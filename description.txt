@@ -1,1 +1,1 @@
-Level+ is meant to bring a leveling system that makes your character progress as the game progresses.
+Level+ is meant to bring a leveling system that makes your character progress as the game progresses. STILL VERY MUCH IN TESTING

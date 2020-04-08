@@ -1,6 +1,7 @@
 **/.vs
 **/bin
 **/obj
+*.csproj
 *.kra
 *.png~
 *.kra~
