@@ -37,7 +37,7 @@ namespace levelplus.Items
 			recipe.AddRecipe();
 
 			recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.SummonerEmblem, 1);
+			recipe.AddIngredient(ItemID.WarriorEmblem, 1);
 			recipe.AddIngredient(ItemID.LifeCrystal, 1);
 			recipe.AddIngredient(ItemID.CrystalShard, 10);
 			recipe.AddTile(TileID.TinkerersWorkbench);
@@ -61,12 +61,13 @@ namespace levelplus.Items
 			recipe.AddRecipe();
 		}
 
-		public override void OnConsumeItem(Player player)
+		public override bool UseItem(Player player)
 		{
-			base.OnConsumeItem(player);
 
 			levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
 			modPlayer.statReset();
+
+			return true;
 		}
 	}
 }
