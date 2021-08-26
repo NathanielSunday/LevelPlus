@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace levelplus
 {
 	class levelplusGlobalItem : GlobalItem
 	{
-		public override void SetDefaults(Item item)
+		public override void OnConsumeItem(Item item, Player player)
 		{
-			base.SetDefaults(item);
+			levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
+
+			switch (item.netID)
+			{
+                case ItemID.LifeCrystal:
+					break;
+			}
+			base.OnConsumeItem(item, player);
 		}
 	}
 }

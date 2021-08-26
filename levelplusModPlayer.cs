@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
 using Terraria;
-using Terraria.UI;
 using Terraria.ID;
 using levelplus.UI;
 
 namespace levelplus
 {
+	internal enum Weapon
+	{
+		SWORD,//
+		YOYO,//
+		SUMMON,//
+		SPEAR,//
+		BOOMERANG,//
+		MAGIC,//
+		BOW,//
+		GUN,
+		THROWN
+	}
+
 	class levelplusModPlayer : ModPlayer
 	{
  
@@ -16,84 +28,31 @@ namespace levelplus
 		const double INCREASE = 50;
 		const double BASE_XP = 100;		
 		const ushort BASE_POINTS = 3;
+		const ushort LEVEL_POINTS = 3;
+
+		private Weapon weapon = (Weapon) new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length);
+
+		private string talents;
 
 		private double currentXP;
 		private double neededXP;
 		private ushort level;
 		private ushort pointsUnspent;
+		private ushort talentUnspent;
+
+
 		private ushort constitution; //buff to max health, base defense
-		private ushort strength; //buff to melee damage/throwing damage
+		private ushort strength; //buff to melee damage
 		private ushort intelligence; //buff to max mana and magic damage
 		private ushort charisma; //buff to summon damage (maybe shop price)
-		private ushort dexterity; //buff to ranged, movement speed (maybe dodge chance)
+		private ushort dexterity; //buff to ranged
 
-		private StyleDimension healthLeft;
-		private StyleDimension healthTop;
-		private StyleDimension manaLeft;
-		private StyleDimension manaTop;
-		private StyleDimension xpLeft;
-		private StyleDimension xpTop;
+		private ushort mobility; //movement speed and such
+		private ushort excavation; //pick speed
+		private ushort animalia; //fishing power and xp gain
+		private ushort grace; //jump and flight
+		private ushort mysticism; //max mana and regen
 
-		public StyleDimension getHealthLeft()
-		{
-			return healthLeft;
-		}
-
-		public StyleDimension getHealthTop()
-		{
-			return healthTop;
-		}
-
-		public StyleDimension getManaLeft()
-		{
-			return manaLeft;
-		}
-
-		public StyleDimension getManaTop()
-		{
-			return manaTop;
-		}
-
-		public StyleDimension getXpLeft()
-		{
-			return xpLeft;
-		}
-
-		public StyleDimension getXpTop()
-		{
-			return xpTop;
-		}
-
-		public void setHealthLeft(StyleDimension _healthLeft)
-		{
-			healthLeft = _healthLeft;
-		}
-
-		public void setHealthTop(StyleDimension _healthTop)
-		{
-			healthTop = _healthTop;
-		}
-
-		public void setManaLeft(StyleDimension _manaLeft)
-		{
-			manaLeft = _manaLeft;
-		}
-
-		public void setManaTop(StyleDimension _manaTop)
-		{
-			manaTop = _manaTop;
-		}
-
-		public void setXpLeft(StyleDimension _xpLeft)
-		{
-			xpLeft = _xpLeft;
-		}
-
-		public void setXpTop(StyleDimension _xpTop)
-		{
-			xpTop = _xpTop;
-		}
-		
 		public double getCurrentXP()
 		{
 			return currentXP;
@@ -134,6 +93,31 @@ namespace levelplus
 			return dexterity;
 		}
 
+		public ushort getMys()
+		{
+			return mysticism;
+		}
+
+		public ushort getMob()
+		{
+			return mobility;
+		}
+
+		public ushort getExc()
+		{
+			return excavation;
+		}
+
+		public ushort getAni()
+		{
+			return animalia;
+		}
+
+		public ushort getGra()
+		{
+			return grace;
+		}
+
 		public ushort getUnspentPoints()
 		{
 			return pointsUnspent;
@@ -142,9 +126,11 @@ namespace levelplus
 		public void spend(ButtonMode stat)
 		{
 			if (pointsUnspent > 0)
-			{
-				Main.PlaySound(SoundID.MenuTick, (int)player.Center.X, (int)player.Center.Y, 1, 1f);
+			{   
+				//SoundID.MenuTick
+				//ModSound.PlaySound(SoundEffectInstance, (int)Player.Center.X, (int)Player.Center.Y, Terraria.ModLoader.SoundType.Custom);
 				--pointsUnspent;
+				
 				switch (stat)
 				{
 					case ButtonMode.CON:
@@ -162,38 +148,69 @@ namespace levelplus
 					case ButtonMode.DEX:
 						++dexterity;
 						break;
+					case ButtonMode.MOB:
+						++mobility;
+						break;
+					case ButtonMode.EXC:
+						++excavation;
+						break;
+					case ButtonMode.ANI:
+						++animalia;
+						break;
+					case ButtonMode.GRA:
+						++grace;
+						break;
+					case ButtonMode.MYS:
+						++mysticism;
+						break;
 					default:
 						break;
 				}
 			}
 		}
 
-		public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
+		public override void OnEnterWorld(Player player)
+		{
+			base.OnEnterWorld(player);
+
+
+		}
+
+		public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
 		{
 			Random rand = new Random();
 
-			if (!mediumcoreDeath)
+			if (!mediumCoreDeath)
 			{
 				currentXP = 0;
 				neededXP = BASE_XP;
 				level = 0;
 				pointsUnspent = BASE_POINTS;
+				talents = "--------";
+				talentUnspent = 0;
 				constitution = 0;
 				strength = 0;
 				intelligence = 0;
 				charisma = 0;
 				dexterity = 0;
+				mobility = 0;
+				excavation = 0;
+				animalia = 0;
+				grace = 0;
+				mysticism = 0;
 			}
-			//items.Clear();
-			switch (rand.Next(4))
+			
+			switch (weapon)
 			{
-				default:
-					items[0].SetDefaults(ItemID.CopperBroadsword, true);
+				case Weapon.SWORD:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBroadsword));
 					break;
-				case 1:
-					items[0].SetDefaults(ItemID.CopperBow, true);
+				case Weapon.BOOMERANG:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.WoodenBoomerang));
+					break;
+				case Weapon.BOW:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBow));
 					Item arrows = new Item();
-					int arrowChance = rand.Next(20);
 					switch (rand.Next(3))
 					{
 						default:
@@ -207,40 +224,62 @@ namespace levelplus
 							break;
 					}
 					arrows.stack = 100 + rand.Next(101);
-					items.Add(arrows);
+					itemsByMod["Terraria"].Add(arrows);
 					break;
-				case 2:
-					items[0].SetDefaults((rand.Next(2)==0) ? ItemID.AmethystStaff : ItemID.HornetStaff, true);
-					Item manaCrystal = new Item();
-					manaCrystal.SetDefaults(ItemID.ManaCrystal, true);
-					items.Add(manaCrystal);
+				case Weapon.MAGIC:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.WandofSparking));
+					if (!mediumCoreDeath)
+					{
+						Item manaCrystal = new Item();
+						manaCrystal.SetDefaults(ItemID.ManaCrystal, true);
+						itemsByMod["Terraria"].Add(manaCrystal);
+					}
 					break;
-				case 3:
-					items[0].SetDefaults(ItemID.Shuriken, true);
-					items[0].stack = 150;
+				case Weapon.SUMMON:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.HornetStaff));
+					break;
+				case Weapon.SPEAR:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.Spear));
+					break;
+				case Weapon.YOYO:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.WoodYoyo));
+					break;
+				case Weapon.GUN:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.FlintlockPistol));
+					break;
+				case Weapon.THROWN:
+					itemsByMod["Terraria"].Insert(0, new Item(ItemID.Shuriken));
+					itemsByMod["Terraria"][0].stack = 100 + rand.Next(101);
+					break;
+				default:
 					break;
 			}
-			
-			items[1].SetDefaults(ItemID.CopperPickaxe, true);
-			items[2].SetDefaults(ItemID.CopperAxe, true);
 		}
 
 		public override TagCompound Save()
 		{
 			TagCompound tag = new TagCompound();
 
+
+			//check if this character has a save tag
 			if (tag.GetBool("initialized"))
 			{
-				//tag.Set("initialized", true);
 				tag.Set("level", level);
 				tag.Set("currentXP", currentXP);
 				tag.Set("neededXP", neededXP);
 				tag.Set("points", pointsUnspent);
+				tag.Set("talents", talents);
+				tag.Set("talentPoints", talentUnspent);
 				tag.Set("con", constitution);
 				tag.Set("str", strength);
 				tag.Set("int", intelligence);
 				tag.Set("cha", charisma);
 				tag.Set("dex", dexterity);
+				tag.Set("mob", mobility);
+				tag.Set("exc", excavation);
+				tag.Set("ani", animalia);
+				tag.Set("gra", grace);
+				tag.Set("mys", mysticism);
 			}
 			else
 			{
@@ -249,11 +288,18 @@ namespace levelplus
 				tag.Add("currentXP", currentXP);
 				tag.Add("neededXP", neededXP);
 				tag.Add("points", pointsUnspent);
+				tag.Add("talents", talents);
+				tag.Add("talentPoints", talentUnspent);
 				tag.Add("con", constitution);
 				tag.Add("str", strength);
 				tag.Add("int", intelligence);
 				tag.Add("cha", charisma);
 				tag.Add("dex", dexterity);
+				tag.Add("mob", mobility);
+				tag.Add("exc", excavation);
+				tag.Add("ani", animalia);
+				tag.Add("gra", grace);
+				tag.Add("mys", mysticism);
 			}
 
 			return tag;
@@ -267,43 +313,81 @@ namespace levelplus
 				currentXP = tag.GetAsDouble("currentXP");
 				neededXP = tag.GetAsDouble("neededXP");
 				pointsUnspent = (ushort)tag.GetAsShort("points");
+				talents = tag.Get<string>("talents");
+				talentUnspent = (ushort)tag.GetAsShort("talentPoints");
 				constitution = (ushort)tag.GetAsShort("con");
 				strength = (ushort)tag.GetAsShort("str");
 				intelligence = (ushort)tag.GetAsShort("int");
 				charisma = (ushort)tag.GetAsShort("cha");
 				dexterity = (ushort)tag.GetAsShort("dex");
+				mobility = (ushort)tag.GetAsShort("mob");
+				excavation = (ushort)tag.GetAsShort("exc");
+				animalia = (ushort)tag.GetAsShort("ani");
+				grace = (ushort)tag.GetAsShort("gra");
+				mysticism = (ushort)tag.GetAsShort("mys");
 			}	
 		}
+
+		public override void OnRespawn(Player player)
+		{
+			base.OnRespawn(player);
+			currentXP = 0;
+		}
+
 		public override void PostUpdateEquips()
 		{
 			//base.PostUpdateEquips();
 
-			player.statLifeMax2 += (2 * level) + (2 * constitution);
-			player.lifeRegen += (constitution / 20);
-			player.statDefense += constitution;
-			player.statManaMax2 += (1 * level) + (1 * intelligence);
-			player.manaRegen += (intelligence / 20);
+			//COMBAT
+				//constitution
+				Player.statLifeMax2 += (2 * level) + (5 * constitution);
+				Player.lifeRegen += (constitution / 25);
+				Player.statDefense += constitution / 3;
+				
+				//intelligence
+				Player.GetDamage(DamageClass.Magic) *= 1f + (intelligence / 200f);
+				Player.GetCritChance(DamageClass.Magic) += intelligence / 20;
 
-			player.meleeDamage *= (1f + (strength/100f));
-			player.meleeCrit += (strength / 10);
-			player.thrownDamage *= (1f + (strength / 100f));
-			player.thrownCrit += (strength / 10);
-			player.rangedDamage *= (1f + (dexterity / 100f));
-			player.rangedCrit += (1 + (dexterity / 10));
-			player.magicDamage *= (1f + (intelligence / 100f));
-			player.magicCrit += (intelligence / 10);
-			player.minionDamage *= (1f + (charisma / 100f));
-			player.maxMinions += (charisma / 10);
-			player.wingTimeMax += (int)(player.wingTimeMax * (charisma / 100f));
+				//strength
+				Player.GetDamage(DamageClass.Melee) *= 1f + (strength / 200f);
+				Player.GetCritChance(DamageClass.Melee) += strength / 15;
 
-			player.maxRunSpeed += (1f + (dexterity / 100f));
-			player.moveSpeed *= (1f + (dexterity / 100f));
-			player.jumpSpeedBoost += (dexterity / 100f);
+				//dexterity
+				Player.GetDamage(DamageClass.Ranged) *= 1f + (dexterity / 200f);
+				Player.GetCritChance(DamageClass.Ranged) += 1 + (dexterity / 20);
+			
+				//charisma
+				Player.GetDamage(DamageClass.Summon) *= 1f + (charisma / 200f);
+				Player.GetCritChance(DamageClass.Summon) += charisma / 20;
+				
+
+			//UTILITY
+				//animalia
+				Player.fishingSkill += (int)(Player.fishingSkill * (animalia / 100f));
+				Player.maxMinions += animalia / 30;
+				//xpgain 1% per point	
+
+				//excavation
+				Player.pickSpeed *= (1f + (excavation / 100f));
+				Player.tileSpeed *= (1f + (excavation / 100f));
+				Player.blockRange += (int)(Player.blockRange * (excavation / 100f));
+
+				//mobility
+				Player.maxRunSpeed += (1f + (mobility / 100f));
+				Player.moveSpeed *= (1f + (mobility / 100f));
+
+				//grace
+				Player.wingTimeMax += (int)(Player.wingTimeMax * (grace / 100f));
+				Player.jump += (int)(Player.jump * (grace / 100f));
+
+				//mysticism
+				Player.statManaMax2 += (1 * level) + (2 * intelligence);
+				Player.manaRegen += (intelligence / 25);
 		}
 
 		public void gainXP(double amount)
 		{
-			currentXP += amount;
+			currentXP += amount * (1 + (animalia / 100f));
 			//Main.NewText("CurrentXP: " + currentXP);
 
 			if (currentXP >= neededXP)
@@ -315,20 +399,21 @@ namespace levelplus
 		private void levelUp()
 		{
 
-			Projectile proj = new Projectile();
+			if(!Main.dedServ)
+				//Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(Terraria.ModLoader.SoundType.Custom, "Audio/level"));
 
-			Main.PlaySound(SoundID.DD2_OgreGroundPound, (int)player.Center.X, (int)player.Center.Y);
-			Main.PlaySound(SoundID.Meowmere, (int)player.Center.X, (int)player.Center.Y);
-			Main.PlaySound(SoundID.Coins, (int)player.Center.X, (int)player.Center.Y);
-			Main.PlaySound(SoundID.Tink, (int)player.Center.X, (int)player.Center.Y);
+			//Main.PlaySound(SoundID.DD2_OgreGroundPound, (int)player.Center.X, (int)player.Center.Y);
+			//Main.PlaySound(SoundID.Meowmere, (int)player.Center.X, (int)player.Center.Y);
+			//Main.PlaySound(SoundID.Coins, (int)player.Center.X, (int)player.Center.Y);
+			//Main.PlaySound(SoundID.Tink, (int)player.Center.X, (int)player.Center.Y);
 			//Main.PlaySound(SoundLoader.customSoundType, (int)player.Center.X, (int)player.Center.Y, mod.GetSoundSlot(Terraria.ModLoader.SoundType.Custom, "Audio/levelup")); //throws index out of bounds exception
 
-			player.statLife = player.statLifeMax2;
-			player.statMana = player.statManaMax2;
+			Player.statLife = Player.statLifeMax;
+			Player.statMana = Player.statManaMax;
 
 			currentXP -= neededXP;
 			++level;
-			++pointsUnspent;
+			pointsUnspent += LEVEL_POINTS;
 			//Main.NewText("Your new level: " + (level + 1));
 			neededXP = Math.Round(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
 			//Main.NewText("NeededXP: " + neededXP);
@@ -336,13 +421,18 @@ namespace levelplus
 
 		public void statReset()
 		{
-			pointsUnspent += (ushort)(constitution + strength + intelligence + charisma + dexterity);
+			pointsUnspent += (ushort)(constitution + strength + intelligence + charisma + dexterity + mysticism + mobility + animalia + grace + excavation);
 
 			constitution = 0;
 			strength = 0;
 			intelligence = 0;
 			charisma = 0;
 			dexterity = 0;
+			mysticism = 0;
+			mobility = 0;
+			animalia = 0;
+			grace = 0;
+			excavation = 0;
 		}
 	}
 }

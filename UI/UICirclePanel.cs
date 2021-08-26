@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using ReLogic.Content;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -17,21 +17,24 @@ namespace levelplus.UI
 		{
 			if (_backgroundTexture == null)
 			{
-				_backgroundTexture = ModContent.GetTexture("levelplus/Textures/UI/Circle");
+				_backgroundTexture = ModContent.Request<Texture2D>("levelplus/Textures/UI/Circle", AssetRequestMode.ImmediateLoad).Value;
 			}
+		}
+
+		public override void OnDeactivate()
+		{
+			base.OnDeactivate();
+			_backgroundTexture = null;
 		}
 
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
 			//base.DrawSelf(spriteBatch);
 
-			
 
-			CalculatedStyle dimensions = GetDimensions();
-			Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
-			int width = (int)Math.Ceiling(dimensions.Width);
-			int height = (int)Math.Ceiling(dimensions.Height);
-			spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), backgroundColor);
+			//spriteBatch.Begin();
+			Rectangle rectangle = GetDimensions().ToRectangle();
+			spriteBatch.Draw(_backgroundTexture, rectangle, backgroundColor);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -19,7 +20,7 @@ namespace levelplus.UI
 		{
 			if (_backgroundTexture == null)
 			{
-				_backgroundTexture = ModContent.GetTexture("levelplus/Textures/UI/Circle");
+				_backgroundTexture = ModContent.Request<Texture2D>("levelplus/Textures/UI/Circle", AssetRequestMode.ImmediateLoad).Value;
 			}
 
 			this.height = height;
