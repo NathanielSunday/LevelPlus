@@ -1,101 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace levelplus
-{
-	class levelplusGlobalNPC : GlobalNPC
-		
-	{
-		private List<levelplusModPlayer> playerHits = new List<levelplusModPlayer>();
+namespace levelplus {
+    class levelplusGlobalNPC : GlobalNPC {
 
-		public override bool InstancePerEntity => true;
+        public override bool InstancePerEntity => true;
 
-		public override void SetDefaults(NPC npc)
-		{
-			base.SetDefaults(npc);
-			float averageLevel = 0;
+        public override void SetDefaults(NPC npc) {
 
-			Player player;
-			levelplusModPlayer modPlayer;
+            base.SetDefaults(npc);
+            float averageLevel = 0;
+            int playerCount = 0;
 
-			for (int i = 0; i < Main.PlayerList.Count; ++i)
-			{
-				player = Main.player[i];
-				modPlayer = player.GetModPlayer<levelplusModPlayer>();
-				averageLevel += modPlayer.getLevel();
-			}
+            foreach (Player i in Main.player) {
+                if (i.active) {
+                    ++playerCount;
+                    averageLevel += i.GetModPlayer<levelplusModPlayer>().getLevel();
+                }
+            }
 
-			averageLevel /= Main.PlayerList.Count;
+            averageLevel /= playerCount;
 
-			npc.damage += (int)(npc.damage * (averageLevel / 20));
-			npc.lifeMax += (int)(npc.lifeMax * (averageLevel / 20));
-		}
-
+            npc.damage += (int)(npc.damage * (averageLevel / 25f));
+            npc.lifeMax += (int)(npc.lifeMax * (averageLevel / 25f));
+        }
 
         public override void OnKill(NPC npc) {
 
-			if (playerHits != null && !npc.SpawnedFromStatue && npc.type != NPCID.TargetDummy)
-				foreach (levelplusModPlayer i in playerHits) {
-					if (npc.boss) {
-						i.gainXP(npc.lifeMax / 3);
-					} else {
-						i.gainXP(npc.lifeMax / 4);
-					}
+            if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
+                double amount;
+                if (npc.boss) {
+                    amount = npc.lifeMax / 3;
+                } else {
+                    amount = npc.lifeMax / 4;
+                }
 
-
-				}
-			else {
-				Player player = Main.player[npc.FindClosestPlayer()];
-				levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
-
-				modPlayer.gainXP(npc.lifeMax / 4);
-			}
-		}
-
-		public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
-		{
-			if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue)
-			{	
-				bool check = false;
-				if(playerHits != null)
-					foreach (levelplusModPlayer i in playerHits)
-					{
-						if(i == player.GetModPlayer<levelplusModPlayer>())
-						{
-							check = true;
-							break;
-						}
-					}
-				if (!check)
-				{
-					playerHits.Add(player.GetModPlayer<levelplusModPlayer>());
-				}
-				
-			}
-		}
-
-		public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
-		{
-			if(npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue)
-			{
-				bool check = false;
-				Player player = Main.player[projectile.owner];
-				if(playerHits != null)
-					foreach (levelplusModPlayer i in playerHits)
-					{
-						if (i == player.GetModPlayer<levelplusModPlayer>())
-						{
-							check = true;
-							break;
-						}
-					}
-				if (!check)
-				{
-					playerHits.Add(player.GetModPlayer<levelplusModPlayer>());
-				}
-			}
-		}
-	}
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().gainXP(amount);
+                else if (Main.netMode == NetmodeID.Server)
+                    for (int i = 0; i < npc.playerInteraction.Length; ++i)
+                        if (npc.playerInteraction[i]) {
+                            ModPacket packet = levelplus.Instance.GetPacket();
+                            packet.Write((byte)PacketType.XP);
+                            packet.Write(amount);
+                            packet.Send(i);
+                        }
+            }
+        }
+    }
 }
+

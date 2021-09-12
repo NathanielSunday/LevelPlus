@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
 namespace levelplus.UI {
@@ -11,46 +10,43 @@ namespace levelplus.UI {
 
     class ResourceBar : UIElement {
 
-        //private LevelButton xpButton;
+        private XPBarButton xpButton;
         private ResourceBarMode stat;
         private float width;
-        private float height;
-        private UIFlatPanel barBackground;
+        private float height = 24;
+        private UIHollowPanel barBackground;
+        private UIHollowCap barCap;
         private UIFlatPanel currentBar;
-        private UIText text;
-        private Vector2 offset;
-        public bool dragging;
 
-        public ResourceBar(ResourceBarMode stat, int height, int width) {
+        public ResourceBar(ResourceBarMode stat, float width) {
             this.stat = stat;
             this.width = width;
-            this.height = height;
         }
 
         public override void OnInitialize() {
+            base.OnInitialize();
+
             Height.Set(height, 0f);
             Width.Set(width, 0f);
 
-            barBackground = new UIFlatPanel(); //create gray background
+            barBackground = new UIHollowPanel(); //create background
             barBackground.Left.Set(0f, 0f);
             barBackground.Top.Set(0f, 0f);
-            barBackground.backgroundColor = Color.Gray;
             barBackground.Width.Set(width, 0f);
             barBackground.Height.Set(height, 0f);
 
+            barCap = new UIHollowCap();
+            barCap.Left.Set(width, 0f);
+            barCap.Top.Set(0f, 0f);
+            barCap.Width.Set(42 * height / 186, 0f);
+            barCap.Height.Set(height, 0f);
+
+
             currentBar = new UIFlatPanel(); //create current value panel
-            currentBar.SetPadding(0);
             currentBar.Left.Set(0f, 0f);
             currentBar.Top.Set(0f, 0f);
             currentBar.Width.Set(width, 0f);
             currentBar.Height.Set(height, 0f);
-
-            /*xpButton = new LevelButton(ButtonMode.LEVEL, 35, 35);
-			xpButton.SetPadding(0);
-			xpButton.Left.Set(0f, 0f);
-			xpButton.Top.Set(0f, 0f);
-			xpButton.Width.Set(35, 0f);
-			xpButton.Height.Set(35, 0f);*/
 
             //assignment of color
             switch (stat) {
@@ -61,23 +57,26 @@ namespace levelplus.UI {
                     break;
             }
 
-            text = new UIText("0|0"); //text for showing values
-            text.Width.Set(width, 0f);
-            text.Height.Set(height, 0f);
-            text.Top.Set(height / 2 - text.MinHeight.Pixels / 2, 0f); //center the text, because I'm not a heathen
-
-            //barBackground.Append(xpButton);
+            barBackground.Append(barCap);
             barBackground.Append(currentBar);
-            barBackground.Append(text);
+            
+            //barBackground.Append(text);
             base.Append(barBackground);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch) {
-            //base.Draw(spriteBatch);
+            base.DrawSelf(spriteBatch);
 
-            //spriteBatch.Begin();
             Player player = Main.player[Main.myPlayer];
             levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
+
+            
+
+            if (Main.mouseX >= this.Left.Pixels && Main.mouseX <= this.Left.Pixels + this.Width.Pixels && Main.mouseY >= this.Top.Pixels && Main.mouseY <= this.Top.Pixels + this.Height.Pixels) {
+                Main.instance.MouseText("" + (ushort)modPlayer.getCurrentXP() + " | " + modPlayer.getNeededXP());
+            }
+
+            //spriteBatch.Begin();
             float quotient = 1f;
             //calculate quotient
             switch (stat) {
@@ -98,19 +97,23 @@ namespace levelplus.UI {
         public override void Update(GameTime gameTime) {
 
             base.Update(gameTime);
-            Player player = Main.player[Main.myPlayer];
-            levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
 
+            if (ContainsPoint(new Vector2(Main.mouseX, Main.mouseY))) {
+                Main.LocalPlayer.mouseInterface = true;
+            }
 
 
             switch (stat) {
                 case ResourceBarMode.XP:
-                    text.SetText("" + (ushort)modPlayer.getCurrentXP() + " | " + modPlayer.getNeededXP()); //Set XP
+                    //text.SetText("" + (ushort)modPlayer.getCurrentXP() + " | " + modPlayer.getNeededXP()); //Set XP
                     break;
                 default:
                     break;
             }
 
+            //old drawing code that I keep incase I want to come back to being able to drag them
+
+            /*
             if (dragging) {
                 Left.Set(Main.mouseX - offset.X, 0f); // Main.MouseScreen.X and Main.mouseX are the same.
                 Top.Set(Main.mouseY - offset.Y, 0f);
@@ -126,9 +129,9 @@ namespace levelplus.UI {
                 Top.Pixels = Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);
                 // Recalculate forces the UI system to do the positioning math again.
                 Recalculate();
-            }
+            }*/
         }
-
+        /*
         public override void MouseDown(UIMouseEvent evt) {
             base.MouseDown(evt);
             DragStart(evt);
@@ -152,7 +155,7 @@ namespace levelplus.UI {
             Top.Set(end.Y - offset.Y, 0f);
 
             Recalculate();
-        }
+        }*/
     }
 }
 

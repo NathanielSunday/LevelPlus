@@ -8,7 +8,7 @@ namespace levelplus.UI
 {
 	class UIFlatPanel : UIElement
 	{
-		public Color backgroundColor = Color.Gray;
+		public Color backgroundColor = Color.White;
 		private static Texture2D _backgroundTexture;
 
 		public UIFlatPanel()

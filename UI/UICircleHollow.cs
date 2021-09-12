@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -24,7 +25,15 @@ namespace levelplus.UI
 			_backgroundTexture = null;
 		}
 
-		protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void Update(GameTime gameTime) {
+            base.Update(gameTime);
+
+			if (ContainsPoint(new Vector2(Main.mouseX, Main.mouseY))) {
+				Main.LocalPlayer.mouseInterface = true;
+			}
+		}
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
 			//base.DrawSelf(spriteBatch);
 

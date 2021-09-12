@@ -11,7 +11,6 @@ namespace levelplus.UI
 	{
 		public Color backgroundColor = Color.Gray;
 		private static Texture2D _backgroundTexture;
-		public string HoverText;
 
 		public UICirclePanel()
 		{
