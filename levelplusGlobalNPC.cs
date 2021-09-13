@@ -1,5 +1,4 @@
-﻿using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,33 +7,33 @@ namespace levelplus {
 
         public override bool InstancePerEntity => true;
 
-        public override void SetDefaults(NPC npc) {
-
-            base.SetDefaults(npc);
+        public override void ScaleExpertStats(NPC npc, int numPlayers, float bossLifeScale) {
+            base.ScaleExpertStats(npc, numPlayers, bossLifeScale);
             float averageLevel = 0;
-            int playerCount = 0;
 
-            foreach (Player i in Main.player) {
+            //doesnt work in multiplayer, might have to make this an expert only mechanic
+
+            foreach (Player i in Main.ActiveWorld.Players)
                 if (i.active) {
-                    ++playerCount;
+                    numPlayers++;
                     averageLevel += i.GetModPlayer<levelplusModPlayer>().getLevel();
                 }
-            }
 
-            averageLevel /= playerCount;
+            averageLevel /= numPlayers;
 
-            npc.damage += (int)(npc.damage * (averageLevel / 25f));
-            npc.lifeMax += (int)(npc.lifeMax * (averageLevel / 25f));
+            npc.damage += (int)(npc.damage * (averageLevel / 40.0f));
+            npc.lifeMax += (int)(npc.lifeMax * (averageLevel / 40.0f));
         }
+
 
         public override void OnKill(NPC npc) {
 
             if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
                 double amount;
                 if (npc.boss) {
-                    amount = npc.lifeMax / 3;
+                    amount = npc.lifeMax / 5;
                 } else {
-                    amount = npc.lifeMax / 4;
+                    amount = npc.lifeMax / 3;
                 }
 
                 if (Main.netMode == NetmodeID.SinglePlayer)

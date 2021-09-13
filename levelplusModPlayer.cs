@@ -220,7 +220,9 @@ namespace levelplus {
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.WoodYoyo));
                     break;
                 case Weapon.GUN:
+                    Item bullets = new Item(ItemID.MusketBall, 100);
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.FlintlockPistol));
+                    itemsByMod["Terraria"].Add(bullets);
                     break;
                 case Weapon.THROWN:
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.Shuriken));
@@ -321,7 +323,7 @@ namespace levelplus {
 
         public override void PostUpdateEquips() {
             //base.PostUpdateEquips();
-
+                        
             //COMBAT
             //constitution
             Player.statLifeMax2 += (2 * level) + (5 * constitution);
@@ -348,8 +350,8 @@ namespace levelplus {
             //UTILITY
             //animalia
             Player.fishingSkill += (int)(Player.fishingSkill * (animalia / 100f));
-            Player.maxMinions += animalia / 30;
-
+            Player.maxMinions += animalia / 15;
+            //xpgain +1% per point
 
             //excavation
             Player.pickSpeed *= (1f + (excavation / 100f));
@@ -367,13 +369,12 @@ namespace levelplus {
             //mysticism
             Player.statManaMax2 += (1 * level) + (2 * intelligence);
             Player.manaRegen += (intelligence / 25);
-            //xpgain +1% per point
+            
         }
 
         public void gainXP(double amount) {
-            currentXP += amount * (1 + (mysticism / 100f));
+            currentXP += amount * (1 + (animalia / 100f));
             //Main.NewText("CurrentXP: " + currentXP);
-
             if (currentXP >= neededXP) {
                 levelUp();
             }
@@ -385,10 +386,6 @@ namespace levelplus {
 
         private void levelUp() {
 
-            if (!Main.dedServ) {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, -1, -1, levelplus.Instance.GetSoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/level"));
-            }
-
             Player.statLife = Player.statLifeMax;
             Player.statMana = Player.statManaMax;
 
@@ -396,13 +393,18 @@ namespace levelplus {
             ++level;
             pointsUnspent += LEVEL_POINTS;
 
-            //Main.NewText("Your new level: " + (level + 1));
             neededXP = Math.Round(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
-            //Main.NewText("NeededXP: " + neededXP);
+
+            if (currentXP >= neededXP) 
+                levelUp();
+            else if (!Main.dedServ) {
+                SoundEngine.PlaySound(SoundLoader.customSoundType, -1, -1, levelplus.Instance.GetSoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/level"));
+            }
+
         }
 
         public void statReset() {
-            pointsUnspent += (ushort)(constitution + strength + intelligence + charisma + dexterity + mysticism + mobility + animalia + grace + excavation);
+            pointsUnspent = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
 
             constitution = 0;
             strength = 0;

@@ -193,7 +193,8 @@ namespace levelplus.UI {
                 case ButtonMode.ANI:
                     text = "Animalia:\n\n"
                         + "  +" + (modPlayer.getAni()) + "% better fishing\n"
-                        + "  +" + (modPlayer.getAni() / 20) + " minion slots";
+                        + "  +" + (modPlayer.getAni() / 20) + " minion slots\n"
+                        + "  +" + (modPlayer.getAni()) + "% xp gain";
                     rarity = 0; //white
                     break;
                 case ButtonMode.GRA:
@@ -205,8 +206,7 @@ namespace levelplus.UI {
                 case ButtonMode.MYS:
                     text = "Mysticism:\n\n"
                         + "  +" + (modPlayer.getMys() * 2) + " max mana (+" + modPlayer.getLevel() + " from level)\n"
-                        + "  +" + (modPlayer.getMys() / 25) + " mana regen\n"
-                        + "  +" + (modPlayer.getMys()) + "% xp gain";
+                        + "  +" + (modPlayer.getMys() / 25) + " mana regen";
                     rarity = 0; //white
                     break;
                 default:
