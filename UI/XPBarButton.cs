@@ -44,7 +44,7 @@ namespace levelplus.UI {
             base.Update(time);
 
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
-            currentStat.SetText("" + (modPlayer.getLevel() + 1));
+            currentStat.SetText("" + (modPlayer.GetLevel() + 1));
             if (ContainsPoint(new Vector2(Main.mouseX, Main.mouseY))) {
                 Main.LocalPlayer.mouseInterface = true;
             }
@@ -55,7 +55,7 @@ namespace levelplus.UI {
 
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
             if (Main.mouseX >= this.Left.Pixels && Main.mouseX <= this.Left.Pixels + this.Width.Pixels && Main.mouseY >= this.Top.Pixels && Main.mouseY <= this.Top.Pixels + this.Height.Pixels) {
-                Main.instance.MouseText(modPlayer.getUnspentPoints() + " unspent points");
+                Main.instance.MouseText(modPlayer.GetUnspentPoints() + " unspent points");
             }
         }
 

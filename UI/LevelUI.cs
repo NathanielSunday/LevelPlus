@@ -66,7 +66,7 @@ namespace levelplus.UI {
             Ani.Top.Set(m1 + m2 + 4f + combat.Top.Pixels, 0f);
             base.Append(Ani);
 
-            Gra = new LevelButton(ButtonMode.GRA, 38, 38);
+            Gra = new LevelButton(ButtonMode.LUC, 38, 38);
             Gra.Left.Set(m1 + s1 - 19f + combat.Left.Pixels, 0f);
             Gra.Top.Set(m1 + c1 + combat.Top.Pixels, 0f);
             base.Append(Gra);
@@ -126,7 +126,7 @@ namespace levelplus.UI {
             Player player = Main.player[Main.myPlayer];
             levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
 
-            unspentPoints.SetText("" + modPlayer.getUnspentPoints());            
+            unspentPoints.SetText("" + modPlayer.GetUnspentPoints());            
         }
 
         //close the menu when center is clicked

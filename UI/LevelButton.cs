@@ -16,7 +16,7 @@ namespace levelplus.UI {
         MOB,
         EXC,
         ANI,
-        GRA,
+        LUC,
         MYS,
         LEVEL
     }
@@ -74,7 +74,7 @@ namespace levelplus.UI {
                     break;
                 case ButtonMode.ANI:
                     break;
-                case ButtonMode.GRA:
+                case ButtonMode.LUC:
                     break;
                 case ButtonMode.MYS:
                     break;
@@ -104,34 +104,34 @@ namespace levelplus.UI {
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
             switch (button) {
                 case ButtonMode.CON:
-                    currentStat.SetText("" + modPlayer.getCon());
+                    currentStat.SetText("" + modPlayer.GetCon());
                     break;
                 case ButtonMode.STR:
-                    currentStat.SetText("" + modPlayer.getStr());
+                    currentStat.SetText("" + modPlayer.GetStr());
                     break;
                 case ButtonMode.INT:
-                    currentStat.SetText("" + modPlayer.getInt());
+                    currentStat.SetText("" + modPlayer.GetInt());
                     break;
                 case ButtonMode.CHA:
-                    currentStat.SetText("" + modPlayer.getCha());
+                    currentStat.SetText("" + modPlayer.GetCha());
                     break;
                 case ButtonMode.DEX:
-                    currentStat.SetText("" + modPlayer.getDex());
+                    currentStat.SetText("" + modPlayer.GetDex());
                     break;
                 case ButtonMode.MOB:
-                    currentStat.SetText("" + modPlayer.getMob());
+                    currentStat.SetText("" + modPlayer.GetMob());
                     break;
                 case ButtonMode.EXC:
-                    currentStat.SetText("" + modPlayer.getExc());
+                    currentStat.SetText("" + modPlayer.GetExc());
                     break;
                 case ButtonMode.ANI:
-                    currentStat.SetText("" + modPlayer.getAni());
+                    currentStat.SetText("" + modPlayer.GetAni());
                     break;
-                case ButtonMode.GRA:
-                    currentStat.SetText("" + modPlayer.getGra());
+                case ButtonMode.LUC:
+                    currentStat.SetText("" + modPlayer.GetLuc());
                     break;
                 case ButtonMode.MYS:
-                    currentStat.SetText("" + modPlayer.getMys());
+                    currentStat.SetText("" + modPlayer.GetMys());
                     break;
                 default:
                     break;
@@ -148,65 +148,67 @@ namespace levelplus.UI {
             switch (button) {
                 case ButtonMode.CON:
                     text = "Constitution:\n\n"
-                        + "  +" + (modPlayer.getCon() * 5) + " life (+" + (modPlayer.getLevel() * 2) + " from level)\n"
-                        + "  +" + (modPlayer.getCon() / 3) + " defense\n"
-                        + "  +" + (modPlayer.getCon() / 25) + " life regen";
+                        + "  +" + (modPlayer.GetCon() * 5) + " life (+" + (modPlayer.GetLevel() * 2) + " from level)\n"
+                        + "  +" + (modPlayer.GetCon() / 3) + " defense\n"
+                        + "  +" + (modPlayer.GetCon() / 20) + " life regen";
                     rarity = 7; //lime
                     break;
                 case ButtonMode.STR:
                     text = "Strength:\n\n"
-                        + "  +" + (modPlayer.getStr() / 2.0f) + "% melee damage\n"
-                        + "  +" + (modPlayer.getStr() / 20) + "% melee crit chance";
+                        + "  +" + modPlayer.GetStr() + "% melee damage\n"
+                        + "  +" + (modPlayer.GetStr() / 15) + "% melee crit chance";
                     rarity = 10; //red
                     break;
                 case ButtonMode.INT:
                     text = "Intelligence:\n\n"
-                        + "  +" + (modPlayer.getInt() / 2.0f) + "% magic damage\n"
-                        + "  +" + (modPlayer.getInt() / 20) + "% magic crit chance";
+                        + "  +" + modPlayer.GetInt() + "% magic damage\n"
+                        + "  +" + (modPlayer.GetInt() / 15) + "% magic crit chance";
                     rarity = 9; //cyan
                     break;
                 case ButtonMode.CHA:
                     text = "Charisma:\n\n"
-                        + "  +" + (modPlayer.getCha() / 2.0f) + "% minion damage\n"
-                        + "  +" + (modPlayer.getCha() / 20) + "% minion crit chance";
+                        + "  +" + modPlayer.GetCha() + "% minion damage\n"
+                        + "  +" + (modPlayer.GetCha() / 15) + "% minion crit chance";
                     rarity = 6; //light purple
                     break;
                 case ButtonMode.DEX:
                     text = "Dexterity:\n\n"
-                        + "  +" + (modPlayer.getDex() / 2.0f) + "% ranged damage\n"
-                        + "  +" + (modPlayer.getDex() / 20) + "% ranged crit chance";
+                        + "  +" + modPlayer.GetDex() + "% ranged damage\n"
+                        + "  +" + (modPlayer.GetDex() / 15) + "% ranged crit chance";
                     rarity = 8; //yellow
                     break;
                 case ButtonMode.MOB:
                     text = "Mobility:\n\n"
-                        + "  +" + modPlayer.getMob() + "% move speed\n"
-                        + "  +" + modPlayer.getMob() + "% max run speed";
+                        + "  +" + (modPlayer.GetMob() * 2) + "% acceleration\n"
+                        + "  +" + (modPlayer.GetMob() * 2) + "% wing time\n"
+                        + "  +" + (modPlayer.GetMob()) + "% max run speed";
                     rarity = 0; //white
                     break;
                 case ButtonMode.EXC:
                     text = "Excavation:\n\n"
-                        + "  +" + modPlayer.getExc() + "% pick speed\n"
-                        + "  +" + modPlayer.getExc() + "% place speed\n"
-                        + "  +" + modPlayer.getExc() + "% block range";
+                        + "  +" + (modPlayer.GetExc()) + "% pick speed\n"
+                        + "  +" + (modPlayer.GetExc() * 2) + "% place speed\n"
+                        + "  +" + (modPlayer.GetExc() / 10) + " block range";
                     rarity = 0; //white
                     break;
                 case ButtonMode.ANI:
                     text = "Animalia:\n\n"
-                        + "  +" + (modPlayer.getAni()) + "% better fishing\n"
-                        + "  +" + (modPlayer.getAni() / 20) + " minion slots\n"
-                        + "  +" + (modPlayer.getAni()) + "% xp gain";
+                        + "  +" + (modPlayer.GetAni() * 2) + "% better fishing\n"
+                        + "  +" + (modPlayer.GetAni() / 20) + " minion slots\n"
+                        + "  +" + (modPlayer.GetAni() * 2) + "% minion knockback";
                     rarity = 0; //white
                     break;
-                case ButtonMode.GRA:
-                    text = "Grace:\n\n"
-                        + "  +" + modPlayer.getGra() + "% wing time\n"
-                        + "  +" + modPlayer.getGra() + "% jump height";
+                case ButtonMode.LUC:
+                    text = "Luck:\n\n"
+                        + "  +" + modPlayer.GetLuc() + "% xp gain\n"
+                        + "  +" + modPlayer.GetLuc() + "% chance not to consume ammo";
                     rarity = 0; //white
                     break;
                 case ButtonMode.MYS:
                     text = "Mysticism:\n\n"
-                        + "  +" + (modPlayer.getMys() * 2) + " max mana (+" + modPlayer.getLevel() + " from level)\n"
-                        + "  +" + (modPlayer.getMys() / 25) + " mana regen";
+                        + "  +" + (modPlayer.GetMys() * 2) + " max mana (+" + modPlayer.GetLevel() + " from level)\n"
+                        + "  +" + (modPlayer.GetMys() / 15) + " mana regen\n"
+                        + "  -" + System.Math.Clamp(modPlayer.GetMys() / 2.0f, 0.0f, 100.0f) + "% mana cost";
                     rarity = 0; //white
                     break;
                 default:

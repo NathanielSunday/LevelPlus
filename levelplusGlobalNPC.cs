@@ -16,7 +16,7 @@ namespace levelplus {
             foreach (Player i in Main.ActiveWorld.Players)
                 if (i.active) {
                     numPlayers++;
-                    averageLevel += i.GetModPlayer<levelplusModPlayer>().getLevel();
+                    averageLevel += i.GetModPlayer<levelplusModPlayer>().GetLevel();
                 }
 
             averageLevel /= numPlayers;
@@ -29,15 +29,15 @@ namespace levelplus {
         public override void OnKill(NPC npc) {
 
             if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
-                double amount;
+                ulong amount;
                 if (npc.boss) {
-                    amount = npc.lifeMax / 5;
+                    amount = (ulong)(npc.lifeMax / 4);
                 } else {
-                    amount = npc.lifeMax / 3;
+                    amount = (ulong)(npc.lifeMax / 3);
                 }
 
                 if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().gainXP(amount);
+                    Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(amount);
                 else if (Main.netMode == NetmodeID.Server)
                     for (int i = 0; i < npc.playerInteraction.Length; ++i)
                         if (npc.playerInteraction[i]) {

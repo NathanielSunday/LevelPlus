@@ -10,7 +10,6 @@ namespace levelplus.UI {
 
     class ResourceBar : UIElement {
 
-        private XPBarButton xpButton;
         private ResourceBarMode stat;
         private float width;
         private float height = 24;
@@ -73,7 +72,7 @@ namespace levelplus.UI {
             
 
             if (Main.mouseX >= this.Left.Pixels && Main.mouseX <= this.Left.Pixels + this.Width.Pixels && Main.mouseY >= this.Top.Pixels && Main.mouseY <= this.Top.Pixels + this.Height.Pixels) {
-                Main.instance.MouseText("" + (ushort)modPlayer.getCurrentXP() + " | " + modPlayer.getNeededXP());
+                Main.instance.MouseText("" + modPlayer.GetCurrentXP() + " | " + modPlayer.GetNeededXP());
             }
 
             //spriteBatch.Begin();
@@ -81,7 +80,7 @@ namespace levelplus.UI {
             //calculate quotient
             switch (stat) {
                 case ResourceBarMode.XP:
-                    quotient = (float)modPlayer.getCurrentXP() / (float)modPlayer.getNeededXP();
+                    quotient = (float)modPlayer.GetCurrentXP() / (float)modPlayer.GetNeededXP();
                     break;
                 default:
                     break;

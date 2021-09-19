@@ -22,9 +22,9 @@ namespace levelplus {
 
     class levelplusModPlayer : ModPlayer {
 
-        const double RATE = 1.5;
-        const double INCREASE = 50;
-        const double BASE_XP = 100;
+        const float RATE = 2.0f;
+        const ushort INCREASE = 100;
+        const ushort BASE_XP = 100;
         const ushort BASE_POINTS = 3;
         const ushort LEVEL_POINTS = 3;
 
@@ -32,8 +32,8 @@ namespace levelplus {
 
         private string talents;
 
-        private double currentXP;
-        private double neededXP;
+        private ulong currentXP;
+        private ulong neededXP;
         private ushort level;
         private ushort pointsUnspent;
         private ushort talentUnspent;
@@ -47,63 +47,63 @@ namespace levelplus {
 
         private ushort mobility; //movement speed and such
         private ushort excavation; //pick speed
-        private ushort animalia; //fishing power and xp gain
-        private ushort grace; //jump and flight
+        private ushort animalia; //fishing power and minion extras
+        private ushort luck; //xp gain and whatnot
         private ushort mysticism; //max mana and regen
 
-        public double getCurrentXP() {
+        public ulong GetCurrentXP() {
             return currentXP;
         }
 
-        public double getNeededXP() {
+        public ulong GetNeededXP() {
             return neededXP;
         }
 
-        public ushort getLevel() {
+        public ushort GetLevel() {
             return level;
         }
 
-        public ushort getCon() {
+        public ushort GetCon() {
             return constitution;
         }
 
-        public ushort getStr() {
+        public ushort GetStr() {
             return strength;
         }
 
-        public ushort getInt() {
+        public ushort GetInt() {
             return intelligence;
         }
 
-        public ushort getCha() {
+        public ushort GetCha() {
             return charisma;
         }
 
-        public ushort getDex() {
+        public ushort GetDex() {
             return dexterity;
         }
 
-        public ushort getMys() {
+        public ushort GetMys() {
             return mysticism;
         }
 
-        public ushort getMob() {
+        public ushort GetMob() {
             return mobility;
         }
 
-        public ushort getExc() {
+        public ushort GetExc() {
             return excavation;
         }
 
-        public ushort getAni() {
+        public ushort GetAni() {
             return animalia;
         }
 
-        public ushort getGra() {
-            return grace;
+        public ushort GetLuc() {
+            return luck;
         }
 
-        public ushort getUnspentPoints() {
+        public ushort GetUnspentPoints() {
             return pointsUnspent;
         }
 
@@ -138,8 +138,8 @@ namespace levelplus {
                     case ButtonMode.ANI:
                         ++animalia;
                         break;
-                    case ButtonMode.GRA:
-                        ++grace;
+                    case ButtonMode.LUC:
+                        ++luck;
                         break;
                     case ButtonMode.MYS:
                         ++mysticism;
@@ -174,7 +174,7 @@ namespace levelplus {
                 mobility = 0;
                 excavation = 0;
                 animalia = 0;
-                grace = 0;
+                luck = 0;
                 mysticism = 0;
             }
 
@@ -220,13 +220,12 @@ namespace levelplus {
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.WoodYoyo));
                     break;
                 case Weapon.GUN:
-                    Item bullets = new Item(ItemID.MusketBall, 100);
+                    Item bullets = new(ItemID.MusketBall, 100 + rand.Next(101));
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.FlintlockPistol));
                     itemsByMod["Terraria"].Add(bullets);
                     break;
                 case Weapon.THROWN:
-                    itemsByMod["Terraria"].Insert(0, new Item(ItemID.Shuriken));
-                    itemsByMod["Terraria"][0].stack = 100 + rand.Next(101);
+                    itemsByMod["Terraria"].Insert(0, new Item(ItemID.Shuriken, 100 + rand.Next(101)));
                     break;
                 default:
                     break;
@@ -253,7 +252,7 @@ namespace levelplus {
                 tag.Set("mob", mobility);
                 tag.Set("exc", excavation);
                 tag.Set("ani", animalia);
-                tag.Set("gra", grace);
+                tag.Set("gra", luck);
                 tag.Set("mys", mysticism);
             } else {
                 tag.Add("initialized", true);
@@ -271,7 +270,7 @@ namespace levelplus {
                 tag.Add("mob", mobility);
                 tag.Add("exc", excavation);
                 tag.Add("ani", animalia);
-                tag.Add("gra", grace);
+                tag.Add("gra", luck);
                 tag.Add("mys", mysticism);
             }
 
@@ -281,8 +280,8 @@ namespace levelplus {
         public override void Load(TagCompound tag) {
             if (tag.GetBool("initialized")) {
                 level = (ushort)tag.GetAsShort("level");
-                currentXP = tag.GetAsDouble("currentXP");
-                neededXP = tag.GetAsDouble("neededXP");
+                currentXP = (ulong)tag.GetAsLong("currentXP");
+                neededXP = (ulong)tag.GetAsLong("neededXP");
                 pointsUnspent = (ushort)tag.GetAsShort("points");
                 talents = tag.Get<string>("talents");
                 talentUnspent = (ushort)tag.GetAsShort("talentPoints");
@@ -294,7 +293,7 @@ namespace levelplus {
                 mobility = (ushort)tag.GetAsShort("mob");
                 excavation = (ushort)tag.GetAsShort("exc");
                 animalia = (ushort)tag.GetAsShort("ani");
-                grace = (ushort)tag.GetAsShort("gra");
+                luck = (ushort)tag.GetAsShort("gra");
                 mysticism = (ushort)tag.GetAsShort("mys");
             } else {
                 currentXP = 0;
@@ -311,99 +310,149 @@ namespace levelplus {
                 mobility = 0;
                 excavation = 0;
                 animalia = 0;
-                grace = 0;
+                luck = 0;
                 mysticism = 0;
             }
         }
 
         public override void OnRespawn(Player player) {
             base.OnRespawn(player);
-            currentXP = 0;
+            //lose a quarter of your xp on death
+            currentXP = (ulong)(currentXP * .75);
         }
 
         public override void PostUpdateEquips() {
-            //base.PostUpdateEquips();
+            base.PostUpdateEquips();
                         
             //COMBAT
+
             //constitution
+                //+2 life per level
+                //+5 life per point
+                //+1 defense per 3 points
             Player.statLifeMax2 += (2 * level) + (5 * constitution);
-            Player.lifeRegen += (constitution / 25);
+            Player.lifeRegen += constitution / 20;
             Player.statDefense += constitution / 3;
 
             //intelligence
-            Player.GetDamage(DamageClass.Magic) *= 1f + (intelligence / 200f);
-            Player.GetCritChance(DamageClass.Magic) += intelligence / 20;
+                //+1% damage per point
+                //+1% crit chance per 15 points
+            Player.GetDamage(DamageClass.Magic) *= 1.00f + (intelligence / 100.00f);
+            Player.GetCritChance(DamageClass.Magic) += intelligence / 15;
 
             //strength
-            Player.GetDamage(DamageClass.Melee) *= 1f + (strength / 200f);
-            Player.GetCritChance(DamageClass.Melee) += strength / 20;
+                //+1% damage per point
+                //+1% crit chance per 15 points
+            Player.GetDamage(DamageClass.Melee) *= 1.00f + (strength / 100.00f);
+            Player.GetCritChance(DamageClass.Melee) += strength / 15;
 
             //dexterity
-            Player.GetDamage(DamageClass.Ranged) *= 1f + (dexterity / 200f);
-            Player.GetCritChance(DamageClass.Ranged) += 1 + (dexterity / 20);
+                //+1% damage per point
+                //+1% crit chance per 15 points
+            Player.GetDamage(DamageClass.Ranged) *= 1.00f + (dexterity / 100.00f);
+            Player.GetCritChance(DamageClass.Ranged) += dexterity / 15;
 
             //charisma
-            Player.GetDamage(DamageClass.Summon) *= 1f + (charisma / 200f);
-            Player.GetCritChance(DamageClass.Summon) += charisma / 20;
+                //+1% damage per point
+                //+1% crit chance per 15 points
+            Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma / 100.00f);
+            Player.GetCritChance(DamageClass.Summon) += charisma / 15;
 
 
             //UTILITY
+
             //animalia
-            Player.fishingSkill += (int)(Player.fishingSkill * (animalia / 100f));
-            Player.maxMinions += animalia / 15;
-            //xpgain +1% per point
+                //+2% fishing skill per point
+                //+1 minion per 10 points
+                //+2% minion kb per point
+            Player.fishingSkill += (int)(Player.fishingSkill * (animalia / 50.00f));
+            Player.maxMinions += animalia / 20;
+            Player.minionKB *= 1.00f * (animalia / 50.00f);
+            
 
             //excavation
-            Player.pickSpeed *= (1f + (excavation / 100f));
-            Player.tileSpeed *= (1f + (excavation / 100f));
-            Player.blockRange += (int)(Player.blockRange * (excavation / 100f));
+                //+2% pick speed per point
+                //+2% place speed per point
+                //+1 place reach per 10 points
+            Player.pickSpeed *= 1.00f - (excavation / 100.00f);
+            Player.tileSpeed *= 1.00f + (excavation / 50.00f);
+            Player.wallSpeed *= 1.00f + (excavation / 50.00f);
+            Player.blockRange += excavation / 10;
 
             //mobility
-            Player.maxRunSpeed *= 1f + (mobility / 100f);
-            Player.moveSpeed *= 1f + (mobility / 100f);
+                //+2% max run speed per point
+                //+2% move speed per point
+                //+2% max flight time per point
+            Player.maxRunSpeed *= 1.00f + (mobility / 100.00f);
+            Player.runAcceleration *= 1.00f + (mobility / 50.00f);
+            Player.wingTimeMax += (int)(Player.wingTimeMax * (mobility / 50.00f));
 
-            //grace
-            Player.wingTimeMax += (int)(Player.wingTimeMax * (grace / 100f));
-            Player.jump += (int)(Player.jump * (grace / 100f));
+            //luck
+                //+1% xp per point
+                //1% chance not to consume ammo
+                
 
             //mysticism
-            Player.statManaMax2 += (1 * level) + (2 * intelligence);
-            Player.manaRegen += (intelligence / 25);
+                //+1 max mana per level
+                //+2 max mana per point 
+                //+1 mana regen per 15 points
+                //-0.5% mana cost per point
+            Player.statManaMax2 += (1 * level) + (2 * mysticism);
+            Player.manaRegen += mysticism / 15;
             
         }
 
-        public void gainXP(double amount) {
-            currentXP += amount * (1 + (animalia / 100f));
-            //Main.NewText("CurrentXP: " + currentXP);
+        public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
+            mult *= Math.Clamp(1.00f - (mysticism / 200.00f), 0.00f, 1.00f);
+            base.ModifyManaCost(item, ref reduce, ref mult);
+        }
+
+        public override bool ConsumeAmmo(Item weapon, Item ammo) {
+            base.ConsumeAmmo(weapon, ammo);
+            Random rand = new();
+
+            if(rand.Next(1, 101) <= luck) {
+                return false;
+            }
+
+
+            
+            return true;
+        }
+
+        
+
+        public void AddXp(ulong amount) {
+            currentXP += (ulong)(amount * (1 + (luck / 100.00f)));
             if (currentXP >= neededXP) {
-                levelUp();
+                LevelUp();
             }
         }
 
-        public void addPoints(int points) {
+        public void AddPoints(int points) {
             pointsUnspent = (ushort)(pointsUnspent + points);
         }
 
-        private void levelUp() {
+        private void LevelUp() {
 
-            Player.statLife = Player.statLifeMax;
-            Player.statMana = Player.statManaMax;
+            Player.statLife = Player.statLifeMax2;
+            Player.statMana = Player.statManaMax2;
 
             currentXP -= neededXP;
             ++level;
             pointsUnspent += LEVEL_POINTS;
 
-            neededXP = Math.Round(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
+            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
 
             if (currentXP >= neededXP) 
-                levelUp();
+                LevelUp();
             else if (!Main.dedServ) {
                 SoundEngine.PlaySound(SoundLoader.customSoundType, -1, -1, levelplus.Instance.GetSoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/level"));
             }
 
         }
 
-        public void statReset() {
+        public void StatReset() {
             pointsUnspent = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
 
             constitution = 0;
@@ -414,7 +463,7 @@ namespace levelplus {
             mysticism = 0;
             mobility = 0;
             animalia = 0;
-            grace = 0;
+            luck = 0;
             excavation = 0;
         }
     }

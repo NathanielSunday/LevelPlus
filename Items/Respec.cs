@@ -61,7 +61,7 @@ namespace levelplus.Items
 		{
 
 			levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
-			modPlayer.statReset();
+			modPlayer.StatReset();
 
 			return true;
 		}

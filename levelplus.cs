@@ -25,7 +25,7 @@ namespace levelplus {
             switch ((PacketType)msgType) {
                 case PacketType.XP: //xp gain
                     if (Main.netMode == NetmodeID.MultiplayerClient)
-                        Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().gainXP(reader.ReadDouble());
+                        Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(reader.ReadUInt64());
                     break;
                 default:
                     Logger.WarnFormat("levelplus: Unknown message type {0}", msgType);
