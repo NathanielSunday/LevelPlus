@@ -235,7 +235,6 @@ namespace levelplus {
         public override TagCompound Save() {
             TagCompound tag = new TagCompound();
 
-
             //check if this character has a save tag
             if (tag.GetBool("initialized")) {
                 tag.Set("level", level);
@@ -252,7 +251,7 @@ namespace levelplus {
                 tag.Set("mob", mobility);
                 tag.Set("exc", excavation);
                 tag.Set("ani", animalia);
-                tag.Set("gra", luck);
+                tag.Set("luc", luck);
                 tag.Set("mys", mysticism);
             } else {
                 tag.Add("initialized", true);
@@ -270,7 +269,7 @@ namespace levelplus {
                 tag.Add("mob", mobility);
                 tag.Add("exc", excavation);
                 tag.Add("ani", animalia);
-                tag.Add("gra", luck);
+                tag.Add("luc", luck);
                 tag.Add("mys", mysticism);
             }
 
@@ -293,7 +292,7 @@ namespace levelplus {
                 mobility = (ushort)tag.GetAsShort("mob");
                 excavation = (ushort)tag.GetAsShort("exc");
                 animalia = (ushort)tag.GetAsShort("ani");
-                luck = (ushort)tag.GetAsShort("gra");
+                luck = (ushort)(tag.ContainsKey("gra") ? tag.GetAsShort("gra") : tag.GetAsShort("luc"));
                 mysticism = (ushort)tag.GetAsShort("mys");
             } else {
                 currentXP = 0;
@@ -363,7 +362,7 @@ namespace levelplus {
 
             //animalia
                 //+2% fishing skill per point
-                //+1 minion per 10 points
+                //+1 minion per 20 points
                 //+2% minion kb per point
             Player.fishingSkill += (int)(Player.fishingSkill * (animalia / 50.00f));
             Player.maxMinions += animalia / 20;
@@ -371,7 +370,7 @@ namespace levelplus {
             
 
             //excavation
-                //+2% pick speed per point
+                //+1% pick speed per point
                 //+2% place speed per point
                 //+1 place reach per 10 points
             Player.pickSpeed *= 1.00f - (excavation / 100.00f);
@@ -380,7 +379,7 @@ namespace levelplus {
             Player.blockRange += excavation / 10;
 
             //mobility
-                //+2% max run speed per point
+                //+1% max run speed per point
                 //+2% move speed per point
                 //+2% max flight time per point
             Player.maxRunSpeed *= 1.00f + (mobility / 100.00f);
@@ -407,16 +406,14 @@ namespace levelplus {
             base.ModifyManaCost(item, ref reduce, ref mult);
         }
 
-        public override bool ConsumeAmmo(Item weapon, Item ammo) {
-            base.ConsumeAmmo(weapon, ammo);
+        public override bool CanConsumeAmmo(Item weapon, Item ammo) {
             Random rand = new();
 
             if(rand.Next(1, 101) <= luck) {
                 return false;
             }
 
-
-            
+            base.CanConsumeAmmo(weapon, ammo);
             return true;
         }
 
