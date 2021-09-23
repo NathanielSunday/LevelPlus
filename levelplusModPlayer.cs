@@ -231,9 +231,7 @@ namespace levelplus {
                     break;
             }
         }
-
-        public override TagCompound Save() {
-            TagCompound tag = new TagCompound();
+        public override void SaveData(TagCompound tag) {
 
             //check if this character has a save tag
             if (tag.GetBool("initialized")) {
@@ -273,10 +271,10 @@ namespace levelplus {
                 tag.Add("mys", mysticism);
             }
 
-            return tag;
+            base.SaveData(tag);
         }
 
-        public override void Load(TagCompound tag) {
+        public override void LoadData(TagCompound tag) {
             if (tag.GetBool("initialized")) {
                 level = (ushort)tag.GetAsShort("level");
                 currentXP = (ulong)tag.GetAsLong("currentXP");
@@ -312,6 +310,7 @@ namespace levelplus {
                 luck = 0;
                 mysticism = 0;
             }
+            base.LoadData(tag);
         }
 
         public override void OnRespawn(Player player) {
