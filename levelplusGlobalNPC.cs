@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.IO;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -27,6 +28,7 @@ namespace levelplus {
 
 
         public override void OnKill(NPC npc) {
+            base.OnKill(npc);
 
             if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
                 ulong amount;
@@ -36,9 +38,10 @@ namespace levelplus {
                     amount = (ulong)(npc.lifeMax / 3);
                 }
 
-                if (Main.netMode == NetmodeID.SinglePlayer)
+                if (Main.netMode == NetmodeID.SinglePlayer) {
                     Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(amount);
-                else if (Main.netMode == NetmodeID.Server)
+                } else if (Main.netMode == NetmodeID.Server) {
+                    levelplus.Instance.Logger.WarnFormat("" + npc.playerInteraction.Length);
                     for (int i = 0; i < npc.playerInteraction.Length; ++i)
                         if (npc.playerInteraction[i]) {
                             ModPacket packet = levelplus.Instance.GetPacket();
@@ -46,6 +49,7 @@ namespace levelplus {
                             packet.Write(amount);
                             packet.Send(i);
                         }
+                }
             }
         }
     }

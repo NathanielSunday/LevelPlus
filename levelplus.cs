@@ -1,8 +1,6 @@
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Audio;
 using System.IO;
 using Terraria;
-using System;
 using Terraria.ID;
 
 namespace levelplus {
@@ -14,11 +12,9 @@ namespace levelplus {
     public class levelplus : Mod {
         public const string modID = "levelplus";
 
-        public levelplus() {
-            Instance = this;
-        }
+        public levelplus() { Instance = this; }
+
         public static levelplus Instance { get; set; }
-        public static SoundEffect LevelUp { get; set; }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) {
             byte msgType = reader.ReadByte();

@@ -2,11 +2,16 @@
 
 Level+ is meant to bring a simple leveling system that makes your character progress as the game progresses.
 
+Check out what I'm working on and to come here: https://trello.com/b/jAdgFhfR/level
+Ideas or Bugs? Send them here: https://forms.gle/BvTxWhWfqEcyCW2o9
+
 Play expert or higher for an added challenge of enemies scaling with you.
 
+You reset stats by making a Stat Token, obtainable after killing Wall of Flesh, made from a stat emblem, crystal shards, and a life crystal.
+
 Per Level Bonuses
-+2 life per level
-+1 mana per level
+	+2 life per level
+	+1 mana per level
 
 Combat Ring (The colored one):
 
@@ -30,7 +35,7 @@ Combat Ring (The colored one):
 	Charisma:
 		+1% minion damage per point
 		+1% minion crit chance per 15 points
-
+	
 Utility Ring (The uncolored one):
 
 	Animalia:
@@ -58,32 +63,24 @@ Utility Ring (The uncolored one):
 		-0.5% mana cost per point (100% cap)
 
 Amount of XP gained from an enemy:
-	Normal enemy: 1/3 of its life
-	Boss enemy: 1/4 of its life
+Normal enemy: 1/3 of its life
+Boss enemy: 1/4 of its life
 
 Enemy Scaling:
-	+2.5% life and damage per average level (average level is the average level of online players)
-
-Changelog
-
--> 0.3.3.1
-	+ balancing
-	+ new stat "Luck"
-	+ some abilities to existing stats
-	- old stat "Grace"
++2.5% life and damage per average level (average level is the average level of online players)
 
 
-Credits: 
+Credits:
 
-	Programming:
-		PoctorDepper
+Programming:
+	PoctorDepper
 
-	Art:
-		PoctorDepper
+Art:
+	PoctorDepper
 
-	Testing:
-		Circul1
-		Mageblood
-		AkantuS
+Testing:
+	Circul1
+	Mageblood
+	AkantuS
 
 Special thanks to direwolf420 for helping out a lot, and Mageblood for ideas and fixes. (even though they didn't have to)

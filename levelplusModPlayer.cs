@@ -152,8 +152,6 @@ namespace levelplus {
 
         public override void OnEnterWorld(Player player) {
             base.OnEnterWorld(player);
-
-
         }
 
         public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath) {
@@ -176,6 +174,10 @@ namespace levelplus {
                 animalia = 0;
                 luck = 0;
                 mysticism = 0;
+
+                Item respec = new Item();
+                respec.SetDefaults(ModContent.ItemType<Items.Respec>());
+                itemsByMod["Terraria"].Add(respec);
             }
 
             switch (weapon) {
@@ -211,7 +213,7 @@ namespace levelplus {
                     }
                     break;
                 case Weapon.SUMMON:
-                    itemsByMod["Terraria"].Insert(0, new Item(ItemID.HornetStaff));
+                    itemsByMod["Terraria"].Insert(0, new Item(ItemID.BabyBirdStaff));
                     break;
                 case Weapon.SPEAR:
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.Spear));
@@ -310,6 +312,11 @@ namespace levelplus {
                 luck = 0;
                 mysticism = 0;
             }
+
+            if(currentXP > neededXP) {
+                LevelUp();
+            }
+
             base.LoadData(tag);
         }
 
@@ -440,10 +447,12 @@ namespace levelplus {
 
             neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
 
+
+            //run levelup again if XP is still higher, otherwise, play the level up noise
             if (currentXP >= neededXP) 
                 LevelUp();
             else if (!Main.dedServ) {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, -1, -1, levelplus.Instance.GetSoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/level"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/level"));
             }
 
         }

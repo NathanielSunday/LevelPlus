@@ -12,7 +12,7 @@ namespace levelplus.Commands {
         public override void Action(CommandCaller caller, string input, string[] args) {
             levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
 
-            //player.AddPoints(int.Parse(args[0]));
+            player.AddPoints(int.Parse(args[0]));
         }
     }
 }
