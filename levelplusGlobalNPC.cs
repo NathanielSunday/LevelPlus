@@ -10,17 +10,17 @@ namespace levelplus {
 
         public override void ScaleExpertStats(NPC npc, int numPlayers, float bossLifeScale) {
             base.ScaleExpertStats(npc, numPlayers, bossLifeScale);
-            float averageLevel = 0;
+            float averageLevel = 1;
 
             //doesnt work in multiplayer, might have to make this an expert only mechanic
 
-            foreach (Player i in Main.ActiveWorld.Players)
-                if (i.active) {
-                    numPlayers++;
-                    averageLevel += i.GetModPlayer<levelplusModPlayer>().GetLevel();
-                }
+            //foreach (Player i in Main.ActiveWorld.Players)
+            //    if (i.active) {
+            //        numPlayers++;
+            //        averageLevel += i.GetModPlayer<levelplusModPlayer>().GetLevel();
+            //    }
 
-            averageLevel /= numPlayers;
+            //averageLevel /= numPlayers;
 
             npc.damage += (int)(npc.damage * (averageLevel / 40.0f));
             npc.lifeMax += (int)(npc.lifeMax * (averageLevel / 40.0f));
