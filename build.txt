@@ -1,4 +1,4 @@
 displayName = Level+
 author = PoctorDepper
-version = 0.3.3.5
+version = 0.3.5.4
 homepage = https://github.com/PoctorDepper/levelplus
