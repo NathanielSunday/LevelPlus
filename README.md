@@ -18,7 +18,7 @@ Credits:
 
 Programming:
 - PoctorDepper
-- LanToaster
+- LanToaster with a few hotfixes and config
 
 Art:
  - PoctorDepper
