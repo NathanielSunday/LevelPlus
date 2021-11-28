@@ -14,7 +14,7 @@ namespace levelplus {
 
             //doesnt work in multiplayer, might have to make this an expert only mechanic
 
-            foreach (Player i in Main.ActiveWorld.Players)
+            foreach (Player i in Main.player)
                 if (i.active) {
                     numPlayers++;
                     averageLevel += i.GetModPlayer<levelplusModPlayer>().GetLevel();
@@ -22,8 +22,8 @@ namespace levelplus {
 
             averageLevel /= numPlayers;
 
-            npc.damage += (int)(npc.damage * (averageLevel / 40.0f));
-            npc.lifeMax += (int)(npc.lifeMax * (averageLevel / 40.0f));
+            npc.damage += (int)(npc.damage * (averageLevel * levelplusConfig.Instance.ScalingDamage));
+            npc.lifeMax += (int)(npc.lifeMax * (averageLevel * levelplusConfig.Instance.ScalingHealth));
         }
 
 
@@ -33,9 +33,9 @@ namespace levelplus {
             if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
                 ulong amount;
                 if (npc.boss) {
-                    amount = (ulong)(npc.lifeMax / 4);
+                    amount = (ulong)(npc.lifeMax / levelplusConfig.Instance.BossXP);
                 } else {
-                    amount = (ulong)(npc.lifeMax / 3);
+                    amount = (ulong)(npc.lifeMax / levelplusConfig.Instance.MobXP);
                 }
 
                 if (Main.netMode == NetmodeID.SinglePlayer) {

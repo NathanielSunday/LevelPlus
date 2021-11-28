@@ -148,67 +148,67 @@ namespace levelplus.UI {
             switch (button) {
                 case ButtonMode.CON:
                     text = "Constitution:\n\n"
-                        + "  +" + (modPlayer.GetCon() * 5) + " life (+" + (modPlayer.GetLevel() * 2) + " from level)\n"
-                        + "  +" + (modPlayer.GetCon() / 3) + " defense\n"
-                        + "  +" + (modPlayer.GetCon() / 20) + " life regen";
+                        + "  +" + (modPlayer.GetCon() * levelplusConfig.Instance.HealthPerPoint) + " life (+" + (modPlayer.GetLevel() * levelplusConfig.Instance.HealthPerLevel) + " from level)\n"
+                        + "  +" + (modPlayer.GetCon() / levelplusConfig.Instance.DefensePerPoint) + " defense\n"
+                        + "  +" + (modPlayer.GetCon() / levelplusConfig.Instance.HRegenPerPoint) + " life regen";
                     rarity = 7; //lime
                     break;
                 case ButtonMode.STR:
                     text = "Strength:\n\n"
-                        + "  +" + modPlayer.GetStr() + "% melee damage\n"
-                        + "  +" + (modPlayer.GetStr() / 15) + "% melee crit chance";
+                        + "  +" + ((int)(modPlayer.GetStr() * (levelplusConfig.Instance.MeleeDamagePerPoint * 100))) + "% melee damage\n"
+                        + "  +" + (modPlayer.GetStr() / levelplusConfig.Instance.MeleeCritPerPoint) + "% melee crit chance";
                     rarity = 10; //red
                     break;
                 case ButtonMode.INT:
                     text = "Intelligence:\n\n"
-                        + "  +" + modPlayer.GetInt() + "% magic damage\n"
-                        + "  +" + (modPlayer.GetInt() / 15) + "% magic crit chance";
+                        + "  +" + ((int)(modPlayer.GetInt() * (levelplusConfig.Instance.MagicDamagePerPoint * 100))) + "% magic damage\n"
+                        + "  +" + (modPlayer.GetInt() / levelplusConfig.Instance.MagicCritPerPoint) + "% magic crit chance";
                     rarity = 9; //cyan
                     break;
                 case ButtonMode.CHA:
                     text = "Charisma:\n\n"
-                        + "  +" + modPlayer.GetCha() + "% minion damage\n"
-                        + "  +" + (modPlayer.GetCha() / 15) + "% minion crit chance";
+                        + "  +" + ((int)(modPlayer.GetCha() * (levelplusConfig.Instance.SummonDamagePerPoint * 100))) + "% minion damage\n"
+                        + "  +" + (modPlayer.GetCha() / levelplusConfig.Instance.SummonCritPerPoint) + "% minion crit chance";
                     rarity = 6; //light purple
                     break;
                 case ButtonMode.DEX:
                     text = "Dexterity:\n\n"
-                        + "  +" + modPlayer.GetDex() + "% ranged damage\n"
-                        + "  +" + (modPlayer.GetDex() / 15) + "% ranged crit chance";
+                        + "  +" + ((int)(modPlayer.GetDex() * (levelplusConfig.Instance.RangedDamagePerPoint * 100))) + "% ranged damage\n"
+                        + "  +" + (modPlayer.GetDex() / levelplusConfig.Instance.RangedCritPerPoint) + "% ranged crit chance";
                     rarity = 8; //yellow
                     break;
                 case ButtonMode.MOB:
                     text = "Mobility:\n\n"
-                        + "  +" + (modPlayer.GetMob() * 2) + "% acceleration\n"
-                        + "  +" + (modPlayer.GetMob() * 2) + "% wing time\n"
-                        + "  +" + (modPlayer.GetMob()) + "% max run speed";
+                        + "  +" + ((int)(modPlayer.GetMob() * (levelplusConfig.Instance.AccelPerPoint * 100))) + "% acceleration\n"
+                        + "  +" + ((int)(modPlayer.GetMob() * (levelplusConfig.Instance.WingPerPoint * 100))) + "% wing time\n"
+                        + "  +" + ((int)(modPlayer.GetMob() * (levelplusConfig.Instance.RunSpeedPerPoint * 100))) + "% max run speed";
                     rarity = 0; //white
                     break;
                 case ButtonMode.EXC:
                     text = "Excavation:\n\n"
-                        + "  +" + (modPlayer.GetExc()) + "% pick speed\n"
-                        + "  +" + (modPlayer.GetExc() * 2) + "% place speed\n"
-                        + "  +" + (modPlayer.GetExc() / 10) + " block range";
+                        + "  +" + ((int)(modPlayer.GetExc() * (levelplusConfig.Instance.PickSpeedPerPoint * 100))) + "% pick speed\n"
+                        + "  +" + ((int)(modPlayer.GetExc() * (levelplusConfig.Instance.BuildSpeedPerPoint * 100))) + "% place speed\n"
+                        + "  +" + (modPlayer.GetExc() / levelplusConfig.Instance.RangePerPoint) + " block range";
                     rarity = 0; //white
                     break;
                 case ButtonMode.ANI:
                     text = "Animalia:\n\n"
-                        + "  +" + (modPlayer.GetAni() * 2) + "% better fishing\n"
-                        + "  +" + (modPlayer.GetAni() / 20) + " minion slots\n"
-                        + "  +" + (modPlayer.GetAni() * 2) + "% minion knockback";
+                        + "  +" + ((int)(modPlayer.GetAni() * (levelplusConfig.Instance.FishSkillPerPoint *100))) + "% better fishing\n"
+                        + "  +" + (modPlayer.GetAni() / levelplusConfig.Instance.MinionPerPoint) + " minion slots\n"
+                        + "  +" + ((int)(modPlayer.GetAni() * (levelplusConfig.Instance.MinionKnockBack * 100))) + "% minion knockback";
                     rarity = 0; //white
                     break;
                 case ButtonMode.LUC:
                     text = "Luck:\n\n"
-                        + "  +" + modPlayer.GetLuc() + "% xp gain\n"
-                        + "  +" + modPlayer.GetLuc() + "% chance not to consume ammo";
+                        + "  +" + ((int)(modPlayer.GetLuc() * (levelplusConfig.Instance.XPPerPoint * 100))) + "% xp gain\n"
+                        + "  +" + ((int)((modPlayer.GetLuc() * 100) / levelplusConfig.Instance.AmmoPerPoint)) + "% chance not to consume ammo";
                     rarity = 0; //white
                     break;
                 case ButtonMode.MYS:
                     text = "Mysticism:\n\n"
-                        + "  +" + (modPlayer.GetMys() * 2) + " max mana (+" + modPlayer.GetLevel() + " from level)\n"
-                        + "  +" + (modPlayer.GetMys() / 15) + " mana regen\n"
-                        + "  -" + System.Math.Clamp(modPlayer.GetMys() / 2.0f, 0.0f, 100.0f) + "% mana cost";
+                        + "  +" + (modPlayer.GetMys() * levelplusConfig.Instance.ManaPerPoint) + " max mana (+" + (modPlayer.GetLevel() * levelplusConfig.Instance.ManaPerLevel) + " from level)\n"
+                        + "  +" + (modPlayer.GetMys() / levelplusConfig.Instance.ManaRegPerPoint) + " mana regen\n"
+                        + "  -" + System.Math.Clamp((int)(modPlayer.GetMys() * (levelplusConfig.Instance.ManaCostPerPoint * 100)), 0.0f, 100.0f) + "% mana cost";
                     rarity = 0; //white
                     break;
                 default:
