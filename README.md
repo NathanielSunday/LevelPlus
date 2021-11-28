@@ -18,6 +18,7 @@ Credits:
 
 Programming:
 	PoctorDepper
+	LanToaster
 
 Art:
 	PoctorDepper
