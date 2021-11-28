@@ -21,13 +21,13 @@ namespace levelplus {
     }
 
     class levelplusModPlayer : ModPlayer {
-
+        
         const float RATE = 2.0f;
         const ushort INCREASE = 100;
         const ushort BASE_XP = 100;
         const ushort BASE_POINTS = 3;
         const ushort LEVEL_POINTS = 3;
-
+        
         private Weapon weapon = (Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length);
 
         private string talents;
@@ -335,33 +335,33 @@ namespace levelplus {
                 //+2 life per level
                 //+5 life per point
                 //+1 defense per 3 points
-            Player.statLifeMax2 += (2 * level) + (5 * constitution);
-            Player.lifeRegen += constitution / 20;
-            Player.statDefense += constitution / 3;
+            Player.statLifeMax2 += (levelplusConfig.Instance.HealthPerLevel * level) + (levelplusConfig.Instance.HealthPerPoint * constitution);
+            Player.lifeRegen += constitution / levelplusConfig.Instance.HRegenPerPoint;
+            Player.statDefense += constitution / levelplusConfig.Instance.DefensePerPoint;
 
             //intelligence
                 //+1% damage per point
                 //+1% crit chance per 15 points
-            Player.GetDamage(DamageClass.Magic) *= 1.00f + (intelligence / 100.00f);
-            Player.GetCritChance(DamageClass.Magic) += intelligence / 15;
+            Player.GetDamage(DamageClass.Magic) *= 1.00f + (intelligence * levelplusConfig.Instance.MagicDamagePerPoint);
+            Player.GetCritChance(DamageClass.Magic) += intelligence / levelplusConfig.Instance.MagicCritPerPoint;
 
             //strength
                 //+1% damage per point
                 //+1% crit chance per 15 points
-            Player.GetDamage(DamageClass.Melee) *= 1.00f + (strength / 100.00f);
-            Player.GetCritChance(DamageClass.Melee) += strength / 15;
+            Player.GetDamage(DamageClass.Melee) *= 1.00f + (strength * levelplusConfig.Instance.MeleeDamagePerPoint);
+            Player.GetCritChance(DamageClass.Melee) += strength / levelplusConfig.Instance.MeleeCritPerPoint;
 
             //dexterity
                 //+1% damage per point
                 //+1% crit chance per 15 points
-            Player.GetDamage(DamageClass.Ranged) *= 1.00f + (dexterity / 100.00f);
-            Player.GetCritChance(DamageClass.Ranged) += dexterity / 15;
+            Player.GetDamage(DamageClass.Ranged) *= 1.00f + (dexterity * levelplusConfig.Instance.RangedDamagePerPoint);
+            Player.GetCritChance(DamageClass.Ranged) += dexterity / levelplusConfig.Instance.RangedCritPerPoint;
 
             //charisma
                 //+1% damage per point
                 //+1% crit chance per 15 points
-            Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma / 100.00f);
-            Player.GetCritChance(DamageClass.Summon) += charisma / 15;
+            Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma * levelplusConfig.Instance.SummonDamagePerPoint);
+            Player.GetCritChance(DamageClass.Summon) += charisma / levelplusConfig.Instance.SummonCritPerPoint;
 
 
             //UTILITY
@@ -370,27 +370,27 @@ namespace levelplus {
                 //+2% fishing skill per point
                 //+1 minion per 20 points
                 //+2% minion kb per point
-            Player.fishingSkill += (int)(Player.fishingSkill * (animalia / 50.00f));
-            Player.maxMinions += animalia / 20;
-            Player.minionKB *= 1.00f * (animalia / 50.00f);
+            Player.fishingSkill += (int)(Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
+            Player.maxMinions += animalia / levelplusConfig.Instance.MinionPerPoint;
+            Player.minionKB *= 1.00f * (animalia * levelplusConfig.Instance.MinionKnockBack);
             
 
             //excavation
                 //+1% pick speed per point
                 //+2% place speed per point
                 //+1 place reach per 10 points
-            Player.pickSpeed *= 1.00f - (excavation / 100.00f);
-            Player.tileSpeed *= 1.00f + (excavation / 50.00f);
-            Player.wallSpeed *= 1.00f + (excavation / 50.00f);
-            Player.blockRange += excavation / 10;
+            Player.pickSpeed *= 1.00f - (excavation * levelplusConfig.Instance.PickSpeedPerPoint);
+            Player.tileSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
+            Player.wallSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
+            Player.blockRange += excavation / levelplusConfig.Instance.RangePerPoint;
 
             //mobility
                 //+1% max run speed per point
                 //+2% move speed per point
                 //+2% max flight time per point
-            Player.maxRunSpeed *= 1.00f + (mobility / 100.00f);
-            Player.runAcceleration *= 1.00f + (mobility / 50.00f);
-            Player.wingTimeMax += (int)(Player.wingTimeMax * (mobility / 50.00f));
+            Player.maxRunSpeed *= 1.00f + (mobility * levelplusConfig.Instance.RunSpeedPerPoint);
+            Player.runAcceleration *= 1.00f + (mobility * levelplusConfig.Instance.AccelPerPoint);
+            Player.wingTimeMax += (int)(Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
 
             //luck
                 //+1% xp per point
@@ -402,13 +402,13 @@ namespace levelplus {
                 //+2 max mana per point 
                 //+1 mana regen per 15 points
                 //-0.5% mana cost per point
-            Player.statManaMax2 += (1 * level) + (2 * mysticism);
-            Player.manaRegen += mysticism / 15;
+            Player.statManaMax2 += (levelplusConfig.Instance.ManaPerLevel * level) + (levelplusConfig.Instance.ManaPerPoint * mysticism);
+            Player.manaRegen += mysticism / levelplusConfig.Instance.ManaRegPerPoint;
             
         }
 
         public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
-            mult *= Math.Clamp(1.00f - (mysticism / 200.00f), 0.00f, 1.00f);
+            mult *= Math.Clamp(1.00f - (mysticism * levelplusConfig.Instance.ManaCostPerPoint), 0.00f, 1.00f);
             base.ModifyManaCost(item, ref reduce, ref mult);
         }
 
@@ -426,7 +426,7 @@ namespace levelplus {
         
 
         public void AddXp(ulong amount) {
-            currentXP += (ulong)(amount * (1 + (luck / 100.00f)));
+            currentXP += (ulong)(amount * (1 + (luck * levelplusConfig.Instance.XPPerPoint)));
             if (currentXP >= neededXP) {
                 LevelUp();
             }
