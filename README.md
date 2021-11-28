@@ -3,6 +3,7 @@
 Level+ is meant to bring a simple leveling system that makes your character progress as the game progresses.
 
 Check out what I'm working on and to come here: https://trello.com/b/jAdgFhfR/level
+
 Ideas or Bugs? Send them here: https://forms.gle/BvTxWhWfqEcyCW2o9
 
 Play expert or higher for an added challenge of enemies scaling with you.
