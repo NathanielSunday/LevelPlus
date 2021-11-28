@@ -201,7 +201,7 @@ namespace levelplus.UI {
                 case ButtonMode.LUC:
                     text = "Luck:\n\n"
                         + "  +" + ((int)(modPlayer.GetLuc() * (levelplusConfig.Instance.XPPerPoint * 100))) + "% xp gain\n"
-                        + "  +" + modPlayer.GetLuc() + "% chance not to consume ammo";
+                        + "  +" + ((int)((modPlayer.GetLuc() * 100) / levelplusConfig.Instance.AmmoPerPoint)) + "% chance not to consume ammo";
                     rarity = 0; //white
                     break;
                 case ButtonMode.MYS:

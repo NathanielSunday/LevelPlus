@@ -10,80 +10,7 @@ namespace levelplus
         // You MUST specify a ConfigScope.
         public override ConfigScope Mode => ConfigScope.ServerSide;
         public static levelplusConfig Instance => ModContent.GetInstance<levelplusConfig>();
-        
-        //[Header("Character Stats")]
-        //[Label("Starting Points")]
-        //[Tooltip("Points at Level 0")]
-        //[Range(0, 10)]
-        //[DefaultValue(3)]
-       // public ushort PointsBase;
-        //Used: levelplusConfig.Instance.PointsBase
-        
-        //[Label("Points per Level")]
-        //[Tooltip("Statpoint Gain per level")]
-        //[Range(0, 10)]
-        //[DefaultValue(3)]
-        //public ushort PointsPerLevel;
-        //Used: levelplusConfig.Instance.PointsPerLevel
-        
-        
-        //[Label("Base XP")]
-        //[Tooltip("Level Up Calculation related")]
-        //[Range(50, 500)]
-        //[DefaultValue(100)]
-        //public ushort XPBase;
-        //Used: levelplusConfig.Instance.XPBase
-        
-        //[Label("XP Increase")]
-        //[Tooltip("Level Up Calculation relatedl")]
-        //[Range(50, 500)]
-        //[DefaultValue(100)]
-        //public ushort XPIncrease;
-        //Used: levelplusConfig.Instance.XPIncrease
-        
-        //[Label("XP Rate")]
-        //[Tooltip("Level Up Calculation related")]
-        //[Slider]
-        //[Range(1.00f, 5.00f)]
-        //[Increment(0.5f)]
-        //[DefaultValue(2.0f)]
-        //public float XPRate;
-        //Used: levelplusConfig.Instance.XPRate
-        
-        [Label("Experience Factor (Mob)")]
-        [Tooltip("Enemy HP is divided by this to determine Experience Gain")]
-        [Range(1, 10)]
-        [DefaultValue(3)] 
-        public int MobXP;
-        //Used: levelplusConfig.Instance.MobXP
-        
-        [Label("Experience Factor (Boss)")]
-        [Tooltip("Enemy HP is divided by this to determine Experience Gain")]
-        [Range(1, 10)]
-        [DefaultValue(4)] 
-        public int BossXP;
-        //Used: levelplusConfig.Instance.BossXP
-        
-        [Header("Level Scaling")]
-        [Label("Enemy Health")]
-        [Tooltip("Multiplies the Health of Enemies per Average level")]
-        [Slider]
-        [Range(0.0050f, 0.050f)]
-        [Increment(0.0050f)]
-        [DefaultValue(0.0250f)]
-        public float ScalingHealth;
-        //Used: levelplusConfig.Instance.ScalingHealth
-        
-        [Label("Enemy Damage")]
-        [Tooltip("Multiplies the Damage of Enemies per Average level")]
-        [Slider]
-        [Range(0.0050f, 0.050f)]
-        [Increment(0.0050f)]
-        [DefaultValue(0.0250f)]
-        public float ScalingDamage;
-        //Used: levelplusConfig.Instance.ScalingDamage
-        
-        
+   
         // --- //
         // Constitution //
         [Header("Constitution")]
@@ -291,14 +218,11 @@ namespace levelplus
         public float XPPerPoint; 
         //Used: levelplusConfig.Instance.XPPerPoint
         
-        // Setting is NYI
-        //[Label("Luck: Ammo Consumption")]
-        //[Tooltip("")]
-        //[Slider]
-        //[Range(0.00f, 0.05f)]
-        //[Increment(0.001f)]
-        //[DefaultValue(0.01f)]
-        //public float AmmoPerPoint; 
+        [Label("Luck: Ammo Consumption")]
+        [Tooltip("How much Points you need to Reach 100%")]
+        [Range(50, 500)]
+        [DefaultValue(100)] 
+        public int AmmoPerPoint; 
         //Used: levelplusConfig.Instance.AmmoPerPoint
         
         // --- //
@@ -333,6 +257,89 @@ namespace levelplus
         [DefaultValue(0.005f)]
         public float ManaCostPerPoint; 
         //Used: levelplusConfig.Instance.ManaCostPerPoint
+
+        [Header("Character Stats - (Requires Reload)")]
+        [Label("Starting Points")]
+        [Tooltip("Points at Level 0")]
+        [Range(0, 10)]
+        [DefaultValue(3)]
+        [ReloadRequired]
+        public int PointsBase;
+        //Used: levelplusConfig.Instance.PointsBase
+        
+        [Label("Points per Level")]
+        [Tooltip("Statpoint Gain per level")]
+        [Range(0, 10)]
+        [DefaultValue(3)]
+        [ReloadRequired]
+        public int PointsPerLevel;
+        //Used: levelplusConfig.Instance.PointsPerLevel
+        
+        
+        [Label("Base XP")]
+        [Tooltip("Level Up Calculation related")]
+        [Range(50, 500)]
+        [DefaultValue(100)]
+        [Increment(25)]
+        [ReloadRequired]
+        public int XPBase;
+        //Used: levelplusConfig.Instance.XPBase
+        
+        [Label("XP Increase")]
+        [Tooltip("Level Up Calculation relatedl")]
+        [Range(50, 500)]
+        [DefaultValue(100)]
+        [Increment(25)]
+        [ReloadRequired]
+        public int XPIncrease;
+        //Used: levelplusConfig.Instance.XPIncrease
+        
+        [Label("XP Rate")]
+        [Tooltip("Level Up Calculation related")]
+        [Slider]
+        [Range(1.00f, 5.00f)]
+        [Increment(0.5f)]
+        [DefaultValue(2.0f)]
+        [ReloadRequired]
+        public float XPRate;
+        //Used: levelplusConfig.Instance.XPRate
+        
+        [Label("Experience Factor (Mob)")]
+        [Tooltip("Enemy HP is divided by this to determine Experience Gain")]
+        [Range(1, 10)]
+        [DefaultValue(3)] 
+        [ReloadRequired]
+        public int MobXP;
+        //Used: levelplusConfig.Instance.MobXP
+        
+        [Label("Experience Factor (Boss)")]
+        [Tooltip("Enemy HP is divided by this to determine Experience Gain")]
+        [Range(1, 10)]
+        [DefaultValue(4)] 
+        [ReloadRequired]
+        public int BossXP;
+        //Used: levelplusConfig.Instance.BossXP
+        
+        [Header("Level Scaling")]
+        [Label("Enemy Health")]
+        [Tooltip("Multiplies the Health of Enemies per Average level")]
+        [Slider]
+        [Range(0.0050f, 0.050f)]
+        [Increment(0.0050f)]
+        [DefaultValue(0.0250f)]
+        [ReloadRequired]
+        public float ScalingHealth;
+        //Used: levelplusConfig.Instance.ScalingHealth
+        
+        [Label("Enemy Damage")]
+        [Tooltip("Multiplies the Damage of Enemies per Average level")]
+        [Slider]
+        [Range(0.0050f, 0.050f)]
+        [Increment(0.0050f)]
+        [DefaultValue(0.0250f)]
+        [ReloadRequired]
+        public float ScalingDamage;
+        //Used: levelplusConfig.Instance.ScalingDamage
        
     }
 }

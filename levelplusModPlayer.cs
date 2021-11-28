@@ -22,11 +22,11 @@ namespace levelplus {
 
     class levelplusModPlayer : ModPlayer {
         
-        const float RATE = 2.0f;
-        const ushort INCREASE = 100;
-        const ushort BASE_XP = 100;
-        const ushort BASE_POINTS = 3;
-        const ushort LEVEL_POINTS = 3;
+        float RATE = levelplusConfig.Instance.XPRate;
+        ushort INCREASE = (ushort)levelplusConfig.Instance.XPIncrease;
+        ushort BASE_XP = (ushort)levelplusConfig.Instance.XPBase;
+        ushort BASE_POINTS = (ushort)levelplusConfig.Instance.PointsBase;
+        ushort LEVEL_POINTS = (ushort)levelplusConfig.Instance.PointsPerLevel;
         
         private Weapon weapon = (Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length);
 
@@ -415,7 +415,7 @@ namespace levelplus {
         public override bool CanConsumeAmmo(Item weapon, Item ammo) {
             Random rand = new();
 
-            if(rand.Next(1, 101) <= luck) {
+            if(rand.Next(1, levelplusConfig.Instance.AmmoPerPoint) <= luck) {
                 return false;
             }
 
