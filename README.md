@@ -17,15 +17,15 @@ All other things are configurable.
 Credits:
 
 Programming:
-	PoctorDepper
-	LanToaster
+- PoctorDepper
+- LanToaster
 
 Art:
-	PoctorDepper
+ - PoctorDepper
 
 Testing:
-	Circul1
-	Mageblood
-	AkantuS
+ - Circul1
+ - Mageblood
+ - AkantuS
 
 Special thanks to direwolf420 for helping out a lot, and Mageblood for ideas and fixes. (even though they didn't have to)
