@@ -12,7 +12,7 @@ Play expert or higher for an added challenge of enemies scaling with you.
 
 You reset stats by making a Stat Token, obtainable after killing Wall of Flesh, made from a stat emblem, crystal shards, and a life crystal.
 
-All other things are configurable
+All other things are configurable.
 
 Credits:
 
