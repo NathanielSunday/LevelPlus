@@ -222,6 +222,7 @@ namespace levelplus
         [Tooltip("How much Points you need to Reach 100%")]
         [Range(50, 500)]
         [DefaultValue(100)] 
+        [Increment(10)]
         public int AmmoPerPoint; 
         //Used: levelplusConfig.Instance.AmmoPerPoint
         
