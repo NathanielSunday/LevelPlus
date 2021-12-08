@@ -44,7 +44,7 @@ namespace levelplus.UI {
             base.Update(time);
 
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
-            currentStat.SetText("" + (modPlayer.GetLevel() + 1));
+            currentStat.SetText("" + (modPlayer.level + 1));
             if (ContainsPoint(new Vector2(Main.mouseX, Main.mouseY))) {
                 Main.LocalPlayer.mouseInterface = true;
             }
@@ -55,7 +55,19 @@ namespace levelplus.UI {
 
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
             if (Main.mouseX >= this.Left.Pixels && Main.mouseX <= this.Left.Pixels + this.Width.Pixels && Main.mouseY >= this.Top.Pixels && Main.mouseY <= this.Top.Pixels + this.Height.Pixels) {
-                Main.instance.MouseText(modPlayer.GetUnspentPoints() + " unspent points");
+                int numPlayers = 0;
+                float averageLevel = 0;
+
+                foreach (Player i in Main.player)
+                    if (i.active)
+                    {
+                        numPlayers++;
+                        averageLevel += i.GetModPlayer<levelplusModPlayer>().level + 1;
+                    }
+
+                averageLevel /= numPlayers;
+
+                Main.instance.MouseText("Level: " + (modPlayer.level + 1) + "\n" + modPlayer.GetUnspentPoints() + " unspent points\n" + ((Main.netMode == NetmodeID.MultiplayerClient) ? numPlayers + " players online\nAverage Level: " + ((int)averageLevel) : ""));
             }
         }
 

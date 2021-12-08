@@ -21,35 +21,35 @@ namespace levelplus {
     }
 
     class levelplusModPlayer : ModPlayer {
-        
+
         float RATE = levelplusConfig.Instance.XPRate;
         ushort INCREASE = (ushort)levelplusConfig.Instance.XPIncrease;
         ushort BASE_XP = (ushort)levelplusConfig.Instance.XPBase;
         ushort BASE_POINTS = (ushort)levelplusConfig.Instance.PointsBase;
         ushort LEVEL_POINTS = (ushort)levelplusConfig.Instance.PointsPerLevel;
-        
+
         private Weapon weapon = (Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length);
 
         private string talents;
 
         private ulong currentXP;
         private ulong neededXP;
-        private ushort level;
+        public ushort level { get; set; }
         private ushort pointsUnspent;
         private ushort talentUnspent;
 
 
-        private ushort constitution; //buff to max health, base defense
-        private ushort strength; //buff to melee damage
-        private ushort intelligence; //buff to max mana and magic damage
-        private ushort charisma; //buff to summon damage (maybe shop price)
-        private ushort dexterity; //buff to ranged
+        public ushort constitution { get; set; } //buff to max health, base defense
+        public ushort strength { get; set; } //buff to melee damage
+        public ushort intelligence { get; set; } //buff to max mana and magic damage
+        public ushort charisma { get; set; } //buff to summon damage (maybe shop price)
+        public ushort dexterity { get; set; } //buff to ranged
 
-        private ushort mobility; //movement speed and such
-        private ushort excavation; //pick speed
-        private ushort animalia; //fishing power and minion extras
-        private ushort luck; //xp gain and whatnot
-        private ushort mysticism; //max mana and regen
+        public ushort mobility { get; set; } //movement speed and such
+        public ushort excavation { get; set; } //pick speed
+        public ushort animalia { get; set; } //fishing power and minion extras
+        public ushort luck { get; set; } //xp gain and whatnot
+        public ushort mysticism { get; set; } //max mana and regen
 
         public ulong GetCurrentXP() {
             return currentXP;
@@ -57,50 +57,6 @@ namespace levelplus {
 
         public ulong GetNeededXP() {
             return neededXP;
-        }
-
-        public ushort GetLevel() {
-            return level;
-        }
-
-        public ushort GetCon() {
-            return constitution;
-        }
-
-        public ushort GetStr() {
-            return strength;
-        }
-
-        public ushort GetInt() {
-            return intelligence;
-        }
-
-        public ushort GetCha() {
-            return charisma;
-        }
-
-        public ushort GetDex() {
-            return dexterity;
-        }
-
-        public ushort GetMys() {
-            return mysticism;
-        }
-
-        public ushort GetMob() {
-            return mobility;
-        }
-
-        public ushort GetExc() {
-            return excavation;
-        }
-
-        public ushort GetAni() {
-            return animalia;
-        }
-
-        public ushort GetLuc() {
-            return luck;
         }
 
         public ushort GetUnspentPoints() {
@@ -148,10 +104,6 @@ namespace levelplus {
                         break;
                 }
             }
-        }
-
-        public override void OnEnterWorld(Player player) {
-            base.OnEnterWorld(player);
         }
 
         public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath) {
@@ -253,7 +205,8 @@ namespace levelplus {
                 tag.Set("ani", animalia);
                 tag.Set("luc", luck);
                 tag.Set("mys", mysticism);
-            } else {
+            }
+            else {
                 tag.Add("initialized", true);
                 tag.Add("level", level);
                 tag.Add("currentXP", currentXP);
@@ -294,7 +247,8 @@ namespace levelplus {
                 animalia = (ushort)tag.GetAsShort("ani");
                 luck = (ushort)(tag.ContainsKey("gra") ? tag.GetAsShort("gra") : tag.GetAsShort("luc"));
                 mysticism = (ushort)tag.GetAsShort("mys");
-            } else {
+            }
+            else {
                 currentXP = 0;
                 neededXP = BASE_XP;
                 level = 0;
@@ -313,7 +267,7 @@ namespace levelplus {
                 mysticism = 0;
             }
 
-            if(currentXP > neededXP) {
+            if (currentXP > neededXP) {
                 LevelUp();
             }
 
@@ -326,40 +280,40 @@ namespace levelplus {
             currentXP = (ulong)(currentXP * .75);
         }
 
-        public override void PostUpdateEquips() {
-            base.PostUpdateEquips();
-                        
+        public override void ResetEffects() {
+            base.ResetEffects();
+
             //COMBAT
 
             //constitution
-                //+2 life per level
-                //+5 life per point
-                //+1 defense per 3 points
+            //+2 life per level
+            //+5 life per point
+            //+1 defense per 3 points
             Player.statLifeMax2 += (levelplusConfig.Instance.HealthPerLevel * level) + (levelplusConfig.Instance.HealthPerPoint * constitution);
             Player.lifeRegen += constitution / levelplusConfig.Instance.HRegenPerPoint;
             Player.statDefense += constitution / levelplusConfig.Instance.DefensePerPoint;
 
             //intelligence
-                //+1% damage per point
-                //+1% crit chance per 15 points
+            //+1% damage per point
+            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Magic) *= 1.00f + (intelligence * levelplusConfig.Instance.MagicDamagePerPoint);
             Player.GetCritChance(DamageClass.Magic) += intelligence / levelplusConfig.Instance.MagicCritPerPoint;
 
             //strength
-                //+1% damage per point
-                //+1% crit chance per 15 points
+            //+1% damage per point
+            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Melee) *= 1.00f + (strength * levelplusConfig.Instance.MeleeDamagePerPoint);
             Player.GetCritChance(DamageClass.Melee) += strength / levelplusConfig.Instance.MeleeCritPerPoint;
 
             //dexterity
-                //+1% damage per point
-                //+1% crit chance per 15 points
+            //+1% damage per point
+            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Ranged) *= 1.00f + (dexterity * levelplusConfig.Instance.RangedDamagePerPoint);
             Player.GetCritChance(DamageClass.Ranged) += dexterity / levelplusConfig.Instance.RangedCritPerPoint;
 
             //charisma
-                //+1% damage per point
-                //+1% crit chance per 15 points
+            //+1% damage per point
+            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma * levelplusConfig.Instance.SummonDamagePerPoint);
             Player.GetCritChance(DamageClass.Summon) += charisma / levelplusConfig.Instance.SummonCritPerPoint;
 
@@ -367,44 +321,44 @@ namespace levelplus {
             //UTILITY
 
             //animalia
-                //+2% fishing skill per point
-                //+1 minion per 20 points
-                //+2% minion kb per point
+            //+2% fishing skill per point
+            //+1 minion per 20 points
+            //+2% minion kb per point
             Player.fishingSkill += (int)(Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
             Player.maxMinions += animalia / levelplusConfig.Instance.MinionPerPoint;
             Player.minionKB *= 1.00f * (animalia * levelplusConfig.Instance.MinionKnockBack);
-            
+
 
             //excavation
-                //+1% pick speed per point
-                //+2% place speed per point
-                //+1 place reach per 10 points
+            //+1% pick speed per point
+            //+2% place speed per point
+            //+1 place reach per 10 points
             Player.pickSpeed *= 1.00f - (excavation * levelplusConfig.Instance.PickSpeedPerPoint);
             Player.tileSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
             Player.wallSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
             Player.blockRange += excavation / levelplusConfig.Instance.RangePerPoint;
 
             //mobility
-                //+1% max run speed per point
-                //+2% move speed per point
-                //+2% max flight time per point
+            //+1% max run speed per point
+            //+2% move speed per point
+            //+2% max flight time per point
             Player.maxRunSpeed *= 1.00f + (mobility * levelplusConfig.Instance.RunSpeedPerPoint);
             Player.runAcceleration *= 1.00f + (mobility * levelplusConfig.Instance.AccelPerPoint);
             Player.wingTimeMax += (int)(Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
 
             //luck
-                //+1% xp per point
-                //1% chance not to consume ammo
-                
+            //+1% xp per point
+            //1% chance not to consume ammo
+
 
             //mysticism
-                //+1 max mana per level
-                //+2 max mana per point 
-                //+1 mana regen per 15 points
-                //-0.5% mana cost per point
+            //+1 max mana per level
+            //+2 max mana per point 
+            //+1 mana regen per 15 points
+            //-0.5% mana cost per point
             Player.statManaMax2 += (levelplusConfig.Instance.ManaPerLevel * level) + (levelplusConfig.Instance.ManaPerPoint * mysticism);
             Player.manaRegen += mysticism / levelplusConfig.Instance.ManaRegPerPoint;
-            
+
         }
 
         public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
@@ -415,7 +369,7 @@ namespace levelplus {
         public override bool CanConsumeAmmo(Item weapon, Item ammo) {
             Random rand = new();
 
-            if(rand.Next(1, levelplusConfig.Instance.AmmoPerPoint) <= luck) {
+            if (rand.Next(1, levelplusConfig.Instance.AmmoPerPoint) <= luck) {
                 return false;
             }
 
@@ -423,7 +377,13 @@ namespace levelplus {
             return true;
         }
 
-        
+
+        public void AddLevel(ushort level) {
+            pointsUnspent += (ushort)(LEVEL_POINTS * (level - this.level));
+            this.level += level;
+            currentXP = 0;
+            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
+        }
 
         public void AddXp(ulong amount) {
             currentXP += (ulong)(amount * (1 + (luck * levelplusConfig.Instance.XPPerPoint)));
@@ -449,12 +409,11 @@ namespace levelplus {
 
 
             //run levelup again if XP is still higher, otherwise, play the level up noise
-            if (currentXP >= neededXP) 
+            if (currentXP >= neededXP)
                 LevelUp();
             else if (!Main.dedServ) {
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/level"));
             }
-
         }
 
         public void StatReset() {
@@ -470,6 +429,74 @@ namespace levelplus {
             animalia = 0;
             luck = 0;
             excavation = 0;
+        }
+
+        public override void clientClone(ModPlayer clientClone) {
+            base.clientClone(clientClone);
+            levelplusModPlayer clone = clientClone as levelplusModPlayer;
+
+            clone.level = level;
+            clone.constitution = constitution;
+            clone.strength = strength;
+            clone.intelligence = intelligence;
+            clone.charisma = charisma;
+            clone.dexterity = dexterity;
+            clone.mysticism = mysticism;
+            clone.mobility = mobility;
+            clone.animalia = animalia;
+            clone.luck = luck;
+            clone.excavation = excavation;
+        }
+
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
+            base.SyncPlayer(toWho, fromWho, newPlayer);
+
+            ModPacket packet = Mod.GetPacket();
+            packet.Write((byte)PacketType.PlayerSync);
+            AddSyncToPacket(packet);
+            packet.Send();
+        }
+
+        public override void SendClientChanges(ModPlayer clientPlayer) {
+            base.SendClientChanges(clientPlayer);
+            if (!StatsMatch(clientPlayer as levelplusModPlayer)) {
+                ModPacket packet = Mod.GetPacket();
+                packet.Write((byte)PacketType.StatsChanged);
+                AddSyncToPacket(packet);
+                packet.Send();
+            }
+        }
+
+        public void AddSyncToPacket(ModPacket packet) {
+            packet.Write((byte)Player.whoAmI);
+            packet.Write(level);
+            packet.Write(constitution);
+            packet.Write(strength);
+            packet.Write(intelligence);
+            packet.Write(charisma);
+            packet.Write(dexterity);
+            packet.Write(mysticism);
+            packet.Write(mobility);
+            packet.Write(animalia);
+            packet.Write(luck);
+            packet.Write(excavation);
+        }
+
+        public bool StatsMatch(levelplusModPlayer compare) { //returns true if stats match
+            if(compare.level != level ||
+            compare.constitution != constitution ||
+            compare.strength != strength ||
+            compare.intelligence != intelligence ||
+            compare.charisma != charisma ||
+            compare.dexterity != dexterity ||
+            compare.mysticism != mysticism ||
+            compare.mobility != mobility ||
+            compare.animalia != animalia ||
+            compare.luck != luck ||
+            compare.excavation != excavation)
+                return false;
+            else 
+                return true;
         }
     }
 }
