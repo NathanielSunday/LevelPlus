@@ -4,24 +4,50 @@ using Terraria.ModLoader.Config;
 
 namespace levelplus
 {
-    public class levelplusConfig : ModConfig
-    {
+    public class levelplusConfig : ModConfig {
         // You MUST specify a ConfigScope.
         public override ConfigScope Mode => ConfigScope.ServerSide;
         public static levelplusConfig Instance => ModContent.GetInstance<levelplusConfig>();
-   
+
+        // --- //
+        //Level Bonuses
+        [Header("Level")]
+        [Label("Level: Health per Level")]
+        [Tooltip("How much HP the player gets per Level")]
+        [Range(0, 5)]
+        [DefaultValue(2)]
+        public int HealthPerLevel;
+        //Used: levelplusConfig.Instance.HealthPerLevel
+
+        [Label("Level: Mana per Level")]
+        [Tooltip("How much HP the player gets per Level")]
+        [Range(0, 5)]
+        [DefaultValue(1)]
+        public int ManaPerLevel;
+        //Used: levelplusConfig.Instance.ManaPerLevel
+
+        //This doesn't work due to config being server-handled
+
+        //// --- //
+        ////UI Things
+        //[Header("UI")]
+        //[Label("UI: XP Bar Left")]
+        //[Tooltip("How far the xp bar is offset left side")]
+        //[DefaultValue(480)]
+        //public float XPLeft;
+        ////Used: levelplusConfig.Instance.XPLeft
+
+        //[Label("UI: XP Bar Top")]
+        //[Tooltip("How far the xp bar is offset top side")]
+        //[DefaultValue(35)]
+        //public float XPTop;
+        ////Used: levelplusConfig.Instance.XPTop
+
         // --- //
         // Constitution //
         [Header("Constitution")]
-        [Label("Constitution: Health per Level")]
-        [Tooltip("How much HP the player gets per Level")]
-        [Range(0, 5)]
-        [DefaultValue(2)] 
-        public int HealthPerLevel;  
-        //Used: levelplusConfig.Instance.HealthPerLevel
-        
         [Label("Constitution: Health per Point")]
-        [Tooltip("How much HP the player gets per Point")]
+        [Tooltip("How much HP the player gets per point")]
         [Range(0, 25)]
         [DefaultValue(5)] 
         public int HealthPerPoint;  
@@ -45,7 +71,7 @@ namespace levelplus
         // Intelligence //
         [Header("Intelligence")]
         [Label("Intelligence:  Magic Damage")]
-        [Tooltip("How much MagicDamage the player gets per Level")]
+        [Tooltip("How much MagicDamage the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.01f)]
@@ -64,7 +90,7 @@ namespace levelplus
         // Strength //
         [Header("Strength")]
         [Label("Strength: Melee Damage")]
-        [Tooltip("How much MeleeDamage the player gets per Level")]
+        [Tooltip("How much MeleeDamage the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.01f)]
@@ -83,7 +109,7 @@ namespace levelplus
         // Dexterity //
         [Header("Dexterity")]
         [Label("Dexterity: Ranged Damage")]
-        [Tooltip("How much RangedDamage the player gets per Level")]
+        [Tooltip("How much RangedDamage the player gets per point")]
         [Slider]
         [Range(0.00f, 0.25f)]
         [Increment(0.01f)]
@@ -102,7 +128,7 @@ namespace levelplus
         // Charisma //
         [Header("Charisma")]
         [Label("Charisma: Summon Damage")]
-        [Tooltip("How much SummonDamage the player gets per Level")]
+        [Tooltip("How much SummonDamage the player gets per point")]
         [Slider]
         [Range(0.00f, 0.25f)]
         [Increment(0.01f)]
@@ -122,7 +148,7 @@ namespace levelplus
         // Animalia //
         [Header("Animalia")]
         [Label("Animalia: Fishing Skill")]
-        [Tooltip("How much Fishing Skill the player gets per Level")]
+        [Tooltip("How much Fishing Skill the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
@@ -131,7 +157,7 @@ namespace levelplus
         //Used: levelplusConfig.Instance.FishSkillPerPoint
         
         [Label("Animalia: Minion Knockback")]
-        [Tooltip("How much Minion Knockback the player gets per Level")]
+        [Tooltip("How much Minion Knockback the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
@@ -151,7 +177,7 @@ namespace levelplus
         // Excavation //
         [Header("Excavation")]
         [Label("Excavation: Pick Speed")]
-        [Tooltip("How much Pick Speed the player gets per Level")]
+        [Tooltip("How much Pick Speed the player gets per point")]
         [Slider]
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
@@ -160,7 +186,7 @@ namespace levelplus
         //Used: levelplusConfig.Instance.PickSpeedPerPoint
         
         [Label("Excavation: Building Speed")]
-        [Tooltip("How much Building Speed the player gets per Level")]
+        [Tooltip("How much Building Speed the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
@@ -179,7 +205,7 @@ namespace levelplus
         // Mobility //
         [Header("Mobility")]
         [Label("Mobility: Run Speed")]
-        [Tooltip("How much Run Speed the player gets per Level")]
+        [Tooltip("How much Run Speed the player gets per point")]
         [Slider]
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
@@ -188,7 +214,7 @@ namespace levelplus
         //Used: levelplusConfig.Instance.RunSpeedPerPoint
         
         [Label("Mobility: Acceleration")]
-        [Tooltip("How much Acceleration the player gets per Level")]
+        [Tooltip("How much Acceleration the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
@@ -197,7 +223,7 @@ namespace levelplus
         //Used: levelplusConfig.Instance.AccelPerPoint
         
         [Label("Mobility: Wing Time")]
-        [Tooltip("How much Acceleration the player gets per Level")]
+        [Tooltip("How much Acceleration the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
@@ -209,7 +235,7 @@ namespace levelplus
         // Luck //
         [Header("Luck")]
         [Label("Luck: Bonus Experience")]
-        [Tooltip("How much Bonus Experience the player gets per Level")]
+        [Tooltip("How much Bonus Experience the player gets per point")]
         [Slider]
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
@@ -228,15 +254,8 @@ namespace levelplus
         // --- //
         // Mysticism //
         [Header("Mysticism")]
-        [Label("Mysticism: Mana per Level")]
-        [Tooltip("How much HP the player gets per Level")]
-        [Range(0, 5)]
-        [DefaultValue(1)] 
-        public int ManaPerLevel;  
-        //Used: levelplusConfig.Instance.ManaPerLevel
-        
         [Label("Mysticism: Mana per Point")]
-        [Tooltip("How much HP the player gets per Point")]
+        [Tooltip("How much Mana the player gets per point")]
         [Range(0, 25)]
         [DefaultValue(2)] 
         public int ManaPerPoint;  

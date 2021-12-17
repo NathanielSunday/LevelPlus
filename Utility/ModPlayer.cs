@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using levelplus.UI;
 using Terraria.Audio;
+using Terraria.GameInput;
 
 namespace levelplus {
     internal enum Weapon {
@@ -63,47 +64,56 @@ namespace levelplus {
             return pointsUnspent;
         }
 
-        public void spend(ButtonMode stat) {
+        public void spend(Stat stat, ushort amount) {
             if (pointsUnspent > 0) {
-                //SoundID.MenuTick
-                //ModSound.PlaySound(SoundEffectInstance, (int)Player.Center.X, (int)Player.Center.Y, Terraria.ModLoader.SoundType.Custom);
-                --pointsUnspent;
+                if (pointsUnspent >= amount) {
+                    pointsUnspent -= amount;
+                }
+                else {
+                    amount = pointsUnspent;
+                    pointsUnspent = 0;
+                }
+
 
                 switch (stat) {
-                    case ButtonMode.CON:
-                        ++constitution;
+                    case Stat.CONSTITUTION:
+                        constitution += amount;
                         break;
-                    case ButtonMode.STR:
-                        ++strength;
+                    case Stat.STRENGTH:
+                        strength += amount;
                         break;
-                    case ButtonMode.INT:
-                        ++intelligence;
+                    case Stat.INTELLIGENCE:
+                        intelligence += amount;
                         break;
-                    case ButtonMode.CHA:
-                        ++charisma;
+                    case Stat.CHARISMA:
+                        charisma += amount;
                         break;
-                    case ButtonMode.DEX:
-                        ++dexterity;
+                    case Stat.DEXTERITY:
+                        dexterity += amount;
                         break;
-                    case ButtonMode.MOB:
-                        ++mobility;
+                    case Stat.MOBILITY:
+                        mobility += amount;
                         break;
-                    case ButtonMode.EXC:
-                        ++excavation;
+                    case Stat.EXCAVATION:
+                        excavation += amount;
                         break;
-                    case ButtonMode.ANI:
-                        ++animalia;
+                    case Stat.ANIMALIA:
+                        animalia += amount;
                         break;
-                    case ButtonMode.LUC:
-                        ++luck;
+                    case Stat.LUCK:
+                        luck += amount;
                         break;
-                    case ButtonMode.MYS:
-                        ++mysticism;
+                    case Stat.MYSTICISM:
+                        mysticism += amount;
                         break;
                     default:
                         break;
                 }
             }
+        }
+
+        public void spend(Stat stat) {
+            spend(stat, 1);
         }
 
         public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath) {
@@ -483,7 +493,7 @@ namespace levelplus {
         }
 
         public bool StatsMatch(levelplusModPlayer compare) { //returns true if stats match
-            if(compare.level != level ||
+            if (compare.level != level ||
             compare.constitution != constitution ||
             compare.strength != strength ||
             compare.intelligence != intelligence ||
@@ -495,8 +505,18 @@ namespace levelplus {
             compare.luck != luck ||
             compare.excavation != excavation)
                 return false;
-            else 
+            else
                 return true;
+        }
+
+        public override void ProcessTriggers(TriggersSet triggersSet) {
+            base.ProcessTriggers(triggersSet);
+            if (levelplus.SpendUIHotKey.JustPressed) {
+                if(Main.netMode != NetmodeID.Server) {
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    SpendUI.visible = !SpendUI.visible;
+                }
+            }
         }
     }
 }

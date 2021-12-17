@@ -11,7 +11,7 @@ namespace levelplus {
 		internal GUI gui;
 		public static UserInterface guiInterface;
 
-		internal LevelUI levelUI;
+		internal SpendUI levelUI;
 		public static UserInterface levelInterface;
 
 		public override void Load() {
@@ -23,28 +23,26 @@ namespace levelplus {
 				guiInterface = new UserInterface();
 				guiInterface.SetState(gui);
 
-				levelUI = new LevelUI();
+				levelUI = new SpendUI();
 				levelUI.Activate();
 				levelInterface = new UserInterface();
 				levelInterface.SetState(levelUI);
-
-
 			}
 		}
 
 		public override void Unload() {
 			base.Unload();
 			if (!Main.dedServ) {
-				LevelUI.visible = false;
+				SpendUI.visible = false;
 				GUI.visible = false;
 				if (levelInterface != null && guiInterface != null) {
 					levelInterface.SetState(null);
 					guiInterface.SetState(null);
 				}
 
-
 				gui = null;
 				levelUI = null;
+				UITexture.textures.Clear();
 			}
 		}
 
@@ -52,7 +50,7 @@ namespace levelplus {
 			if (GUI.visible)
                 guiInterface?.Update(gameTime);
 
-			if (LevelUI.visible)
+			if (SpendUI.visible)
                 levelInterface?.Update(gameTime);
 		}
 
@@ -64,7 +62,7 @@ namespace levelplus {
 			layers.Insert(resourceBarsIndex, new LegacyGameInterfaceLayer("Level+: Resource Bars", delegate {
 				if (GUI.visible)
 					guiInterface.Draw(Main.spriteBatch, new GameTime());
-				if (LevelUI.visible)
+				if (SpendUI.visible)
 					levelInterface.Draw(Main.spriteBatch, new GameTime());
 
 				return true;

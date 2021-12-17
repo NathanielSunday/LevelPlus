@@ -5,18 +5,34 @@ using Terraria.ID;
 
 namespace levelplus {
 
-    internal enum PacketType {
+    internal enum PacketType : byte {
         XP,
         PlayerSync,
         StatsChanged
     }
 
     public class levelplus : Mod {
-        public const string modID = "levelplus";
         public static levelplus Instance { get; private set; }
         public levelplus() { Instance = this; }
 
+        public static ModKeybind SpendUIHotKey;
+        public static ModKeybind SpendModFive;
+        public static ModKeybind SpendModTen;
+        public static ModKeybind SpendModTwentyFive;
 
+        public override void Load() {
+            SpendUIHotKey = KeybindLoader.RegisterKeybind(this, "Open SpendUI", Microsoft.Xna.Framework.Input.Keys.P);
+            SpendModFive = KeybindLoader.RegisterKeybind(this, "Spend 5 points", Microsoft.Xna.Framework.Input.Keys.LeftShift);
+            SpendModTen = KeybindLoader.RegisterKeybind(this, "Spend 10 points", Microsoft.Xna.Framework.Input.Keys.LeftControl);
+            SpendModTwentyFive = KeybindLoader.RegisterKeybind(this, "Spend 25 points", Microsoft.Xna.Framework.Input.Keys.LeftAlt);
+        }
+
+        public override void Unload() {
+            SpendUIHotKey = null;
+            SpendModFive = null;
+            SpendModTen = null;
+            SpendModTwentyFive = null;
+        }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) {
             byte msgType = reader.ReadByte();
