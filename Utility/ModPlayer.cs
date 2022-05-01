@@ -38,9 +38,6 @@ namespace levelplus {
         public ushort level { get; set; }
         public ushort statPoints { get; private set; }
 
-
-
-
         public ushort constitution { get; set; } //buff to max health, base defense
         public ushort strength { get; set; } //buff to melee damage
         public ushort intelligence { get; set; } //buff to max mana and magic damage
@@ -117,7 +114,6 @@ namespace levelplus {
 
         public void StatReset() {
             statPoints = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
-
             constitution = 0;
             strength = 0;
             intelligence = 0;
@@ -129,7 +125,7 @@ namespace levelplus {
             luck = 0;
             excavation = 0;
         }
-
+      
         public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath) {
             Random rand = new Random();
 
@@ -199,7 +195,6 @@ namespace levelplus {
             tag.Set("initialized", true, true);
             tag.Set("level", level, true);
             tag.Set("currentXP", currentXP, true);
-            tag.Set("neededXP", neededXP, true);
             tag.Set("points", statPoints, true);
             tag.Set("talents", talents, true);
             tag.Set("talentPoints", talentUnspent, true);
@@ -221,8 +216,8 @@ namespace levelplus {
             if (tag.GetBool("initialized")) {
                 level = (ushort)tag.GetAsShort("level");
                 currentXP = (ulong)tag.GetAsLong("currentXP");
-                neededXP = (ulong)tag.GetAsLong("neededXP");
-                statPoints = (ushort)tag.GetAsShort("points");
+                neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
+                pointsUnspent = (ushort)tag.GetAsShort("points");
                 talents = tag.Get<string>("talents");
                 talentUnspent = (ushort)tag.GetAsShort("talentPoints");
                 constitution = (ushort)tag.GetAsShort("con");
@@ -349,7 +344,6 @@ namespace levelplus {
             base.CanConsumeAmmo(weapon, ammo);
             return true;
         }
-
 
         public void AddLevel(ushort level) {
             statPoints += (ushort)(LEVEL_POINTS * (level - this.level));

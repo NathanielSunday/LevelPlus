@@ -162,7 +162,6 @@ namespace levelplus.UI {
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
-
             unspentPoints.SetText("" + modPlayer.statPoints);
 
             if (dragging) {
