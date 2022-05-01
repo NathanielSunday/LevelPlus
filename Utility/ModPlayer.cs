@@ -110,14 +110,14 @@ namespace levelplus {
             currentXP = 0;
             neededXP = BASE_XP;
             level = 0;
-            talents = "--------";
-            talentUnspent = 0;
+
             StatReset();
         }
 
         public void StatReset() {
             statPoints = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
-
+            talents = "--------";
+            talentUnspent = 0;
             constitution = 0;
             strength = 0;
             intelligence = 0;
@@ -199,7 +199,6 @@ namespace levelplus {
             tag.Set("initialized", true, true);
             tag.Set("level", level, true);
             tag.Set("currentXP", currentXP, true);
-            tag.Set("neededXP", neededXP, true);
             tag.Set("points", statPoints, true);
             tag.Set("talents", talents, true);
             tag.Set("talentPoints", talentUnspent, true);
@@ -221,7 +220,7 @@ namespace levelplus {
             if (tag.GetBool("initialized")) {
                 level = (ushort)tag.GetAsShort("level");
                 currentXP = (ulong)tag.GetAsLong("currentXP");
-                neededXP = (ulong)tag.GetAsLong("neededXP");
+                neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
                 statPoints = (ushort)tag.GetAsShort("points");
                 talents = tag.Get<string>("talents");
                 talentUnspent = (ushort)tag.GetAsShort("talentPoints");

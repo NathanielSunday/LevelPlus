@@ -10,7 +10,6 @@ namespace levelplus.Items
 		{
 			DisplayName.SetDefault("Reset Token");
             Tooltip.SetDefault("Consume to reset your ENTIRE character.\n\nThis item will set your character's level back to 1,\nas if you had just started a new character.");
-
         }
 
         public override void SetDefaults() 
