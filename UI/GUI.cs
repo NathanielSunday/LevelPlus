@@ -82,7 +82,7 @@ namespace levelplus.UI
 			base.Append(xp);
 
 			button = new LevelButton(ButtonMode.LEVEL, 50, 50);
-			button.Left.Set(500, 0f);
+			button.Left.Set(510, 0f);
 			button.Top.Set(20f, 0f);
 			button.OnClick += new MouseEvent(OpenLevelClicked);
 			base.Append(button);
@@ -108,6 +108,8 @@ namespace levelplus.UI
 			{
 				Main.instance.MouseText(unspentPoints);
 			}
+			
+			
 		}
 
 		private void OpenLevelClicked(UIMouseEvent evt, UIElement listeningElement)

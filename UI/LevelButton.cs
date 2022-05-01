@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -13,6 +12,11 @@ namespace levelplus.UI
 		INT,
 		CHA,
 		DEX,
+		MOB,
+		EXC,
+		ANI,
+		GRA,
+		MYS,
 		LEVEL
 	}
 
@@ -111,17 +115,6 @@ namespace levelplus.UI
 			base.Append(currentButton);
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			/*
-			if (Main.mouseX >= this.Left.Pixels && Main.mouseX <= (this.Left.Pixels + this.Width.Pixels) && Main.mouseY >= this.Top.Pixels && Main.mouseY <= (this.Left.Pixels + this.Width.Pixels))
-			{
-				Main.instance.MouseText(currentButton.HoverText);
-			}
-			*/
-			base.Draw(spriteBatch);
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
@@ -147,6 +140,21 @@ namespace levelplus.UI
 					break;
 				case ButtonMode.DEX:
 					currentStat.SetText("" + modPlayer.getDex());
+					break;
+				case ButtonMode.MOB:
+					currentStat.SetText("" + modPlayer.getMob());
+					break;
+				case ButtonMode.EXC:
+					currentStat.SetText("" + modPlayer.getExc());
+					break;
+				case ButtonMode.ANI:
+					currentStat.SetText("" + modPlayer.getAni());
+					break;
+				case ButtonMode.GRA:
+					currentStat.SetText("" + modPlayer.getGra());
+					break;
+				case ButtonMode.MYS:
+					currentStat.SetText("" + modPlayer.getMys());
 					break;
 				case ButtonMode.LEVEL:
 					currentStat.SetText("" + (modPlayer.getLevel() + 1));

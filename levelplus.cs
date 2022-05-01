@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 using levelplus.UI;
+using System.Data;
+using Microsoft.Xna.Framework.Audio;
 
 namespace levelplus
 {
@@ -16,8 +18,11 @@ namespace levelplus
 		internal LevelUI levelUI;
 		public UserInterface levelInterface;
 
+		public static SoundEffect LevelUp { get; set; }
+
 		public override void Load()
 		{
+			base.Load();
 			//makes sure UI isn't opened server side
 			if (!Main.dedServ)
 			{
@@ -30,6 +35,27 @@ namespace levelplus
 				levelUI.Activate();
 				levelInterface = new UserInterface();
 				levelInterface.SetState(levelUI);
+
+
+			}
+		}
+
+		public override void Unload()
+		{
+			base.Unload();
+			if (!Main.dedServ)
+			{
+				LevelUI.visible = false;
+				GUI.visible = false;
+				if (levelInterface != null && guiInterface != null)
+				{
+					levelInterface.SetState(null);
+					guiInterface.SetState(null);
+				}
+				
+				
+				gui = null;
+				levelUI = null;
 			}
 		}
 

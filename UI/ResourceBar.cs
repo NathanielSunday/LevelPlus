@@ -94,9 +94,11 @@ namespace levelplus.UI
 			base.Append(barBackground);
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
-			base.Draw(spriteBatch);
+			//base.Draw(spriteBatch);
+
+			//spriteBatch.Begin();
 			Player player = Main.player[Main.myPlayer];
 			levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
 			float quotient = 1f;
@@ -125,7 +127,7 @@ namespace levelplus.UI
 			currentBar.Width.Set(quotient * width, 0f);
 
 			Recalculate();
-
+			//spriteBatch.End();
 			
 		}
 
@@ -147,7 +149,7 @@ namespace levelplus.UI
 					text.SetText("" + player.statMana + " | " + player.statManaMax2); //Set Mana
 					break;
 				case ResourceBarMode.XP:
-					text.SetText("" + modPlayer.getCurrentXP() + " | " + modPlayer.getNeededXP()); //Set XP
+					text.SetText("" + (ushort)modPlayer.getCurrentXP() + " | " + modPlayer.getNeededXP()); //Set XP
 					break;
 				case ResourceBarMode.BREATH:
 					text.SetText("");

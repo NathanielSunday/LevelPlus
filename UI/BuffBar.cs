@@ -79,14 +79,18 @@ namespace levelplus.UI
 			Main.instance.MouseTextHackZoom(Lang.GetBuffName(buffId), itemRarity);
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		protected override void DrawSelf (SpriteBatch spriteBatch)
 		{
-			base.Draw(spriteBatch);
+			//base.Draw(spriteBatch);
 
+			//spriteBatch.Begin();
 			Main.buffString = "";
 			Main.bannerMouseOver = false;
 			if (!Main.ingameOptionsWindow && !Main.playerInventory)
 				DrawBuffs();
+
+			//spriteBatch.End();
+			
 		}
 
 
