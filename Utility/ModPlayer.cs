@@ -29,15 +29,16 @@ namespace levelplus {
         ushort BASE_POINTS = (ushort)levelplusConfig.Instance.PointsBase;
         ushort LEVEL_POINTS = (ushort)levelplusConfig.Instance.PointsPerLevel;
 
-        private Weapon weapon = (Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length);
-
+        //currently private/unused variables
+        private ushort talentUnspent;
         private string talents;
 
-        private ulong currentXP;
-        private ulong neededXP;
+        public ulong currentXP { get; private set; }
+        public ulong neededXP { get; private set; }
         public ushort level { get; set; }
-        private ushort pointsUnspent;
-        private ushort talentUnspent;
+        public ushort statPoints { get; private set; }
+
+
 
 
         public ushort constitution { get; set; } //buff to max health, base defense
@@ -52,26 +53,15 @@ namespace levelplus {
         public ushort luck { get; set; } //xp gain and whatnot
         public ushort mysticism { get; set; } //max mana and regen
 
-        public ulong GetCurrentXP() {
-            return currentXP;
-        }
-
-        public ulong GetNeededXP() {
-            return neededXP;
-        }
-
-        public ushort GetUnspentPoints() {
-            return pointsUnspent;
-        }
 
         public void spend(Stat stat, ushort amount) {
-            if (pointsUnspent > 0) {
-                if (pointsUnspent >= amount) {
-                    pointsUnspent -= amount;
+            if (statPoints > 0) {
+                if (statPoints >= amount) {
+                    statPoints -= amount;
                 }
                 else {
-                    amount = pointsUnspent;
-                    pointsUnspent = 0;
+                    amount = statPoints;
+                    statPoints = 0;
                 }
 
 
@@ -116,33 +106,42 @@ namespace levelplus {
             spend(stat, 1);
         }
 
+        public void initialize() {
+            currentXP = 0;
+            neededXP = BASE_XP;
+            level = 0;
+            talents = "--------";
+            talentUnspent = 0;
+            StatReset();
+        }
+
+        public void StatReset() {
+            statPoints = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
+
+            constitution = 0;
+            strength = 0;
+            intelligence = 0;
+            charisma = 0;
+            dexterity = 0;
+            mysticism = 0;
+            mobility = 0;
+            animalia = 0;
+            luck = 0;
+            excavation = 0;
+        }
+
         public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath) {
             Random rand = new Random();
 
             if (!mediumCoreDeath) {
-                currentXP = 0;
-                neededXP = BASE_XP;
-                level = 0;
-                pointsUnspent = BASE_POINTS;
-                talents = "--------";
-                talentUnspent = 0;
-                constitution = 0;
-                strength = 0;
-                intelligence = 0;
-                charisma = 0;
-                dexterity = 0;
-                mobility = 0;
-                excavation = 0;
-                animalia = 0;
-                luck = 0;
-                mysticism = 0;
+                initialize();
 
                 Item respec = new Item();
                 respec.SetDefaults(ModContent.ItemType<Items.Respec>());
                 itemsByMod["Terraria"].Add(respec);
             }
 
-            switch (weapon) {
+            switch ((Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length)) {
                 case Weapon.SWORD:
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBroadsword));
                     break;
@@ -195,46 +194,25 @@ namespace levelplus {
                     break;
             }
         }
-        public override void SaveData(TagCompound tag) {
 
-            //check if this character has a save tag
-            if (tag.GetBool("initialized")) {
-                tag.Set("level", level);
-                tag.Set("currentXP", currentXP);
-                tag.Set("neededXP", neededXP);
-                tag.Set("points", pointsUnspent);
-                tag.Set("talents", talents);
-                tag.Set("talentPoints", talentUnspent);
-                tag.Set("con", constitution);
-                tag.Set("str", strength);
-                tag.Set("int", intelligence);
-                tag.Set("cha", charisma);
-                tag.Set("dex", dexterity);
-                tag.Set("mob", mobility);
-                tag.Set("exc", excavation);
-                tag.Set("ani", animalia);
-                tag.Set("luc", luck);
-                tag.Set("mys", mysticism);
-            }
-            else {
-                tag.Add("initialized", true);
-                tag.Add("level", level);
-                tag.Add("currentXP", currentXP);
-                tag.Add("neededXP", neededXP);
-                tag.Add("points", pointsUnspent);
-                tag.Add("talents", talents);
-                tag.Add("talentPoints", talentUnspent);
-                tag.Add("con", constitution);
-                tag.Add("str", strength);
-                tag.Add("int", intelligence);
-                tag.Add("cha", charisma);
-                tag.Add("dex", dexterity);
-                tag.Add("mob", mobility);
-                tag.Add("exc", excavation);
-                tag.Add("ani", animalia);
-                tag.Add("luc", luck);
-                tag.Add("mys", mysticism);
-            }
+        public override void SaveData(TagCompound tag) {
+            tag.Set("initialized", true, true);
+            tag.Set("level", level, true);
+            tag.Set("currentXP", currentXP, true);
+            tag.Set("neededXP", neededXP, true);
+            tag.Set("points", statPoints, true);
+            tag.Set("talents", talents, true);
+            tag.Set("talentPoints", talentUnspent, true);
+            tag.Set("con", constitution, true);
+            tag.Set("str", strength, true);
+            tag.Set("int", intelligence, true);
+            tag.Set("cha", charisma, true);
+            tag.Set("dex", dexterity, true);
+            tag.Set("mob", mobility, true);
+            tag.Set("exc", excavation, true);
+            tag.Set("ani", animalia, true);
+            tag.Set("luc", luck, true);
+            tag.Set("mys", mysticism, true);
 
             base.SaveData(tag);
         }
@@ -244,7 +222,7 @@ namespace levelplus {
                 level = (ushort)tag.GetAsShort("level");
                 currentXP = (ulong)tag.GetAsLong("currentXP");
                 neededXP = (ulong)tag.GetAsLong("neededXP");
-                pointsUnspent = (ushort)tag.GetAsShort("points");
+                statPoints = (ushort)tag.GetAsShort("points");
                 talents = tag.Get<string>("talents");
                 talentUnspent = (ushort)tag.GetAsShort("talentPoints");
                 constitution = (ushort)tag.GetAsShort("con");
@@ -259,22 +237,7 @@ namespace levelplus {
                 mysticism = (ushort)tag.GetAsShort("mys");
             }
             else {
-                currentXP = 0;
-                neededXP = BASE_XP;
-                level = 0;
-                pointsUnspent = BASE_POINTS;
-                talents = "--------";
-                talentUnspent = 0;
-                constitution = 0;
-                strength = 0;
-                intelligence = 0;
-                charisma = 0;
-                dexterity = 0;
-                mobility = 0;
-                excavation = 0;
-                animalia = 0;
-                luck = 0;
-                mysticism = 0;
+                initialize();
             }
 
             if (currentXP > neededXP) {
@@ -336,7 +299,7 @@ namespace levelplus {
             //+2% minion kb per point
             Player.fishingSkill += (int)(Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
             Player.maxMinions += animalia / levelplusConfig.Instance.MinionPerPoint;
-            Player.minionKB *= 1.00f * (animalia * levelplusConfig.Instance.MinionKnockBack);
+            //Player.minionKB *= 1.00f * (animalia * levelplusConfig.Instance.MinionKnockBack);
 
 
             //excavation
@@ -389,7 +352,7 @@ namespace levelplus {
 
 
         public void AddLevel(ushort level) {
-            pointsUnspent += (ushort)(LEVEL_POINTS * (level - this.level));
+            statPoints += (ushort)(LEVEL_POINTS * (level - this.level));
             this.level += level;
             currentXP = 0;
             neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
@@ -403,7 +366,7 @@ namespace levelplus {
         }
 
         public void AddPoints(int points) {
-            pointsUnspent = (ushort)(pointsUnspent + points);
+            statPoints = (ushort)(statPoints + points);
         }
 
         private void LevelUp() {
@@ -413,7 +376,7 @@ namespace levelplus {
 
             currentXP -= neededXP;
             ++level;
-            pointsUnspent += LEVEL_POINTS;
+            statPoints += LEVEL_POINTS;
 
             neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
 
@@ -424,21 +387,6 @@ namespace levelplus {
             else if (!Main.dedServ) {
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/level"));
             }
-        }
-
-        public void StatReset() {
-            pointsUnspent = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
-
-            constitution = 0;
-            strength = 0;
-            intelligence = 0;
-            charisma = 0;
-            dexterity = 0;
-            mysticism = 0;
-            mobility = 0;
-            animalia = 0;
-            luck = 0;
-            excavation = 0;
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -512,7 +460,7 @@ namespace levelplus {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             base.ProcessTriggers(triggersSet);
             if (levelplus.SpendUIHotKey.JustPressed) {
-                if(Main.netMode != NetmodeID.Server) {
+                if (Main.netMode != NetmodeID.Server) {
                     SoundEngine.PlaySound(SoundID.MenuTick);
                     SpendUI.visible = !SpendUI.visible;
                 }

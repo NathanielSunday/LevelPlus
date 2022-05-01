@@ -62,7 +62,7 @@ namespace levelplus.UI {
             barBackground.Append(currentBar);
 
             //barBackground.Append(text);
-            base.Append(barBackground);
+            Append(barBackground);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch) {
@@ -76,7 +76,7 @@ namespace levelplus.UI {
             //calculate quotient
             switch (stat) {
                 case ResourceBarMode.XP:
-                    quotient = (float)modPlayer.GetCurrentXP() / (float)modPlayer.GetNeededXP();
+                    quotient = modPlayer.currentXP / (float)modPlayer.neededXP;
                     break;
                 default:
                     break;
@@ -96,13 +96,13 @@ namespace levelplus.UI {
             string HoverText;
             switch (stat) {
                 case ResourceBarMode.XP:
-                    HoverText = "" + modPlayer.GetCurrentXP() + " | " + modPlayer.GetNeededXP();
+                    HoverText = "" + modPlayer.currentXP + " | " + modPlayer.neededXP;
                     break;
                 default:
                     HoverText = "";
                     break;
             }
-            if (this.IsMouseHovering) {
+            if (IsMouseHovering) {
                 Main.instance.MouseText(HoverText);
             }
         }
