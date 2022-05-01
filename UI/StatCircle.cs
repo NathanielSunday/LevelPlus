@@ -70,7 +70,7 @@ namespace levelplus.UI {
             unspentPoints.OnClick += new MouseEvent(CloseMenu);
 
             pentagram.Append(unspentPoints);
-            base.Append(pentagram);
+            Append(pentagram);
             //big radius
             float BR = R1 * diameter;
             //little radius
@@ -85,62 +85,62 @@ namespace levelplus.UI {
             Animalia = new StatButton(Stat.ANIMALIA, LBR * 2);
             Animalia.Left.Set(center.X - LBR, 0f);
             Animalia.Top.Set(center.Y + LR - LBR, 0f);
-            base.Append(Animalia);
+            Append(Animalia);
 
             //bottom right
             Luck = new StatButton(Stat.LUCK, LBR * 2);
             Luck.Left.Set(center.X + S1 * LR - LBR, 0f);
             Luck.Top.Set(center.Y + C1 * LR - LBR, 0f);
-            base.Append(Luck);
+            Append(Luck);
 
             //top right
             Mobility = new StatButton(Stat.MOBILITY, LBR * 2);
             Mobility.Left.Set(center.X + S2 * LR - LBR, 0f);
             Mobility.Top.Set(center.Y - C2 * LR - LBR, 0f);
-            base.Append(Mobility);
+            Append(Mobility);
 
             //top left
             Excavation = new StatButton(Stat.EXCAVATION, LBR * 2);
             Excavation.Left.Set(center.X - S2 * LR - LBR, 0f);
             Excavation.Top.Set(center.Y - C2 * LR - LBR, 0f);
-            base.Append(Excavation);
+            Append(Excavation);
 
             //bottom left
             Mysticism = new StatButton(Stat.MYSTICISM, LBR * 2);
             Mysticism.Left.Set(center.X - S1 * LR - LBR, 0f);
             Mysticism.Top.Set(center.Y + C1 * LR - LBR, 0f);
-            base.Append(Mysticism);
+            Append(Mysticism);
 
 
             //top
             Constitution = new StatButton(Stat.CONSTITUTION, BBR * 2);
             Constitution.Left.Set(center.X - BBR, 0f);
             Constitution.Top.Set(center.Y - BR - BBR, 0f);
-            base.Append(Constitution);
+            Append(Constitution);
 
             //top left
             Strength = new StatButton(Stat.STRENGTH, BBR * 2);
             Strength.Left.Set(center.X - S1 * BR - BBR, 0f);
             Strength.Top.Set(center.Y - C1 * BR - BBR, 0f);
-            base.Append(Strength);
+            Append(Strength);
 
             //bottom left
             Intelligence = new StatButton(Stat.INTELLIGENCE, BBR * 2);
             Intelligence.Left.Set(center.X - S2 * BR - BBR, 0f);
             Intelligence.Top.Set(center.Y + C2 * BR - BBR, 0f);
-            base.Append(Intelligence);
+            Append(Intelligence);
 
             //bottom right
             Charisma = new StatButton(Stat.CHARISMA, BBR * 2);
             Charisma.Left.Set(center.X + S2 * BR - BBR, 0f);
             Charisma.Top.Set(center.Y + C2 * BR - BBR, 0f);
-            base.Append(Charisma);
+            Append(Charisma);
 
             //top right
             Dexterity = new StatButton(Stat.DEXTERITY, BBR * 2);
             Dexterity.Left.Set(center.X + S1 * BR - BBR, 0f);
             Dexterity.Top.Set(center.Y - C1 * BR - BBR, 0f);
-            base.Append(Dexterity);
+            Append(Dexterity);
         }
 
         public override void OnDeactivate() {
@@ -162,8 +162,7 @@ namespace levelplus.UI {
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
-
-            unspentPoints.SetText("" + modPlayer.pointsUnspent);
+            unspentPoints.SetText("" + modPlayer.statPoints);
 
             if (dragging) {
                 Left.Set(Main.mouseX - offset.X, 0f);

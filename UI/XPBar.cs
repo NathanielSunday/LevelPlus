@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -36,8 +35,8 @@ namespace levelplus.UI {
             bar.Left.Set(height * (186 / 186), 0f);
             bar.Top.Set(0f, 0f);
 
-            base.Append(bar);
-            base.Append(button);
+            Append(bar);
+            Append(button);
 
         }
 
@@ -145,8 +144,7 @@ namespace levelplus.UI {
                     }
 
                 averageLevel /= numPlayers;
-
-                Main.instance.MouseText("Level: " + (modPlayer.level + 1) + "\n" + modPlayer.pointsUnspent + " unspent points\n" + ((Main.netMode == NetmodeID.MultiplayerClient) ? numPlayers + " players online\nAverage Level: " + ((int)averageLevel) : ""));
+                Main.instance.MouseText("Level: " + (modPlayer.level + 1) + "\n" + modPlayer.statPoints + " unspent points\n" + ((Main.netMode == NetmodeID.MultiplayerClient) ? numPlayers + " players online\nAverage Level: " + ((int)averageLevel) : ""));
             }
         }
 

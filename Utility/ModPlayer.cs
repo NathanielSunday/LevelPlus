@@ -29,15 +29,14 @@ namespace levelplus {
         ushort BASE_POINTS = (ushort)levelplusConfig.Instance.PointsBase;
         ushort LEVEL_POINTS = (ushort)levelplusConfig.Instance.PointsPerLevel;
 
-
+        //currently private/unused variables
+        private ushort talentUnspent;
         private string talents;
 
         public ulong currentXP { get; private set; }
         public ulong neededXP { get; private set; }
         public ushort level { get; set; }
-        public ushort pointsUnspent { get; private set; }
-        public ushort talentUnspent { get; private set; }
-
+        public ushort statPoints { get; private set; }
 
         public ushort constitution { get; set; } //buff to max health, base defense
         public ushort strength { get; set; } //buff to melee damage
@@ -53,13 +52,13 @@ namespace levelplus {
 
 
         public void spend(Stat stat, ushort amount) {
-            if (pointsUnspent > 0) {
-                if (pointsUnspent >= amount) {
-                    pointsUnspent -= amount;
+            if (statPoints > 0) {
+                if (statPoints >= amount) {
+                    statPoints -= amount;
                 }
                 else {
-                    amount = pointsUnspent;
-                    pointsUnspent = 0;
+                    amount = statPoints;
+                    statPoints = 0;
                 }
 
 
@@ -104,48 +103,17 @@ namespace levelplus {
             spend(stat, 1);
         }
 
-        public void AddLevel(ushort level) {
-            pointsUnspent += (ushort)(LEVEL_POINTS * (level - this.level));
-            this.level += level;
+        public void initialize() {
             currentXP = 0;
-            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
-        }
-
-        public void AddXp(ulong amount) {
-            currentXP += (ulong)(amount * (1 + (luck * levelplusConfig.Instance.XPPerPoint)));
-            if (currentXP >= neededXP) {
-                LevelUp();
-            }
-        }
-
-        public void AddPoints(int points) {
-            pointsUnspent = (ushort)(pointsUnspent + points);
-        }
-
-        private void LevelUp() {
-
-            Player.statLife = Player.statLifeMax2;
-            Player.statMana = Player.statManaMax2;
-
-            currentXP -= neededXP;
-            ++level;
-            pointsUnspent += LEVEL_POINTS;
-
-            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
-
-
-            //run levelup again if XP is still higher, otherwise, play the level up noise
-            if (currentXP >= neededXP)
-                LevelUp();
-            else if (!Main.dedServ) {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/level"));
-            }
+            neededXP = BASE_XP;
+            level = 0;
+            talents = "--------";
+            talentUnspent = 0;
+            StatReset();
         }
 
         public void StatReset() {
-            pointsUnspent = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
-            talents = "--------";
-            talentUnspent = 0;
+            statPoints = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
             constitution = 0;
             strength = 0;
             intelligence = 0;
@@ -157,93 +125,7 @@ namespace levelplus {
             luck = 0;
             excavation = 0;
         }
-
-        public void initialize() {
-            currentXP = 0;
-            neededXP = BASE_XP;
-            level = 0;
-            StatReset();
-        }
-
-        public void AddSyncToPacket(ModPacket packet) {
-            packet.Write((byte)Player.whoAmI);
-            packet.Write(level);
-            packet.Write(constitution);
-            packet.Write(strength);
-            packet.Write(intelligence);
-            packet.Write(charisma);
-            packet.Write(dexterity);
-            packet.Write(mysticism);
-            packet.Write(mobility);
-            packet.Write(animalia);
-            packet.Write(luck);
-            packet.Write(excavation);
-        }
-
-        public bool StatsMatch(levelplusModPlayer compare) { //returns true if stats match
-            if (compare.level != level ||
-            compare.constitution != constitution ||
-            compare.strength != strength ||
-            compare.intelligence != intelligence ||
-            compare.charisma != charisma ||
-            compare.dexterity != dexterity ||
-            compare.mysticism != mysticism ||
-            compare.mobility != mobility ||
-            compare.animalia != animalia ||
-            compare.luck != luck ||
-            compare.excavation != excavation)
-                return false;
-            else
-                return true;
-        }
-
-
-        public override void clientClone(ModPlayer clientClone) {
-            base.clientClone(clientClone);
-            levelplusModPlayer clone = clientClone as levelplusModPlayer;
-
-            clone.level = level;
-            clone.constitution = constitution;
-            clone.strength = strength;
-            clone.intelligence = intelligence;
-            clone.charisma = charisma;
-            clone.dexterity = dexterity;
-            clone.mysticism = mysticism;
-            clone.mobility = mobility;
-            clone.animalia = animalia;
-            clone.luck = luck;
-            clone.excavation = excavation;
-        }
-
-        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
-            base.SyncPlayer(toWho, fromWho, newPlayer);
-
-            ModPacket packet = Mod.GetPacket();
-            packet.Write((byte)PacketType.PlayerSync);
-            AddSyncToPacket(packet);
-            packet.Send();
-        }
-
-        public override void SendClientChanges(ModPlayer clientPlayer) {
-            base.SendClientChanges(clientPlayer);
-            if (!StatsMatch(clientPlayer as levelplusModPlayer)) {
-                ModPacket packet = Mod.GetPacket();
-                packet.Write((byte)PacketType.StatsChanged);
-                AddSyncToPacket(packet);
-                packet.Send();
-            }
-        }
-
-        public override void ProcessTriggers(TriggersSet triggersSet) {
-            base.ProcessTriggers(triggersSet);
-            if (levelplus.SpendUIHotKey.JustPressed) {
-                if (Main.netMode != NetmodeID.Server) {
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-                    SpendUI.visible = !SpendUI.visible;
-                }
-            }
-        }
-
+      
         public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath) {
             Random rand = new Random();
 
@@ -255,10 +137,7 @@ namespace levelplus {
                 itemsByMod["Terraria"].Add(respec);
             }
 
-            Weapon weapon = (Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length);
-
-
-            switch (weapon) {
+            switch ((Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length)) {
                 case Weapon.SWORD:
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBroadsword));
                     break;
@@ -313,43 +192,22 @@ namespace levelplus {
         }
 
         public override void SaveData(TagCompound tag) {
-
-            //check if this character has a save tag
-            if (tag.GetBool("initialized")) {
-                tag.Set("level", level);
-                tag.Set("currentXP", currentXP);
-                tag.Set("points", pointsUnspent);
-                tag.Set("talents", talents);
-                tag.Set("talentPoints", talentUnspent);
-                tag.Set("con", constitution);
-                tag.Set("str", strength);
-                tag.Set("int", intelligence);
-                tag.Set("cha", charisma);
-                tag.Set("dex", dexterity);
-                tag.Set("mob", mobility);
-                tag.Set("exc", excavation);
-                tag.Set("ani", animalia);
-                tag.Set("luc", luck);
-                tag.Set("mys", mysticism);
-            }
-            else {
-                tag.Add("initialized", true);
-                tag.Add("level", level);
-                tag.Add("currentXP", currentXP);
-                tag.Add("points", pointsUnspent);
-                tag.Add("talents", talents);
-                tag.Add("talentPoints", talentUnspent);
-                tag.Add("con", constitution);
-                tag.Add("str", strength);
-                tag.Add("int", intelligence);
-                tag.Add("cha", charisma);
-                tag.Add("dex", dexterity);
-                tag.Add("mob", mobility);
-                tag.Add("exc", excavation);
-                tag.Add("ani", animalia);
-                tag.Add("luc", luck);
-                tag.Add("mys", mysticism);
-            }
+            tag.Set("initialized", true, true);
+            tag.Set("level", level, true);
+            tag.Set("currentXP", currentXP, true);
+            tag.Set("points", statPoints, true);
+            tag.Set("talents", talents, true);
+            tag.Set("talentPoints", talentUnspent, true);
+            tag.Set("con", constitution, true);
+            tag.Set("str", strength, true);
+            tag.Set("int", intelligence, true);
+            tag.Set("cha", charisma, true);
+            tag.Set("dex", dexterity, true);
+            tag.Set("mob", mobility, true);
+            tag.Set("exc", excavation, true);
+            tag.Set("ani", animalia, true);
+            tag.Set("luc", luck, true);
+            tag.Set("mys", mysticism, true);
 
             base.SaveData(tag);
         }
@@ -436,7 +294,7 @@ namespace levelplus {
             //+2% minion kb per point
             Player.fishingSkill += (int)(Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
             Player.maxMinions += animalia / levelplusConfig.Instance.MinionPerPoint;
-            //Player.minionKb *= 1.00f * (animalia * levelplusConfig.Instance.MinionKnockBack);
+            //Player.minionKB *= 1.00f * (animalia * levelplusConfig.Instance.MinionKnockBack);
 
 
             //excavation
@@ -485,6 +343,122 @@ namespace levelplus {
 
             base.CanConsumeAmmo(weapon, ammo);
             return true;
+        }
+
+        public void AddLevel(ushort level) {
+            statPoints += (ushort)(LEVEL_POINTS * (level - this.level));
+            this.level += level;
+            currentXP = 0;
+            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
+        }
+
+        public void AddXp(ulong amount) {
+            currentXP += (ulong)(amount * (1 + (luck * levelplusConfig.Instance.XPPerPoint)));
+            if (currentXP >= neededXP) {
+                LevelUp();
+            }
+        }
+
+        public void AddPoints(int points) {
+            statPoints = (ushort)(statPoints + points);
+        }
+
+        private void LevelUp() {
+
+            Player.statLife = Player.statLifeMax2;
+            Player.statMana = Player.statManaMax2;
+
+            currentXP -= neededXP;
+            ++level;
+            statPoints += LEVEL_POINTS;
+
+            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
+
+
+            //run levelup again if XP is still higher, otherwise, play the level up noise
+            if (currentXP >= neededXP)
+                LevelUp();
+            else if (!Main.dedServ) {
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/level"));
+            }
+        }
+
+        public override void clientClone(ModPlayer clientClone) {
+            base.clientClone(clientClone);
+            levelplusModPlayer clone = clientClone as levelplusModPlayer;
+
+            clone.level = level;
+            clone.constitution = constitution;
+            clone.strength = strength;
+            clone.intelligence = intelligence;
+            clone.charisma = charisma;
+            clone.dexterity = dexterity;
+            clone.mysticism = mysticism;
+            clone.mobility = mobility;
+            clone.animalia = animalia;
+            clone.luck = luck;
+            clone.excavation = excavation;
+        }
+
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
+            base.SyncPlayer(toWho, fromWho, newPlayer);
+
+            ModPacket packet = Mod.GetPacket();
+            packet.Write((byte)PacketType.PlayerSync);
+            AddSyncToPacket(packet);
+            packet.Send();
+        }
+
+        public override void SendClientChanges(ModPlayer clientPlayer) {
+            base.SendClientChanges(clientPlayer);
+            if (!StatsMatch(clientPlayer as levelplusModPlayer)) {
+                ModPacket packet = Mod.GetPacket();
+                packet.Write((byte)PacketType.StatsChanged);
+                AddSyncToPacket(packet);
+                packet.Send();
+            }
+        }
+
+        public void AddSyncToPacket(ModPacket packet) {
+            packet.Write((byte)Player.whoAmI);
+            packet.Write(level);
+            packet.Write(constitution);
+            packet.Write(strength);
+            packet.Write(intelligence);
+            packet.Write(charisma);
+            packet.Write(dexterity);
+            packet.Write(mysticism);
+            packet.Write(mobility);
+            packet.Write(animalia);
+            packet.Write(luck);
+            packet.Write(excavation);
+        }
+
+        public bool StatsMatch(levelplusModPlayer compare) { //returns true if stats match
+            if (compare.level != level ||
+            compare.constitution != constitution ||
+            compare.strength != strength ||
+            compare.intelligence != intelligence ||
+            compare.charisma != charisma ||
+            compare.dexterity != dexterity ||
+            compare.mysticism != mysticism ||
+            compare.mobility != mobility ||
+            compare.animalia != animalia ||
+            compare.luck != luck ||
+            compare.excavation != excavation)
+                return false;
+            else
+                return true;
+        }
+
+        public override void ProcessTriggers(TriggersSet triggersSet) {
+            base.ProcessTriggers(triggersSet);
+            if (levelplus.SpendUIHotKey.JustPressed) {
+                if (Main.netMode != NetmodeID.Server) {
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    SpendUI.visible = !SpendUI.visible;
+                }
+            }
         }
     }
 }

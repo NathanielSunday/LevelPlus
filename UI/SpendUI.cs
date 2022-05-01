@@ -17,7 +17,7 @@ namespace levelplus.UI {
             circle.Left.Set((Main.screenWidth / 2f) - (circleDiameter / 2f), 0f);
             circle.Top.Set((Main.screenHeight / 2f) - (circleDiameter / 2f), 0f);
             
-            base.Append(circle);
+            Append(circle);
         }
 
         public override void OnDeactivate() {

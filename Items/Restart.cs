@@ -8,9 +8,10 @@ namespace levelplus.Items
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Reset Token"); 
-			Tooltip.SetDefault("Consume to reset your ENTIRE character, level included.");
-		}
+			DisplayName.SetDefault("Reset Token");
+      Tooltip.SetDefault("Consume to reset your ENTIRE character.\n\nThis item will set your character's level back to 1,\nas if you had just started a new character.");
+    }
+
 
 		public override void SetDefaults() 
 		{
@@ -35,12 +36,9 @@ namespace levelplus.Items
 
 		public override bool? UseItem(Player player)
 		{
-
-			levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
-			modPlayer.initialize();
+			player.GetModPlayer<levelplusModPlayer>().initialize();
 
 			return true;
 		}
-
 	}
 }
