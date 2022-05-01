@@ -164,8 +164,8 @@ namespace levelplus.UI {
                     points.SetText("" + modPlayer.animalia);
                     text = "Animalia:\n\n"
                         + "  +" + ((int)(modPlayer.animalia * (levelplusConfig.Instance.FishSkillPerPoint * 100))) + "% better fishing\n"
-                        + "  +" + (modPlayer.animalia / levelplusConfig.Instance.MinionPerPoint) + " minion slots\n"
-                        + "  +" + ((int)(modPlayer.animalia * (levelplusConfig.Instance.MinionKnockBack * 100))) + "% minion knockback";
+                        + "  +" + (modPlayer.animalia / levelplusConfig.Instance.MinionPerPoint) + " minion slots\n";
+                        //+ "  +" + ((int)(modPlayer.animalia * (levelplusConfig.Instance.MinionKnockBack * 100))) + "% minion knockback";
                     rarity = 0; //white
                     break;
                 case Stat.LUCK:

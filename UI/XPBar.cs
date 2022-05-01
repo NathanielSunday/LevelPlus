@@ -146,7 +146,7 @@ namespace levelplus.UI {
 
                 averageLevel /= numPlayers;
 
-                Main.instance.MouseText("Level: " + (modPlayer.level + 1) + "\n" + modPlayer.GetUnspentPoints() + " unspent points\n" + ((Main.netMode == NetmodeID.MultiplayerClient) ? numPlayers + " players online\nAverage Level: " + ((int)averageLevel) : ""));
+                Main.instance.MouseText("Level: " + (modPlayer.level + 1) + "\n" + modPlayer.pointsUnspent + " unspent points\n" + ((Main.netMode == NetmodeID.MultiplayerClient) ? numPlayers + " players online\nAverage Level: " + ((int)averageLevel) : ""));
             }
         }
 

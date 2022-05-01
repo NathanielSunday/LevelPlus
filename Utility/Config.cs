@@ -156,6 +156,7 @@ namespace levelplus
         public float FishSkillPerPoint; 
         //Used: levelplusConfig.Instance.FishSkillPerPoint
         
+        /*
         [Label("Animalia: Minion Knockback")]
         [Tooltip("How much Minion Knockback the player gets per point")]
         [Slider]
@@ -164,7 +165,8 @@ namespace levelplus
         [DefaultValue(0.02f)]
         public float MinionKnockBack; 
         //Used: levelplusConfig.Instance.MinionKnockBack
-        
+        */
+
         [Label("Animalia: Max Minions")]
         [Tooltip("How many Points needed to be spent for 1 Minion Capacity")]
         [Range(1, 30)]
