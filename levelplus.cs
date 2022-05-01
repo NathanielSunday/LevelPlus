@@ -1,78 +1,99 @@
-using Terraria.ModLoader;
-using System.IO;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.UI;
+using levelplus.UI;
+using System.Data;
+using Microsoft.Xna.Framework.Audio;
 
-namespace levelplus {
+namespace levelplus
+{
+	public class levelplus : Mod
+	{
 
-    internal enum PacketType : byte {
-        XP,
-        PlayerSync,
-        StatsChanged
-    }
+		internal GUI gui;
+		public UserInterface guiInterface;
 
-    public class levelplus : Mod {
-        public static levelplus Instance { get; private set; }
-        public levelplus() { Instance = this; }
+		internal LevelUI levelUI;
+		public UserInterface levelInterface;
 
-        public static ModKeybind SpendUIHotKey;
-        public static ModKeybind SpendModFive;
-        public static ModKeybind SpendModTen;
-        public static ModKeybind SpendModTwentyFive;
+		public static SoundEffect LevelUp { get; set; }
 
-        public override void Load() {
-            SpendUIHotKey = KeybindLoader.RegisterKeybind(this, "Open SpendUI", Microsoft.Xna.Framework.Input.Keys.P);
-            SpendModFive = KeybindLoader.RegisterKeybind(this, "Spend 5 points", Microsoft.Xna.Framework.Input.Keys.LeftShift);
-            SpendModTen = KeybindLoader.RegisterKeybind(this, "Spend 10 points", Microsoft.Xna.Framework.Input.Keys.LeftControl);
-            SpendModTwentyFive = KeybindLoader.RegisterKeybind(this, "Spend 25 points", Microsoft.Xna.Framework.Input.Keys.LeftAlt);
-        }
+		public override void Load()
+		{
+			base.Load();
+			//makes sure UI isn't opened server side
+			if (!Main.dedServ)
+			{
+				gui = new GUI();
+				gui.Activate();
+				guiInterface = new UserInterface();
+				guiInterface.SetState(gui);
 
-        public override void Unload() {
-            SpendUIHotKey = null;
-            SpendModFive = null;
-            SpendModTen = null;
-            SpendModTwentyFive = null;
-        }
+				levelUI = new LevelUI();
+				levelUI.Activate();
+				levelInterface = new UserInterface();
+				levelInterface.SetState(levelUI);
 
-        public override void HandlePacket(BinaryReader reader, int whoAmI) {
-            byte msgType = reader.ReadByte();
-            switch ((PacketType)msgType) {
-                case PacketType.XP: //xp gain
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(reader.ReadUInt64());
-                    break;
-                case PacketType.PlayerSync: //sync the players properly
-                    ParsePlayer(reader, reader.ReadByte());
-                    break;
-                case PacketType.StatsChanged: //this is called on SendClientChanges
-                    byte index = reader.ReadByte();
-                    ParsePlayer(reader, index);
-                    if(Main.netMode == NetmodeID.Server) {
-                        ModPacket packet = GetPacket();
-                        packet.Write((byte)PacketType.StatsChanged);
-                        Main.player[index].GetModPlayer<levelplusModPlayer>().AddSyncToPacket(packet);
-                        packet.Send(-1, index);
-                    }
-                    break;
-                default:
-                    Logger.WarnFormat("levelplus: Unknown message type {0}", msgType);
-                    break;
-            }
-        }
 
-        public void ParsePlayer(BinaryReader reader, byte index) {
-            levelplusModPlayer copy = Main.player[index].GetModPlayer<levelplusModPlayer>();
-            copy.level = reader.ReadUInt16();
-            copy.constitution = reader.ReadUInt16();
-            copy.strength = reader.ReadUInt16();
-            copy.intelligence = reader.ReadUInt16();
-            copy.charisma = reader.ReadUInt16();
-            copy.dexterity = reader.ReadUInt16();
-            copy.mysticism = reader.ReadUInt16();
-            copy.mobility = reader.ReadUInt16();
-            copy.animalia = reader.ReadUInt16();
-            copy.luck = reader.ReadUInt16();
-            copy.excavation = reader.ReadUInt16();
-        }
-    }
+			}
+		}
+
+		public override void Unload()
+		{
+			base.Unload();
+			if (!Main.dedServ)
+			{
+				LevelUI.visible = false;
+				GUI.visible = false;
+				if (levelInterface != null && guiInterface != null)
+				{
+					levelInterface.SetState(null);
+					guiInterface.SetState(null);
+				}
+				
+				
+				gui = null;
+				levelUI = null;
+			}
+		}
+
+		public override void UpdateUI(GameTime gameTime)
+		{
+			//will only draw UI if !inMenu
+			if (/*!Main.gameMenu &&*/ GUI.visible)
+				guiInterface?.Update(gameTime);
+
+			if (LevelUI.visible)
+				levelInterface?.Update(gameTime);
+		}
+
+		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+		{
+			base.ModifyInterfaceLayers(layers);
+
+			int resourceBarsIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+			layers.RemoveAt(resourceBarsIndex);
+			layers.Insert(resourceBarsIndex, new LegacyGameInterfaceLayer("Level+: Resource Bars", delegate
+			{
+				if (/*!Main.gameMenu &&*/ GUI.visible)
+					guiInterface.Draw(Main.spriteBatch, new GameTime());
+				if (LevelUI.visible)
+					levelInterface.Draw(Main.spriteBatch, new GameTime());
+
+				return true;
+			}, InterfaceScaleType.UI));
+		}
+
+		/*private bool DrawBars()
+		{
+			if (!Main.gameMenu && GUI.visible)
+			{
+				guiInterface.Draw(Main.spriteBatch, new GameTime());
+			}
+
+			return true;
+		}*/
+	}
 }
