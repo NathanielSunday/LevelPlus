@@ -384,7 +384,7 @@ namespace levelplus {
             if (currentXP >= neededXP)
                 LevelUp();
             else if (!Main.dedServ) {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/level"));
+                SoundEngine.PlaySound(new SoundStyle("Sounds/Custom/level"));
             }
         }
 
