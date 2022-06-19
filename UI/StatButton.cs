@@ -177,7 +177,7 @@ namespace levelplus.UI {
                     text = "Mysticism:\n\n"
                         + "  +" + (modPlayer.mysticism * levelplusConfig.Instance.ManaPerPoint) + " max mana (+" + (modPlayer.level * levelplusConfig.Instance.ManaPerLevel) + " from level)\n"
                         + "  +" + (modPlayer.mysticism / levelplusConfig.Instance.ManaRegPerPoint) + " mana regen\n"
-                        + "  -" + System.Math.Clamp((int)(modPlayer.mysticism * (levelplusConfig.Instance.ManaCostPerPoint * 100)), 0.0f, 100.0f) + "% mana cost";
+                        + "  -" + System.Math.Clamp((int)(modPlayer.mysticism * (levelplusConfig.Instance.ManaCostPerPoint * 100)), 0f, 99.0f) + "% mana cost (can't be reduced below 1%)";
                     rarity = 0; //white
                     break;
                 default:

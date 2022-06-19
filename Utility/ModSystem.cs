@@ -1,5 +1,7 @@
 ﻿using levelplus.UI;
 using Microsoft.Xna.Framework;
+using MonoMod.Cil;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -16,6 +18,8 @@ namespace levelplus {
 
 		public override void Load() {
 			base.Load();
+			//modify our mana cap
+			IL.Terraria.Player.Update += PlayerManaUpdate;
 			//makes sure UI isn't opened server side
 			if (!Main.dedServ) {
 				gui = new GUI();
@@ -30,7 +34,9 @@ namespace levelplus {
 			}
 		}
 
-		public override void Unload() {
+        
+
+        public override void Unload() {
 			base.Unload();
 			if (!Main.dedServ) {
 				SpendUI.visible = false;
@@ -67,6 +73,21 @@ namespace levelplus {
 
 				return true;
 			}, InterfaceScaleType.UI));
+		}
+		
+		private void PlayerManaUpdate(ILContext il) {
+			//throw new NotImplementedException();
+			ILCursor cursor = new(il);
+
+			if (!cursor.TryGotoNext(MoveType.Before,
+				i => i.MatchLdfld("Terraria.Player", "statManaMax2"),
+				i => i.MatchLdcI4(400))
+			) {
+				levelplus.Instance.Logger.FatalFormat("Could not find instruction");
+				return;
+			}
+
+			cursor.Next.Next.Operand = 200000;
 		}
 	}
 }
