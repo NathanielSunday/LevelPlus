@@ -23,12 +23,6 @@ namespace levelplus {
 
     class levelplusModPlayer : ModPlayer {
 
-        float RATE = levelplusConfig.Instance.XPRate;
-        ushort INCREASE = (ushort)levelplusConfig.Instance.XPIncrease;
-        ushort BASE_XP = (ushort)levelplusConfig.Instance.XPBase;
-        ushort BASE_POINTS = (ushort)levelplusConfig.Instance.PointsBase;
-        ushort LEVEL_POINTS = (ushort)levelplusConfig.Instance.PointsPerLevel;
-
         //currently private/unused variables
         private ushort talentUnspent;
         private string talents;
@@ -37,9 +31,6 @@ namespace levelplus {
         public ulong neededXP { get; private set; }
         public ushort level { get; set; }
         public ushort statPoints { get; private set; }
-
-
-
 
         public ushort constitution { get; set; } //buff to max health, base defense
         public ushort strength { get; set; } //buff to melee damage
@@ -107,15 +98,15 @@ namespace levelplus {
         }
 
         public void initialize() {
-            currentXP = 0;
-            neededXP = BASE_XP;
             level = 0;
-
+            currentXP = 0;
+            neededXP = CalculateNeededXP(level);
+            
             StatReset();
         }
 
         public void StatReset() {
-            statPoints = (ushort)(level * LEVEL_POINTS + BASE_POINTS);
+            statPoints = (ushort)(level * levelplusConfig.Instance.PointsPerLevel + levelplusConfig.Instance.PointsBase);
             talents = "--------";
             talentUnspent = 0;
             constitution = 0;
@@ -220,7 +211,7 @@ namespace levelplus {
             if (tag.GetBool("initialized")) {
                 level = (ushort)tag.GetAsShort("level");
                 currentXP = (ulong)tag.GetAsLong("currentXP");
-                neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
+                neededXP = CalculateNeededXP(level);
                 statPoints = (ushort)tag.GetAsShort("points");
                 talents = tag.Get<string>("talents");
                 talentUnspent = (ushort)tag.GetAsShort("talentPoints");
@@ -234,13 +225,13 @@ namespace levelplus {
                 animalia = (ushort)tag.GetAsShort("ani");
                 luck = (ushort)(tag.ContainsKey("gra") ? tag.GetAsShort("gra") : tag.GetAsShort("luc"));
                 mysticism = (ushort)tag.GetAsShort("mys");
+
+                if (currentXP > neededXP) {
+                    LevelUp();
+                }
             }
             else {
                 initialize();
-            }
-
-            if (currentXP > neededXP) {
-                LevelUp();
             }
 
             base.LoadData(tag);
@@ -254,87 +245,46 @@ namespace levelplus {
 
         public override void ResetEffects() {
             base.ResetEffects();
-
-            //COMBAT
-
             //constitution
-            //+2 life per level
-            //+5 life per point
-            //+1 defense per 3 points
             Player.statLifeMax2 += (levelplusConfig.Instance.HealthPerLevel * level) + (levelplusConfig.Instance.HealthPerPoint * constitution);
             Player.lifeRegen += constitution / levelplusConfig.Instance.HRegenPerPoint;
             Player.statDefense += constitution / levelplusConfig.Instance.DefensePerPoint;
-
             //intelligence
-            //+1% damage per point
-            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Magic) *= 1.00f + (intelligence * levelplusConfig.Instance.MagicDamagePerPoint);
             Player.GetCritChance(DamageClass.Magic) += intelligence / levelplusConfig.Instance.MagicCritPerPoint;
-
             //strength
-            //+1% damage per point
-            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Melee) *= 1.00f + (strength * levelplusConfig.Instance.MeleeDamagePerPoint);
             Player.GetCritChance(DamageClass.Melee) += strength / levelplusConfig.Instance.MeleeCritPerPoint;
-
             //dexterity
-            //+1% damage per point
-            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Ranged) *= 1.00f + (dexterity * levelplusConfig.Instance.RangedDamagePerPoint);
             Player.GetCritChance(DamageClass.Ranged) += dexterity / levelplusConfig.Instance.RangedCritPerPoint;
-
             //charisma
-            //+1% damage per point
-            //+1% crit chance per 15 points
             Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma * levelplusConfig.Instance.SummonDamagePerPoint);
             Player.GetCritChance(DamageClass.Summon) += charisma / levelplusConfig.Instance.SummonCritPerPoint;
-
-
-            //UTILITY
-
             //animalia
-            //+2% fishing skill per point
-            //+1 minion per 20 points
-            //+2% minion kb per point
             Player.fishingSkill += (int)(Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
-            Player.maxMinions += animalia / levelplusConfig.Instance.MinionPerPoint;
-            //Player.minionKB *= 1.00f * (animalia * levelplusConfig.Instance.MinionKnockBack);
-
-
             //excavation
-            //+1% pick speed per point
-            //+2% place speed per point
-            //+1 place reach per 10 points
             Player.pickSpeed *= 1.00f - (excavation * levelplusConfig.Instance.PickSpeedPerPoint);
             Player.tileSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
             Player.wallSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
             Player.blockRange += excavation / levelplusConfig.Instance.RangePerPoint;
-
             //mobility
-            //+1% max run speed per point
-            //+2% move speed per point
-            //+2% max flight time per point
             Player.maxRunSpeed *= 1.00f + (mobility * levelplusConfig.Instance.RunSpeedPerPoint);
             Player.runAcceleration *= 1.00f + (mobility * levelplusConfig.Instance.AccelPerPoint);
             Player.wingTimeMax += (int)(Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
-
-            //luck
-            //+1% xp per point
-            //1% chance not to consume ammo
-
-
             //mysticism
-            //+1 max mana per level
-            //+2 max mana per point 
-            //+1 mana regen per 15 points
-            //-0.5% mana cost per point
             Player.statManaMax2 += (levelplusConfig.Instance.ManaPerLevel * level) + (levelplusConfig.Instance.ManaPerPoint * mysticism);
             Player.manaRegen += mysticism / levelplusConfig.Instance.ManaRegPerPoint;
 
         }
 
+        public override void PostUpdateEquips() {
+            base.PostUpdateEquips();
+            Player.maxMinions += animalia / levelplusConfig.Instance.MinionPerPoint;
+        }
+
         public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
-            mult *= Math.Clamp(1.00f - (mysticism * levelplusConfig.Instance.ManaCostPerPoint), 0.00f, 1.00f);
+            mult *= Math.Clamp(1.0f - (mysticism * levelplusConfig.Instance.ManaCostPerPoint), 0.1f, 1.0f);
             base.ModifyManaCost(item, ref reduce, ref mult);
         }
 
@@ -349,12 +299,11 @@ namespace levelplus {
             return true;
         }
 
-
         public void AddLevel(ushort level) {
-            statPoints += (ushort)(LEVEL_POINTS * (level - this.level));
+            statPoints += (ushort)(levelplusConfig.Instance.PointsPerLevel * (level - this.level));
             this.level += level;
             currentXP = 0;
-            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
+            neededXP = CalculateNeededXP(level);
         }
 
         public void AddXp(ulong amount) {
@@ -369,23 +318,25 @@ namespace levelplus {
         }
 
         private void LevelUp() {
+            currentXP -= neededXP;
+            ++level;
+            statPoints += (ushort)levelplusConfig.Instance.PointsPerLevel;
+
+            neededXP = CalculateNeededXP(level);
 
             Player.statLife = Player.statLifeMax2;
             Player.statMana = Player.statManaMax2;
-
-            currentXP -= neededXP;
-            ++level;
-            statPoints += LEVEL_POINTS;
-
-            neededXP = (ulong)(INCREASE * Math.Pow(level, RATE)) + BASE_XP;
-
 
             //run levelup again if XP is still higher, otherwise, play the level up noise
             if (currentXP >= neededXP)
                 LevelUp();
             else if (!Main.dedServ) {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/level"));
+                SoundEngine.PlaySound(new SoundStyle("levelplus/Sounds/Custom/level"));
             }
+        }
+
+        public ulong CalculateNeededXP(ushort level) {
+            return (ulong)(levelplusConfig.Instance.XPIncrease * Math.Pow(level, levelplusConfig.Instance.XPRate) + levelplusConfig.Instance.XPBase);
         }
 
         public override void clientClone(ModPlayer clientClone) {
