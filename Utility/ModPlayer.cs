@@ -88,7 +88,8 @@ namespace levelplus {
                     theStat = mysticism;
                     break;
             }
-            ushort canFit = (ushort) ((ushort) (Math.Min(statPointsInt, howMuch) + theStat) > ushort.MaxValue ? ushort.MaxValue - theStat : Math.Min(statPointsInt, howMuch) + theStat);
+            ushort canFit = (ushort) Math.Min(ushort.MaxValue - theStat, Math.Min(statPointsInt, howMuch));
+            statPoints = (ushort) Math.Min(ushort.MaxValue, statPointsInt - canFit);
             switch (whichStat) {
                 case Stat.CONSTITUTION:
                     constitution += canFit;
@@ -121,7 +122,6 @@ namespace levelplus {
                     mysticism += canFit;
                     break;
             }
-            statPoints = (ushort) Math.Min(ushort.MaxValue, statPointsInt - canFit);
         }
 
         public void initialize() {
@@ -334,7 +334,7 @@ namespace levelplus {
         }
 
         public void SetLevel(ushort setLevelToThis) {
-            level = setLevelToThis;
+            level = (ushort) Math.Max(0, setLevelToThis - 1);
             int statPointsInt = levelplusConfig.Instance.PointsPerLevel * setLevelToThis;
             statPointsInt -= constitution;
             statPointsInt -= strength;
@@ -346,7 +346,7 @@ namespace levelplus {
             statPointsInt -= animalia;
             statPointsInt -= luck;
             statPointsInt -= excavation;
-            statPoints = (ushort) Math.Min(ushort.MaxValue, statPointsInt);
+            statPoints = (ushort) Math.Max(Math.Min(ushort.MaxValue, statPointsInt), 0);
             currentXP = 0;
             neededXP = CalculateNeededXP(setLevelToThis);
         }
