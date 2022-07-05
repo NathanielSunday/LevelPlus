@@ -351,8 +351,11 @@ namespace levelplus {
             neededXP = CalculateNeededXP(setLevelToThis);
         }
 
-        public void AddXp(ulong amountToAdd) {
-            currentXP += amountToAdd;
+        public void AddXp(ulong amountToAdd, bool addRaw = false) {
+            if (addRaw)
+                currentXP += amountToAdd;
+            else
+                currentXP += (ulong) (amountToAdd * (luck * levelplusConfig.Instance.XPPerPoint + 1));
             if (currentXP >= neededXP) {
                 LevelUp();
             }

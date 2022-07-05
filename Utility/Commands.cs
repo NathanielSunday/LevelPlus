@@ -52,7 +52,7 @@ namespace levelplus.Commands {
                 return;
             }
             levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
-            player.AddXp(ulong.Parse(args[0]));
+            player.AddXp(ulong.Parse(args[0]), true);
         }
     }
 
