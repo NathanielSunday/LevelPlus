@@ -128,12 +128,12 @@ namespace levelplus {
             level = 0;
             currentXP = 0;
             neededXP = CalculateNeededXP(level);
-            
+
             StatReset();
         }
 
         public void StatReset() {
-            statPoints = (ushort)(level * levelplusConfig.Instance.PointsPerLevel + levelplusConfig.Instance.PointsBase);
+            statPoints = (ushort) (level * levelplusConfig.Instance.PointsPerLevel + levelplusConfig.Instance.PointsBase);
             talents = "--------";
             talentUnspent = 0;
             constitution = 0;
@@ -159,7 +159,7 @@ namespace levelplus {
                 itemsByMod["Terraria"].Add(respec);
             }
 
-            switch ((Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length)) {
+            switch ((Weapon) new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length)) {
                 case Weapon.SWORD:
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBroadsword));
                     break;
@@ -236,22 +236,22 @@ namespace levelplus {
 
         public override void LoadData(TagCompound tag) {
             if (tag.GetBool("initialized")) {
-                level = (ushort)tag.GetAsShort("level");
-                currentXP = (ulong)tag.GetAsLong("currentXP");
+                level = (ushort) tag.GetAsShort("level");
+                currentXP = (ulong) tag.GetAsLong("currentXP");
                 neededXP = CalculateNeededXP(level);
-                statPoints = (ushort)tag.GetAsShort("points");
+                statPoints = (ushort) tag.GetAsShort("points");
                 talents = tag.Get<string>("talents");
-                talentUnspent = (ushort)tag.GetAsShort("talentPoints");
-                constitution = (ushort)tag.GetAsShort("con");
-                strength = (ushort)tag.GetAsShort("str");
-                intelligence = (ushort)tag.GetAsShort("int");
-                charisma = (ushort)tag.GetAsShort("cha");
-                dexterity = (ushort)tag.GetAsShort("dex");
-                mobility = (ushort)tag.GetAsShort("mob");
-                excavation = (ushort)tag.GetAsShort("exc");
-                animalia = (ushort)tag.GetAsShort("ani");
-                luck = (ushort)(tag.ContainsKey("gra") ? tag.GetAsShort("gra") : tag.GetAsShort("luc"));
-                mysticism = (ushort)tag.GetAsShort("mys");
+                talentUnspent = (ushort) tag.GetAsShort("talentPoints");
+                constitution = (ushort) tag.GetAsShort("con");
+                strength = (ushort) tag.GetAsShort("str");
+                intelligence = (ushort) tag.GetAsShort("int");
+                charisma = (ushort) tag.GetAsShort("cha");
+                dexterity = (ushort) tag.GetAsShort("dex");
+                mobility = (ushort) tag.GetAsShort("mob");
+                excavation = (ushort) tag.GetAsShort("exc");
+                animalia = (ushort) tag.GetAsShort("ani");
+                luck = (ushort) (tag.ContainsKey("gra") ? tag.GetAsShort("gra") : tag.GetAsShort("luc"));
+                mysticism = (ushort) tag.GetAsShort("mys");
 
                 if (currentXP > neededXP) {
                     LevelUp();
@@ -267,7 +267,7 @@ namespace levelplus {
         public override void OnRespawn(Player player) {
             base.OnRespawn(player);
             //lose a quarter of your xp on death
-            currentXP = (ulong)(currentXP * .75);
+            currentXP = (ulong) (currentXP * .75);
         }
 
         public override void ResetEffects() {
@@ -289,7 +289,7 @@ namespace levelplus {
             Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma * levelplusConfig.Instance.SummonDamagePerPoint);
             Player.GetCritChance(DamageClass.Summon) += charisma / levelplusConfig.Instance.SummonCritPerPoint;
             //animalia
-            Player.fishingSkill += (int)(Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
+            Player.fishingSkill += (int) (Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
             //excavation
             Player.pickSpeed *= 1.00f - (excavation * levelplusConfig.Instance.PickSpeedPerPoint);
             Player.tileSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
@@ -298,7 +298,7 @@ namespace levelplus {
             //mobility
             Player.maxRunSpeed *= 1.00f + (mobility * levelplusConfig.Instance.RunSpeedPerPoint);
             Player.runAcceleration *= 1.00f + (mobility * levelplusConfig.Instance.AccelPerPoint);
-            Player.wingTimeMax += (int)(Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
+            Player.wingTimeMax += (int) (Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
             //mysticism
             Player.statManaMax2 += (levelplusConfig.Instance.ManaPerLevel * level) + (levelplusConfig.Instance.ManaPerPoint * mysticism);
             Player.manaRegen += mysticism / levelplusConfig.Instance.ManaRegPerPoint;
@@ -472,7 +472,7 @@ namespace levelplus {
         private void LevelUp() {
             currentXP -= neededXP;
             ++level;
-            statPoints += (ushort)levelplusConfig.Instance.PointsPerLevel;
+            statPoints += (ushort) levelplusConfig.Instance.PointsPerLevel;
 
             neededXP = CalculateNeededXP(level);
 
@@ -488,7 +488,7 @@ namespace levelplus {
         }
 
         public ulong CalculateNeededXP(ushort level) {
-            return (ulong)(levelplusConfig.Instance.XPIncrease * Math.Pow(level, levelplusConfig.Instance.XPRate) + levelplusConfig.Instance.XPBase);
+            return (ulong) (levelplusConfig.Instance.XPIncrease * Math.Pow(level, levelplusConfig.Instance.XPRate) + levelplusConfig.Instance.XPBase);
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -512,7 +512,7 @@ namespace levelplus {
             base.SyncPlayer(toWho, fromWho, newPlayer);
 
             ModPacket packet = Mod.GetPacket();
-            packet.Write((byte)PacketType.PlayerSync);
+            packet.Write((byte) PacketType.PlayerSync);
             AddSyncToPacket(packet);
             packet.Send();
         }
@@ -521,14 +521,14 @@ namespace levelplus {
             base.SendClientChanges(clientPlayer);
             if (!StatsMatch(clientPlayer as levelplusModPlayer)) {
                 ModPacket packet = Mod.GetPacket();
-                packet.Write((byte)PacketType.StatsChanged);
+                packet.Write((byte) PacketType.StatsChanged);
                 AddSyncToPacket(packet);
                 packet.Send();
             }
         }
 
         public void AddSyncToPacket(ModPacket packet) {
-            packet.Write((byte)Player.whoAmI);
+            packet.Write((byte) Player.whoAmI);
             packet.Write(level);
             packet.Write(constitution);
             packet.Write(strength);

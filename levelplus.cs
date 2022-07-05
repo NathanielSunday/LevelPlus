@@ -36,7 +36,7 @@ namespace levelplus {
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) {
             byte msgType = reader.ReadByte();
-            switch ((PacketType)msgType) {
+            switch ((PacketType) msgType) {
                 case PacketType.XP: //xp gain
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(reader.ReadUInt64());
@@ -47,9 +47,9 @@ namespace levelplus {
                 case PacketType.StatsChanged: //this is called on SendClientChanges
                     byte index = reader.ReadByte();
                     ParsePlayer(reader, index);
-                    if(Main.netMode == NetmodeID.Server) {
+                    if (Main.netMode == NetmodeID.Server) {
                         ModPacket packet = GetPacket();
-                        packet.Write((byte)PacketType.StatsChanged);
+                        packet.Write((byte) PacketType.StatsChanged);
                         Main.player[index].GetModPlayer<levelplusModPlayer>().AddSyncToPacket(packet);
                         packet.Send(-1, index);
                     }

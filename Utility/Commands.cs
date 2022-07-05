@@ -20,8 +20,7 @@ namespace levelplus.Commands {
         }
     }
 
-    class SetPointsCommand : ModCommand
-    {
+    class SetPointsCommand : ModCommand {
         public override string Command => "setpoints";
 
         public override string Description => "(Level+) Sets the player's available skill points to a given amount.";
@@ -57,8 +56,7 @@ namespace levelplus.Commands {
         }
     }
 
-    class SetXpCommand : ModCommand
-    {
+    class SetXpCommand : ModCommand {
         public override string Command => "setxp";
 
         public override string Description => "(Level+) Sets player experience to a given amount.";
@@ -76,8 +74,7 @@ namespace levelplus.Commands {
         }
     }
 
-    class AddLevelsCommand : ModCommand
-    {
+    class AddLevelsCommand : ModCommand {
         public override string Command => "addlevel";
 
         public override string Description => "(Level+) Adds a given amount of levels to the current player level.";
@@ -95,8 +92,7 @@ namespace levelplus.Commands {
         }
     }
 
-    class SetLevelCommand : ModCommand
-    {
+    class SetLevelCommand : ModCommand {
         public override string Command => "setlevel";
 
         public override string Description => "(Level+) Sets the player level to a given amount.";
@@ -114,8 +110,7 @@ namespace levelplus.Commands {
         }
     }
 
-    class InvestCommand : ModCommand
-    {
+    class InvestCommand : ModCommand {
         public override string Command => "invest";
 
         public override string Description => "(Level+) Invests a given amount of levels into a stat of your choice."
@@ -129,14 +124,14 @@ namespace levelplus.Commands {
             levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
             if (args.Length == 1) {
                 player.InvestParticularAmount(ushort.Parse(args[0]));
-			} else {
+            }
+            else {
                 player.InvestParticularAmount(ushort.Parse(args[0]), ushort.Parse(args[1]));
             }
         }
     }
 
-    class SetInvestmentCommand : ModCommand
-    {
+    class SetInvestmentCommand : ModCommand {
         public override string Command => "setinvestment";
 
         public override string Description => "(Level+) Sets the investment in a stat of your choice to a given amount."
@@ -151,7 +146,7 @@ namespace levelplus.Commands {
             if (!levelplusConfig.Instance.CommandsEnabled) {
                 Main.NewText("Enable commands in the Level+ config to use this command.");
                 return;
-			}
+            }
             levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
             if (args.Length == 1) {
                 player.SetInvestmentToParticularAmount(ushort.Parse(args[0]));
