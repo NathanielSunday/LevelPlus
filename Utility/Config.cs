@@ -2,8 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
-namespace levelplus
-{
+namespace levelplus {
     public class levelplusConfig : ModConfig {
         public override ConfigScope Mode => ConfigScope.ServerSide;
         public static levelplusConfig Instance => ModContent.GetInstance<levelplusConfig>();
@@ -28,21 +27,21 @@ namespace levelplus
         [Label("Constitution: Health per Point")]
         [Tooltip("How much HP the player gets per point")]
         [Range(0, 25)]
-        [DefaultValue(5)] 
-        public int HealthPerPoint;  
-        
+        [DefaultValue(5)]
+        public int HealthPerPoint;
+
         [Label("Constitution: LifeRegen")]
         [Tooltip("How many Points needed to be spent for 1 LifeReg")]
         [Range(1, 30)]
-        [DefaultValue(20)] 
-        public int HRegenPerPoint;  
-        
+        [DefaultValue(20)]
+        public int HRegenPerPoint;
+
         [Label("Constitution: Defense")]
         [Tooltip("How many Points needed to be spent for 1 Defense")]
         [Range(1, 30)]
-        [DefaultValue(3)] 
-        public int DefensePerPoint;  
-          
+        [DefaultValue(3)]
+        public int DefensePerPoint;
+
         // --- //
         // Intelligence //
         [Label("Intelligence:  Magic Damage")]
@@ -51,14 +50,14 @@ namespace levelplus
         [Range(0.00f, 0.10f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
-        public float MagicDamagePerPoint; 
-        
+        public float MagicDamagePerPoint;
+
         [Label("Intelligence: Magic Crit")]
         [Tooltip("How many Points needed to be spent for 1% Magic Crit")]
         [Range(1, 30)]
-        [DefaultValue(15)] 
-        public int MagicCritPerPoint;  
-        
+        [DefaultValue(15)]
+        public int MagicCritPerPoint;
+
         // --- //
         // Strength //
         [Label("Strength: Melee Damage")]
@@ -67,14 +66,14 @@ namespace levelplus
         [Range(0.00f, 0.10f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
-        public float MeleeDamagePerPoint; 
-        
+        public float MeleeDamagePerPoint;
+
         [Label("Strength: Melee Crit")]
         [Tooltip("How many Points needed to be spent for 1% Melee Crit")]
         [Range(1, 30)]
-        [DefaultValue(15)] 
-        public int MeleeCritPerPoint;  
-        
+        [DefaultValue(15)]
+        public int MeleeCritPerPoint;
+
         // --- //
         // Dexterity //
         [Label("Dexterity: Ranged Damage")]
@@ -83,14 +82,14 @@ namespace levelplus
         [Range(0.00f, 0.25f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
-        public float RangedDamagePerPoint; 
-        
+        public float RangedDamagePerPoint;
+
         [Label("Dexterity: Ranged Crit")]
         [Tooltip("How many Points needed to be spent for 1% Ranged Crit")]
         [Range(1, 30)]
-        [DefaultValue(15)] 
-        public int RangedCritPerPoint;  
-        
+        [DefaultValue(15)]
+        public int RangedCritPerPoint;
+
         // --- //
         // Charisma //
         [Label("Charisma: Summon Damage")]
@@ -99,15 +98,15 @@ namespace levelplus
         [Range(0.00f, 0.25f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
-        public float SummonDamagePerPoint; 
-        
+        public float SummonDamagePerPoint;
+
         [Label("Charisma: Summon Crit")]
         [Tooltip("How many Points needed to be spent for 1% Summon Crit")]
         [Range(1, 30)]
-        [DefaultValue(15)] 
-        public int SummonCritPerPoint;  
-        
-        
+        [DefaultValue(15)]
+        public int SummonCritPerPoint;
+
+
         // --- //
         // Animalia //
         [Label("Animalia: Fishing Skill")]
@@ -116,8 +115,8 @@ namespace levelplus
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
         [DefaultValue(0.02f)]
-        public float FishSkillPerPoint; 
-        
+        public float FishSkillPerPoint;
+
 
         //an update removed minionKB as a stat I can modify, come back to this later
         /*
@@ -133,10 +132,10 @@ namespace levelplus
         [Label("Animalia: Max Minions")]
         [Tooltip("How many Points needed to be spent for 1 Minion Capacity")]
         [Range(1, 30)]
-        [DefaultValue(20)] 
-        public int MinionPerPoint;  
-        
-        
+        [DefaultValue(20)]
+        public int MinionPerPoint;
+
+
         // --- //
         // Excavation //
         [Label("Excavation: Pick Speed")]
@@ -145,22 +144,22 @@ namespace levelplus
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
         [DefaultValue(0.01f)]
-        public float PickSpeedPerPoint; 
-        
+        public float PickSpeedPerPoint;
+
         [Label("Excavation: Building Speed")]
         [Tooltip("How much Building Speed the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
         [DefaultValue(0.02f)]
-        public float BuildSpeedPerPoint; 
-        
+        public float BuildSpeedPerPoint;
+
         [Label("Excavation: Block Range")]
         [Tooltip("How many Points needed to be spent for 1 Placement Range")]
         [Range(1, 30)]
-        [DefaultValue(20)] 
-        public int RangePerPoint;  
-        
+        [DefaultValue(20)]
+        public int RangePerPoint;
+
         // --- //
         // Mobility //
         [Label("Mobility: Run Speed")]
@@ -169,16 +168,16 @@ namespace levelplus
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
         [DefaultValue(0.01f)]
-        public float RunSpeedPerPoint; 
-        
+        public float RunSpeedPerPoint;
+
         [Label("Mobility: Acceleration")]
         [Tooltip("How much Acceleration the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
         [DefaultValue(0.02f)]
-        public float AccelPerPoint; 
-       
+        public float AccelPerPoint;
+
         [Label("Mobility: Wing Time")]
         [Tooltip("How much Acceleration the player gets per point")]
         [Slider]
@@ -186,7 +185,7 @@ namespace levelplus
         [Increment(0.005f)]
         [DefaultValue(0.02f)]
         public float WingPerPoint;
-        
+
         // --- //
         // Luck //
         [Label("Luck: Bonus Experience")]
@@ -195,36 +194,36 @@ namespace levelplus
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
         [DefaultValue(0.01f)]
-        public float XPPerPoint; 
-        
+        public float XPPerPoint;
+
         [Label("Luck: Ammo Consumption")]
         [Tooltip("How much Points you need to Reach 100%")]
         [Range(50, 500)]
-        [DefaultValue(100)] 
+        [DefaultValue(100)]
         [Increment(10)]
-        public int AmmoPerPoint; 
-        
+        public int AmmoPerPoint;
+
         // --- //
         // Mysticism //
         [Label("Mysticism: Mana per Point")]
         [Tooltip("How much Mana the player gets per point")]
         [Range(0, 25)]
-        [DefaultValue(2)] 
-        public int ManaPerPoint;  
-        
+        [DefaultValue(2)]
+        public int ManaPerPoint;
+
         [Label("Mysticism: Mana Regen")]
         [Tooltip("How many Points needed to be spent for 1 ManaReg")]
         [Range(0, 30)]
-        [DefaultValue(15)] 
-        public int ManaRegPerPoint;  
-        
+        [DefaultValue(15)]
+        public int ManaRegPerPoint;
+
         [Label("Mysticism: Mana Cost")]
         [Tooltip("The percent of mana reduced per point invested")]
         [Slider]
         [Range(0.00f, 0.025f)]
         [Increment(0.001f)]
         [DefaultValue(0.001f)]
-        public float ManaCostPerPoint; 
+        public float ManaCostPerPoint;
 
         [SeparatePage]
         [Header("Requires Reload")]
@@ -234,15 +233,15 @@ namespace levelplus
         [DefaultValue(3)]
         [ReloadRequired]
         public int PointsBase;
-        
+
         [Label("Points per Level")]
         [Tooltip("Statpoint Gain per level")]
         [Range(0, 10)]
         [DefaultValue(3)]
         [ReloadRequired]
         public int PointsPerLevel;
-        
-        
+
+
         [Label("Base XP")]
         [Tooltip("Level Up Calculation related")]
         [Range(50, 500)]
@@ -250,7 +249,7 @@ namespace levelplus
         [Increment(25)]
         [ReloadRequired]
         public int XPBase;
-        
+
         [Label("XP Increase")]
         [Tooltip("Level Up Calculation related")]
         [Range(50, 500)]
@@ -258,7 +257,7 @@ namespace levelplus
         [Increment(25)]
         [ReloadRequired]
         public int XPIncrease;
-        
+
         [Label("XP Rate")]
         [Tooltip("Level Up Calculation related")]
         [Slider]
@@ -267,7 +266,7 @@ namespace levelplus
         [DefaultValue(2.0f)]
         [ReloadRequired]
         public float XPRate;
-        
+
         [Label("Mob Experience")]
         [Tooltip("This is the percentage of mob HP you get in XP")]
         [Slider]
@@ -276,16 +275,16 @@ namespace levelplus
         [DefaultValue(0.35f)]
         [ReloadRequired]
         public float MobXP;
-        
+
         [Label("Boss Experience")]
         [Tooltip("This is the percentage of boss HP you get in XP")]
         [Slider]
         [Range(0.0f, 1.0f)]
         [Increment(0.05f)]
-        [DefaultValue(0.25f)] 
+        [DefaultValue(0.25f)]
         [ReloadRequired]
         public float BossXP;
-        
+
         [Label("Scaling")]
         [Tooltip("Turns on mob scaling")]
         [DefaultValue(true)]
@@ -300,7 +299,7 @@ namespace levelplus
         [DefaultValue(0.0250f)]
         [ReloadRequired]
         public float ScalingHealth;
-        
+
         [Label("Enemy Damage")]
         [Tooltip("Multiplies the Damage of Enemies per Average level")]
         [Slider]

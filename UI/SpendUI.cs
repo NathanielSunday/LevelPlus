@@ -16,7 +16,7 @@ namespace levelplus.UI {
             circle = new StatCircle(circleDiameter);
             circle.Left.Set((Main.screenWidth / 2f) - (circleDiameter / 2f), 0f);
             circle.Top.Set((Main.screenHeight / 2f) - (circleDiameter / 2f), 0f);
-            
+
             Append(circle);
         }
 

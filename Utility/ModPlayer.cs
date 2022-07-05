@@ -45,68 +45,104 @@ namespace levelplus {
         public ushort mysticism { get; set; } //max mana and regen
 
 
-        public void spend(Stat stat, ushort amount) {
-            if (statPoints > 0) {
-                if (statPoints >= amount) {
-                    statPoints -= amount;
-                }
-                else {
-                    amount = statPoints;
-                    statPoints = 0;
-                }
-
-
-                switch (stat) {
-                    case Stat.CONSTITUTION:
-                        constitution += amount;
-                        break;
-                    case Stat.STRENGTH:
-                        strength += amount;
-                        break;
-                    case Stat.INTELLIGENCE:
-                        intelligence += amount;
-                        break;
-                    case Stat.CHARISMA:
-                        charisma += amount;
-                        break;
-                    case Stat.DEXTERITY:
-                        dexterity += amount;
-                        break;
-                    case Stat.MOBILITY:
-                        mobility += amount;
-                        break;
-                    case Stat.EXCAVATION:
-                        excavation += amount;
-                        break;
-                    case Stat.ANIMALIA:
-                        animalia += amount;
-                        break;
-                    case Stat.LUCK:
-                        luck += amount;
-                        break;
-                    case Stat.MYSTICISM:
-                        mysticism += amount;
-                        break;
-                    default:
-                        break;
-                }
+        public void spend(Stat whichStat, ushort howMuch = 1, int givenStatPoints = -1) {
+            int statPointsInt;
+            if (givenStatPoints == -1) {
+                statPointsInt = statPoints;
             }
+            else {
+                statPointsInt = givenStatPoints;
+            }
+            if (statPointsInt == 0)
+                return;
+            ushort theStat = 0;
+            switch (whichStat) {
+                case Stat.CONSTITUTION:
+                    theStat = constitution;
+                    break;
+                case Stat.STRENGTH:
+                    theStat = strength;
+                    break;
+                case Stat.INTELLIGENCE:
+                    theStat = intelligence;
+                    break;
+                case Stat.CHARISMA:
+                    theStat = charisma;
+                    break;
+                case Stat.DEXTERITY:
+                    theStat = dexterity;
+                    break;
+                case Stat.MOBILITY:
+                    theStat = mobility;
+                    break;
+                case Stat.EXCAVATION:
+                    theStat = excavation;
+                    break;
+                case Stat.ANIMALIA:
+                    theStat = animalia;
+                    break;
+                case Stat.LUCK:
+                    theStat = luck;
+                    break;
+                case Stat.MYSTICISM:
+                    theStat = mysticism;
+                    break;
+            }
+            ushort canFit = (ushort) Math.Min(ushort.MaxValue - theStat, Math.Min(statPointsInt, howMuch));
+            statPoints = (ushort) Math.Min(ushort.MaxValue, statPointsInt - canFit);
+            switch (whichStat) {
+                case Stat.CONSTITUTION:
+                    constitution += canFit;
+                    break;
+                case Stat.STRENGTH:
+                    strength += canFit;
+                    break;
+                case Stat.INTELLIGENCE:
+                    intelligence += canFit;
+                    break;
+                case Stat.CHARISMA:
+                    charisma += canFit;
+                    break;
+                case Stat.DEXTERITY:
+                    dexterity += canFit;
+                    break;
+                case Stat.MOBILITY:
+                    mobility += canFit;
+                    break;
+                case Stat.EXCAVATION:
+                    excavation += canFit;
+                    break;
+                case Stat.ANIMALIA:
+                    animalia += canFit;
+                    break;
+                case Stat.LUCK:
+                    luck += canFit;
+                    break;
+                case Stat.MYSTICISM:
+                    mysticism += canFit;
+                    break;
+            }
+            SetLevel(level, false);
         }
 
-        public void spend(Stat stat) {
-            spend(stat, 1);
+        private ushort IntToUShortNoOverflow(int num) {
+            return (ushort) Math.Clamp(num, 0, ushort.MaxValue);
+        }
+
+        private ushort IntToUShortNoOverflow(uint num) {
+            return (ushort) Math.Clamp(num, 0, ushort.MaxValue);
         }
 
         public void initialize() {
             level = 0;
             currentXP = 0;
             neededXP = CalculateNeededXP(level);
-            
+
             StatReset();
         }
 
         public void StatReset() {
-            statPoints = (ushort)(level * levelplusConfig.Instance.PointsPerLevel + levelplusConfig.Instance.PointsBase);
+            statPoints = (ushort) (level * levelplusConfig.Instance.PointsPerLevel + levelplusConfig.Instance.PointsBase);
             talents = "--------";
             talentUnspent = 0;
             constitution = 0;
@@ -132,7 +168,7 @@ namespace levelplus {
                 itemsByMod["Terraria"].Add(respec);
             }
 
-            switch ((Weapon)new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length)) {
+            switch ((Weapon) new Random().Next(0, Enum.GetNames(typeof(Weapon)).Length)) {
                 case Weapon.SWORD:
                     itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBroadsword));
                     break;
@@ -209,22 +245,22 @@ namespace levelplus {
 
         public override void LoadData(TagCompound tag) {
             if (tag.GetBool("initialized")) {
-                level = (ushort)tag.GetAsShort("level");
-                currentXP = (ulong)tag.GetAsLong("currentXP");
+                level = (ushort) tag.GetAsShort("level");
+                currentXP = (ulong) tag.GetAsLong("currentXP");
                 neededXP = CalculateNeededXP(level);
-                statPoints = (ushort)tag.GetAsShort("points");
+                statPoints = (ushort) tag.GetAsShort("points");
                 talents = tag.Get<string>("talents");
-                talentUnspent = (ushort)tag.GetAsShort("talentPoints");
-                constitution = (ushort)tag.GetAsShort("con");
-                strength = (ushort)tag.GetAsShort("str");
-                intelligence = (ushort)tag.GetAsShort("int");
-                charisma = (ushort)tag.GetAsShort("cha");
-                dexterity = (ushort)tag.GetAsShort("dex");
-                mobility = (ushort)tag.GetAsShort("mob");
-                excavation = (ushort)tag.GetAsShort("exc");
-                animalia = (ushort)tag.GetAsShort("ani");
-                luck = (ushort)(tag.ContainsKey("gra") ? tag.GetAsShort("gra") : tag.GetAsShort("luc"));
-                mysticism = (ushort)tag.GetAsShort("mys");
+                talentUnspent = (ushort) tag.GetAsShort("talentPoints");
+                constitution = (ushort) tag.GetAsShort("con");
+                strength = (ushort) tag.GetAsShort("str");
+                intelligence = (ushort) tag.GetAsShort("int");
+                charisma = (ushort) tag.GetAsShort("cha");
+                dexterity = (ushort) tag.GetAsShort("dex");
+                mobility = (ushort) tag.GetAsShort("mob");
+                excavation = (ushort) tag.GetAsShort("exc");
+                animalia = (ushort) tag.GetAsShort("ani");
+                luck = (ushort) (tag.ContainsKey("gra") ? tag.GetAsShort("gra") : tag.GetAsShort("luc"));
+                mysticism = (ushort) tag.GetAsShort("mys");
 
                 if (currentXP > neededXP) {
                     LevelUp();
@@ -240,7 +276,7 @@ namespace levelplus {
         public override void OnRespawn(Player player) {
             base.OnRespawn(player);
             //lose a quarter of your xp on death
-            currentXP = (ulong)(currentXP * .75);
+            currentXP = (ulong) (currentXP * .75);
         }
 
         public override void ResetEffects() {
@@ -262,7 +298,7 @@ namespace levelplus {
             Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma * levelplusConfig.Instance.SummonDamagePerPoint);
             Player.GetCritChance(DamageClass.Summon) += charisma / levelplusConfig.Instance.SummonCritPerPoint;
             //animalia
-            Player.fishingSkill += (int)(Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
+            Player.fishingSkill += (int) (Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
             //excavation
             Player.pickSpeed *= 1.00f - (excavation * levelplusConfig.Instance.PickSpeedPerPoint);
             Player.tileSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
@@ -271,7 +307,7 @@ namespace levelplus {
             //mobility
             Player.maxRunSpeed *= 1.00f + (mobility * levelplusConfig.Instance.RunSpeedPerPoint);
             Player.runAcceleration *= 1.00f + (mobility * levelplusConfig.Instance.AccelPerPoint);
-            Player.wingTimeMax += (int)(Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
+            Player.wingTimeMax += (int) (Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
             //mysticism
             Player.statManaMax2 += (levelplusConfig.Instance.ManaPerLevel * level) + (levelplusConfig.Instance.ManaPerPoint * mysticism);
             Player.manaRegen += mysticism / levelplusConfig.Instance.ManaRegPerPoint;
@@ -299,44 +335,193 @@ namespace levelplus {
             return true;
         }
 
-        public void AddLevel(ushort level) {
-            statPoints += (ushort)(levelplusConfig.Instance.PointsPerLevel * (level - this.level));
-            this.level += level;
-            currentXP = 0;
+        public void AddLevel(ushort addThisToLevel) {
+            SetLevel((uint) (level + addThisToLevel));
+        }
+
+        public void SetLevel(uint setLevelToThis, bool resetXp = true) {
+            level = IntToUShortNoOverflow(setLevelToThis);
+            uint statPointsInt = (uint) (levelplusConfig.Instance.PointsPerLevel * level + levelplusConfig.Instance.PointsBase);
+            statPointsInt -= constitution;
+            statPointsInt -= strength;
+            statPointsInt -= intelligence;
+            statPointsInt -= charisma;
+            statPointsInt -= dexterity;
+            statPointsInt -= mysticism;
+            statPointsInt -= mobility;
+            statPointsInt -= animalia;
+            statPointsInt -= luck;
+            statPointsInt -= excavation;
+            if (levelplusConfig.Instance.PointsPerLevel * level + levelplusConfig.Instance.PointsBase < statPointsInt)
+                statPointsInt = 0;
+            statPoints = IntToUShortNoOverflow(statPointsInt);
+            if (resetXp)
+                currentXP = 0;
             neededXP = CalculateNeededXP(level);
         }
 
-        public void AddXp(ulong amount) {
-            currentXP += (ulong)(amount * (1 + (luck * levelplusConfig.Instance.XPPerPoint)));
+        public void AddXp(ulong amountToAdd, bool addRaw = false) {
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                return;
+            }
+            if (addRaw)
+                currentXP += amountToAdd;
+            else
+                currentXP += (ulong) (amountToAdd * (luck * levelplusConfig.Instance.XPPerPoint + 1));
             if (currentXP >= neededXP) {
                 LevelUp();
             }
         }
 
-        public void AddPoints(int points) {
-            statPoints = (ushort)(statPoints + points);
+        public void SetXp(ulong amountToSetTo) {
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                return;
+            }
+            currentXP = amountToSetTo;
+            if (currentXP >= neededXP) {
+                LevelUp();
+            }
+        }
+
+        //public void AddPoints(int amountToAdd) {
+        //    statPoints += IntToUShortNoOverflow(Math.Min(ushort.MaxValue - statPoints, amountToAdd));
+        //}
+        //
+        //public void SetPoints(int amountToSetTo) {
+        //    statPoints = IntToUShortNoOverflow(amountToSetTo);
+        //}
+
+        public void InvestParticularAmount(ushort whichStat, ushort howMuch = ushort.MaxValue, int givenStatPoints = -1) {
+            // The order is starting from the top and going right, around the circle.
+            int statPointsInt;
+            if (givenStatPoints == -1) {
+                statPointsInt = statPoints;
+            }
+            else {
+                statPointsInt = givenStatPoints;
+            }
+            if (statPointsInt == 0)
+                return;
+            switch (whichStat) {
+                case 0:
+                    spend(Stat.CONSTITUTION, howMuch, statPointsInt);
+                    break;
+                case 1:
+                    spend(Stat.MOBILITY, howMuch, statPointsInt);
+                    break;
+                case 2:
+                    spend(Stat.DEXTERITY, howMuch, statPointsInt);
+                    break;
+                case 3:
+                    spend(Stat.LUCK, howMuch, statPointsInt);
+                    break;
+                case 4:
+                    spend(Stat.CHARISMA, howMuch, statPointsInt);
+                    break;
+                case 5:
+                    spend(Stat.ANIMALIA, howMuch, statPointsInt);
+                    break;
+                case 6:
+                    spend(Stat.INTELLIGENCE, howMuch, statPointsInt);
+                    break;
+                case 7:
+                    spend(Stat.MYSTICISM, howMuch, statPointsInt);
+                    break;
+                case 8:
+                    spend(Stat.STRENGTH, howMuch, statPointsInt);
+                    break;
+                case 9:
+                    spend(Stat.EXCAVATION, howMuch, statPointsInt);
+                    break;
+            }
+        }
+
+        public void SetInvestmentToParticularAmount(ushort whichStat, ushort howMuch = 0) {
+            // The order is starting from the top and going right, around the circle.
+            int statPointsInt = statPoints;
+            switch (whichStat) {
+                case 0:
+                    statPointsInt += constitution;
+                    constitution = 0;
+                    break;
+                case 1:
+                    statPointsInt += mobility;
+                    mobility = 0;
+                    break;
+                case 2:
+                    statPointsInt += dexterity;
+                    dexterity = 0;
+                    break;
+                case 3:
+                    statPointsInt += luck;
+                    luck = 0;
+                    break;
+                case 4:
+                    statPointsInt += charisma;
+                    charisma = 0;
+                    break;
+                case 5:
+                    statPointsInt += animalia;
+                    animalia = 0;
+                    break;
+                case 6:
+                    statPointsInt += intelligence;
+                    intelligence = 0;
+                    break;
+                case 7:
+                    statPointsInt += mysticism;
+                    mysticism = 0;
+                    break;
+                case 8:
+                    statPointsInt += strength;
+                    strength = 0;
+                    break;
+                case 9:
+                    statPointsInt += excavation;
+                    excavation = 0;
+                    break;
+            }
+            if (howMuch == 0)
+                statPoints = IntToUShortNoOverflow(statPointsInt);
+            else if (howMuch > statPointsInt) {
+                statPointsInt = howMuch;
+                InvestParticularAmount(whichStat, howMuch, statPointsInt);
+                return;
+            }
+            InvestParticularAmount(whichStat, howMuch, statPointsInt);
         }
 
         private void LevelUp() {
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                return;
+            }
             currentXP -= neededXP;
             ++level;
-            statPoints += (ushort)levelplusConfig.Instance.PointsPerLevel;
+            statPoints += (ushort) levelplusConfig.Instance.PointsPerLevel;
 
             neededXP = CalculateNeededXP(level);
 
             Player.statLife = Player.statLifeMax2;
             Player.statMana = Player.statManaMax2;
 
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("levelplus/Sounds/Custom/level"));
+                return;
+            }
             //run levelup again if XP is still higher, otherwise, play the level up noise
             if (currentXP >= neededXP)
                 LevelUp();
-            else if (!Main.dedServ) {
+            else if (!Main.dedServ)
                 SoundEngine.PlaySound(new SoundStyle("levelplus/Sounds/Custom/level"));
-            }
         }
 
         public ulong CalculateNeededXP(ushort level) {
-            return (ulong)(levelplusConfig.Instance.XPIncrease * Math.Pow(level, levelplusConfig.Instance.XPRate) + levelplusConfig.Instance.XPBase);
+            return (ulong) (levelplusConfig.Instance.XPIncrease * Math.Pow(level, levelplusConfig.Instance.XPRate) + levelplusConfig.Instance.XPBase);
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -360,7 +545,7 @@ namespace levelplus {
             base.SyncPlayer(toWho, fromWho, newPlayer);
 
             ModPacket packet = Mod.GetPacket();
-            packet.Write((byte)PacketType.PlayerSync);
+            packet.Write((byte) PacketType.PlayerSync);
             AddSyncToPacket(packet);
             packet.Send();
         }
@@ -369,14 +554,14 @@ namespace levelplus {
             base.SendClientChanges(clientPlayer);
             if (!StatsMatch(clientPlayer as levelplusModPlayer)) {
                 ModPacket packet = Mod.GetPacket();
-                packet.Write((byte)PacketType.StatsChanged);
+                packet.Write((byte) PacketType.StatsChanged);
                 AddSyncToPacket(packet);
                 packet.Send();
             }
         }
 
         public void AddSyncToPacket(ModPacket packet) {
-            packet.Write((byte)Player.whoAmI);
+            packet.Write((byte) Player.whoAmI);
             packet.Write(level);
             packet.Write(constitution);
             packet.Write(strength);

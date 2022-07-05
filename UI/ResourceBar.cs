@@ -76,7 +76,7 @@ namespace levelplus.UI {
             //calculate quotient
             switch (stat) {
                 case ResourceBarMode.XP:
-                    quotient = modPlayer.currentXP / (float)modPlayer.neededXP;
+                    quotient = modPlayer.currentXP / (float) modPlayer.neededXP;
                     break;
                 default:
                     break;
