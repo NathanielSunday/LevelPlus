@@ -1,42 +1,43 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace levelplus.Commands {
-    class AddPointsCommand : ModCommand {
-        public override string Command => "addpoints";
-
-        public override string Description => "(Level+) Adds a given amount of skill points to the player's available skill points.";
-        public override CommandType Type => CommandType.Chat;
-
-        public override string Usage => "/addpoints <amount>";
-
-        public override void Action(CommandCaller caller, string input, string[] args) {
-            if (!levelplusConfig.Instance.CommandsEnabled) {
-                Main.NewText("Enable commands in the Level+ config to use this command.");
-                return;
-            }
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
-            player.AddPoints(int.Parse(args[0]));
-        }
-    }
-
-    class SetPointsCommand : ModCommand {
-        public override string Command => "setpoints";
-
-        public override string Description => "(Level+) Sets the player's available skill points to a given amount.";
-        public override CommandType Type => CommandType.Chat;
-
-        public override string Usage => "/setpoints <amount>";
-
-        public override void Action(CommandCaller caller, string input, string[] args) {
-            if (!levelplusConfig.Instance.CommandsEnabled) {
-                Main.NewText("Enable commands in the Level+ config to use this command.");
-                return;
-            }
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
-            player.SetPoints(int.Parse(args[0]));
-        }
-    }
+    //class AddPointsCommand : ModCommand {
+    //    public override string Command => "addpoints";
+    //
+    //    public override string Description => "(Level+) Adds a given amount of skill points to the player's available skill points.";
+    //    public override CommandType Type => CommandType.Chat;
+    //
+    //    public override string Usage => "/addpoints <amount>";
+    //
+    //    public override void Action(CommandCaller caller, string input, string[] args) {
+    //        if (!levelplusConfig.Instance.CommandsEnabled) {
+    //            Main.NewText("Enable commands in the Level+ config to use this command.");
+    //            return;
+    //        }
+    //        levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+    //        player.AddPoints(int.Parse(args[0]));
+    //    }
+    //}
+    //
+    //class SetPointsCommand : ModCommand {
+    //    public override string Command => "setpoints";
+    //
+    //    public override string Description => "(Level+) Sets the player's available skill points to a given amount.";
+    //    public override CommandType Type => CommandType.Chat;
+    //
+    //    public override string Usage => "/setpoints <amount>";
+    //
+    //    public override void Action(CommandCaller caller, string input, string[] args) {
+    //        if (!levelplusConfig.Instance.CommandsEnabled) {
+    //            Main.NewText("Enable commands in the Level+ config to use this command.");
+    //            return;
+    //        }
+    //        levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+    //        player.SetPoints(int.Parse(args[0]));
+    //    }
+    //}
 
     class AddXpCommand : ModCommand {
         public override string Command => "addxp";
@@ -106,7 +107,7 @@ namespace levelplus.Commands {
                 return;
             }
             levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
-            player.SetLevel(ushort.Parse(args[0]));
+            player.SetLevel(Math.Clamp(uint.Parse(args[0]), 1, 65536) - 1);
         }
     }
 

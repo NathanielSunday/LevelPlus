@@ -122,6 +122,15 @@ namespace levelplus {
                     mysticism += canFit;
                     break;
             }
+            SetLevel(level, false);
+        }
+
+        private ushort IntToUShortNoOverflow(int num) {
+            return (ushort) Math.Clamp(num, 0, ushort.MaxValue);
+        }
+
+        private ushort IntToUShortNoOverflow(uint num) {
+            return (ushort) Math.Clamp(num, 0, ushort.MaxValue);
         }
 
         public void initialize() {
@@ -327,15 +336,12 @@ namespace levelplus {
         }
 
         public void AddLevel(ushort addThisToLevel) {
-            statPoints += (ushort) Math.Min(ushort.MaxValue - statPoints, levelplusConfig.Instance.PointsPerLevel * addThisToLevel);
-            level += addThisToLevel;
-            currentXP = 0;
-            neededXP = CalculateNeededXP(addThisToLevel);
+            SetLevel((uint) (level + addThisToLevel));
         }
 
-        public void SetLevel(ushort setLevelToThis) {
-            level = (ushort) Math.Max(0, setLevelToThis - 1);
-            int statPointsInt = levelplusConfig.Instance.PointsPerLevel * setLevelToThis;
+        public void SetLevel(uint setLevelToThis, bool resetXp = true) {
+            level = IntToUShortNoOverflow(setLevelToThis);
+            uint statPointsInt = (uint) (levelplusConfig.Instance.PointsPerLevel * level + levelplusConfig.Instance.PointsBase);
             statPointsInt -= constitution;
             statPointsInt -= strength;
             statPointsInt -= intelligence;
@@ -346,12 +352,19 @@ namespace levelplus {
             statPointsInt -= animalia;
             statPointsInt -= luck;
             statPointsInt -= excavation;
-            statPoints = (ushort) Math.Max(Math.Min(ushort.MaxValue, statPointsInt), 0);
-            currentXP = 0;
-            neededXP = CalculateNeededXP(setLevelToThis);
+            if (levelplusConfig.Instance.PointsPerLevel * level + levelplusConfig.Instance.PointsBase < statPointsInt)
+                statPointsInt = 0;
+            statPoints = IntToUShortNoOverflow(statPointsInt);
+            if (resetXp)
+                currentXP = 0;
+            neededXP = CalculateNeededXP(level);
         }
 
         public void AddXp(ulong amountToAdd, bool addRaw = false) {
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                return;
+            }
             if (addRaw)
                 currentXP += amountToAdd;
             else
@@ -362,21 +375,25 @@ namespace levelplus {
         }
 
         public void SetXp(ulong amountToSetTo) {
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                return;
+            }
             currentXP = amountToSetTo;
             if (currentXP >= neededXP) {
                 LevelUp();
             }
         }
 
-        public void AddPoints(int amountToAdd) {
-            statPoints += (ushort) Math.Min(ushort.MaxValue - statPoints, amountToAdd);
-        }
+        //public void AddPoints(int amountToAdd) {
+        //    statPoints += IntToUShortNoOverflow(Math.Min(ushort.MaxValue - statPoints, amountToAdd));
+        //}
+        //
+        //public void SetPoints(int amountToSetTo) {
+        //    statPoints = IntToUShortNoOverflow(amountToSetTo);
+        //}
 
-        public void SetPoints(int amountToSetTo) {
-            statPoints = (ushort) Math.Min(ushort.MaxValue, amountToSetTo);
-        }
-
-        public void InvestParticularAmount(ushort whichStat, ushort howMuch = 65535, int givenStatPoints = -1) {
+        public void InvestParticularAmount(ushort whichStat, ushort howMuch = ushort.MaxValue, int givenStatPoints = -1) {
             // The order is starting from the top and going right, around the circle.
             int statPointsInt;
             if (givenStatPoints == -1) {
@@ -467,12 +484,20 @@ namespace levelplus {
                     break;
             }
             if (howMuch == 0)
-                statPoints = (ushort) Math.Min(ushort.MaxValue, statPointsInt);
-            else
+                statPoints = IntToUShortNoOverflow(statPointsInt);
+            else if (howMuch > statPointsInt) {
+                statPointsInt = howMuch;
                 InvestParticularAmount(whichStat, howMuch, statPointsInt);
+                return;
+            }
+            InvestParticularAmount(whichStat, howMuch, statPointsInt);
         }
 
         private void LevelUp() {
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                return;
+            }
             currentXP -= neededXP;
             ++level;
             statPoints += (ushort) levelplusConfig.Instance.PointsPerLevel;
@@ -482,12 +507,17 @@ namespace levelplus {
             Player.statLife = Player.statLifeMax2;
             Player.statMana = Player.statManaMax2;
 
+            if (level == ushort.MaxValue) {
+                currentXP = 0;
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("levelplus/Sounds/Custom/level"));
+                return;
+            }
             //run levelup again if XP is still higher, otherwise, play the level up noise
             if (currentXP >= neededXP)
                 LevelUp();
-            else if (!Main.dedServ) {
+            else if (!Main.dedServ)
                 SoundEngine.PlaySound(new SoundStyle("levelplus/Sounds/Custom/level"));
-            }
         }
 
         public ulong CalculateNeededXP(ushort level) {
