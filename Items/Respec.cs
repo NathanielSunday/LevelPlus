@@ -17,7 +17,7 @@ namespace levelplus.Items {
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.maxStack = 1;
             Item.consumable = true;
-            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.value = Item.buyPrice(0, 0, 80, 0);
             Item.rare = ItemRarityID.Lime;
             Item.UseSound = SoundID.Item4;
         }
