@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,8 +23,8 @@ namespace levelplus {
 
                 averageLevel /= numPlayers;
 
-                npc.damage += (int) (npc.damage * (averageLevel * levelplusConfig.Instance.ScalingDamage));
-                npc.lifeMax += (int) (npc.lifeMax * (averageLevel * levelplusConfig.Instance.ScalingHealth));
+                npc.damage = (int) Math.Clamp(npc.damage * (long) Math.Round(1 + averageLevel * levelplusConfig.Instance.ScalingDamage), 0, 2147483000);
+                npc.lifeMax = (int) Math.Clamp(npc.lifeMax * (long) Math.Round(1 + averageLevel * levelplusConfig.Instance.ScalingDamage), 0, 2147483000);
             }
         }
 
