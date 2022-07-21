@@ -29,7 +29,7 @@ namespace levelplus.Items {
         }
 
         public override bool? UseItem(Player player) {
-            player.GetModPlayer<levelplusModPlayer>().initialize();
+            player.GetModPlayer<levelplusModPlayer>().StatInitialize();
 
             return true;
         }

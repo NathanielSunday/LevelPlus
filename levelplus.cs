@@ -5,12 +5,6 @@ using Terraria.ID;
 
 namespace levelplus {
 
-    internal enum PacketType : byte {
-        XP,
-        PlayerSync,
-        StatsChanged
-    }
-
     public class levelplus : Mod {
         public static levelplus Instance { get; private set; }
         public levelplus() { Instance = this; }
@@ -36,43 +30,32 @@ namespace levelplus {
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) {
             byte msgType = reader.ReadByte();
-            switch ((PacketType) msgType) {
-                case PacketType.XP: //xp gain
+            switch ((Utility.PacketType) msgType) {
+                //called when a player recieves an XP packet
+                case Utility.PacketType.XP: 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(reader.ReadUInt64());
                     break;
-                case PacketType.PlayerSync: //sync the players properly
-                    ParsePlayer(reader, reader.ReadByte());
+                //sync the players properly, after a stat has changed
+                case Utility.PacketType.PlayerSync:
+                    Utility.ParsePlayer(reader, reader.ReadByte());
                     break;
-                case PacketType.StatsChanged: //this is called on SendClientChanges
+                //this is called on SendClientChanges, basically when a stat changes
+                case Utility.PacketType.StatsChanged: 
                     byte index = reader.ReadByte();
-                    ParsePlayer(reader, index);
+                    Utility.ParsePlayer(reader, index);
                     if (Main.netMode == NetmodeID.Server) {
                         ModPacket packet = GetPacket();
-                        packet.Write((byte) PacketType.StatsChanged);
-                        Main.player[index].GetModPlayer<levelplusModPlayer>().AddSyncToPacket(packet);
+                        packet.Write((byte) Utility.PacketType.StatsChanged);
+                        Utility.AddSyncToPacket(packet, Main.player[index].GetModPlayer<levelplusModPlayer>());
                         packet.Send(-1, index);
                     }
                     break;
+                //wrong message type recieved
                 default:
                     Logger.WarnFormat("levelplus: Unknown message type {0}", msgType);
                     break;
             }
-        }
-
-        public void ParsePlayer(BinaryReader reader, byte index) {
-            levelplusModPlayer copy = Main.player[index].GetModPlayer<levelplusModPlayer>();
-            copy.level = reader.ReadUInt16();
-            copy.constitution = reader.ReadUInt16();
-            copy.strength = reader.ReadUInt16();
-            copy.intelligence = reader.ReadUInt16();
-            copy.charisma = reader.ReadUInt16();
-            copy.dexterity = reader.ReadUInt16();
-            copy.mysticism = reader.ReadUInt16();
-            copy.mobility = reader.ReadUInt16();
-            copy.animalia = reader.ReadUInt16();
-            copy.luck = reader.ReadUInt16();
-            copy.excavation = reader.ReadUInt16();
         }
     }
 }

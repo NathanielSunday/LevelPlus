@@ -1,8 +1,8 @@
 ﻿using levelplus.UI;
 using Microsoft.Xna.Framework;
 using MonoMod.Cil;
-using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -33,8 +33,6 @@ namespace levelplus {
                 levelInterface.SetState(levelUI);
             }
         }
-
-
 
         public override void Unload() {
             base.Unload();
@@ -75,11 +73,10 @@ namespace levelplus {
             }, InterfaceScaleType.UI));
         }
 
+        //goes to the max mana check in Terraria's IL, and replaces the check with 200000 instead of 400
         private void PlayerManaUpdate(ILContext il) {
-            //throw new NotImplementedException();
-            ILCursor cursor = new(il);
-
-            if (!cursor.TryGotoNext(MoveType.Before,
+            ILCursor c = new(il);
+            if (!c.TryGotoNext(MoveType.Before,
                 i => i.MatchLdfld("Terraria.Player", "statManaMax2"),
                 i => i.MatchLdcI4(400))
             ) {
@@ -87,7 +84,7 @@ namespace levelplus {
                 return;
             }
 
-            cursor.Next.Next.Operand = 200000;
+            c.Next.Next.Operand = 200000;
         }
     }
 }

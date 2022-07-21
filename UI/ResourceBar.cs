@@ -76,7 +76,7 @@ namespace levelplus.UI {
             //calculate quotient
             switch (stat) {
                 case ResourceBarMode.XP:
-                    quotient = modPlayer.currentXP / (float) modPlayer.neededXP;
+                    quotient = modPlayer.XP / (float) modPlayer.NeededXP;
                     break;
                 default:
                     break;
@@ -96,7 +96,7 @@ namespace levelplus.UI {
             string HoverText;
             switch (stat) {
                 case ResourceBarMode.XP:
-                    HoverText = "" + modPlayer.currentXP + " | " + modPlayer.neededXP;
+                    HoverText = "" + modPlayer.XP + " | " + modPlayer.NeededXP;
                     break;
                 default:
                     HoverText = "";

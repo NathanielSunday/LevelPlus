@@ -132,7 +132,7 @@ namespace levelplus.UI {
             base.Update(time);
 
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
-            level.SetText("" + (modPlayer.level + 1));
+            level.SetText("" + (modPlayer.Level + 1));
             if (this.IsMouseHovering) {
                 int numPlayers = 0;
                 float averageLevel = 0;
@@ -140,12 +140,12 @@ namespace levelplus.UI {
                 foreach (Player i in Main.player)
                     if (i.active) {
                         numPlayers++;
-                        averageLevel += i.GetModPlayer<levelplusModPlayer>().level + 1;
+                        averageLevel += i.GetModPlayer<levelplusModPlayer>().Level + 1;
                     }
 
                 averageLevel /= numPlayers;
 
-                Main.instance.MouseText("Level: " + (modPlayer.level + 1) + "\n" + modPlayer.statPoints + " unspent points\n" + ((Main.netMode == NetmodeID.MultiplayerClient) ? numPlayers + " players online\nAverage Level: " + ((int) averageLevel) : ""));
+                Main.instance.MouseText("Level: " + (modPlayer.Level + 1) + "\n" + modPlayer.Points + " unspent points\n" + ((Main.netMode == NetmodeID.MultiplayerClient) ? numPlayers + " players online\nAverage Level: " + ((int) averageLevel) : ""));
             }
         }
 

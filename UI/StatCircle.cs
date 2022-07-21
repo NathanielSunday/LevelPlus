@@ -163,7 +163,7 @@ namespace levelplus.UI {
             base.Update(gameTime);
             levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
 
-            unspentPoints.SetText("" + modPlayer.statPoints);
+            unspentPoints.SetText("" + modPlayer.Points);
 
             if (dragging) {
                 Left.Set(Main.mouseX - offset.X, 0f);
