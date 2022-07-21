@@ -24,7 +24,7 @@ namespace levelplus {
                 averageLevel /= numPlayers;
 
                 npc.damage = (int) Math.Clamp(npc.damage * (long) Math.Round(1 + averageLevel * levelplusConfig.Instance.ScalingDamage), 0, 2147483000);
-                npc.lifeMax = (int) Math.Clamp(npc.lifeMax * (long) Math.Round(1 + averageLevel * levelplusConfig.Instance.ScalingDamage), 0, 2147483000);
+                npc.lifeMax = (int) Math.Clamp(npc.lifeMax * (long) Math.Round(1 + averageLevel * levelplusConfig.Instance.ScalingHealth), 0, 2147483000);
             }
         }
 
