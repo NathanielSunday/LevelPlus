@@ -4,6 +4,8 @@ Level+ is meant to bring a simple leveling system that makes your character prog
 
 Wanna join a Discord server and interact with the dev? Click here: https://discord.gg/zAWaHEyAA6
 
+I've also got a Patreon, if you're at all interested: https://www.patreon.com/poctordepper5446
+
 Check out what I'm working on here: https://trello.com/b/jAdgFhfR/level
 
 Ideas or Bugs? Send them here: https://forms.gle/BvTxWhWfqEcyCW2o9
