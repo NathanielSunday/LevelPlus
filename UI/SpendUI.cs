@@ -1,7 +1,7 @@
 ﻿using Terraria.UI;
 using Terraria;
 
-namespace levelplus.UI {
+namespace LevelPlus.UI {
     class SpendUI : UIState {
         public static bool visible;
 

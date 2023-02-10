@@ -2,10 +2,10 @@
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
-namespace levelplus {
-    public class levelplusConfig : ModConfig {
+namespace LevelPlus {
+    public class LevelPlusConfig : ModConfig {
         public override ConfigScope Mode => ConfigScope.ServerSide;
-        public static levelplusConfig Instance => ModContent.GetInstance<levelplusConfig>();
+        public static LevelPlusConfig Instance => ModContent.GetInstance<LevelPlusConfig>();
 
         [Label("Scaling")]
         [Tooltip("Turns on mob scaling")]

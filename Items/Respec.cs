@@ -1,12 +1,13 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace levelplus.Items {
+namespace LevelPlus.Items {
     public class Respec : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Insignia of Reform");
-            Tooltip.SetDefault("This token enables the reallocation of Level+ skill points.\nHoist this token to return all Level+ invested skill points to the skill point pool.\nUnallocated points can be reinvested into skills again.");
+            DisplayName.SetDefault(Language.GetTextValue("Mods." + Mod.Name + ".DisplayName." + Name));
+            Tooltip.SetDefault(Language.GetTextValue("Mods." + Mod.Name + ".Tooltip." + Name));
         }
 
         public override void SetDefaults() {
@@ -53,7 +54,7 @@ namespace levelplus.Items {
         }
 
         public override bool? UseItem(Player player) {
-            levelplusModPlayer modPlayer = player.GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer modPlayer = player.GetModPlayer<LevelPlusModPlayer>();
             modPlayer.StatReset();
 
             return true;

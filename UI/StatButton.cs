@@ -5,7 +5,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace levelplus.UI {
+namespace LevelPlus.UI {
 
     class StatButton : UIElement {
 
@@ -90,7 +90,7 @@ namespace levelplus.UI {
             string text;
             int rarity;
 
-            levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
 
             switch (type) {
                 case Utility.Stat.CONSTITUTION:
@@ -181,7 +181,7 @@ namespace levelplus.UI {
 
         private void pointSpend(UIMouseEvent evt, UIElement listeningElement) {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
             modPlayer.Spend(type, (ushort) (levelplus.SpendModFive.Current ? 5 : levelplus.SpendModTen.Current ? 10 : levelplus.SpendModTwentyFive.Current ? 25 : 1));
         }
     }

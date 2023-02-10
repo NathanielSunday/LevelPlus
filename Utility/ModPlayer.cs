@@ -4,13 +4,14 @@ using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
-using levelplus.UI;
+using LevelPlus.UI;
 using Terraria.Audio;
 using Terraria.GameInput;
 
-namespace levelplus {
 
-    class levelplusModPlayer : ModPlayer {
+namespace LevelPlus {
+
+    class LevelPlusModPlayer : ModPlayer {
 
         public int Level { get; set; }
         public ulong XP { get; set; }
@@ -353,7 +354,7 @@ namespace levelplus {
 
         public override void clientClone(ModPlayer clientClone) {
             base.clientClone(clientClone);
-            levelplusModPlayer clone = clientClone as levelplusModPlayer;
+            LevelPlusModPlayer clone = clientClone as LevelPlusModPlayer;
 
             clone.XP = XP;
             clone.Stats = Stats;
@@ -370,7 +371,7 @@ namespace levelplus {
 
         public override void SendClientChanges(ModPlayer clientPlayer) {
             base.SendClientChanges(clientPlayer);
-            if (!Utility.PlayerStatsMatch(this, clientPlayer as levelplusModPlayer)) {
+            if (!Utility.PlayerStatsMatch(this, clientPlayer as LevelPlusModPlayer)) {
                 ModPacket packet = Mod.GetPacket();
                 packet.Write((byte)Utility.PacketType.StatsChanged);
                 Utility.AddSyncToPacket(packet, this);
@@ -380,7 +381,7 @@ namespace levelplus {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             base.ProcessTriggers(triggersSet);
-            if (levelplus.SpendUIHotKey.JustPressed) {
+            if (LevelPlus.SpendUIHotKey.JustPressed) {
                 if (Main.netMode != NetmodeID.Server) {
                     SoundEngine.PlaySound(SoundID.MenuTick);
                     SpendUI.visible = !SpendUI.visible;

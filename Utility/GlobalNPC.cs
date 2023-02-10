@@ -3,14 +3,14 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace levelplus {
+namespace LevelPlus {
     class levelplusGlobalNPC : GlobalNPC {
 
         public override bool InstancePerEntity => true;
 
         public override void ScaleExpertStats(NPC npc, int numPlayers, float bossLifeScale) {
             base.ScaleExpertStats(npc, numPlayers, bossLifeScale);
-            if (levelplusConfig.Instance.ScalingEnabled) {
+            if (LevelPlusConfig.Instance.ScalingEnabled) {
                 float averageLevel = 0;
 
 
@@ -18,7 +18,7 @@ namespace levelplus {
                 foreach (Player i in Main.player)
                     if (i.active) {
                         //numPlayers++; //not needed here, since numPlayers should get the number of active players on the server already
-                        averageLevel += i.GetModPlayer<levelplusModPlayer>().Level;
+                        averageLevel += i.GetModPlayer<LevelPlusModPlayer>().Level;
                     }
 
                 averageLevel /= numPlayers;
@@ -40,7 +40,7 @@ namespace levelplus {
                 foreach (Player i in Main.player) {
                     if (i.active) {
                         numPlayers++;
-                        averageLevel += i.GetModPlayer<levelplusModPlayer>().Level;
+                        averageLevel += i.GetModPlayer<LevelPlusModPlayer>().Level;
                     }
                 }
 
@@ -51,13 +51,14 @@ namespace levelplus {
                     * ((numPlayers == 1) ? 1 : (Math.Log(numPlayers - 1) + 1.25f) / numPlayers));
 
                 if (Main.netMode == NetmodeID.SinglePlayer) {
-                    Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(amount);
+                    Main.LocalPlayer.GetModPlayer<LevelPlusModPlayer>().AddXp(amount);
                 }
                 else if (Main.netMode == NetmodeID.Server) {
                     for (int i = 0; i < npc.playerInteraction.Length; ++i) {
                         if (npc.playerInteraction[i]) {
-                            ModPacket packet = levelplus.Instance.GetPacket();
+                            ModPacket packet = LevelPlus.Instance.GetPacket();
                             packet.Write((byte)Utility.PacketType.XP);
+
                             packet.Write(amount);
                             packet.Send(i);
                         }

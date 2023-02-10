@@ -5,7 +5,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace levelplus.UI {
+namespace LevelPlus.UI {
     class StatCircle : UIElement {
         //C1 = cos(pi * 2/5)
         //C2 = cos(pi * 1/5)
@@ -161,7 +161,7 @@ namespace levelplus.UI {
 
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
-            levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
 
             unspentPoints.SetText("" + modPlayer.Points);
 

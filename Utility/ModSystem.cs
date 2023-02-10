@@ -1,4 +1,4 @@
-﻿using levelplus.UI;
+﻿using LevelPlus.UI;
 using Microsoft.Xna.Framework;
 using MonoMod.Cil;
 using System.Collections.Generic;
@@ -7,8 +7,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace levelplus {
-    class levelplusModSystem : ModSystem {
+namespace LevelPlus {
+    class LevelPlusModSystem : ModSystem {
 
         internal GUI gui;
         public static UserInterface guiInterface;
@@ -80,7 +80,7 @@ namespace levelplus {
                 i => i.MatchLdfld("Terraria.Player", "statManaMax2"),
                 i => i.MatchLdcI4(400))
             ) {
-                levelplus.Instance.Logger.FatalFormat("Could not find instruction");
+                LevelPlus.Instance.Logger.FatalFormat("Could not find instruction");
                 return;
             }
 

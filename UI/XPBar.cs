@@ -5,7 +5,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace levelplus.UI {
+namespace LevelPlus.UI {
     class XPBar : UIElement {
         private bool dragging;
         private ResourceBar bar;
@@ -131,8 +131,9 @@ namespace levelplus.UI {
         public override void Update(GameTime time) {
             base.Update(time);
 
-            levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
             level.SetText("" + (modPlayer.Level + 1));
+
             if (this.IsMouseHovering) {
                 int numPlayers = 0;
                 float averageLevel = 0;
@@ -140,7 +141,8 @@ namespace levelplus.UI {
                 foreach (Player i in Main.player)
                     if (i.active) {
                         numPlayers++;
-                        averageLevel += i.GetModPlayer<levelplusModPlayer>().Level + 1;
+                        averageLevel += i.GetModPlayer<LevelPlusModPlayer>().Level + 1;
+
                     }
 
                 averageLevel /= numPlayers;
