@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria.UI;
 
-namespace levelplus.UI {
+namespace LevelPlus.UI {
     internal class GUI : UIState {
         public static bool visible;
         private XPBar XPBar;

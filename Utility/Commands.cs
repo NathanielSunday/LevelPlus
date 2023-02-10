@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace levelplus.Commands {
+namespace LevelPlus.Commands {
     //class AddPointsCommand : ModCommand {
     //    public override string Command => "addpoints";
     //
@@ -87,11 +87,11 @@ namespace levelplus.Commands {
         public override string Usage => "/addxp <amount>";
 
         public override void Action(CommandCaller caller, string input, string[] args) {
-            if (!levelplusConfig.Instance.CommandsEnabled) {
+            if (!LevelPlusConfig.Instance.CommandsEnabled) {
                 Main.NewText("Enable commands in the Level+ config to use this command.");
                 return;
             }
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer player = caller.Player.GetModPlayer<LevelPlusModPlayer>();
             player.AddXp(ulong.Parse(args[0]), true);
         }
     }
@@ -105,11 +105,11 @@ namespace levelplus.Commands {
         public override string Usage => "/setxp <amount>";
 
         public override void Action(CommandCaller caller, string input, string[] args) {
-            if (!levelplusConfig.Instance.CommandsEnabled) {
+            if (!LevelPlusConfig.Instance.CommandsEnabled) {
                 Main.NewText("Enable commands in the Level+ config to use this command.");
                 return;
             }
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer player = caller.Player.GetModPlayer<LevelPlusModPlayer>();
             player.SetXp(ulong.Parse(args[0]));
         }
     }
@@ -123,11 +123,11 @@ namespace levelplus.Commands {
         public override string Usage => "/addlevel <amount>";
 
         public override void Action(CommandCaller caller, string input, string[] args) {
-            if (!levelplusConfig.Instance.CommandsEnabled) {
+            if (!LevelPlusConfig.Instance.CommandsEnabled) {
                 Main.NewText("Enable commands in the Level+ config to use this command.");
                 return;
             }
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer player = caller.Player.GetModPlayer<LevelPlusModPlayer>();
             player.AddLevel(ushort.Parse(args[0]));
         }
     }
@@ -141,11 +141,11 @@ namespace levelplus.Commands {
         public override string Usage => "/setlevel <amount>";
 
         public override void Action(CommandCaller caller, string input, string[] args) {
-            if (!levelplusConfig.Instance.CommandsEnabled) {
+            if (!LevelPlusConfig.Instance.CommandsEnabled) {
                 Main.NewText("Enable commands in the Level+ config to use this command.");
                 return;
             }
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer player = caller.Player.GetModPlayer<LevelPlusModPlayer>();
             player.SetLevel(Math.Clamp(uint.Parse(args[0]), 1, 65536) - 1);
         }
     }
@@ -172,7 +172,7 @@ namespace levelplus.Commands {
             }
             else
                 id = ushort.Parse(args[0]);
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer player = caller.Player.GetModPlayer<LevelPlusModPlayer>();
             if (args.Length == 1) {
                 player.InvestParticularAmount(id);
             }
@@ -195,7 +195,7 @@ namespace levelplus.Commands {
         public override string Usage => "/setinvestment <stat invest id> <amount, defaults to 0>";
 
         public override void Action(CommandCaller caller, string input, string[] args) {
-            if (!levelplusConfig.Instance.CommandsEnabled) {
+            if (!LevelPlusConfig.Instance.CommandsEnabled) {
                 Main.NewText("Enable commands in the Level+ config to use this command.");
                 return;
             }
@@ -209,7 +209,7 @@ namespace levelplus.Commands {
             }
             else
                 id = ushort.Parse(args[0]);
-            levelplusModPlayer player = caller.Player.GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer player = caller.Player.GetModPlayer<LevelPlusModPlayer>();
             if (args.Length == 1) {
                 player.SetInvestmentToParticularAmount(id);
             }

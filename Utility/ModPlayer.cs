@@ -4,11 +4,11 @@ using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
-using levelplus.UI;
+using LevelPlus.UI;
 using Terraria.Audio;
 using Terraria.GameInput;
 
-namespace levelplus {
+namespace LevelPlus {
     internal enum Weapon {
         SWORD,//
         YOYO,//
@@ -21,7 +21,7 @@ namespace levelplus {
         THROWN
     }
 
-    class levelplusModPlayer : ModPlayer {
+    class LevelPlusModPlayer : ModPlayer {
 
         //currently private/unused variables
         private ushort talentUnspent;
@@ -142,7 +142,7 @@ namespace levelplus {
         }
 
         public void StatReset() {
-            statPoints = (ushort) (level * levelplusConfig.Instance.PointsPerLevel + levelplusConfig.Instance.PointsBase);
+            statPoints = (ushort) (level * LevelPlusConfig.Instance.PointsPerLevel + LevelPlusConfig.Instance.PointsBase);
             talents = "--------";
             talentUnspent = 0;
             constitution = 0;
@@ -282,52 +282,52 @@ namespace levelplus {
         public override void ResetEffects() {
             base.ResetEffects();
             //constitution
-            Player.statLifeMax2 += (levelplusConfig.Instance.HealthPerLevel * level) + (levelplusConfig.Instance.HealthPerPoint * constitution);
-            Player.lifeRegen += constitution / levelplusConfig.Instance.HRegenPerPoint;
-            Player.statDefense += constitution / levelplusConfig.Instance.DefensePerPoint;
+            Player.statLifeMax2 += (LevelPlusConfig.Instance.HealthPerLevel * level) + (LevelPlusConfig.Instance.HealthPerPoint * constitution);
+            Player.lifeRegen += constitution / LevelPlusConfig.Instance.HRegenPerPoint;
+            Player.statDefense += constitution / LevelPlusConfig.Instance.DefensePerPoint;
             //intelligence
-            Player.GetDamage(DamageClass.Magic) *= 1.00f + (intelligence * levelplusConfig.Instance.MagicDamagePerPoint);
-            Player.GetCritChance(DamageClass.Magic) += intelligence / levelplusConfig.Instance.MagicCritPerPoint;
+            Player.GetDamage(DamageClass.Magic) *= 1.00f + (intelligence * LevelPlusConfig.Instance.MagicDamagePerPoint);
+            Player.GetCritChance(DamageClass.Magic) += intelligence / LevelPlusConfig.Instance.MagicCritPerPoint;
             //strength
-            Player.GetDamage(DamageClass.Melee) *= 1.00f + (strength * levelplusConfig.Instance.MeleeDamagePerPoint);
-            Player.GetCritChance(DamageClass.Melee) += strength / levelplusConfig.Instance.MeleeCritPerPoint;
+            Player.GetDamage(DamageClass.Melee) *= 1.00f + (strength * LevelPlusConfig.Instance.MeleeDamagePerPoint);
+            Player.GetCritChance(DamageClass.Melee) += strength / LevelPlusConfig.Instance.MeleeCritPerPoint;
             //dexterity
-            Player.GetDamage(DamageClass.Ranged) *= 1.00f + (dexterity * levelplusConfig.Instance.RangedDamagePerPoint);
-            Player.GetCritChance(DamageClass.Ranged) += dexterity / levelplusConfig.Instance.RangedCritPerPoint;
+            Player.GetDamage(DamageClass.Ranged) *= 1.00f + (dexterity * LevelPlusConfig.Instance.RangedDamagePerPoint);
+            Player.GetCritChance(DamageClass.Ranged) += dexterity / LevelPlusConfig.Instance.RangedCritPerPoint;
             //charisma
-            Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma * levelplusConfig.Instance.SummonDamagePerPoint);
-            Player.GetCritChance(DamageClass.Summon) += charisma / levelplusConfig.Instance.SummonCritPerPoint;
+            Player.GetDamage(DamageClass.Summon) *= 1.00f + (charisma * LevelPlusConfig.Instance.SummonDamagePerPoint);
+            Player.GetCritChance(DamageClass.Summon) += charisma / LevelPlusConfig.Instance.SummonCritPerPoint;
             //animalia
-            Player.fishingSkill += (int) (Player.fishingSkill * (animalia * levelplusConfig.Instance.FishSkillPerPoint));
+            Player.fishingSkill += (int) (Player.fishingSkill * (animalia * LevelPlusConfig.Instance.FishSkillPerPoint));
             //excavation
-            Player.pickSpeed *= 1.00f - (excavation * levelplusConfig.Instance.PickSpeedPerPoint);
-            Player.tileSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
-            Player.wallSpeed *= 1.00f + (excavation * levelplusConfig.Instance.BuildSpeedPerPoint);
-            Player.blockRange += excavation / levelplusConfig.Instance.RangePerPoint;
+            Player.pickSpeed *= 1.00f - (excavation * LevelPlusConfig.Instance.PickSpeedPerPoint);
+            Player.tileSpeed *= 1.00f + (excavation * LevelPlusConfig.Instance.BuildSpeedPerPoint);
+            Player.wallSpeed *= 1.00f + (excavation * LevelPlusConfig.Instance.BuildSpeedPerPoint);
+            Player.blockRange += excavation / LevelPlusConfig.Instance.RangePerPoint;
             //mobility
-            Player.maxRunSpeed *= 1.00f + (mobility * levelplusConfig.Instance.RunSpeedPerPoint);
-            Player.runAcceleration *= 1.00f + (mobility * levelplusConfig.Instance.AccelPerPoint);
-            Player.wingTimeMax += (int) (Player.wingTimeMax * (mobility * levelplusConfig.Instance.WingPerPoint));
+            Player.maxRunSpeed *= 1.00f + (mobility * LevelPlusConfig.Instance.RunSpeedPerPoint);
+            Player.runAcceleration *= 1.00f + (mobility * LevelPlusConfig.Instance.AccelPerPoint);
+            Player.wingTimeMax += (int) (Player.wingTimeMax * (mobility * LevelPlusConfig.Instance.WingPerPoint));
             //mysticism
-            Player.statManaMax2 += (levelplusConfig.Instance.ManaPerLevel * level) + (levelplusConfig.Instance.ManaPerPoint * mysticism);
-            Player.manaRegen += mysticism / levelplusConfig.Instance.ManaRegPerPoint;
+            Player.statManaMax2 += (LevelPlusConfig.Instance.ManaPerLevel * level) + (LevelPlusConfig.Instance.ManaPerPoint * mysticism);
+            Player.manaRegen += mysticism / LevelPlusConfig.Instance.ManaRegPerPoint;
 
         }
 
         public override void PostUpdateEquips() {
             base.PostUpdateEquips();
-            Player.maxMinions += animalia / levelplusConfig.Instance.MinionPerPoint;
+            Player.maxMinions += animalia / LevelPlusConfig.Instance.MinionPerPoint;
         }
 
         public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
-            mult *= Math.Clamp(1.0f - (mysticism * levelplusConfig.Instance.ManaCostPerPoint), 0.1f, 1.0f);
+            mult *= Math.Clamp(1.0f - (mysticism * LevelPlusConfig.Instance.ManaCostPerPoint), 0.1f, 1.0f);
             base.ModifyManaCost(item, ref reduce, ref mult);
         }
 
         public override bool CanConsumeAmmo(Item weapon, Item ammo) {
             Random rand = new();
 
-            if (rand.Next(1, levelplusConfig.Instance.AmmoPerPoint) <= luck) {
+            if (rand.Next(1, LevelPlusConfig.Instance.AmmoPerPoint) <= luck) {
                 return false;
             }
 
@@ -341,7 +341,7 @@ namespace levelplus {
 
         public void SetLevel(uint setLevelToThis, bool resetXp = true) {
             level = IntToUShortNoOverflow(setLevelToThis);
-            uint statPointsInt = (uint) (levelplusConfig.Instance.PointsPerLevel * level + levelplusConfig.Instance.PointsBase);
+            uint statPointsInt = (uint) (LevelPlusConfig.Instance.PointsPerLevel * level + LevelPlusConfig.Instance.PointsBase);
             statPointsInt -= constitution;
             statPointsInt -= strength;
             statPointsInt -= intelligence;
@@ -352,7 +352,7 @@ namespace levelplus {
             statPointsInt -= animalia;
             statPointsInt -= luck;
             statPointsInt -= excavation;
-            if (levelplusConfig.Instance.PointsPerLevel * level + levelplusConfig.Instance.PointsBase < statPointsInt)
+            if (LevelPlusConfig.Instance.PointsPerLevel * level + LevelPlusConfig.Instance.PointsBase < statPointsInt)
                 statPointsInt = 0;
             statPoints = IntToUShortNoOverflow(statPointsInt);
             if (resetXp)
@@ -368,7 +368,7 @@ namespace levelplus {
             if (addRaw)
                 currentXP += amountToAdd;
             else
-                currentXP += (ulong) (amountToAdd * (luck * levelplusConfig.Instance.XPPerPoint + 1));
+                currentXP += (ulong) (amountToAdd * (luck * LevelPlusConfig.Instance.XPPerPoint + 1));
             if (currentXP >= neededXP) {
                 LevelUp();
             }
@@ -500,7 +500,7 @@ namespace levelplus {
             }
             currentXP -= neededXP;
             ++level;
-            statPoints += (ushort) levelplusConfig.Instance.PointsPerLevel;
+            statPoints += (ushort) LevelPlusConfig.Instance.PointsPerLevel;
 
             neededXP = CalculateNeededXP(level);
 
@@ -521,12 +521,12 @@ namespace levelplus {
         }
 
         public ulong CalculateNeededXP(ushort level) {
-            return (ulong) (levelplusConfig.Instance.XPIncrease * Math.Pow(level, levelplusConfig.Instance.XPRate) + levelplusConfig.Instance.XPBase);
+            return (ulong) (LevelPlusConfig.Instance.XPIncrease * Math.Pow(level, LevelPlusConfig.Instance.XPRate) + LevelPlusConfig.Instance.XPBase);
         }
 
         public override void clientClone(ModPlayer clientClone) {
             base.clientClone(clientClone);
-            levelplusModPlayer clone = clientClone as levelplusModPlayer;
+            LevelPlusModPlayer clone = clientClone as LevelPlusModPlayer;
 
             clone.level = level;
             clone.constitution = constitution;
@@ -552,7 +552,7 @@ namespace levelplus {
 
         public override void SendClientChanges(ModPlayer clientPlayer) {
             base.SendClientChanges(clientPlayer);
-            if (!StatsMatch(clientPlayer as levelplusModPlayer)) {
+            if (!StatsMatch(clientPlayer as LevelPlusModPlayer)) {
                 ModPacket packet = Mod.GetPacket();
                 packet.Write((byte) PacketType.StatsChanged);
                 AddSyncToPacket(packet);
@@ -575,7 +575,7 @@ namespace levelplus {
             packet.Write(excavation);
         }
 
-        public bool StatsMatch(levelplusModPlayer compare) { //returns true if stats match
+        public bool StatsMatch(LevelPlusModPlayer compare) { //returns true if stats match
             if (compare.level != level ||
             compare.constitution != constitution ||
             compare.strength != strength ||
@@ -594,7 +594,7 @@ namespace levelplus {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             base.ProcessTriggers(triggersSet);
-            if (levelplus.SpendUIHotKey.JustPressed) {
+            if (LevelPlus.SpendUIHotKey.JustPressed) {
                 if (Main.netMode != NetmodeID.Server) {
                     SoundEngine.PlaySound(SoundID.MenuTick);
                     SpendUI.visible = !SpendUI.visible;

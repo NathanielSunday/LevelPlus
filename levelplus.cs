@@ -2,8 +2,9 @@ using Terraria.ModLoader;
 using System.IO;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 
-namespace levelplus {
+namespace LevelPlus {
 
     internal enum PacketType : byte {
         XP,
@@ -11,9 +12,9 @@ namespace levelplus {
         StatsChanged
     }
 
-    public class levelplus : Mod {
-        public static levelplus Instance { get; private set; }
-        public levelplus() { Instance = this; }
+    public class LevelPlus : Mod {
+        public static LevelPlus Instance { get; private set; }
+        public LevelPlus() { Instance = this; }
 
         public static ModKeybind SpendUIHotKey;
         public static ModKeybind SpendModFive;
@@ -21,10 +22,10 @@ namespace levelplus {
         public static ModKeybind SpendModTwentyFive;
 
         public override void Load() {
-            SpendUIHotKey = KeybindLoader.RegisterKeybind(this, "Open SpendUI", Microsoft.Xna.Framework.Input.Keys.P);
-            SpendModFive = KeybindLoader.RegisterKeybind(this, "Spend 5 points", Microsoft.Xna.Framework.Input.Keys.LeftShift);
-            SpendModTen = KeybindLoader.RegisterKeybind(this, "Spend 10 points", Microsoft.Xna.Framework.Input.Keys.LeftControl);
-            SpendModTwentyFive = KeybindLoader.RegisterKeybind(this, "Spend 25 points", Microsoft.Xna.Framework.Input.Keys.LeftAlt);
+            SpendUIHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.UI"), Microsoft.Xna.Framework.Input.Keys.P);
+            SpendModFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.Five"), Microsoft.Xna.Framework.Input.Keys.LeftShift);
+            SpendModTen = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.Ten"), Microsoft.Xna.Framework.Input.Keys.LeftControl);
+            SpendModTwentyFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.TwentyFive"), Microsoft.Xna.Framework.Input.Keys.LeftAlt);
         }
 
         public override void Unload() {
@@ -39,7 +40,7 @@ namespace levelplus {
             switch ((PacketType) msgType) {
                 case PacketType.XP: //xp gain
                     if (Main.netMode == NetmodeID.MultiplayerClient)
-                        Main.LocalPlayer.GetModPlayer<levelplusModPlayer>().AddXp(reader.ReadUInt64());
+                        Main.LocalPlayer.GetModPlayer<LevelPlusModPlayer>().AddXp(reader.ReadUInt64());
                     break;
                 case PacketType.PlayerSync: //sync the players properly
                     ParsePlayer(reader, reader.ReadByte());
@@ -50,7 +51,7 @@ namespace levelplus {
                     if (Main.netMode == NetmodeID.Server) {
                         ModPacket packet = GetPacket();
                         packet.Write((byte) PacketType.StatsChanged);
-                        Main.player[index].GetModPlayer<levelplusModPlayer>().AddSyncToPacket(packet);
+                        Main.player[index].GetModPlayer<LevelPlusModPlayer>().AddSyncToPacket(packet);
                         packet.Send(-1, index);
                     }
                     break;
@@ -61,7 +62,7 @@ namespace levelplus {
         }
 
         public void ParsePlayer(BinaryReader reader, byte index) {
-            levelplusModPlayer copy = Main.player[index].GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer copy = Main.player[index].GetModPlayer<LevelPlusModPlayer>();
             copy.level = reader.ReadUInt16();
             copy.constitution = reader.ReadUInt16();
             copy.strength = reader.ReadUInt16();

@@ -1,0 +1,25 @@
+Mods: {
+	LevelPlus: {
+    DisplayName: {
+      Respec: Insignia of Reform
+      Restart: Insignia of Rebirth
+    }
+    Tooltip: { 
+      Respec:
+        '''
+				[c/55ff55:Allows the reallocation of skill points.]
+				'''
+			Restart:
+				'''
+				[c/ff0000:WHEN USED, ALL PROGRESS FOR Level+ WILL BE LOST FOR THIS CHARACTER.]
+				"Return from whence ye came!"
+				'''
+    }
+    Keybind: {
+      UI: Open stat UI
+      Five: Spend 5 points
+      Ten: Spend 10 points
+      TwentyFive: Spend 25 points
+    }
+	}
+}

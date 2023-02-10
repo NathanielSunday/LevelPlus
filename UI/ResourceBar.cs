@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
 
-namespace levelplus.UI {
+namespace LevelPlus.UI {
     internal enum ResourceBarMode {
         XP
     }
@@ -68,7 +68,7 @@ namespace levelplus.UI {
         protected override void DrawSelf(SpriteBatch spriteBatch) {
             base.DrawSelf(spriteBatch);
 
-            levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
 
 
             //spriteBatch.Begin();
@@ -92,7 +92,7 @@ namespace levelplus.UI {
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
 
-            levelplusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<levelplusModPlayer>();
+            LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
             string HoverText;
             switch (stat) {
                 case ResourceBarMode.XP:

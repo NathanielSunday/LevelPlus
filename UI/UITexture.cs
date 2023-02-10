@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace levelplus.UI {
+namespace LevelPlus.UI {
 
     class UITexture : UIElement {
         public Color backgroundColor = Color.White;

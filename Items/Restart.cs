@@ -1,12 +1,13 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace levelplus.Items {
+namespace LevelPlus.Items {
     public class Restart : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Insignia of Rebirth");
-            Tooltip.SetDefault("By hoisting this token, you lose the experience you have gained, and return to level 1.\n[c/ff0000:WHEN USED, ALL PROGRESS FOR Level+ WILL BE LOST FOR THIS CHARACTER.]");
+            DisplayName.SetDefault(Language.GetTextValue("Mods." + Mod.Name + ".DisplayName." + Name));
+            Tooltip.SetDefault(Language.GetTextValue("Mods." + Mod.Name + ".Tooltip." + Name));
         }
 
         public override void SetDefaults() {
@@ -29,7 +30,7 @@ namespace levelplus.Items {
         }
 
         public override bool? UseItem(Player player) {
-            player.GetModPlayer<levelplusModPlayer>().initialize();
+            player.GetModPlayer<LevelPlusModPlayer>().initialize();
 
             return true;
         }
