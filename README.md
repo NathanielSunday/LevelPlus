@@ -20,16 +20,16 @@ When you reach hardmode, you can get your points back and spend them differently
 and 1 gold or platinum bar.
 
 Credits
----
+-
 
 Development
---
+----
 - PoctorDepper: UI, netcode, and general backend
 - Cercul1: for being PoctorDepper's "rubber duck"
 - MarauderKnight3: early version commands, which has since been modified out  
 - LanToaster: early config edition, which has since been modified out
 
 Graphics
---
+----
 - PoctorDepper: general UI
 - MarauderKnight3: insignia sprites
