@@ -1,5 +1,4 @@
 # Level+
----
 
 Level+ is meant to bring a simple leveling system that makes your character progress as the game progresses.
 
