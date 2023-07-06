@@ -1,7 +1,5 @@
 Level+ is meant to bring a simple leveling system that makes your character progress as the game progresses.
-
 Check out the GitHub page for more info: https://github.com/PoctorDepper/levelplus
 
-I've also got a Patreon, if you're at all interested: https://www.patreon.com/poctordepper5446
-
-Wanna join a Discord server and interact with the dev? Click here: https://discord.gg/zAWaHEyAA6
+Bugs, suggestions, or want to interact with the developer(s)? Click here: https://discord.gg/zAWaHEyAA6
+If you'd like to support me, buy me a coffee: https://ko-fi.com/poctordepper
