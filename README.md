@@ -13,8 +13,7 @@ When you reach hardmode, you can get your points back and spend them differently
 1 soul of flight,
 and 1 gold or platinum bar.
 
-#### Linkies
----
+### Linkies
 Bugs, suggestions, or want to interact with the developer(s)? Click here: https://discord.gg/zAWaHEyAA6
 If you'd like to support me, buy me a ko-fi? https://ko-fi.com/poctordepper
 I've also got a Patreon, but not much is done with it: https://www.patreon.com/poctordepper5446
