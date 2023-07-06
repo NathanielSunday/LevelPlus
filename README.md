@@ -19,17 +19,14 @@ When you reach hardmode, you can get your points back and spend them differently
 1 soul of flight,
 and 1 gold or platinum bar.
 
-Credits
--
+## Credits
 
-Development
-----
+### Development
 - PoctorDepper: UI, netcode, and general backend
 - Cercul1: for being PoctorDepper's "rubber duck"
 - MarauderKnight3: early version commands, which has since been modified out  
 - LanToaster: early config edition, which has since been modified out
 
-Graphics
-----
+### Graphics
 - PoctorDepper: general UI
 - MarauderKnight3: insignia sprites
