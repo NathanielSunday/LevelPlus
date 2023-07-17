@@ -1,23 +1,29 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Copyright (c) BitWiser.
+// Licensed under the Apache License, Version 2.0.
+
+using LevelPlus.Core;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace LevelPlus.UI {
+
+namespace LevelPlus.UI
+{
 
     class StatButton : UIElement {
 
-        public Utility.Stat type { get; private set; }
+        public Utils.Stat type { get; private set; }
         private float height;
         private float width;
         private UITexture button;
         private UIText points;
 
-        public StatButton(Utility.Stat type, float diameter) : this(type, diameter, diameter) { }
+        public StatButton(Utils.Stat type, float diameter) : this(type, diameter, diameter) { }
 
-        public StatButton(Utility.Stat type, float height, float width) {
+        public StatButton(Utils.Stat type, float height, float width) {
             this.type = type;
             this.height = height;
             this.width = width;
@@ -38,30 +44,30 @@ namespace LevelPlus.UI {
             button.Height.Set(height, 0f);
 
             switch (type) {
-                case Utility.Stat.CONSTITUTION:
+                case Utils.Stat.CONSTITUTION:
                     button.backgroundColor = Color.LimeGreen; //green
                     break;
-                case Utility.Stat.STRENGTH:
+                case Utils.Stat.STRENGTH:
                     button.backgroundColor = Color.Red; //red
                     break;
-                case Utility.Stat.INTELLIGENCE:
+                case Utils.Stat.INTELLIGENCE:
                     button.backgroundColor = Color.Blue; //blue	
                     break;
-                case Utility.Stat.CHARISMA:
+                case Utils.Stat.CHARISMA:
                     button.backgroundColor = Color.Purple; //purple
                     break;
-                case Utility.Stat.DEXTERITY:
+                case Utils.Stat.DEXTERITY:
                     button.backgroundColor = Color.Yellow; //yellow
                     break;
-                case Utility.Stat.MOBILITY:
+                case Utils.Stat.MOBILITY:
                     break;
-                case Utility.Stat.EXCAVATION:
+                case Utils.Stat.EXCAVATION:
                     break;
-                case Utility.Stat.ANIMALIA:
+                case Utils.Stat.ANIMALIA:
                     break;
-                case Utility.Stat.LUCK:
+                case Utils.Stat.LUCK:
                     break;
-                case Utility.Stat.MYSTICISM:
+                case Utils.Stat.MYSTICISM:
                     break;
                 default:
                     break;
@@ -93,79 +99,79 @@ namespace LevelPlus.UI {
             LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
 
             switch (type) {
-                case Utility.Stat.CONSTITUTION:
+                case Utils.Stat.CONSTITUTION:
                     points.SetText("" + modPlayer.constitution);
                     text = "Constitution:\n\n"
-                        + "  +" + (modPlayer.constitution * Utility.HealthPerPoint) + " life (+" + (modPlayer.Level * Utility.HealthPerLevel) + " from level)\n"
-                        + "  +" + (modPlayer.constitution / Utility.DefensePerPoint) + " defense\n"
-                        + "  +" + (modPlayer.constitution / Utility.HRegenPerPoint) + " life regen";
+                        + "  +" + (modPlayer.constitution * Utils.HealthPerPoint) + " life (+" + (modPlayer.Level * Utils.HealthPerLevel) + " from level)\n"
+                        + "  +" + (modPlayer.constitution / Utils.DefensePerPoint) + " defense\n"
+                        + "  +" + (modPlayer.constitution / Utils.HRegenPerPoint) + " life regen";
                     rarity = 7; //lime
                     break;
-                case Utility.Stat.STRENGTH:
+                case Utils.Stat.STRENGTH:
                     points.SetText("" + modPlayer.strength);
                     text = "Strength:\n\n"
-                        + "  +" + ((int) (modPlayer.strength * (Utility.MeleeDamagePerPoint * 100))) + "% melee damage\n"
-                        + "  +" + (modPlayer.strength / Utility.MeleeCritPerPoint) + "% melee crit chance";
+                        + "  +" + ((int) (modPlayer.strength * (Utils.MeleeDamagePerPoint * 100))) + "% melee damage\n"
+                        + "  +" + (modPlayer.strength / Utils.MeleeCritPerPoint) + "% melee crit chance";
                     rarity = 10; //red
                     break;
-                case Utility.Stat.INTELLIGENCE:
+                case Utils.Stat.INTELLIGENCE:
                     points.SetText("" + modPlayer.intelligence);
                     text = "Intelligence:\n\n"
-                        + "  +" + ((int) (modPlayer.intelligence * (Utility.MagicDamagePerPoint * 100))) + "% magic damage\n"
-                        + "  +" + (modPlayer.intelligence / Utility.MagicCritPerPoint) + "% magic crit chance";
+                        + "  +" + ((int) (modPlayer.intelligence * (Utils.MagicDamagePerPoint * 100))) + "% magic damage\n"
+                        + "  +" + (modPlayer.intelligence / Utils.MagicCritPerPoint) + "% magic crit chance";
                     rarity = 9; //cyan
                     break;
-                case Utility.Stat.CHARISMA:
+                case Utils.Stat.CHARISMA:
                     points.SetText("" + modPlayer.charisma);
                     text = "Charisma:\n\n"
-                        + "  +" + ((int) (modPlayer.charisma * (Utility.SummonDamagePerPoint * 100))) + "% minion damage\n"
-                        + "  +" + (modPlayer.charisma / Utility.SummonCritPerPoint) + "% minion crit chance";
+                        + "  +" + ((int) (modPlayer.charisma * (Utils.SummonDamagePerPoint * 100))) + "% minion damage\n"
+                        + "  +" + (modPlayer.charisma / Utils.SummonCritPerPoint) + "% minion crit chance";
                     rarity = 6; //light purple
                     break;
-                case Utility.Stat.DEXTERITY:
+                case Utils.Stat.DEXTERITY:
                     points.SetText("" + modPlayer.dexterity);
                     text = "Dexterity:\n\n"
-                        + "  +" + ((int) (modPlayer.dexterity * (Utility.RangedDamagePerPoint * 100))) + "% ranged damage\n"
-                        + "  +" + (modPlayer.dexterity / Utility.RangedCritPerPoint) + "% ranged crit chance";
+                        + "  +" + ((int) (modPlayer.dexterity * (Utils.RangedDamagePerPoint * 100))) + "% ranged damage\n"
+                        + "  +" + (modPlayer.dexterity / Utils.RangedCritPerPoint) + "% ranged crit chance";
                     rarity = 8; //yellow
                     break;
-                case Utility.Stat.MOBILITY:
+                case Utils.Stat.MOBILITY:
                     points.SetText("" + modPlayer.mobility);
                     text = "Mobility:\n\n"
-                        + "  +" + ((int) (modPlayer.mobility * (Utility.AccelPerPoint * 100))) + "% acceleration\n"
-                        + "  +" + ((int) (modPlayer.mobility * (Utility.WingPerPoint * 100))) + "% wing time\n"
-                        + "  +" + ((int) (modPlayer.mobility * (Utility.RunSpeedPerPoint * 100))) + "% max run speed";
+                        + "  +" + ((int) (modPlayer.mobility * (Utils.AccelPerPoint * 100))) + "% acceleration\n"
+                        + "  +" + ((int) (modPlayer.mobility * (Utils.WingPerPoint * 100))) + "% wing time\n"
+                        + "  +" + ((int) (modPlayer.mobility * (Utils.RunSpeedPerPoint * 100))) + "% max run speed";
                     rarity = 0; //white
                     break;
-                case Utility.Stat.EXCAVATION:
+                case Utils.Stat.EXCAVATION:
                     points.SetText("" + modPlayer.excavation);
                     text = "Excavation:\n\n"
-                        + "  +" + ((int) (modPlayer.excavation * (Utility.PickSpeedPerPoint * 100))) + "% pick speed\n"
-                        + "  +" + ((int) (modPlayer.excavation * (Utility.BuildSpeedPerPoint * 100))) + "% place speed\n"
-                        + "  +" + (modPlayer.excavation / Utility.RangePerPoint) + " block range";
+                        + "  +" + ((int) (modPlayer.excavation * (Utils.Utils.PickSpeedPerPoint * 100))) + "% pick speed\n"
+                        + "  +" + ((int) (modPlayer.excavation * (Utils.Utils.BuildSpeedPerPoint * 100))) + "% place speed\n"
+                        + "  +" + (modPlayer.excavation / Utils.Utils.RangePerPoint) + " block range";
                     rarity = 0; //white
                     break;
-                case Utility.Stat.ANIMALIA:
+                case Utils.Stat.ANIMALIA:
                     points.SetText("" + modPlayer.animalia);
                     text = "Animalia:\n\n"
-                        + "  +" + ((int) (modPlayer.animalia * (Utility.FishSkillPerPoint * 100))) + "% better fishing\n"
-                        + "  +" + (modPlayer.animalia / Utility.MinionPerPoint) + " minion slots\n";
+                        + "  +" + ((int) (modPlayer.animalia * (Utils.Utils.FishSkillPerPoint * 100))) + "% better fishing\n"
+                        + "  +" + (modPlayer.animalia / Utils.Utils.MinionPerPoint) + " minion slots\n";
                     //+ "  +" + ((int)(modPlayer.animalia * (levelplusConfig.Instance.MinionKnockBack * 100))) + "% minion knockback";
                     rarity = 0; //white
                     break;
-                case Utility.Stat.LUCK:
+                case Utils.Stat.LUCK:
                     points.SetText("" + modPlayer.luck);
                     text = "Luck:\n\n"
-                        + "  +" + ((int) (modPlayer.luck * (Utility.XPPerPoint * 100))) + "% xp gain\n"
-                        + "  +" + ((int) ((modPlayer.luck * 100) / Utility.AmmoPerPoint)) + "% chance not to consume ammo";
+                        + "  +" + ((int) (modPlayer.luck * (Utils.XPPerPoint * 100))) + "% xp gain\n"
+                        + "  +" + ((int) ((modPlayer.luck * 100) / Utils.AmmoPerPoint)) + "% chance not to consume ammo";
                     rarity = 0; //white
                     break;
-                case Utility.Stat.MYSTICISM:
+                case Utils.Stat.MYSTICISM:
                     points.SetText("" + modPlayer.mysticism);
                     text = "Mysticism:\n\n"
-                        + "  +" + (modPlayer.mysticism * Utility.ManaPerPoint) + " max mana (+" + (modPlayer.Level * Utility.ManaPerLevel) + " from level)\n"
-                        + "  +" + (modPlayer.mysticism / Utility.ManaRegPerPoint) + " mana regen\n"
-                        + "  -" + System.Math.Clamp((int) (modPlayer.mysticism * (Utility.ManaCostPerPoint * 100)), 0f, 99.0f) + "% mana cost (can't be reduced below 1%)";
+                        + "  +" + (modPlayer.mysticism * Utils.Utils.ManaPerPoint) + " max mana (+" + (modPlayer.Level * Utils.Utils.ManaPerLevel) + " from level)\n"
+                        + "  +" + (modPlayer.mysticism / Utils.Utils.ManaRegPerPoint) + " mana regen\n"
+                        + "  -" + System.Math.Clamp((int) (modPlayer.mysticism * (Utils.Utils.ManaCostPerPoint * 100)), 0f, 99.0f) + "% mana cost (can't be reduced below 1%)";
                     rarity = 0; //white
                     break;
                 default:
@@ -182,7 +188,7 @@ namespace LevelPlus.UI {
         private void pointSpend(UIMouseEvent evt, UIElement listeningElement) {
             SoundEngine.PlaySound(SoundID.MenuTick);
             LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
-            modPlayer.Spend(type, (ushort) (levelplus.SpendModFive.Current ? 5 : levelplus.SpendModTen.Current ? 10 : levelplus.SpendModTwentyFive.Current ? 25 : 1));
+            modPlayer.Spend(type, (ushort) (LevelPlus.SpendModFive.Current ? 5 : LevelPlus.SpendModTen.Current ? 10 : LevelPlus.SpendModTwentyFive.Current ? 25 : 1));
         }
     }
 }

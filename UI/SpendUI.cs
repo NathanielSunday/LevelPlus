@@ -1,28 +1,32 @@
-﻿using Terraria.UI;
-using Terraria;
+﻿// Copyright (c) BitWiser.
+// Licensed under the Apache License, Version 2.0.
+
+using Terraria.UI;
+using LevelPlus.Config;
 
 namespace LevelPlus.UI {
-    class SpendUI : UIState {
-        public static bool visible;
+  class SpendUI : UIState {
+    public static bool Visible { get; private set; }
+    private StatCircle circle;
 
-        private StatCircle circle;
-
-        public override void OnInitialize() {
-            base.OnInitialize();
-
-            visible = false;
-
-            float circleDiameter = 300f;
-            circle = new StatCircle(circleDiameter);
-            circle.Left.Set((Main.screenWidth / 2f) - (circleDiameter / 2f), 0f);
-            circle.Top.Set((Main.screenHeight / 2f) - (circleDiameter / 2f), 0f);
-
-            Append(circle);
-        }
-
-        public override void OnDeactivate() {
-            base.OnDeactivate();
-            circle = null;
-        }
+    public static void ToggleVisible() {
+      Visible = !Visible;
     }
+
+    public override void OnInitialize() {
+      base.OnInitialize();
+
+      float circleDiameter = 300f;
+      circle = new StatCircle(circleDiameter);
+      circle.Left.Set(ClientConfig.Instance.SpendUILeft, 0f);
+      circle.Top.Set(ClientConfig.Instance.SpendUITop, 0f);
+
+      Append(circle);
+    }
+
+    public override void OnDeactivate() {
+      base.OnDeactivate();
+      circle = null;
+    }
+  }
 }

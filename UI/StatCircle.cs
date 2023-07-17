@@ -1,11 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Copyright (c) BitWiser.
+// Licensed under the Apache License, Version 2.0.
+
+using LevelPlus.Core;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace LevelPlus.UI {
+namespace LevelPlus.UI
+{
     class StatCircle : UIElement {
         //C1 = cos(pi * 2/5)
         //C2 = cos(pi * 1/5)
@@ -82,62 +87,62 @@ namespace LevelPlus.UI {
 
 
             //bottom
-            Animalia = new StatButton(Stat.ANIMALIA, LBR * 2);
+            Animalia = new StatButton(Utils.Stat.ANIMALIA, LBR * 2);
             Animalia.Left.Set(center.X - LBR, 0f);
             Animalia.Top.Set(center.Y + LR - LBR, 0f);
             Append(Animalia);
 
             //bottom right
-            Luck = new StatButton(Stat.LUCK, LBR * 2);
+            Luck = new StatButton(Utils.Stat.LUCK, LBR * 2);
             Luck.Left.Set(center.X + S1 * LR - LBR, 0f);
             Luck.Top.Set(center.Y + C1 * LR - LBR, 0f);
             Append(Luck);
 
             //top right
-            Mobility = new StatButton(Stat.MOBILITY, LBR * 2);
+            Mobility = new StatButton(Utils.Stat.MOBILITY, LBR * 2);
             Mobility.Left.Set(center.X + S2 * LR - LBR, 0f);
             Mobility.Top.Set(center.Y - C2 * LR - LBR, 0f);
             Append(Mobility);
 
             //top left
-            Excavation = new StatButton(Stat.EXCAVATION, LBR * 2);
+            Excavation = new StatButton(Utils.Stat.EXCAVATION, LBR * 2);
             Excavation.Left.Set(center.X - S2 * LR - LBR, 0f);
             Excavation.Top.Set(center.Y - C2 * LR - LBR, 0f);
             Append(Excavation);
 
             //bottom left
-            Mysticism = new StatButton(Stat.MYSTICISM, LBR * 2);
+            Mysticism = new StatButton(Utils.Stat.MYSTICISM, LBR * 2);
             Mysticism.Left.Set(center.X - S1 * LR - LBR, 0f);
             Mysticism.Top.Set(center.Y + C1 * LR - LBR, 0f);
             Append(Mysticism);
 
 
             //top
-            Constitution = new StatButton(Stat.CONSTITUTION, BBR * 2);
+            Constitution = new StatButton(Utils.Stat.CONSTITUTION, BBR * 2);
             Constitution.Left.Set(center.X - BBR, 0f);
             Constitution.Top.Set(center.Y - BR - BBR, 0f);
             Append(Constitution);
 
             //top left
-            Strength = new StatButton(Stat.STRENGTH, BBR * 2);
+            Strength = new StatButton(Utils.Stat.STRENGTH, BBR * 2);
             Strength.Left.Set(center.X - S1 * BR - BBR, 0f);
             Strength.Top.Set(center.Y - C1 * BR - BBR, 0f);
             Append(Strength);
 
             //bottom left
-            Intelligence = new StatButton(Stat.INTELLIGENCE, BBR * 2);
+            Intelligence = new StatButton(Utils.Stat.INTELLIGENCE, BBR * 2);
             Intelligence.Left.Set(center.X - S2 * BR - BBR, 0f);
             Intelligence.Top.Set(center.Y + C2 * BR - BBR, 0f);
             Append(Intelligence);
 
             //bottom right
-            Charisma = new StatButton(Stat.CHARISMA, BBR * 2);
+            Charisma = new StatButton(Utils.Stat.CHARISMA, BBR * 2);
             Charisma.Left.Set(center.X + S2 * BR - BBR, 0f);
             Charisma.Top.Set(center.Y + C2 * BR - BBR, 0f);
             Append(Charisma);
 
             //top right
-            Dexterity = new StatButton(Stat.DEXTERITY, BBR * 2);
+            Dexterity = new StatButton(Utils.Stat.DEXTERITY, BBR * 2);
             Dexterity.Left.Set(center.X + S1 * BR - BBR, 0f);
             Dexterity.Top.Set(center.Y - C1 * BR - BBR, 0f);
             Append(Dexterity);
@@ -173,8 +178,8 @@ namespace LevelPlus.UI {
 
             Rectangle parentSpace = Parent.GetDimensions().ToRectangle();
             if (!GetDimensions().ToRectangle().Intersects(parentSpace)) {
-                Left.Pixels = Utils.Clamp(Left.Pixels, 0, parentSpace.Right - Width.Pixels);
-                Top.Pixels = Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);
+                Left.Pixels = Terraria.Utils.Clamp(Left.Pixels, 0, parentSpace.Right - Width.Pixels);
+                Top.Pixels = Terraria.Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);
                 Recalculate();
             }
         }

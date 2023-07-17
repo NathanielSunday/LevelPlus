@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Copyright (c) BitWiser.
+// Licensed under the Apache License, Version 2.0.
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;

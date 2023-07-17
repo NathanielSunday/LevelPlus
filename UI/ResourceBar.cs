@@ -1,9 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Copyright (c) BitWiser.
+// Licensed under the Apache License, Version 2.0.
+
+using LevelPlus.Core;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
 
-namespace LevelPlus.UI {
+namespace LevelPlus.UI
+{
     internal enum ResourceBarMode {
         XP
     }

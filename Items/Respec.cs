@@ -1,9 +1,14 @@
+// Copyright (c) BitWiser.
+// Licensed under the Apache License, Version 2.0.
+
+using LevelPlus.Core;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace LevelPlus.Items {
+namespace LevelPlus.Items
+{
     public class Respec : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault(Language.GetTextValue("Mods." + Mod.Name + ".DisplayName." + Name));

@@ -1,38 +1,35 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Copyright (c) BitWiser.
+// Licensed under the Apache License, Version 2.0.
+
+using LevelPlus.Core;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace LevelPlus.UI {
-    class XPBar : UIElement {
-        private bool dragging;
+namespace LevelPlus.UI
+{
+    class XPBar : DragableUIElement {
         private ResourceBar bar;
         private XPBarButton button;
-        private float width;
-        private float height;
-        private Vector2 offset;
+        
 
-        public XPBar(float width, float height) {
-            this.width = width;
-            this.height = height;
-            offset = Vector2.Zero;
+        public XPBar(float width, float height) : base(width, height) { 
+
         }
 
         public override void OnInitialize() {
             base.OnInitialize();
 
-            Height.Set(height, 0f);
-            Width.Set(width, 0f);
-
-            button = new XPBarButton(height);
-            bar = new ResourceBar(ResourceBarMode.XP, width - (height * (186 / 186)), height);
+            button = new XPBarButton(Height.Pixels);
+            bar = new ResourceBar(ResourceBarMode.XP, Width.Pixels - (Height.Pixels * (186 / 186)), Height.Pixels);
 
             button.Left.Set(0f, 0f);
             button.Top.Set(0f, 0f);
 
-            bar.Left.Set(height * (186 / 186), 0f);
+            bar.Left.Set(Height.Pixels * (186 / 186), 0f);
             bar.Top.Set(0f, 0f);
 
             Append(bar);
@@ -44,48 +41,6 @@ namespace LevelPlus.UI {
             base.OnDeactivate();
             bar = null;
             button = null;
-        }
-
-        public override void Update(GameTime gameTime) {
-            base.Update(gameTime);
-
-            if (dragging) {
-                Left.Set(Main.mouseX - offset.X, 0f);
-                Top.Set(Main.mouseY - offset.Y, 0f);
-                Recalculate();
-            }
-
-            Rectangle parentSpace = Parent.GetDimensions().ToRectangle();
-            if (!GetDimensions().ToRectangle().Intersects(parentSpace)) {
-                Left.Pixels = Utils.Clamp(Left.Pixels, 0, parentSpace.Right - Width.Pixels);
-                Top.Pixels = Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);
-                Recalculate();
-            }
-        }
-
-        public override void MouseDown(UIMouseEvent evt) {
-            base.MouseDown(evt);
-            DragStart(evt);
-        }
-
-        public override void MouseUp(UIMouseEvent evt) {
-            base.MouseUp(evt);
-            DragEnd(evt);
-        }
-
-        private void DragStart(UIMouseEvent evt) {
-            offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
-            dragging = true;
-        }
-
-        private void DragEnd(UIMouseEvent evt) {
-            Vector2 end = evt.MousePosition;
-            dragging = false;
-
-            Left.Set(end.X - offset.X, 0f);
-            Top.Set(end.Y - offset.Y, 0f);
-
-            Recalculate();
         }
     }
 
