@@ -1,0 +1,46 @@
+Mods: {
+	LevelPlus: {
+    Items: {
+      Respec: {
+        DisplayName: Insignia of Reform
+        Tooltip: 
+          '''
+				  [c/55ff55:Allows the reallocation of skill points.]
+          "New year, new me."
+				  '''
+      Restart: {
+        DisplayName: Insignia of Rebirth
+        Tooltip:
+          '''
+				  [c/ff0000:WHEN USED, ALL PROGRESS FOR Level+ WILL BE LOST FOR THIS CHARACTER.]
+				  "Return from whence ye came!"
+				  '''
+      }
+    }
+    Keybind: {
+      UI: Open stat UI
+      Five: Spend 5 points
+      Ten: Spend 10 points
+      TwentyFive: Spend 25 points
+    }
+    Stat: {
+      ENDURANCE: Endurance
+      STRENGTH: Strength
+      DEXTERITY: Dexterity
+      INTELLIGENCE: Intelligence
+      WISDOM: Wisdom
+      CHARISMA: Charisma
+      LUCK: Luck
+      CONSTRUCTION: Construction 
+      AGILITY: Agility
+    }
+    Config: {
+      Client: {
+        
+      }
+      Server: {
+        
+      }
+    }
+	}
+}
