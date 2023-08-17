@@ -244,8 +244,8 @@ namespace LevelPlus.Core
       else StatInitialize();
     }
 
-    public override void OnRespawn(Player player) {
-      base.OnRespawn(player);
+    public override void OnRespawn() {
+      base.OnRespawn();
       //lose a quarter of your current xp on death
       if (!ServerConfig.Instance.PunishmentEnabled) return;
       XP = (long)Math.Max(XP - SystemHelper.LevelToXP(SystemHelper.XPToLevel(XP)) * ServerConfig.Instance.PunishmentAmount, SystemHelper.LevelToXP(SystemHelper.XPToLevel(XP)));
@@ -415,9 +415,9 @@ namespace LevelPlus.Core
       }
       InvestParticularAmount(whichStat, howMuch, statPointsInt);
     }
-    public override void clientClone(ModPlayer clientClone) {
-      base.clientClone(clientClone);
-      LevelPlusModPlayer clone = clientClone as LevelPlusModPlayer;
+    public override void CopyClientState(ModPlayer targetCopy) {
+      base.CopyClientState(targetCopy);
+      LevelPlusModPlayer clone = targetCopy as LevelPlusModPlayer;
 
       clone.XP = XP;
       clone.Stats = Stats;

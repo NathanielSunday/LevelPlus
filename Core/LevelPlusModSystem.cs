@@ -21,7 +21,7 @@ namespace LevelPlus.Core {
     public override void Load() {
       base.Load();
       //modify our mana cap
-      IL.Terraria.Player.Update += PlayerManaUpdate;
+      IL_Player.Update += PlayerManaUpdate;
       //makes sure UI isn't opened server side
       if (!Main.dedServ) {
         gui = new GUI();
