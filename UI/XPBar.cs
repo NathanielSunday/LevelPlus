@@ -63,13 +63,13 @@ namespace LevelPlus.UI {
             }
         }
 
-        public override void MouseDown(UIMouseEvent evt) {
-            base.MouseDown(evt);
+        public override void LeftMouseDown(UIMouseEvent evt) {
+            base.LeftMouseDown(evt);
             DragStart(evt);
         }
 
-        public override void MouseUp(UIMouseEvent evt) {
-            base.MouseUp(evt);
+        public override void LeftMouseUp(UIMouseEvent evt) {
+            base.LeftMouseUp(evt);
             DragEnd(evt);
         }
 
@@ -111,7 +111,7 @@ namespace LevelPlus.UI {
             button.Top.Set(0f, 0f);
             button.Width.Set(width, 0f);
             button.Height.Set(height, 0f);
-            button.OnClick += new MouseEvent(OpenLevelClicked);
+            button.OnLeftClick += new MouseEvent(OpenLevelClicked);
 
             level = new UIText("0"); //text for showing values
             level.Width.Set(width, 0f);

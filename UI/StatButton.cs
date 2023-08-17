@@ -83,7 +83,7 @@ namespace LevelPlus.UI {
             points.Width.Set(width, 0f);
             points.Height.Set(height, 0f);
             points.Top.Set(height / 2 - points.MinHeight.Pixels / 2, 0f); //center the text, because I'm not a heathen
-            this.OnClick += new MouseEvent(pointSpend);
+            this.OnLeftClick += new MouseEvent(pointSpend);
 
 
             button.Append(points);
