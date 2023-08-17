@@ -11,8 +11,7 @@ namespace LevelPlus.Items
 {
     public class Restart : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault(Language.GetTextValue("Mods." + Mod.Name + ".DisplayName." + Name));
-            Tooltip.SetDefault(Language.GetTextValue("Mods." + Mod.Name + ".Tooltip." + Name));
+
         }
 
         public override void SetDefaults() {
