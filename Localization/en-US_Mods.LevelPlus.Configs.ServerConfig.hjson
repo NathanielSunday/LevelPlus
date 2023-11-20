@@ -1,0 +1,66 @@
+DisplayName: Stat Config
+
+Mob_ScalingEnabled: {
+  Tooltip: Turns on mob scaling.
+  Label: Scaling
+}
+
+Mob_LevelScalar: {
+  Tooltip: 
+		'''
+	  The percentage in which average level modifies mob scaling.\n
+		If you don't know what this does, I don't recommend messing with it.
+		'''
+	Label: Average Level Scaling
+}
+
+Level_LossEnabled: {
+	Tooltip:
+		'''
+		Lose a portion of your XP progress on death, without losing level.
+		'''
+	Label: XP Loss
+}
+
+Level_LossAmount: {
+	Tooltip: 
+		'''
+		The amount a player should be punished.\n
+    Default is 10%, or 0.10
+		'''
+	Label: XP Loss Percentage
+}
+
+Level_MaxLevel: {
+	Tooltip:
+		'''
+		A long awaited feature. This is the max level a player can level to.\n\n
+    Note:\n
+    A player will be automatically validated when joining servers, so if your level\n
+    is higher than what a server allows, your player will be scaled down to accomodate.\n
+    This does NOT mean you lose your XP, however. If you go on another server that\n
+    allows a higher level, you will be scaled back up accordingly.
+		'''
+	Label: Max Level
+}
+
+Level_Points: {
+	Tooltip: The amount of points awarded per level.
+	Label: Points Per Level
+}
+
+Level_StartingPoints: {
+	Tooltip: The amount of points you start with.
+	Label: Starting Points
+}
+
+Level_Health: {
+	Tooltip: The amount of max HP awarded per level.
+	Label: HP
+}
+
+Level_Mana: {
+	Tooltip: The amount of max mana awarded per level.
+	Label: Mana
+}
+

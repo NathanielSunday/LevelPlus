@@ -10,20 +10,20 @@ namespace LevelPlus.Config {
     public override ConfigScope Mode => ConfigScope.ClientSide;
     public static ClientConfig Instance => ModContent.GetInstance<ClientConfig>();
 
-    [Label("XP Bar Left")]
+    #region XPBar
     [DefaultValue(480f)]
     public float XPBarLeft;
 
-    [Label("XP Bar Top")]
     [DefaultValue(35f)]
     public float XPBarTop;
+    #endregion
 
-    [Label("SpendUI Left")]
+    #region Spend UI
     [DefaultValue(35f)]
     public float SpendUILeft;
 
-    [Label("Spend UI Top")]
     [DefaultValue(200f)]
     public float SpendUITop;
+    #endregion
   }
 }

@@ -1,0 +1,21 @@
+DisplayName: UI Config
+
+XPBarLeft: {
+	Tooltip: XP Bar distance from left side of window.
+	Label: XP Bar Left
+}
+
+XPBarTop: {
+	Tooltip: XP Bar distance from top side of window.
+	Label: XP Bar Top
+}
+
+SpendUILeft: {
+	Tooltip: Spend Screen distance from left side of window.
+	Label: Spend Screen Left
+}
+
+SpendUITop: {
+	Tooltip: Spend Screen distance from top side of window.
+	Label: Spend Screen Top
+}

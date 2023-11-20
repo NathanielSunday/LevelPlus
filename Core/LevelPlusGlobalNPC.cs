@@ -1,4 +1,4 @@
-﻿// Copyright (c) BitWiser.
+﻿// Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
 using System;
@@ -15,23 +15,20 @@ namespace LevelPlus.Core
 
     float xpScalar = 1.0f;
     int numPlayers = 0;
+    float topDamage
     /// <summary>
     /// Calculate xp gain from npc stats
     /// </summary>
     /// <returns>the amount of xp that should go to a single player</returns>
-    public long CalculateMobXP(int npcLife, int npcDamage, int npcDefence) {
+    public long CalculateMobXP(int npcLife, int npcDefence) {
       float playerScalar = numPlayers == 1 ? 1.0f : (float)(Math.Log(numPlayers - 1) + 1.25f) / numPlayers;
       return (long)(
-        (npcDamage / xpScalar / 2
-        + npcLife / xpScalar / 3
+        ( npcLife / xpScalar / 3
         + npcDefence)
         * playerScalar);
     }
     public int CalculateMaxHP(int maxHP) {
       return (int)Math.Clamp(maxHP * xpScalar, 0, int.MaxValue);
-    }
-    public int CalculateDamage(int damage) {
-      return (int)Math.Clamp(damage * xpScalar, 0, int.MaxValue);
     }
     public override void OnSpawn(NPC npc, IEntitySource source) {
       base.OnSpawn(npc, source);
@@ -49,20 +46,22 @@ namespace LevelPlus.Core
         numPlayers++;
       }
 
-      if (!ServerConfig.Instance.ScalingEnabled) return;
+      if (!ServerConfig.Instance.Mob_ScalingEnabled) return;
 
       averageLevel /= numPlayers;
-      xpScalar += averageLevel * LEVEL_SCALAR;
+      xpScalar += averageLevel * ServerConfig.Instance.Mob_LevelScalar;
       npc.lifeMax = CalculateMaxHP(npc.lifeMax);
     }
-    public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit) {
-      base.ModifyHitPlayer(npc, target, ref damage, ref crit);
-      damage = CalculateDamage(damage);
+
+    public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers) {
+      base.ModifyHitPlayer(npc, target, ref modifiers);
+      if (modifiers.PvP) return;
+      modifiers.SourceDamage.Scale(xpScalar);
     }
     public override void OnKill(NPC npc) {
       base.OnKill(npc);
       if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
-        long amount = CalculateMobXP(npc.lifeMax, CalculateDamage(npc.damage), npc.defense);
+        long amount = CalculateMobXP((int) (npc.lifeMax * (npc.aiStyle != NPCAIStyleID.Worm ? 1.0f : 0.166f)), npc.defense);
 
         if (Main.netMode == NetmodeID.SinglePlayer) {
           Main.LocalPlayer.GetModPlayer<LevelPlusModPlayer>().AddXP(amount);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) BitWiser.
+﻿// Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
 using System;
@@ -216,8 +216,7 @@ namespace LevelPlus.Core
           break;
       }
     }
-    public override void OnEnterWorld(Player player) {
-      base.OnEnterWorld(player);
+    public override void OnEnterWorld() {
       if (!ServerConfig.Instance.Commands_Enabled) Validate();
     }
     public override void SaveData(TagCompound tag) {
