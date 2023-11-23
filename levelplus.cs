@@ -5,31 +5,29 @@ using Terraria.ModLoader;
 using System.IO;
 using Terraria.Localization;
 using System;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LevelPlus {
   public class LevelPlus : Mod {
-    public static LevelPlus Instance { get; private set; }
-    public LevelPlus() { Instance = this; }
-
-    public static ModKeybind SpendUIHotKey;
-    public static ModKeybind SpendModFive;
-    public static ModKeybind SpendModTen;
-    public static ModKeybind SpendModTwentyFive;
+    public static ModKeybind OpenSpendUI;
+    public static ModKeybind SpendFive;
+    public static ModKeybind SpendTen;
+    public static ModKeybind SpendTwentyFive;
 
     public override void Load() {
       base.Load();
-      SpendUIHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.UI"), Microsoft.Xna.Framework.Input.Keys.P);
-      SpendModFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.Five"), Microsoft.Xna.Framework.Input.Keys.LeftShift);
-      SpendModTen = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.Ten"), Microsoft.Xna.Framework.Input.Keys.LeftControl);
-      SpendModTwentyFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.TwentyFive"), Microsoft.Xna.Framework.Input.Keys.LeftAlt);
+      OpenSpendUI = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("OpenSpendUI"), Microsoft.Xna.Framework.Input.Keys.P);
+      SpendFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("SpendFive"), Microsoft.Xna.Framework.Input.Keys.LeftShift);
+      SpendTen = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("SpendTen"), Microsoft.Xna.Framework.Input.Keys.LeftControl);
+      SpendTwentyFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("SpendTwentyFive"), Microsoft.Xna.Framework.Input.Keys.LeftAlt);
     }
 
     public override void Unload() {
       base.Unload();
-      SpendUIHotKey = null;
-      SpendModFive = null;
-      SpendModTen = null;
-      SpendModTwentyFive = null;
+      OpenSpendUI = null;
+      SpendFive = null;
+      SpendTen = null;
+      SpendTwentyFive = null;
     }
 
     public override void HandlePacket(BinaryReader reader, int whoAmI) {

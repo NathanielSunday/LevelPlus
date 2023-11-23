@@ -216,15 +216,18 @@ namespace LevelPlus.Core
           break;
       }
     }
+
     public override void OnEnterWorld() {
       if (!ServerConfig.Instance.Commands_Enabled) Validate();
     }
+
     public override void SaveData(TagCompound tag) {
       base.SaveData(tag);
       tag.Set("1.2.0", true, true);
       tag.Set("XP", XP, true);
       tag.Set("Stats", Stats, true);
     }
+
     public override void LoadData(TagCompound tag) {
       base.LoadData(tag);
       Stats = new int[Enum.GetValues(typeof(Stat)).Length];
@@ -312,8 +315,6 @@ namespace LevelPlus.Core
       */
       return true;
     }
-
-
 
     public void InvestParticularAmount(ushort whichStat, ushort howMuch = ushort.MaxValue, int givenStatPoints = -1) {
       // The order is starting from the top and going right, around the circle.
@@ -414,6 +415,7 @@ namespace LevelPlus.Core
       }
       InvestParticularAmount(whichStat, howMuch, statPointsInt);
     }
+
     public override void CopyClientState(ModPlayer targetCopy) {
       base.CopyClientState(targetCopy);
       LevelPlusModPlayer clone = targetCopy as LevelPlusModPlayer;

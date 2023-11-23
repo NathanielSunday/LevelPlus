@@ -49,7 +49,7 @@ namespace LevelPlus.Commands
 
 
 }
-
+/*
   class AddLevelsCommand : ModCommand {
     public override string Command => "addlevel";
 
@@ -156,3 +156,4 @@ namespace LevelPlus.Commands
   }
 }
 
+*/

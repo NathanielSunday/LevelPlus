@@ -15,7 +15,7 @@ namespace LevelPlus.Core
 
     float xpScalar = 1.0f;
     int numPlayers = 0;
-    float topDamage
+    float topDamage;
     /// <summary>
     /// Calculate xp gain from npc stats
     /// </summary>

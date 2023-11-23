@@ -71,7 +71,7 @@ namespace LevelPlus.UI {
       unspentPoints.Height.Set(20f, 0f);
       unspentPoints.Top.Set(center.Y - unspentPoints.Height.Pixels / 2f, 0f);
       unspentPoints.Left.Set(center.X - unspentPoints.Width.Pixels / 2f, 0f);
-      unspentPoints.OnClick += new MouseEvent(CloseMenu);
+      unspentPoints.OnLeftClick += new MouseEvent(CloseMenu);
 
       pentagram.Append(unspentPoints);
       Append(pentagram);

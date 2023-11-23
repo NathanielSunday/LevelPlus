@@ -7,8 +7,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace LevelPlus.Items
-{
+namespace LevelPlus.Items {
     public class Restart : ModItem {
         public override void SetStaticDefaults() {
 

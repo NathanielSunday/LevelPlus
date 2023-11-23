@@ -126,10 +126,6 @@ namespace LevelPlus.Config {
     
     #endregion
 
-    
-
-    
-
     #region Commands
     [SeparatePage]
     [Header("Commands")]

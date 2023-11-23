@@ -23,12 +23,12 @@ namespace LevelPlus.UI {
       base.OnInitialize();
 
       button = new XPBarButton(Height.Pixels);
-      bar = new ResourceBar(ResourceBarMode.XP, Width.Pixels - (Height.Pixels * (186 / 186)), Height.Pixels);
+      bar = new ResourceBar(ResourceBarMode.XP, Width.Pixels - (Height.Pixels * (186f / 186f)), Height.Pixels);
 
       button.Left.Set(0f, 0f);
       button.Top.Set(0f, 0f);
 
-      bar.Left.Set(Height.Pixels * (186 / 186), 0f);
+      bar.Left.Set(Height.Pixels * (186f / 186f), 0f);
       bar.Top.Set(0f, 0f);
 
       Append(bar);
@@ -93,7 +93,7 @@ namespace LevelPlus.UI {
 
     public XPBarButton(float height) {
       this.height = height;
-      this.width = height * (186 / 186);
+      this.width = height * (186f / 186f);
     }
 
     public override void OnInitialize() {

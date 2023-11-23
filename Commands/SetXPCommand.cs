@@ -4,6 +4,7 @@
 using LevelPlus.Config;
 using LevelPlus.Core;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace LevelPlus.Commands
@@ -11,14 +12,15 @@ namespace LevelPlus.Commands
     class SetXpCommand : ModCommand {
     public override string Command => "setxp";
 
-    public override string Description => "(Level+) Sets player experience to a given amount.";
+    public override string Description => "(" + Mod.Name + ")" + Language.GetTextValue("Commands.SetXPCommand.Description");
+
     public override CommandType Type => CommandType.Chat;
 
     public override string Usage => "/setxp <amount>";
 
     public override void Action(CommandCaller caller, string input, string[] args) {
       if (!ServerConfig.Instance.CommandsEnabled) {
-        Main.NewText("Enable commands in the Level+ config to use this command.");
+        Main.NewText(Language.GetTextValue("Commands.EnableCommandsError"));
         return;
       }
       LevelPlusModPlayer player = caller.Player.GetModPlayer<LevelPlusModPlayer>();
