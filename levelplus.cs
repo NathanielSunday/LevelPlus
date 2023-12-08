@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using System.IO;
 using Terraria.Localization;
 using System;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LevelPlus {
   public class LevelPlus : Mod {

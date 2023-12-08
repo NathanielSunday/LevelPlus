@@ -43,6 +43,14 @@ namespace LevelPlus.Core
       GUN,
       THROWN
     }
+    public static int GetStatIndexByName(string name) {
+      int index = -1;
+      LevelPlusModPlayer.Stat stat;
+      if (Enum.TryParse(name, out stat)) {
+        index = (int)stat;
+      }
+      return index;
+    }
     public void Spend( Stat stat, int howMuch = 1) {
       if (Points == 0) return;
       if (Points < howMuch) howMuch = Points;

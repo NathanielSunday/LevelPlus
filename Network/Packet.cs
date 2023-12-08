@@ -28,7 +28,7 @@ namespace LevelPlus.Network {
     protected abstract void Handle();
     /// <summary>Send the packet once the properties are filled.</summary>
     public void Send() {
-      ModPacket packet = LevelPlus.Instance.GetPacket();
+      ModPacket packet = /*I need mod packet here*/;
       //I may have to log this, but I've been told this should get the derivative
       packet.Write(GetType().ToString());
       OnSend(ref packet);

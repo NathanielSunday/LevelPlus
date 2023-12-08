@@ -19,7 +19,7 @@ namespace LevelPlus.Commands
     public override string Usage => "/addxp <amount>";
 
     public override void Action(CommandCaller caller, string input, string[] args) {
-      if (!ServerConfig.Instance.CommandsEnabled) {
+      if (!ServerConfig.Instance.Commands_Enabled) {
         Main.NewText(Language.GetTextValue("Commands.EnableCommandsError"));
         return;
       }
