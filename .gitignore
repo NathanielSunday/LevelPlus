@@ -5,4 +5,5 @@
 *.kra
 *.png~
 *.kra~
-
+.idea/
+.DS_Store
