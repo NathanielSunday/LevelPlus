@@ -1,5 +1,7 @@
-﻿using System;
+using System;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -39,6 +41,19 @@ namespace LevelPlus {
         }
         else {
           amount = (ulong)(npc.lifeMax * LevelPlusConfig.Instance.MobXP);
+        }
+        
+        // If the mob died before being touched by a player, no xp is awarded.
+        if (npc.lastInteraction == 255) {
+          return;
+        }
+
+        // Bestiary increments only when player kills the mob. Double the xp for the first kill.
+        int killCount = Main.BestiaryTracker.Kills.GetKillCount(npc);
+        if (killCount == 1)
+        {
+          amount *= 2; // TODO: Localization
+          CombatText.NewText(npc.getRect(), Color.Aqua, "Bestiary unlocked!", true, false);
         }
 
         if (Main.netMode == NetmodeID.SinglePlayer) {
