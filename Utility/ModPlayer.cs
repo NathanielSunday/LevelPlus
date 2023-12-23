@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
 using LevelPlus.UI;
+using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.GameInput;
 
@@ -365,6 +366,10 @@ namespace LevelPlus {
         currentXP = 0;
         return;
       }
+
+      // TODO: Localization
+      CombatText.NewText(Player.getRect(), Color.Yellow, "+" + amountToAdd + " XP");
+      
       if (addRaw)
         currentXP += amountToAdd;
       else
@@ -513,6 +518,10 @@ namespace LevelPlus {
           SoundEngine.PlaySound(new SoundStyle("levelplus/Sounds/Custom/level"));
         return;
       }
+
+      // TODO: Localization
+      CombatText.NewText(Player.getRect(), Color.YellowGreen, "Level Up!", true, false);
+      
       //run levelup again if XP is still higher, otherwise, play the level up noise
       if (currentXP >= neededXP)
         LevelUp();
