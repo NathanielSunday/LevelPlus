@@ -31,7 +31,7 @@ namespace LevelPlus.Common.Players {
       get => _xp;
       private set {
         if (XpToLevel(value) >= Level && !Main.dedServ) {
-          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/level"));
+          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/Level"));
         }
         _xp = value;
         Points += ServerConfig.Instance.Level_Points;
