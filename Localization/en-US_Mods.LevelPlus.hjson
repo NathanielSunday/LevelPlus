@@ -1,15 +1,11 @@
-
-
 Stat: {
-  Endurance: Endurance
-  Strength: Strength
-  Dexterity: Dexterity
-  Intelligence: Intelligence
-  Wisdom: Wisdom
-  Charisma: Charisma
-  Luck: Luck
-  Construction: Construction 
-  Agility: Agility
+  ENDURANCE:Endurance
+  BRAWN: Brawn
+  DEFT: Deft
+  INTELLECT: Intellect
+  CHARM: Charm
+  LUCK: Luck
+  ADROIT: Adroit
 }
 
 Keybinds: {

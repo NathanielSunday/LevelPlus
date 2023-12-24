@@ -9,9 +9,9 @@ namespace LevelPlus.Network {
   /// Place member variables inside of packet and use methods to read, handle, and send
   /// </summary>
   abstract class Packet {
-    protected int whoAmI { get; set; }
     public int toClient { get; set; } = -1;
     public int ignoreClient { get; set; } = -1;
+    protected int whoAmI { get; set; }
     /// <summary>Read and handle the packet.</summary>
     /// <param name="reader">Mod.HandlePacket's reader</param>
     /// <param name="whoAmI">Mod.HandlePacket's whoAmI</param>
@@ -28,7 +28,7 @@ namespace LevelPlus.Network {
     protected abstract void Handle();
     /// <summary>Send the packet once the properties are filled.</summary>
     public void Send() {
-      ModPacket packet = /*I need mod packet here*/;
+      ModPacket packet = ModContent.GetInstance<LevelPlus>().GetPacket();
       //I may have to log this, but I've been told this should get the derivative
       packet.Write(GetType().ToString());
       OnSend(ref packet);
