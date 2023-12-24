@@ -9,11 +9,21 @@ Items: {
 	}
 
 	Respec: {
-		Tooltip: 
-		  '''
+		Tooltip:
+			'''
 			[c/55ff55:Allows the reallocation of skill points.]
 			"New year, new me."
 			'''
 		DisplayName: Insignia of Reform
 	}
+}
+
+Respec: {
+	DisplayName: Respec
+	Tooltip: ""
+}
+
+Restart: {
+	DisplayName: Restart
+	Tooltip: ""
 }

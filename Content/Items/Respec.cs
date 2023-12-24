@@ -10,7 +10,7 @@ namespace LevelPlus.Content.Items
 {
   public class Respec : ModItem
   {
-    public override string Texture => "LevelPlus/Assets/Textures/Items/Respec.png";
+    public override string Texture => "LevelPlus/Assets/Textures/Items/Respec";
 
     public override void SetDefaults()
     {

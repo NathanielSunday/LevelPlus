@@ -11,14 +11,14 @@ namespace LevelPlus.Common.Configs {
     public static ServerConfig Instance => ModContent.GetInstance<ServerConfig>();
 
     #region Mob
-    [Header("Mob Settings")]
+    //[Header("Mob Settings")]
     [DefaultValue(true)]
     public bool Mob_ScalingEnabled;
     [DefaultValue(0.025f)]
     public float Mob_LevelScalar;
     #endregion
     #region Level
-    [Header("Level/XP Settings")]
+    //[Header("Level/XP Settings")]
     [DefaultValue(true)]
     public bool Level_LossEnabled;
     [Range(0.01f, 1.00f)]
@@ -37,7 +37,7 @@ namespace LevelPlus.Common.Configs {
     public int Level_Mana;
     #endregion
     #region Endurance
-    [Header("Endurance Settings")]
+    //[Header("Endurance Settings")]
     [Label("HP")]
     [Tooltip("The amount of max HP awarded per point")]
     [DefaultValue(5)]
@@ -48,7 +48,7 @@ namespace LevelPlus.Common.Configs {
     public float Endurance_Regen; //dim
     #endregion
     #region Strength
-    [Header("Strength Settings")]
+    //[Header("Strength Settings")]
     [DefaultValue(0.01f)]
     public float Strength_Damage;
     [DefaultValue(5)]
@@ -60,7 +60,7 @@ namespace LevelPlus.Common.Configs {
     public int RangedCritPerPoint = 5; //dim
     #endregion
     #region Intelligence
-    [Header("Intelligence Settings")]
+    //[Header("Intelligence Settings")]
     // Intelligence //
     public float Intelligence_Damage = .01f;
     public int Intelligence_Crit = 5; //dim
@@ -102,7 +102,7 @@ namespace LevelPlus.Common.Configs {
     #endregion
     #region Commands
     [SeparatePage]
-    [Header("Commands")]
+    //[Header("Commands")]
     [Label("Enabled")]
     [Tooltip("Enables commands and disables player validation.")]
     [DefaultValue(false)]

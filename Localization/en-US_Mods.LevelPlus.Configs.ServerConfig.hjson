@@ -1,32 +1,29 @@
 DisplayName: Stat Config
 
 Mob_ScalingEnabled: {
-  Tooltip: Turns on mob scaling.
-  Label: Scaling
+	Tooltip: Turns on mob scaling.
+	Label: Scaling
 }
 
 Mob_LevelScalar: {
-  Tooltip: 
+	Tooltip:
 		'''
-	  The percentage in which average level modifies mob scaling.\n
+		 The percentage in which average level modifies mob scaling.\n
 		If you don't know what this does, I don't recommend messing with it.
 		'''
 	Label: Average Level Scaling
 }
 
 Level_LossEnabled: {
-	Tooltip:
-		'''
-		Lose a portion of your XP progress on death, without losing level.
-		'''
+	Tooltip: Lose a portion of your XP progress on death, without losing level.
 	Label: XP Loss
 }
 
 Level_LossAmount: {
-	Tooltip: 
+	Tooltip:
 		'''
 		The amount a player should be punished.\n
-    Default is 10%, or 0.10
+		  Default is 10%, or 0.10
 		'''
 	Label: XP Loss Percentage
 }
@@ -35,11 +32,11 @@ Level_MaxLevel: {
 	Tooltip:
 		'''
 		A long awaited feature. This is the max level a player can level to.\n\n
-    Note:\n
-    A player will be automatically validated when joining servers, so if your level\n
-    is higher than what a server allows, your player will be scaled down to accomodate.\n
-    This does NOT mean you lose your XP, however. If you go on another server that\n
-    allows a higher level, you will be scaled back up accordingly.
+		  Note:\n
+		  A player will be automatically validated when joining servers, so if your level\n
+		  is higher than what a server allows, your player will be scaled down to accomodate.\n
+		  This does NOT mean you lose your XP, however. If you go on another server that\n
+		  allows a higher level, you will be scaled back up accordingly.
 		'''
 	Label: Max Level
 }
@@ -64,3 +61,122 @@ Level_Mana: {
 	Label: Mana
 }
 
+Endurance_Health: {
+	Label: HP
+	Tooltip: The amount of max HP awarded per point
+}
+
+Endurance_Defense: {
+	Label: Endurance_ Defense
+	Tooltip: ""
+}
+
+Endurance_Regen: {
+	Label: Endurance_ Regen
+	Tooltip: ""
+}
+
+Strength_Damage: {
+	Label: Strength_ Damage
+	Tooltip: ""
+}
+
+Strength_Crit: {
+	Label: Strength_ Crit
+	Tooltip: ""
+}
+
+RangedDamagePerPoint: {
+	Label: Ranged Damage Per Point
+	Tooltip: ""
+}
+
+RangedCritPerPoint: {
+	Label: Ranged Crit Per Point
+	Tooltip: ""
+}
+
+Intelligence_Damage: {
+	Label: Intelligence_ Damage
+	Tooltip: ""
+}
+
+Intelligence_Crit: {
+	Label: Intelligence_ Crit
+	Tooltip: ""
+}
+
+ManaPerPoint: {
+	Label: Mana Per Point
+	Tooltip: ""
+}
+
+RegenPerPoint: {
+	Label: Regen Per Point
+	Tooltip: ""
+}
+
+ManaCostPerPoint: {
+	Label: Mana Cost Per Point
+	Tooltip: ""
+}
+
+XPPerPoint: {
+	Label: X P Per Point
+	Tooltip: ""
+}
+
+AmmoPerPoint: {
+	Label: Ammo Per Point
+	Tooltip: ""
+}
+
+SummonDamagePerPoint: {
+	Label: Summon Damage Per Point
+	Tooltip: ""
+}
+
+SummonCritPerPoint: {
+	Label: Summon Crit Per Point
+	Tooltip: ""
+}
+
+FishSkillPerPoint: {
+	Label: Fish Skill Per Point
+	Tooltip: ""
+}
+
+MinionPerPoint: {
+	Label: Minion Per Point
+	Tooltip: ""
+}
+
+PickSpeedPerPoint: {
+	Label: Pick Speed Per Point
+	Tooltip: ""
+}
+
+BuildSpeedPerPoint: {
+	Label: Build Speed Per Point
+	Tooltip: ""
+}
+
+RangePerPoint: {
+	Label: Range Per Point
+	Tooltip: ""
+}
+
+RunSpeedPerPoint: {
+	Label: Run Speed Per Point
+	Tooltip: ""
+}
+
+AccelPerPoint: {
+	Label: Accel Per Point
+	Tooltip: ""
+}
+
+Commands_Enabled: {
+	Label: Enabled
+	Tooltip: Enables commands and disables player validation.
+}

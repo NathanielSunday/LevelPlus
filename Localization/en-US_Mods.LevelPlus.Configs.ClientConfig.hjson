@@ -19,3 +19,23 @@ SpendUITop: {
 	Tooltip: Spend Screen distance from top side of window.
 	Label: Spend Screen Top
 }
+
+XPBar_Left: {
+	Label: X P Bar_ Left
+	Tooltip: ""
+}
+
+XPBar_Top: {
+	Label: X P Bar_ Top
+	Tooltip: ""
+}
+
+SpendUI_Left: {
+	Label: Spend U I_ Left
+	Tooltip: ""
+}
+
+SpendUI_Top: {
+	Label: Spend U I_ Top
+	Tooltip: ""
+}

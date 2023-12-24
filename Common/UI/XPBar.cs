@@ -68,7 +68,7 @@ namespace LevelPlus.Common.UI {
       Height.Set(height, 0f);
       Width.Set(width, 0f);
 
-      button = new UITexture("levelplus/Textures/UI/Hollow_Start", true); //create button
+      button = new UITexture("LevelPlus/Assets/Textures/UI/Hollow_Start", true); //create button
       button.Left.Set(0f, 0f);
       button.Top.Set(0f, 0f);
       button.Width.Set(width, 0f);

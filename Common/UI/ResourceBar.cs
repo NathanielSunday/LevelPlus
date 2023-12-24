@@ -40,19 +40,19 @@ namespace LevelPlus.Common.UI
 
       float capWidthCalc = 42 * height / 186;
 
-      barCap = new UITexture("levelplus/Textures/UI/Hollow_End", true); //create end cap
+      barCap = new UITexture("LevelPlus/Assets/Textures/UI/Hollow_End", true); //create end cap
       barCap.Width.Set(capWidthCalc, 0f);
       barCap.Height.Set(height, 0f);
       barCap.Left.Set(width - capWidthCalc, 0f);
       barCap.Top.Set(0f, 0f);
 
-      barBackground = new UITexture("levelplus/Textures/UI/Hollow", true); //create background
+      barBackground = new UITexture("LevelPlus/Assets/Textures/UI/Hollow", true); //create background
       barBackground.Left.Set(0f, 0f);
       barBackground.Top.Set(0f, 0f);
       barBackground.Width.Set(width - capWidthCalc, 0f);
       barBackground.Height.Set(height, 0f);
 
-      currentBar = new UITexture("levelplus/Textures/UI/Blank", true); //create current value panel
+      currentBar = new UITexture("LevelPlus/Assets/Textures/UI/Blank", true); //create current value panel
       currentBar.Left.Set(0f, 0f);
       currentBar.Top.Set(0f, 0f);
       currentBar.Width.Set(width - capWidthCalc, 0f);

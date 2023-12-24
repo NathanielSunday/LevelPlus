@@ -10,7 +10,7 @@ namespace LevelPlus.Content.Items
 {
   public class Restart : ModItem
   {
-    public override string Texture => "LevelPlus/Assets/Textures/Items/Restart.png";
+    public override string Texture => "LevelPlus/Assets/Textures/Items/Restart";
     public override void SetDefaults()
     {
       Item.width = 40;
