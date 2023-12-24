@@ -6,3 +6,5 @@
 *.png~
 *.kra~
 *.sln
+.idea/
+.DS_Store
