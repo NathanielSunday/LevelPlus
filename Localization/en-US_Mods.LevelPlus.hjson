@@ -14,3 +14,8 @@ Keybinds: {
 	SpendFive.DisplayName: Spend 5 points
 	OpenSpendUI.DisplayName: Open stat UI
 }
+
+Popup: {
+	LevelUp: Level Up!
+	XpGain: + {0} XP
+}
