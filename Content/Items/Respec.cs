@@ -33,6 +33,7 @@ namespace LevelPlus.Content.Items
           .AddIngredient(ItemID.SoulofFlight, 1)
           .AddIngredient(ItemID.SoulofNight, 1)
           .AddTile(TileID.MythrilAnvil)
+          .DisableDecraft()
           .Register();
 
       CreateRecipe()
@@ -40,6 +41,7 @@ namespace LevelPlus.Content.Items
           .AddIngredient(ItemID.SoulofFlight, 1)
           .AddIngredient(ItemID.SoulofLight, 1)
           .AddTile(TileID.MythrilAnvil)
+          .DisableDecraft()
           .Register();
 
       CreateRecipe()
@@ -47,6 +49,7 @@ namespace LevelPlus.Content.Items
           .AddIngredient(ItemID.SoulofFlight, 1)
           .AddIngredient(ItemID.SoulofNight, 1)
           .AddTile(TileID.MythrilAnvil)
+          .DisableDecraft()
           .Register();
 
       CreateRecipe()
@@ -54,6 +57,7 @@ namespace LevelPlus.Content.Items
           .AddIngredient(ItemID.SoulofFlight, 1)
           .AddIngredient(ItemID.SoulofLight, 1)
           .AddTile(TileID.MythrilAnvil)
+          .DisableDecraft()
           .Register();
     }
 
