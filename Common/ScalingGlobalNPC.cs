@@ -4,9 +4,11 @@
 using LevelPlus.Common.Configs;
 using LevelPlus.Common.Players;
 using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace LevelPlus.Common {
@@ -14,7 +16,7 @@ namespace LevelPlus.Common {
     public override bool InstancePerEntity => true;
 
     float xpScalar = 1.0f;
-    int numPlayers = 0;
+    int numPlayers = 1;
     float topDamage;
     private long CalculateMobXP(int npcLife, int npcDefence) {
       float playerScalar = numPlayers == 1 ? 1.0f : (float)(Math.Log(numPlayers - 1) + 1.25f) / numPlayers;
@@ -56,9 +58,23 @@ namespace LevelPlus.Common {
     }
     public override void OnKill(NPC npc) {
       base.OnKill(npc);
-      if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
+      if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC && !npc.CountsAsACritter && !npc.immortal) {
+        
+        // Mob dying by jumping into lava without player involvement should not give XP
+        if (npc.lastInteraction == 255) {
+          return;
+        }
+        
         long amount = CalculateMobXP((int)(npc.lifeMax * (npc.aiStyle != NPCAIStyleID.Worm ? 1.0f : 0.166f)), npc.defense);
 
+        // Bestiary increments only when player kills the mob. Double the xp for the first kill.
+        int killCount = Main.BestiaryTracker.Kills.GetKillCount(npc);
+        if (killCount == 1)
+        {
+          amount *= 2;
+          CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue("Mods.LevelPlus.Popup.BestiaryUnlocked"), true);
+        }
+        
         if (Main.netMode == NetmodeID.SinglePlayer) {
           Main.LocalPlayer.GetModPlayer<LevelPlayer>().AddXp(amount);
         }
