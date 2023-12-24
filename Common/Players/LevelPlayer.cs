@@ -5,7 +5,6 @@ using LevelPlus.Common.Configs;
 using LevelPlus.Common.Systems;
 using LevelPlus.Common.UI.SpendUI;
 using LevelPlus.Content.Items;
-using rail;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -32,10 +31,9 @@ namespace LevelPlus.Common.Players {
       get => _xp;
       private set {
         if (XpToLevel(value) >= Level && !Main.dedServ) {
-          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Sounds/level"));
+          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/level"));
         }
         _xp = value;
-        Validate();
         Points += ServerConfig.Instance.Level_Points;
 
         Player.statLife = Player.statLifeMax2;
@@ -67,7 +65,7 @@ namespace LevelPlus.Common.Players {
     }
 
     public void StatInitialize() {
-      Xp = 0;
+      _xp = 0;
       StatReset();
     }
 
@@ -126,7 +124,7 @@ namespace LevelPlus.Common.Players {
     //difference in points possible back
     private void Validate() {
       if (ServerConfig.Instance.Commands_Enabled) return;
-
+      return;
       //use percentages to figure this out
       int spent = 0;
       for (int i = 0; i < Enum.GetNames(typeof(Stat)).Length; ++i) {
@@ -170,7 +168,7 @@ namespace LevelPlus.Common.Players {
     }
 
     /// <returns>True if stats between two players match</returns>
-    public static bool PlayerStatsMatch(LevelPlayer player, LevelPlayer compare) {
+    public static bool StatsMatch(LevelPlayer player, LevelPlayer compare) {
       if (compare.Xp != player.Xp)
         return false;
       foreach (int i in Enum.GetValues(typeof(Stat))) {
@@ -183,8 +181,6 @@ namespace LevelPlus.Common.Players {
       if (mediumCoreDeath) return;
 
       Random rand = new Random();
-
-      StatInitialize();
 
       Item respec = new Item();
       respec.SetDefaults(ModContent.ItemType<Respec>());
@@ -249,25 +245,21 @@ namespace LevelPlus.Common.Players {
     }
 
     public override void SaveData(TagCompound tag) {
-      tag.Set("1.2.0", true, true);
       tag.Set("XP", Xp, true);
       tag.Set("Stats", Stats, true);
     }
 
     public override void LoadData(TagCompound tag) {
       Stats = new int[Enum.GetValues(typeof(Stat)).Length];
-      if (tag.GetBool("1.2.0")) {
-        Xp = tag.GetAsLong("XP");
-        int[] tagStats = tag.GetIntArray("Stats");
-        long spent = 0;
-        for (int i = 0; i < Enum.GetNames(typeof(Stat)).Length; ++i) {
-          Stats[i] = tagStats[i];
-          spent += tagStats[i];
-        }
-        Points = Level * ServerConfig.Instance.Level_Points + ServerConfig.Instance.Level_StartingPoints - (int)spent;
-        Validate();
+      if (tag.TryGet("XP", out _xp)) {
+        StatInitialize();
+        return;
       }
-      else StatInitialize();
+      int[] tagStats = tag.GetIntArray("Stats");
+      for (int i = 0; i < Enum.GetNames(typeof(Stat)).Length; ++i) {
+        Stats[i] = tagStats[i];
+      }
+      Validate();
     }
 
     public override void OnRespawn() {
@@ -295,7 +287,7 @@ namespace LevelPlus.Common.Players {
       Player.GetCritChance(DamageClass.Summon) += charisma / Utility.SummonCritPerPoint;
       //excavation
       Player.pickSpeed *= 1.00f - (excavation * Utility.PickSpeedPerPoint);
-      
+
       player.tileSpeed *= 1.00f + (modPlayer.StatUtility.BuildSpeedPerPoint);
       player.wallSpeed *= 1.00f + (excavation * Utility.BuildSpeedPerPoint);
       player.blockRange += excavation / Utility.RangePerPoint;
@@ -347,7 +339,7 @@ namespace LevelPlus.Common.Players {
     }
 
     public override void SendClientChanges(ModPlayer clientPlayer) {
-      if (PlayerStatsMatch(this, clientPlayer as LevelPlayer)) return;
+      if (StatsMatch(this, clientPlayer as LevelPlayer)) return;
       //LevelPlus.Network.Packet.StatsChangedPacket.WritePacket(Player.whoAmI);
     }
 
