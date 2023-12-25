@@ -1,4 +1,4 @@
-﻿// Copyright (c) BitWiser.
+// Copyright (c) BitWiser.
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs;
@@ -7,10 +7,12 @@ using LevelPlus.Common.UI.SpendUI;
 using LevelPlus.Content.Items;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -31,7 +33,8 @@ namespace LevelPlus.Common.Players {
       get => _xp;
       private set {
         if (XpToLevel(value) >= Level && !Main.dedServ) {
-          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/Level"));
+          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/LevelUp"));
+          CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Mods.LevelPlus.Popup.LevelUp"));
         }
         _xp = value;
         Points += ServerConfig.Instance.Level_Points;
@@ -89,10 +92,10 @@ namespace LevelPlus.Common.Players {
       Xp = Math.Clamp(amount + Xp,
         0,
         long.MaxValue);
-      /* popup text for xp gain
-      AdvancedPopupRequest request;
-      request.
-      PopupText.NewText()*/
+      if (!Main.dedServ)
+      {
+        CombatText.NewText(Player.getRect(), Color.Yellow, Language.GetTextValue("Mods.LevelPlus.Popup.XpGain", amount), true);
+      }
     }
 
     public void SetXp(long value) {
