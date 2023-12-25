@@ -19,6 +19,7 @@ namespace LevelPlus.Common {
     int numPlayers = 1;
     float topDamage;
     private long CalculateMobXP(int npcLife, int npcDefence) {
+      numPlayers = Math.Max(numPlayers, 1); // Avoid divide by zero
       float playerScalar = numPlayers == 1 ? 1.0f : (float)(Math.Log(numPlayers - 1) + 1.25f) / numPlayers;
       return (long)(
         (npcLife / xpScalar / 3

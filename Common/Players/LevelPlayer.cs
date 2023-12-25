@@ -33,7 +33,7 @@ namespace LevelPlus.Common.Players {
       get => _xp;
       private set {
         if (XpToLevel(value) >= Level && !Main.dedServ) {
-          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/Level"));
+          SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/LevelUp"));
           CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Mods.LevelPlus.Popup.LevelUp"));
         }
         _xp = value;
