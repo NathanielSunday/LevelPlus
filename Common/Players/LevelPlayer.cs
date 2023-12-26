@@ -34,7 +34,7 @@ namespace LevelPlus.Common.Players {
       private set {
         if (XpToLevel(value) >= Level && !Main.dedServ) {
           SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/LevelUp"));
-          CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Mods.LevelPlus.Popup.LevelUp"));
+          CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Mods.LevelPlus.Popup.LevelUp"), true);
         }
         _xp = value;
         Points += ServerConfig.Instance.Level_Points;
@@ -94,7 +94,7 @@ namespace LevelPlus.Common.Players {
         long.MaxValue);
       if (!Main.dedServ)
       {
-        CombatText.NewText(Player.getRect(), Color.Yellow, Language.GetTextValue("Mods.LevelPlus.Popup.XpGain", amount), true);
+        CombatText.NewText(Player.getRect(), Color.Yellow, Language.GetTextValue("Mods.LevelPlus.Popup.XpGain", amount));
       }
     }
 
