@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
@@ -288,7 +288,6 @@ namespace LevelPlus {
         //[Label("Scaling")]
         //[Tooltip("Turns on mob scaling")]
         [DefaultValue(true)]
-        [ReloadRequired]
         public bool ScalingEnabled;
 
         //[Label("Enemy Health")]
@@ -297,7 +296,6 @@ namespace LevelPlus {
         [Range(0.0050f, 0.050f)]
         [Increment(0.0050f)]
         [DefaultValue(0.0250f)]
-        [ReloadRequired]
         public float ScalingHealth;
 
         //[Label("Enemy Damage")]
@@ -306,8 +304,12 @@ namespace LevelPlus {
         [Range(0.0050f, 0.050f)]
         [Increment(0.0050f)]
         [DefaultValue(0.0250f)]
-        [ReloadRequired]
         public float ScalingDamage;
+        
+        //[Label("Enemy Defense")]
+        //[Tooltip("Adds Defense to Enemies per Average level")]
+        [DefaultValue(false)]
+        public bool ScalingDefense;
 
         //[Label("Commands")]
         //[Tooltip("Enables Commands")]

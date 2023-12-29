@@ -13,20 +13,28 @@ namespace LevelPlus {
     public override void ApplyDifficultyAndPlayerScaling(NPC npc, int numPlayers, float balance, float bossAdjustment) {
       base.ApplyDifficultyAndPlayerScaling(npc, numPlayers, balance, bossAdjustment);
       if (LevelPlusConfig.Instance.ScalingEnabled) {
+
         float averageLevel = 0;
-
-
-
-        foreach (Player i in Main.player)
-          if (i.active) {
-            numPlayers++;
-            averageLevel += i.GetModPlayer<LevelPlusModPlayer>().level;
+        if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server) {
+          foreach (Player player in Main.player) {
+            if (player.active) {
+              averageLevel += player.GetModPlayer<LevelPlusModPlayer>().level;
+            }
           }
-
-        averageLevel /= numPlayers;
-
-        npc.damage = (int)Math.Clamp(npc.damage * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage), 0, 2147483000);
-        npc.lifeMax = (int)Math.Clamp(npc.lifeMax * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth), 0, 2147483000);
+          averageLevel /= numPlayers;
+        }
+        else {
+          return;
+        }
+        
+        float healthMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth;
+        float damageMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage;
+        
+        npc.lifeMax = (int)Math.Clamp(npc.lifeMax * healthMultiplier, 0, 2147483000);
+        npc.damage = (int)Math.Clamp(npc.damage * damageMultiplier, 0, 2147483000);
+        if (LevelPlusConfig.Instance.ScalingDefense) {
+          npc.defense += (int)averageLevel;
+        }
       }
     }
 
@@ -34,7 +42,7 @@ namespace LevelPlus {
     public override void OnKill(NPC npc) {
       base.OnKill(npc);
 
-      if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
+      if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC && !npc.immortal && !npc.CountsAsACritter) {
         ulong amount;
         if (npc.boss) {
           amount = (ulong)(npc.lifeMax * LevelPlusConfig.Instance.BossXP);

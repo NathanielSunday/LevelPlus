@@ -29,7 +29,7 @@ Configs: {
 
 		XPPerPoint: {
 			Tooltip: ""
-			Label: X P Per Point
+			Label: Xp Per Point
 		}
 
 		WingPerPoint: {
@@ -186,6 +186,30 @@ Configs: {
 			Label: Commands Enabled
 			Tooltip: ""
 		}
+
+		ScalingDefense: {
+			Label: Scaling Defense
+			Tooltip: Adds the average level of all players to the defense value of every NPC.
+		}
+	}
+
+	ClientConfig: {
+		xpBarTop: {
+			Tooltip: Distance from the top of the screen. (in pixels)
+			Label: Xp Bar Top
+		}
+
+		xpBarLeft: {
+			Tooltip: Distance from the left of the screen. (in pixels)
+			Label: Xp Bar Left
+		}
+
+		xpBarLocked: {
+			Tooltip: When disabled, you can drag the xp bar around the screen.
+			Label: Xp Bar Locked
+		}
+
+		DisplayName: Client Config
 	}
 }
 
