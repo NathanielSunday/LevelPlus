@@ -1,3 +1,4 @@
+using LevelPlus.Utility;
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -61,7 +62,9 @@ namespace LevelPlus {
         if (killCount == 1)
         {
           amount *= 2;
-          CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue("Mods.LevelPlus.Popups.BestiaryUnlock"), true, false);
+          if (Main.netMode != NetmodeID.Server && ClientConfig.Instance.enablePopups) {
+            CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue("Mods.LevelPlus.Popups.BestiaryUnlock"), true, false);
+          }
         }
 
         if (Main.netMode == NetmodeID.SinglePlayer) {

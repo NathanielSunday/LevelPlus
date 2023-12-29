@@ -11,11 +11,14 @@ public class ClientConfig : ModConfig
   public override ConfigScope Mode => ConfigScope.ClientSide;
   
   [DefaultValue(true)]
-  public bool xpBarLocked = true;
+  public bool xpBarLocked;
   
   [DefaultValue(480)]
   public int xpBarLeft;
   
   [DefaultValue(35)]
   public int xpBarTop;
+  
+  [DefaultValue(true)]
+  public bool enablePopups;
 }
