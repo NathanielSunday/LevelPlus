@@ -11,6 +11,7 @@ public class ClientConfig : ModConfig
   public override ConfigScope Mode => ConfigScope.ClientSide;
   
   [DefaultValue(true)]
+  [Header("xpBar")]
   public bool xpBarLocked;
   
   [DefaultValue(480)]
@@ -20,5 +21,6 @@ public class ClientConfig : ModConfig
   public int xpBarTop;
   
   [DefaultValue(true)]
+  [Header("textPopups")]
   public bool enablePopups;
 }

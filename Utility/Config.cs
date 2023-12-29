@@ -14,6 +14,7 @@ namespace LevelPlus {
         //[Tooltip("How much HP the player gets per Level")]
         [Range(0, 5)]
         [DefaultValue(2)]
+        [Header("levelBonus")]
         public int HealthPerLevel;
 
         //[Label("Level: Mana per Level")]
@@ -28,6 +29,7 @@ namespace LevelPlus {
         //[Tooltip("How much HP the player gets per point")]
         [Range(0, 25)]
         [DefaultValue(5)]
+        [Header("constitution")]
         public int HealthPerPoint;
 
         //[Label("Constitution: LifeRegen")]
@@ -50,6 +52,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.10f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
+        [Header("intelligence")]
         public float MagicDamagePerPoint;
 
         //[Label("Intelligence: Magic Crit")]
@@ -66,6 +69,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.10f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
+        [Header("strength")]
         public float MeleeDamagePerPoint;
 
         //[Label("Strength: Melee Crit")]
@@ -82,6 +86,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.25f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
+        [Header("dexterity")]
         public float RangedDamagePerPoint;
 
         //[Label("Dexterity: Ranged Crit")]
@@ -98,6 +103,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.25f)]
         [Increment(0.01f)]
         [DefaultValue(0.01f)]
+        [Header("charisma")]
         public float SummonDamagePerPoint;
 
         //[Label("Charisma: Summon Crit")]
@@ -115,6 +121,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
         [DefaultValue(0.02f)]
+        [Header("animalia")]
         public float FishSkillPerPoint;
 
 
@@ -144,6 +151,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
         [DefaultValue(0.01f)]
+        [Header("excavation")]
         public float PickSpeedPerPoint;
 
         //[Label("Excavation: Building Speed")]
@@ -168,6 +176,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
         [DefaultValue(0.01f)]
+        [Header("mobility")]
         public float RunSpeedPerPoint;
 
         //[Label("Mobility: Acceleration")]
@@ -194,6 +203,7 @@ namespace LevelPlus {
         [Range(0.00f, 0.05f)]
         [Increment(0.001f)]
         [DefaultValue(0.01f)]
+        [Header("luck")]
         public float XPPerPoint;
 
         //[Label("Luck: Ammo Consumption")]
@@ -209,6 +219,7 @@ namespace LevelPlus {
         //[Tooltip("How much Mana the player gets per point")]
         [Range(0, 25)]
         [DefaultValue(2)]
+        [Header("mysticism")]
         public int ManaPerPoint;
 
         //[Label("Mysticism: Mana Regen")]
@@ -224,14 +235,14 @@ namespace LevelPlus {
         [Increment(0.001f)]
         [DefaultValue(0.001f)]
         public float ManaCostPerPoint;
-
-        [SeparatePage]
+        
         //[Header("Requires Reload")]
         //[Label("Starting Points")]
         //[Tooltip("Points at Level 0")]
         [Range(0, 10)]
         [DefaultValue(3)]
         [ReloadRequired]
+        [Header("points")]
         public int PointsBase;
 
         //[Label("Points per Level")]
@@ -248,6 +259,7 @@ namespace LevelPlus {
         [DefaultValue(100)]
         [Increment(25)]
         [ReloadRequired]
+        [Header("xpScaling")]
         public int XPBase;
 
         //[Label("XP Increase")]
@@ -288,6 +300,7 @@ namespace LevelPlus {
         //[Label("Scaling")]
         //[Tooltip("Turns on mob scaling")]
         [DefaultValue(true)]
+        [Header("mobScaling")]
         public bool ScalingEnabled;
 
         //[Label("Enemy Health")]
@@ -316,6 +329,7 @@ namespace LevelPlus {
 
         //[Label("Commands")]
         //[Tooltip("Enables Commands")]
+        [Header("commands")]
         [DefaultValue(false)]
         [ReloadRequired]
         public bool CommandsEnabled;
