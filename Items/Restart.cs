@@ -25,6 +25,7 @@ namespace LevelPlus.Items {
         public override void AddRecipes() {
             CreateRecipe()
                 .AddTile(TileID.WorkBenches)
+                .DisableDecraft()
                 .Register();
         }
 
