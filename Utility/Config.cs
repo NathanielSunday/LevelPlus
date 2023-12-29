@@ -308,8 +308,11 @@ namespace LevelPlus {
         
         //[Label("Enemy Defense")]
         //[Tooltip("Adds Defense to Enemies per Average level")]
-        [DefaultValue(false)]
-        public bool ScalingDefense;
+        [Slider]
+        [Range(0, 10)]
+        [Increment(1)]
+        [DefaultValue(0)]
+        public int ScalingDefense;
 
         //[Label("Commands")]
         //[Tooltip("Enables Commands")]

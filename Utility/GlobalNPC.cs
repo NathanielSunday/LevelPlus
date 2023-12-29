@@ -30,12 +30,11 @@ namespace LevelPlus {
         
         float healthMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth;
         float damageMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage;
+        float defenseMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingDefense;
         
         npc.lifeMax = (int)Math.Clamp(npc.lifeMax * healthMultiplier, 0, 2147483000);
         npc.damage = (int)Math.Clamp(npc.damage * damageMultiplier, 0, 2147483000);
-        if (LevelPlusConfig.Instance.ScalingDefense) {
-          npc.defense += (int)averageLevel;
-        }
+        npc.defense = (int)Math.Clamp(npc.defense * defenseMultiplier, 0, 2147483000);
       }
     }
 
