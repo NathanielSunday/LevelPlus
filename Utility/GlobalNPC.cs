@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace LevelPlus {
@@ -60,8 +61,8 @@ namespace LevelPlus {
         int killCount = Main.BestiaryTracker.Kills.GetKillCount(npc);
         if (killCount == 1)
         {
-          amount *= 2; // TODO: Localization
-          CombatText.NewText(npc.getRect(), Color.Aqua, "Bestiary unlocked!", true, false);
+          amount *= 2;
+          CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue("Mods.LevelPlus.Popups.BestiaryUnlock"), true, false);
         }
 
         if (Main.netMode == NetmodeID.SinglePlayer) {

@@ -241,3 +241,9 @@ Keybinds: {
 		}
 	}
 }
+
+Popups: {
+	XpGain: + {0} XP
+	LevelUp: Level Up!
+	BestiaryUnlock: Bestiary Unlocked!
+}
