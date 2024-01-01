@@ -239,8 +239,8 @@ Configs: {
 		}
 
 		Headers: {
-			textPopups: text Popups Header
-			xpBar: xp Bar Header
+			textPopups: Text Popups
+			xpBar: XP Bar
 		}
 	}
 }
