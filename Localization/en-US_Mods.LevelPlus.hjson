@@ -118,8 +118,8 @@ Configs: {
 		}
 
 		HRegenPerPoint: {
-			Tooltip: ""
-			Label: H Regen Per Point
+			Tooltip: "How many points it takes to increase health regen by one"
+			Label: Points per health regen
 		}
 
 		HealthPerPoint: {
