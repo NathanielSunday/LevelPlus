@@ -15,19 +15,13 @@ namespace LevelPlus {
     public override void ApplyDifficultyAndPlayerScaling(NPC npc, int numPlayers, float balance, float bossAdjustment) {
       base.ApplyDifficultyAndPlayerScaling(npc, numPlayers, balance, bossAdjustment);
       if (LevelPlusConfig.Instance.ScalingEnabled) {
-
         float averageLevel = 0;
-        if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server) {
-          foreach (Player player in Main.player) {
-            if (player.active) {
-              averageLevel += player.GetModPlayer<LevelPlusModPlayer>().level;
-            }
+        foreach (Player player in Main.player) {
+          if (player.active) {
+            averageLevel += player.GetModPlayer<LevelPlusModPlayer>().level;
           }
-          averageLevel /= numPlayers;
         }
-        else {
-          return;
-        }
+        averageLevel /= numPlayers;
         
         float healthMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth;
         float damageMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage;
