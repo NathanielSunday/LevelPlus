@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
 using LevelPlus.UI;
+using LevelPlus.Utility;
+using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.GameInput;
+using Terraria.Localization;
 
 namespace LevelPlus {
   internal enum Weapon {
@@ -365,6 +368,11 @@ namespace LevelPlus {
         currentXP = 0;
         return;
       }
+
+      if (Main.netMode != NetmodeID.Server && ClientConfig.Instance.enablePopups) {
+        CombatText.NewText(Player.getRect(), Color.Yellow, Language.GetTextValue("Mods.LevelPlus.Popups.XpGain", amountToAdd));
+      }
+      
       if (addRaw)
         currentXP += amountToAdd;
       else
@@ -513,6 +521,11 @@ namespace LevelPlus {
           SoundEngine.PlaySound(new SoundStyle("levelplus/Sounds/Custom/level"));
         return;
       }
+
+      if (Main.netMode != NetmodeID.Server && ClientConfig.Instance.enablePopups) {
+        CombatText.NewText(Player.getRect(), Color.YellowGreen, Language.GetTextValue("Mods.LevelPlus.Popups.LevelUp"), true, false);
+      }
+      
       //run levelup again if XP is still higher, otherwise, play the level up noise
       if (currentXP >= neededXP)
         LevelUp();

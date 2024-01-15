@@ -3,188 +3,244 @@ Configs: {
 		DisplayName: Stat Config
 
 		HealthPerLevel: {
-			Tooltip: ""
-			Label: Health Per Level
+			Tooltip: How much max HP is gained per level-up
+			Label: Max health per level
 		}
 
 		ManaCostPerPoint: {
-			Tooltip: ""
-			Label: Mana Cost Per Point
+			Tooltip: Mana cost reduction per point
+			Label: Mana cost reduction per point
 		}
 
 		ManaRegPerPoint: {
-			Tooltip: ""
-			Label: Mana Reg Per Point
+			Tooltip: How many points it takes to increase mana regen by one
+			Label: Points per mana regen
 		}
 
 		ManaPerPoint: {
-			Tooltip: ""
-			Label: Mana Per Point
+			Tooltip: How much max mana is gained per point
+			Label: Max mana per point
 		}
 
 		AmmoPerPoint: {
-			Tooltip: ""
-			Label: Ammo Per Point
+			Tooltip: Percent chance to not consume ammo per point
+			Label: Ammo consumption reduction per point
 		}
 
 		XPPerPoint: {
-			Tooltip: ""
-			Label: X P Per Point
+			Tooltip: How much xp gain is incremented per point (in percent)
+			Label: Xp gain increase per point
 		}
 
 		WingPerPoint: {
-			Tooltip: ""
-			Label: Wing Per Point
+			Tooltip: How much wing time is gained per point (in percent)
+			Label: Wing time per point
 		}
 
 		AccelPerPoint: {
-			Tooltip: ""
-			Label: Accel Per Point
+			Tooltip: How much acceleration is gained per point (in percent)
+			Label: Acceleration per point
 		}
 
 		RunSpeedPerPoint: {
-			Tooltip: ""
-			Label: Run Speed Per Point
+			Tooltip: How much run speed is gained per point (in percent)
+			Label: Run speed per point
 		}
 
 		RangePerPoint: {
-			Tooltip: ""
-			Label: Range Per Point
+			Tooltip: How many points it takes to increase block range by one
+			Label: Points per block range
 		}
 
 		BuildSpeedPerPoint: {
-			Tooltip: ""
-			Label: Build Speed Per Point
+			Tooltip: How much build speed is gained per point (in percent)
+			Label: Build speed per point
 		}
 
 		PickSpeedPerPoint: {
-			Tooltip: ""
-			Label: Pick Speed Per Point
+			Tooltip: How much mining speed is gained per point (in percent)
+			Label: Mining speed per point
 		}
 
 		MinionPerPoint: {
-			Tooltip: ""
-			Label: Minion Per Point
+			Tooltip: How many points it takes to increase minion slots by one
+			Label: Points per minion slot
 		}
 
 		FishSkillPerPoint: {
-			Tooltip: ""
-			Label: Fish Skill Per Point
+			Tooltip: How much fishing skill is gained per point (in percent)
+			Label: Fishing skill per point
 		}
 
 		SummonCritPerPoint: {
-			Tooltip: ""
-			Label: Summon Crit Per Point
+			Tooltip: How many points it takes to increase summon crit by one
+			Label: Points per summon crit
 		}
 
 		SummonDamagePerPoint: {
-			Tooltip: ""
-			Label: Summon Damage Per Point
+			Tooltip: How much summon damage is gained per point (in percent)
+			Label: Summon damage per point
 		}
 
 		RangedCritPerPoint: {
-			Tooltip: ""
-			Label: Ranged Crit Per Point
+			Tooltip: How many points it takes to increase ranged crit by one
+			Label: Points per ranged crit
 		}
 
 		RangedDamagePerPoint: {
-			Tooltip: ""
-			Label: Ranged Damage Per Point
+			Tooltip: How much ranged damage is gained per point (in percent)
+			Label: Ranged damage per point
 		}
 
 		MeleeCritPerPoint: {
-			Tooltip: ""
-			Label: Melee Crit Per Point
+			Tooltip: How many points it takes to increase melee crit by one
+			Label: Points per melee crit
 		}
 
 		MeleeDamagePerPoint: {
-			Tooltip: ""
-			Label: Melee Damage Per Point
+			Tooltip: How much melee damage is gained per point (in percent)
+			Label: Melee damage per point
 		}
 
 		MagicCritPerPoint: {
-			Tooltip: ""
-			Label: Magic Crit Per Point
+			Tooltip: How many points it takes to increase magic crit by one
+			Label: Points per magic crit
 		}
 
 		MagicDamagePerPoint: {
-			Tooltip: ""
-			Label: Magic Damage Per Point
+			Tooltip: How much magic damage is gained per point (in percent)
+			Label: Magic damage per point
 		}
 
 		DefensePerPoint: {
-			Tooltip: ""
-			Label: Defense Per Point
+			Tooltip: How many points it takes to increase defense by one
+			Label: Points per defense
 		}
 
 		HRegenPerPoint: {
-			Tooltip: ""
-			Label: H Regen Per Point
+			Tooltip: "How many points it takes to increase health regen by one"
+			Label: Points per health regen
 		}
 
 		HealthPerPoint: {
-			Tooltip: ""
-			Label: Health Per Point
+			Tooltip: How much max HP is gained per point
+			Label: Max health per point
 		}
 
 		ManaPerLevel: {
-			Tooltip: ""
-			Label: Mana Per Level
+			Tooltip: How much max mana is gained per level-up
+			Label: Max mana per level
 		}
 
 		PointsBase: {
-			Label: Points Base
-			Tooltip: ""
+			Label: Starting points
+			Tooltip: How many points the player starts with
 		}
 
 		PointsPerLevel: {
-			Label: Points Per Level
-			Tooltip: ""
+			Label: Points per level
+			Tooltip: How many points the player gains per level-up
 		}
 
 		XPBase: {
-			Label: X P Base
-			Tooltip: ""
+			Label: Base level xp
+			Tooltip: Base (flat) xp required to level up
 		}
 
 		XPIncrease: {
-			Label: X P Increase
-			Tooltip: ""
+			Label: Level xp increase
+			Tooltip: Xp requirement increment per level
 		}
 
 		XPRate: {
-			Label: X P Rate
-			Tooltip: ""
+			Label: Level xp multiplier
+			Tooltip: Multiplier for xp requirement per level
 		}
 
 		MobXP: {
-			Label: Mob X P
-			Tooltip: ""
+			Label: Mob xp
+			Tooltip: Mob xp multiplier
 		}
 
 		BossXP: {
-			Label: Boss X P
-			Tooltip: ""
+			Label: Boss xp
+			Tooltip: Boss xp multiplier
 		}
 
 		ScalingEnabled: {
-			Label: Scaling Enabled
-			Tooltip: ""
+			Label: Mob scaling enabled
+			Tooltip: Whether or not the mobs should scale with the player
 		}
 
 		ScalingHealth: {
-			Label: Scaling Health
-			Tooltip: ""
+			Label: Mob health scaling
+			Tooltip: Increase in mob health per player level (multiplicative)
 		}
 
 		ScalingDamage: {
-			Label: Scaling Damage
-			Tooltip: ""
+			Label: Mob damage scaling
+			Tooltip: Increase in mob damage per player level (multiplicative)
 		}
 
 		CommandsEnabled: {
 			Label: Commands Enabled
 			Tooltip: ""
+		}
+
+		ScalingDefense: {
+			Label: Mob defense scaling
+			Tooltip:
+				'''
+				Mob defense increment per player level (additive)
+				[c/ff0000:WARNING: Not recommended, unless you feel really over-powered.]
+				'''
+		}
+
+		Headers: {
+			commands: Commands
+			mobScaling: Mob Scaling
+			levelBonus: Level-up Bonuses
+			constitution: Constitution
+			intelligence: Intelligence
+			strength: Strength
+			dexterity: Dexterity
+			charisma: Charisma
+			animalia: Animalia
+			excavation: Excavation
+			xpScaling: Xp Scaling
+			points: Points
+			mysticism: Mysticism
+			mobility: Mobility
+			luck: Luck
+		}
+	}
+
+	ClientConfig: {
+		xpBarTop: {
+			Tooltip: Distance from the top of the screen. (in pixels)
+			Label: Xp Bar Top
+		}
+
+		xpBarLeft: {
+			Tooltip: Distance from the left of the screen. (in pixels)
+			Label: Xp Bar Left
+		}
+
+		xpBarLocked: {
+			Tooltip: When disabled, you can drag the xp bar around the screen.
+			Label: Xp Bar Locked
+		}
+
+		DisplayName: Client Config
+
+		enablePopups: {
+			Tooltip: When enabled, text popups will appear when you gain xp or level up.
+			Label: Enable text popups
+		}
+
+		Headers: {
+			textPopups: Text Popups
+			xpBar: XP Bar
 		}
 	}
 }
@@ -216,4 +272,10 @@ Keybinds: {
 			}
 		}
 	}
+}
+
+Popups: {
+	XpGain: + {0} XP
+	LevelUp: Level Up!
+	BestiaryUnlock: Bestiary Unlocked!
 }

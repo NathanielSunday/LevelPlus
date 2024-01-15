@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LevelPlus.Utility;
+using Microsoft.Xna.Framework;
 using Terraria.UI;
 
 namespace LevelPlus.UI {
@@ -9,7 +10,7 @@ namespace LevelPlus.UI {
 
         public override void OnInitialize() {
             base.OnInitialize();
-            placement = new Vector2(480, 35);
+            placement = new Vector2(ClientConfig.Instance.xpBarLeft, ClientConfig.Instance.xpBarTop);
 
             XPBar = new XPBar(120, 26);
 

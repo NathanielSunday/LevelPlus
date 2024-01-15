@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LevelPlus.Utility;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -27,17 +28,16 @@ namespace LevelPlus.UI {
             Width.Set(width, 0f);
 
             button = new XPBarButton(height);
-            bar = new ResourceBar(ResourceBarMode.XP, width - (height * (186 / 186)), height);
+            bar = new ResourceBar(ResourceBarMode.XP, width - (height), height);
 
             button.Left.Set(0f, 0f);
             button.Top.Set(0f, 0f);
 
-            bar.Left.Set(height * (186 / 186), 0f);
+            bar.Left.Set(height, 0f);
             bar.Top.Set(0f, 0f);
 
             Append(bar);
             Append(button);
-
         }
 
         public override void OnDeactivate() {
@@ -48,6 +48,10 @@ namespace LevelPlus.UI {
 
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
+            
+            if (ClientConfig.Instance.xpBarLocked) {
+                return;
+            }
 
             if (dragging) {
                 Left.Set(Main.mouseX - offset.X, 0f);
@@ -65,6 +69,9 @@ namespace LevelPlus.UI {
 
         public override void LeftMouseDown(UIMouseEvent evt) {
             base.LeftMouseDown(evt);
+            if (ClientConfig.Instance.xpBarLocked) {
+                return;
+            }
             DragStart(evt);
         }
 
@@ -79,6 +86,9 @@ namespace LevelPlus.UI {
         }
 
         private void DragEnd(UIMouseEvent evt) {
+            if (!dragging) {
+                return;
+            }
             Vector2 end = evt.MousePosition;
             dragging = false;
 
@@ -86,6 +96,9 @@ namespace LevelPlus.UI {
             Top.Set(end.Y - offset.Y, 0f);
 
             Recalculate();
+            
+            ClientConfig.Instance.xpBarLeft = (int)Left.Pixels;
+            ClientConfig.Instance.xpBarTop = (int)Top.Pixels;
         }
     }
 
@@ -97,7 +110,7 @@ namespace LevelPlus.UI {
 
         public XPBarButton(float height) {
             this.height = height;
-            this.width = height * (186 / 186);
+            this.width = height;
         }
 
         public override void OnInitialize() {

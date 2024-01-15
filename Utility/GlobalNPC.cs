@@ -1,6 +1,10 @@
-﻿using System;
+using LevelPlus.Utility;
+using System;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace LevelPlus {
@@ -12,19 +16,20 @@ namespace LevelPlus {
       base.ApplyDifficultyAndPlayerScaling(npc, numPlayers, balance, bossAdjustment);
       if (LevelPlusConfig.Instance.ScalingEnabled) {
         float averageLevel = 0;
-
-
-
-        foreach (Player i in Main.player)
-          if (i.active) {
-            numPlayers++;
-            averageLevel += i.GetModPlayer<LevelPlusModPlayer>().level;
+        foreach (Player player in Main.player) {
+          if (player.active) {
+            averageLevel += player.GetModPlayer<LevelPlusModPlayer>().level;
           }
-
+        }
         averageLevel /= numPlayers;
-
-        npc.damage = (int)Math.Clamp(npc.damage * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage), 0, 2147483000);
-        npc.lifeMax = (int)Math.Clamp(npc.lifeMax * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth), 0, 2147483000);
+        
+        float healthMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth;
+        float damageMultiplier = 1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage;
+        float defenseAddition = averageLevel * LevelPlusConfig.Instance.ScalingDefense;
+        
+        npc.lifeMax = (int)Math.Clamp(npc.lifeMax * healthMultiplier, 0, 2147483000);
+        npc.damage = (int)Math.Clamp(npc.damage * damageMultiplier, 0, 2147483000);
+        npc.defense = (int)Math.Clamp(npc.defense + defenseAddition, 0, 2147483000);
       }
     }
 
@@ -32,13 +37,28 @@ namespace LevelPlus {
     public override void OnKill(NPC npc) {
       base.OnKill(npc);
 
-      if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC) {
+      if (npc.type != NPCID.TargetDummy && !npc.SpawnedFromStatue && !npc.friendly && !npc.townNPC && !npc.immortal && !npc.CountsAsACritter) {
         ulong amount;
         if (npc.boss) {
           amount = (ulong)(npc.lifeMax * LevelPlusConfig.Instance.BossXP);
         }
         else {
           amount = (ulong)(npc.lifeMax * LevelPlusConfig.Instance.MobXP);
+        }
+        
+        // If the mob died before being touched by a player, no xp is awarded.
+        if (npc.lastInteraction == 255) {
+          return;
+        }
+
+        // Bestiary increments only when player kills the mob. Double the xp for the first kill.
+        int killCount = Main.BestiaryTracker.Kills.GetKillCount(npc);
+        if (killCount == 1)
+        {
+          amount *= 2;
+          if (Main.netMode != NetmodeID.Server && ClientConfig.Instance.enablePopups) {
+            CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue("Mods.LevelPlus.Popups.BestiaryUnlock"), true, false);
+          }
         }
 
         if (Main.netMode == NetmodeID.SinglePlayer) {
