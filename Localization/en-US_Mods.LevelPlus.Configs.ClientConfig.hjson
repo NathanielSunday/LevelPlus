@@ -1,4 +1,4 @@
-DisplayName: UI Config
+DisplayName: Client-side
 
 XPBarLeft: {
 	Tooltip: XP Bar distance from left side of window.

@@ -1,7 +1,7 @@
 [*.cs]
 csharp_space_around_binary_operators = before_and_after
 csharp_indent_labels = one_less_than_current
-file_header_template = Copyright (c) BitWiser.\nLicensed under the Apache License, Version 2.0.
+file_header_template = Copyright (c) Bitwiser.\nLicensed under the Apache License, Version 2.0.
 [*.{cs,vb}]
 end_of_line = crlf
 indent_size = 2

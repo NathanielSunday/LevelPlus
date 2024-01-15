@@ -1,7 +1,8 @@
-﻿// Copyright (c) BitWiser.
+// Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Players;
+using LevelPlus.Common.Players.Stats;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -79,7 +80,7 @@ namespace LevelPlus.Common.UI
     {
       base.DrawSelf(spriteBatch);
 
-      LevelPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlayer>();
+      LevelStat modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelStat>();
 
 
       //spriteBatch.Begin();
@@ -105,7 +106,7 @@ namespace LevelPlus.Common.UI
     {
       base.Update(gameTime);
 
-      LevelPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlayer>();
+      LevelStat modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelStat>();
       string HoverText = "";
       switch (stat)
       {

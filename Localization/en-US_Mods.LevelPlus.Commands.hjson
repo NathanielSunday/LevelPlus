@@ -1,3 +1,9 @@
 EnableCommandsError: Enable commands in the Level+ config on the host to use this command.
-AddXPCommand.Description: Adds a given amount of experience to the player's current experience.
-SetXPCommand.Description: Sets player experience to a given amount.
+
+AddXPCommand: {
+  Description: Adds a given amount of experience to the player's current experience.
+}
+
+SetXPCommand: {
+  Description: Sets player experience to a given amount.
+}

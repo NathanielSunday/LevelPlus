@@ -1,7 +1,8 @@
-// Copyright (c) BitWiser.
+// Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Players;
+using LevelPlus.Common.Players.Stats;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +35,7 @@ namespace LevelPlus.Content.Items
 
     public override bool? UseItem(Player player)
     {
-      player.GetModPlayer<LevelPlayer>().StatInitialize();
+      player.GetModPlayer<LevelStat>().StatInitialize();
 
       return true;
     }

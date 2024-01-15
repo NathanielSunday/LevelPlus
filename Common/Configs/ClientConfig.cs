@@ -1,33 +1,20 @@
-﻿// Copyright (c) BitWiser.
+// Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
 using System.ComponentModel;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
-namespace LevelPlus.Common.Configs {
-  internal class ClientConfig : ModConfig {
-    public override ConfigScope Mode => ConfigScope.ClientSide;
-    public static ClientConfig Instance => ModContent.GetInstance<ClientConfig>();
+namespace LevelPlus.Common.Configs;
 
-    #region XPBar
-    [Range(0f, 1920f)]
-    [DefaultValue(480f)]
-    public float XPBar_Left;
+public class ClientConfig : ModConfig
+{
+  public override ConfigScope Mode => ConfigScope.ClientSide;
+  public static ClientConfig Instance => ModContent.GetInstance<ClientConfig>();
 
-    [Range(0f, 1080f)]
-    [DefaultValue(35f)]
-    public float XPBar_Top;
-    #endregion
-
-    #region Spend UI
-    [Range(0f, 1920f)]
-    [DefaultValue(35f)]
-    public float SpendUI_Left;
-
-    [Range(0f, 1080f)]
-    [DefaultValue(200f)]
-    public float SpendUI_Top;
-    #endregion
-  }
+  // ReSharper disable InconsistentNaming
+  [DefaultValue(480)] public int XpBar_Left;
+  [DefaultValue(35)] public int XpBar_Top;
+  [DefaultValue(35)] public int SpendUI_Left;
+  [DefaultValue(200)] public int SpendUI_Top;
 }

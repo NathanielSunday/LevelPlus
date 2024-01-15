@@ -15,19 +15,23 @@ and 1 gold/platinum bar.
 
 ### Linkies
 Bugs, suggestions, or want to interact with the developer(s)? Click here: https://discord.gg/zAWaHEyAA6
+
 If you'd like to support me, buy me a ko-fi? https://ko-fi.com/poctordepper
+
 I've also got a Patreon, but not much is done with it: https://www.patreon.com/poctordepper5446
+
 Check out what I'm working on here: https://trello.com/b/jAdgFhfR/level
 
 ## Credits
-### Bitwiser consists of PoctorDepper, Cercul1, and MarauderKnight3. Specific credits, however, go to:
+### Bitwiser consists of PoctorDepper and Bidrum. Specific credits, however, go to:
 
-### Development
+#### Development
 - PoctorDepper: UI, netcode, and general backend
+- TheAshenWolf: extensibility and abstraction
 - MarauderKnight3: early version commands, which has since been modified out  
 - LanToaster: early config edition, which has since been modified out
-- Cercul1: for being PoctorDepper's "rubber duck"
+- Bidrum: Programming Support
 
-### Graphics
+#### Graphics
 - PoctorDepper: general UI
 - MarauderKnight3: insignia sprites

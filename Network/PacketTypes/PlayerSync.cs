@@ -1,8 +1,9 @@
-﻿// Copyright (c) BitWiser.
+// Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Players;
 using System.IO;
+using LevelPlus.Common.Players.Stats;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace LevelPlus.Network.PacketTypes {
       }
     }
     protected override void Handle() {
-      LevelPlayer player = Main.player[Index].GetModPlayer<LevelPlayer>();
+      LevelStat player = Main.player[Index].GetModPlayer<LevelStat>();
       player.SetXp(XP);
       foreach (Stat stat in System.Enum.GetValues(typeof(Stat))) {
         player.SetStat(stat, Stats[(int)stat]);

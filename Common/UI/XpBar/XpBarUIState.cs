@@ -1,4 +1,4 @@
-﻿// Copyright (c) BitWiser.
+// Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs;
@@ -16,7 +16,7 @@ namespace LevelPlus.Common.UI.XpBar
     public override void OnInitialize()
     {
       base.OnInitialize();
-      placement = new Vector2(ClientConfig.Instance.XPBar_Left, ClientConfig.Instance.XPBar_Top);
+      placement = new Vector2(ClientConfig.Instance.XpBar_Left, ClientConfig.Instance.XpBar_Top);
 
       XpBar = new XPBar();
 

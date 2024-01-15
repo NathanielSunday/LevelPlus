@@ -1,22 +1,5 @@
-Stat: {
-	ENDURANCE: Endurance
-	BRAWN: Brawn
-	DEFT: Deft
-	INTELLECT: Intellect
-	CHARM: Charm
-	LUCK: Luck
-	ADROIT: Adroit
-}
-
-Keybinds: {
-	SpendTwentyFive.DisplayName: Spend 25 points
-	SpendTen.DisplayName: Spend 10 points
-	SpendFive.DisplayName: Spend 5 points
-	OpenSpendUI.DisplayName: Open stat UI
-}
-
 Popup: {
-	LevelUp: Level Up!
-	XpGain: + {0} XP
-	BestiaryUnlocked: Bestiary Unlocked!
+  LevelUp: Level Up!
+  XpGain: + {0} XP
+  BestiaryUnlocked: Bestiary Entry Unlocked!
 }

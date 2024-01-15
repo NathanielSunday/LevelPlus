@@ -1,0 +1,39 @@
+Level: {
+	Name: Endurance
+	Bonuses: 
+}
+
+Endurance: {
+	Name: Endurance
+	Bonuses: 
+}
+
+Brawn: {
+	Name: Brawn
+	Bonuses: 
+}
+
+Deft: {
+	Name: Deft
+	Bonuses: 
+}
+
+Intellect: {
+	Name: Intellect
+	Bonuses: 
+}
+
+Charm: {
+	Name: Charm
+	Bonuses: 
+}
+
+Luck: {
+	Name: Luck
+	Bonuses: 
+}
+
+Adroit: {
+	Name: Adroit
+	Bonuses: 
+}

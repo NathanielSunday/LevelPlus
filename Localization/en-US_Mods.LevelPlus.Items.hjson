@@ -1,29 +1,17 @@
-Items: {
-	Restart: {
-		Tooltip:
-			'''
-			[c/ff0000:WHEN USED, ALL PROGRESS FOR Level+ WILL BE LOST FOR THIS CHARACTER.]
-			"Return from whence ye came!"
-			'''
-		DisplayName: Insignia of Rebirth
-	}
-
-	Respec: {
-		Tooltip:
-			'''
-			[c/55ff55:Allows the reallocation of skill points.]
-			"New year, new me."
-			'''
-		DisplayName: Insignia of Reform
-	}
+Restart: {
+	Tooltip:
+		'''
+		[c/ff0000:WHEN USED, ALL PROGRESS FOR Level+ WILL BE LOST FOR THIS CHARACTER.]
+		"Return from whence ye came!"
+		'''
+	DisplayName: Insignia of Rebirth
 }
 
 Respec: {
-	DisplayName: Respec
-	Tooltip: ""
-}
-
-Restart: {
-	DisplayName: Restart
-	Tooltip: ""
+	Tooltip:
+		'''
+		[c/55ff55:Allows the reallocation of skill points.]
+		"New year, new me."
+		'''
+	DisplayName: Insignia of Reform
 }
