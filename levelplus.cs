@@ -19,20 +19,20 @@ namespace LevelPlus {
         public static ModKeybind SpendUIHotKey;
         public static ModKeybind SpendModFive;
         public static ModKeybind SpendModTen;
-        public static ModKeybind SpendModTwentyFive;
+        public static ModKeybind SpendModAll;
 
         public override void Load() {
-            SpendUIHotKey = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.UI"), Microsoft.Xna.Framework.Input.Keys.P);
-            SpendModFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.Five"), Microsoft.Xna.Framework.Input.Keys.LeftShift);
-            SpendModTen = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.Ten"), Microsoft.Xna.Framework.Input.Keys.LeftControl);
-            SpendModTwentyFive = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods." + Name + ".Keybind.TwentyFive"), Microsoft.Xna.Framework.Input.Keys.LeftAlt);
+            SpendUIHotKey = KeybindLoader.RegisterKeybind(this, "Open SpendUI", Microsoft.Xna.Framework.Input.Keys.P);
+            SpendModFive = KeybindLoader.RegisterKeybind(this, "Spend 5 points", Microsoft.Xna.Framework.Input.Keys.LeftShift);
+            SpendModTen = KeybindLoader.RegisterKeybind(this, "Spend 10 points", Microsoft.Xna.Framework.Input.Keys.LeftControl);
+            SpendModAll = KeybindLoader.RegisterKeybind(this, "Spend all points", Microsoft.Xna.Framework.Input.Keys.LeftAlt);
         }
 
         public override void Unload() {
             SpendUIHotKey = null;
             SpendModFive = null;
             SpendModTen = null;
-            SpendModTwentyFive = null;
+            SpendModAll = null;
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) {

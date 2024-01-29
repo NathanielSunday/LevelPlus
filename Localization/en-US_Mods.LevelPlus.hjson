@@ -265,13 +265,18 @@ Keybinds: {
 	Mods: {
 		LevelPlus: {
 			Keybind: {
-				TwentyFive.DisplayName: Spend 25 points
+				TwentyFive.DisplayName: Spend all points
 				Ten.DisplayName: Spend 10 points
 				Five.DisplayName: Spend 5 points
 				UI.DisplayName: Open stat UI
 			}
 		}
 	}
+
+	"Open SpendUI.DisplayName": Open  Spend U I
+	"Spend 5 points.DisplayName": Spend 5 points
+	"Spend 10 points.DisplayName": Spend 10 points
+	"Spend all points.DisplayName": Spend all points
 }
 
 Popups: {

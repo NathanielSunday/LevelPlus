@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -194,7 +194,7 @@ namespace LevelPlus.UI {
         private void pointSpend(UIMouseEvent evt, UIElement listeningElement) {
             SoundEngine.PlaySound(SoundID.MenuTick);
             LevelPlusModPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelPlusModPlayer>();
-            modPlayer.spend(type, (ushort) (LevelPlus.SpendModFive.Current ? 5 : LevelPlus.SpendModTen.Current ? 10 : LevelPlus.SpendModTwentyFive.Current ? 25 : 1));
+            modPlayer.spend(type, (ushort) (LevelPlus.SpendModFive.Current ? 5 : LevelPlus.SpendModTen.Current ? 10 : LevelPlus.SpendModAll.Current ? modPlayer.statPoints : 1));
         }
     }
 }
