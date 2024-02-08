@@ -3,7 +3,6 @@
 
 using LevelPlus.Common.Configs.Stats;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -14,8 +13,7 @@ public class LuckPlayer : StatPlayer
   private static LuckConfig Config => ModContent.GetInstance<LuckConfig>();
 
   protected override string Id => "Luck";
-  public override LocalizedText Name => Language.GetText(NameKey).WithFormatArgs();
-  public override LocalizedText Description => Language.GetText(DescriptionKey).WithFormatArgs();
+  protected override object[] DescriptionArgs => new object[] { };
 
   protected override void OnLoadData(TagCompound tag)
   {

@@ -8,7 +8,11 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players;
-
+/*
+ * The base for any individual stat.
+ * This class also manages every stat child of it, and all the unallocate points, etc
+ * Each child should only handle its own points as well as what buffs are given based on those points.
+ */
 public abstract class StatPlayer : ModPlayer
 {
   public static Dictionary<string, StatPlayer> Stats { get; protected set; }

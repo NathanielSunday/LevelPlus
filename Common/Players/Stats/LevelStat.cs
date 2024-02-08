@@ -45,7 +45,7 @@ public class LevelStat : StatPlayer
 
   public override int Value => XpToLevel(xp);
   protected override string Id => "Level";
-  protected override object[] DescriptionArgs => [ Value / 2 ];
+  protected override object[] DescriptionArgs => new object[] { Value / 2, Value / 2 };
 
   public void StatInitialize()
   {

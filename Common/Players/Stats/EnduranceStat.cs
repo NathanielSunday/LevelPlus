@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -13,8 +12,7 @@ public class EndurancePlayer : StatPlayer
   private static EnduranceConfig Config => ModContent.GetInstance<EnduranceConfig>();
 
   protected override string Id => "Endurance";
-  public override LocalizedText Name => Language.GetText(NameKey).WithFormatArgs();
-  public override LocalizedText Description => Language.GetText(DescriptionKey).WithFormatArgs();
+  protected override object[] DescriptionArgs => new object[] { };
 
   protected override void OnLoadData(TagCompound tag)
   {
