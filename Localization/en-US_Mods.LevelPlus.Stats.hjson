@@ -1,39 +1,39 @@
 Level: {
 	Name: Endurance
-	Bonuses: 
+	Bonuses: TBD
 }
 
 Endurance: {
 	Name: Endurance
-	Bonuses: 
+	Bonuses:  TBD
 }
 
 Brawn: {
 	Name: Brawn
-	Bonuses: 
+	Bonuses:  TBD
 }
 
 Deft: {
 	Name: Deft
-	Bonuses: 
+	Bonuses:  TBD
 }
 
 Intellect: {
 	Name: Intellect
-	Bonuses: 
+	Bonuses:  TBD
 }
 
 Charm: {
 	Name: Charm
-	Bonuses: 
+	Bonuses:  TBD
 }
 
 Luck: {
 	Name: Luck
-	Bonuses: 
+	Bonuses:  TBD
 }
 
 Adroit: {
 	Name: Adroit
-	Bonuses: 
+	Bonuses:  TBD
 }

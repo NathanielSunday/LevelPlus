@@ -1,0 +1,9 @@
+PlacementSpeed: {
+	Tooltip: The amount placement speed is increased by per point.
+	Label: Placement Speed
+}
+
+RangeCost: {
+	Tooltip: The amount of points required to unlock another block in range.
+	Label: Range Cost
+}

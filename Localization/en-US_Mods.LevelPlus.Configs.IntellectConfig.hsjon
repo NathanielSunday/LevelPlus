@@ -1,0 +1,18 @@
+Damage: {
+	Tooltip: The amount magic damage is increased by per point.
+	Label: Magic Damage
+}
+
+Mana: {
+	Tooltip: The amount mana is increased by per point.
+	Label: Mana
+}
+
+ManaRegen: {
+	Tooltip:
+	'''
+	The starting amount of mana regen increase.
+		Diminishing.
+	'''
+	Label: Mana Regen
+}

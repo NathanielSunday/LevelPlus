@@ -1,0 +1,18 @@
+Damage: {
+	Tooltip: The amount melee damage is increased by per point.
+	Label: Melee Damage
+}
+
+MaxWingTime: {
+	Tooltip:
+	'''
+	The starting amount of max flight time increase.
+		Diminishing.
+	'''
+	Label: Flight Time
+}
+
+PickSpeed: {
+	Tooltip: The amount break speed is increased by per point.
+	Label: Break Speed
+}

@@ -12,6 +12,6 @@ public class MobConfig : ModConfig
   public override ConfigScope Mode => ConfigScope.ServerSide;
   public static MobConfig Instance => ModContent.GetInstance<MobConfig>();
   
-  [DefaultValue(true)] public bool MobScalingEnabled;
-  [DefaultValue(0.025f)] public float MobLevelScalar;
+  [DefaultValue(true)] public bool ScalingEnabled;
+  [DefaultValue(0.025f)] public float LevelScalar;
 }

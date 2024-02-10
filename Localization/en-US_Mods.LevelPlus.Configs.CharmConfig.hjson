@@ -1,0 +1,19 @@
+Damage: {
+	Tooltip: The amount summon damage is increased by per point.
+	Label: Summoning Damage
+}
+
+MinionCost: {
+	Tooltip: The amount of points required to unlock another minion slot.
+	Label: Minion Cost
+}
+
+SentryCost: {
+	Tooltip: The amount of points required to unlock another sentry slot.
+	Label: Sentry Cost
+}
+
+Fishing: {
+	Tooltip: The amount fishing level is increased by per point.
+	Label: Fishing
+}

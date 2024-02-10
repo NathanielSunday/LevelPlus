@@ -1,0 +1,18 @@
+Damage: {
+	Tooltip: The amount ranged damage is increased by per point.
+	Label: Ranged Damage
+}
+
+MaxSpeed: {
+	Tooltip: The amount max speed is increased by per point.
+	Label: Max Speed
+}
+
+Acceleration: {
+	Tooltip:
+	'''
+	The starting amount of acceleration increase.
+		Diminishing.
+	'''
+	Label: Acceleration
+}

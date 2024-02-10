@@ -1,0 +1,18 @@
+Life: {
+	Tooltip: The amount max life is increased by per point.
+	Label: Life
+}
+
+Defense: {
+	Tooltip: The amount defense is increased by per point.
+	Label: Defense
+}
+
+LifeRegen: {
+	Tooltip:
+	'''
+	The starting amount of life regen increase.
+		Diminishing.
+	'''
+	Label: Life Regen
+}
