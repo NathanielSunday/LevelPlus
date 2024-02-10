@@ -16,7 +16,7 @@ namespace LevelPlus.Common.UI.XpBar
     public override void OnInitialize()
     {
       base.OnInitialize();
-      placement = new Vector2(ClientConfig.Instance.XpBar_Left, ClientConfig.Instance.XpBar_Top);
+      placement = new Vector2(ClientConfig.Instance.XpBarLeft, ClientConfig.Instance.XpBarTop);
 
       XpBar = new XPBar();
 

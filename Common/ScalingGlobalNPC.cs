@@ -39,7 +39,7 @@ class ScalingGlobalNPC : GlobalNPC
 
   public override void OnSpawn(NPC npc, IEntitySource source)
   {
-    if (!MobConfig.Instance.MobScalingEnabled) return;
+    if (!MobConfig.Instance.ScalingEnabled) return;
 
     float averageLevel = 0;
 
@@ -51,7 +51,7 @@ class ScalingGlobalNPC : GlobalNPC
     }
 
     averageLevel /= numPlayers;
-    scalar += averageLevel * MobConfig.Instance.MobLevelScalar;
+    scalar += averageLevel * MobConfig.Instance.LevelScalar;
     npc.lifeMax = CalculateMaxLife(npc.lifeMax);
   }
 

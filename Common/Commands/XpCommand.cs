@@ -13,7 +13,8 @@ class XpCommand : ModCommand
 {
   public override string Command => "xp";
 
-  public override string Description => "(" + Mod.Name + ")" + Language.GetTextValue("Commands.XpCommand.Description");
+  public override string Description =>
+    "(" + Mod.Name + ")" + Language.GetTextValue("Commands.XpCommand.Description");
 
   public override CommandType Type => CommandType.Chat;
 
