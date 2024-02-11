@@ -3,31 +3,18 @@
 
 using System.Collections.Generic;
 using LevelPlus.Common.Configs;
-using Terraria.Localization;
+using LevelPlus.Common.Players.Stats;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players;
-/*
- * The base for any individual stat.
- * This class also manages every stat child of it, and all the unallocate points, etc
- * Each child should only handle its own points as well as what buffs are given based on those points.
- */
-public abstract class StatPlayer : ModPlayer
+
+public class StatPlayer : ModPlayer
 {
-  public static Dictionary<string, StatPlayer> Stats { get; protected set; }
-  public static int PointsAvailable { get; protected set; }
+  public Dictionary<string, BaseStat> Stats { get; private set; }
+  public int PointsAvailable { get; protected set; }
 
-  private string NameKey => "Stats." + Id + ".Name";
-  private string DescriptionKey => "Stats." + Id + ".Bonuses";
-  public LocalizedText Name => Language.GetText(NameKey);
-  public LocalizedText Description => Language.GetText(DescriptionKey).WithFormatArgs(DescriptionArgs);
-  
-  public virtual int Value { get; protected set; }
-
-  protected abstract string Id { get; }
-  protected abstract object[] DescriptionArgs { get; }
-  
+  public void RegisterStat(BaseStat stat) => Stats.Add(stat.Id, stat);
 
   private void Validate()
   {
@@ -64,10 +51,6 @@ public abstract class StatPlayer : ModPlayer
     PointsAvailable = possiblePoints - spent;
     */
   }
-  
-  // Also want to enforce data being written and *order* of data being written
-  protected abstract void OnLoadData(TagCompound tag);
-  protected abstract void OnSaveData(TagCompound tag);
 
   public virtual void Add(int amount = 1)
   {
@@ -91,7 +74,10 @@ public abstract class StatPlayer : ModPlayer
 
   public override void LoadData(TagCompound tag)
   {
-    OnLoadData(tag);
+    foreach(BaseStat stat in Stats.Values)
+    {
+      stat.LoadData(tag);
+    }
 
     // Give the Player their left over points
   }
@@ -100,11 +86,14 @@ public abstract class StatPlayer : ModPlayer
   {
     // Inject whatever my be needed by other classes here, then pass it on
 
-    OnSaveData(tag);
+    foreach(BaseStat stat in Stats.Values)
+    {
+      stat.SaveData(tag);
+    }
   }
 
-  public override void OnEnterWorld()
-  {
-    Validate();
-  }
+  /// Validate has to be called "OnEnterWorld" to get server-side configs
+  public override void OnEnterWorld() => Validate();
+
+
 }

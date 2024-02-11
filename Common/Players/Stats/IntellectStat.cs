@@ -2,32 +2,38 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class IntellectPlayer : StatPlayer
+public class IntellectPlayer : BaseStat
 {
-  private static IntellectConfig Config => ModContent.GetInstance<IntellectConfig>();
+  private IntellectConfig Config => ModContent.GetInstance<IntellectConfig>();
 
-  protected override string Id => "Intellect";
   protected override object[] DescriptionArgs => new object[] { };
+  public override string Id => "Intellect";
 
-  protected override void OnLoadData(TagCompound tag)
+  public override bool IsLoadingEnabled(Mod mod) => true;
+
+  public override void Load(Mod mod)
   {
-    throw new System.NotImplementedException();
+    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+  }
+  
+  public override void SaveData(TagCompound tag)
+  {
   }
 
-  protected override void OnSaveData(TagCompound tag)
+  public override void LoadData(TagCompound tag)
   {
-    throw new System.NotImplementedException();
   }
 
-  public override void PostUpdateMiscEffects()
+  public override void ModifyPlayer(ref Player player)
   {
-    Player.statManaMax2 += Value * Config.Mana;
-    Player.manaRegen += (int)(Player.manaRegen * Value * Config.ManaRegen);
-    Player.GetDamage(DamageClass.Magic) *= 1.00f + (Value * Config.Damage);
+    player.statManaMax2 += Value * Config.Mana;
+    player.manaRegen += (int)(player.manaRegen * Value * Config.ManaRegen);
+    player.GetDamage(DamageClass.Magic) *= 1.00f + (Value * Config.Damage);
   }
 }

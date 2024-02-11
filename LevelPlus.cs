@@ -3,9 +3,16 @@
 
 using Terraria.ModLoader;
 
-namespace LevelPlus {
-  public partial class LevelPlus : Mod {
-    public override void Load() { }
-    public override void Unload() { }
+namespace LevelPlus;
+
+public partial class LevelPlus : Mod
+{
+  public override void Load()
+  {
+  }
+
+  public override void Unload()
+  {
   }
 }
+

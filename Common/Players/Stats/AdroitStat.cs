@@ -2,32 +2,38 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class AdroitPlayer : StatPlayer
+public class AdroitPlayer : BaseStat
 {
-  private static AdroitConfig Config => ModContent.GetInstance<AdroitConfig>();
+  private AdroitConfig Config => ModContent.GetInstance<AdroitConfig>();
 
-  protected override string Id => "Adroit";
   protected override object[] DescriptionArgs => new object[] { };
+  public override string Id => "Adroit";
 
-  protected override void OnLoadData(TagCompound tag)
+  public override bool IsLoadingEnabled(Mod mod) => true;
+
+  public override void Load(Mod mod)
   {
-    throw new System.NotImplementedException();
+    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
   }
 
-  protected override void OnSaveData(TagCompound tag)
+  public override void LoadData(TagCompound tag)
   {
-    throw new System.NotImplementedException();
   }
 
-  public override void PostUpdateMiscEffects()
+  public override void SaveData(TagCompound tag)
   {
-    Player.tileSpeed *= 1.00f + Value * Config.PlacementSpeed;
-    Player.wallSpeed *= 1.00f + Value * Config.PlacementSpeed;
-    Player.blockRange += Value / Config.RangeCost;
+  }
+
+  public override void ModifyPlayer(ref Player player)
+  {
+    player.tileSpeed *= 1.00f + Value * Config.PlacementSpeed;
+    player.wallSpeed *= 1.00f + Value * Config.PlacementSpeed;
+    player.blockRange += Value / Config.RangeCost;
   }
 }
