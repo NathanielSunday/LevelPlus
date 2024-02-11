@@ -8,46 +8,54 @@ using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class LuckPlayer : StatPlayer
+public class LuckPlayer : BaseStat
 {
   private static LuckConfig Config => ModContent.GetInstance<LuckConfig>();
 
-  protected override string Id => "Luck";
-  protected override object[] DescriptionArgs => new object[] { };
+  private System.Random rand;
 
-  protected override void OnLoadData(TagCompound tag)
+  protected override object[] DescriptionArgs => new object[] { };
+  public override string Id => "Luck";
+
+  public override bool IsLoadingEnabled(Mod mod) => true;
+
+  public override void Load(Mod mod)
   {
-    throw new System.NotImplementedException();
+    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+    rand = new System.Random(System.DateTime.Now.Millisecond);
   }
 
-  protected override void OnSaveData(TagCompound tag)
+  public override void SaveData(TagCompound tag)
   {
-    throw new System.NotImplementedException();
+  }
+
+  public override void LoadData(TagCompound tag)
+  {
   }
 
   //diminish
-  public override void PostUpdateMiscEffects()
+  public override void ModifyPlayer(ref Player player)
   {
-    Player.GetCritChance(DamageClass.Melee) += Value * Config.Crit;
-    Player.GetCritChance(DamageClass.Ranged) += Value * Config.Crit;
-    Player.GetCritChance(DamageClass.Magic) += Value * Config.Crit;
-    Player.GetCritChance(DamageClass.Summon) += Value * Config.Crit;
-    Player.luck += Value * Config.TerrariaLuck;
+    player.GetCritChance(DamageClass.Melee) += Value * Config.Crit;
+    player.GetCritChance(DamageClass.Ranged) += Value * Config.Crit;
+    player.GetCritChance(DamageClass.Magic) += Value * Config.Crit;
+    player.GetCritChance(DamageClass.Summon) += Value * Config.Crit;
+    player.luck += Value * Config.TerrariaLuck;
   }
 
-  public override void OnConsumeMana(Item item, int manaConsumed)
+  public override void ModifyOnConsumeMana(ref Player player, Item item, int manaConsumed)
   {
     //diminish
-    if (Value * Config.ManaReductionChance * 100 > new System.Random(System.DateTime.Now.Millisecond).Next(1, 101))
+    if (Value * Config.ManaReductionChance * 100 > rand.Next(1, 101))
     {
-      Player.statMana += manaConsumed;
+      player.statMana += manaConsumed;
     }
   }
 
   public override bool CanConsumeAmmo(Item weapon, Item ammo)
   {
     //diminish
-    return Value * Config.AmmoReductionChance * 100 > new System.Random(System.DateTime.Now.Millisecond).Next(1, 101);
+    return Value * Config.AmmoReductionChance * 100 > rand.Next(1, 101);
   }
 }
 

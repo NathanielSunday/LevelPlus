@@ -2,33 +2,39 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class BrawnPlayer : StatPlayer
+public class BrawnPlayer : BaseStat
 {
-  private static BrawnConfig Config => ModContent.GetInstance<BrawnConfig>();
+  private BrawnConfig Config => ModContent.GetInstance<BrawnConfig>();
   
-  protected override string Id => "Brawn";
   protected override object[] DescriptionArgs => new object[] { };
+  public override string Id => "Brawn";
 
-  protected override void OnLoadData(TagCompound tag)
+  public override bool IsLoadingEnabled(Mod mod) => true;
+
+  public override void Load(Mod mod)
   {
-    throw new System.NotImplementedException();
+    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
   }
 
-  protected override void OnSaveData(TagCompound tag)
+  public override void SaveData(TagCompound tag)
   {
-    throw new System.NotImplementedException();
   }
 
-  public override void PostUpdateMiscEffects()
+  public override void LoadData(TagCompound tag)
   {
-    Player.GetDamage(DamageClass.Melee) *= 1.00f + (Value * Config.Damage);
-    Player.pickSpeed *= 1.00f + (Value * Config.PickSpeed);
+  }
+
+  public override void ModifyPlayer(ref Player player)
+  {
+    player.GetDamage(DamageClass.Melee) *= 1.00f + (Value * Config.Damage);
+    player.pickSpeed *= 1.00f + (Value * Config.PickSpeed);
     //diminish
-    Player.wingTimeMax += (int)(Player.wingTimeMax * Config.MaxWingTime * Value);
+    player.wingTimeMax += (int)(player.wingTimeMax * Config.MaxWingTime * Value);
   }
 }

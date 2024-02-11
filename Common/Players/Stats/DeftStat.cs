@@ -2,38 +2,44 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class DeftPlayer : StatPlayer
+public class DeftPlayer : BaseStat
 {
-  private static DeftConfig Config => ModContent.GetInstance<DeftConfig>();
+  private DeftConfig Config => ModContent.GetInstance<DeftConfig>();
 
-  protected override string Id => "Deft";
   protected override object[] DescriptionArgs => new object[] { };
+  public override string Id => "Deft";
 
-  protected override void OnLoadData(TagCompound tag)
+  public override bool IsLoadingEnabled(Mod mod) => true;
+
+  public override void Load(Mod mod)
   {
-    throw new System.NotImplementedException();
+    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
   }
 
-  protected override void OnSaveData(TagCompound tag)
+  public override void SaveData(TagCompound tag)
   {
-    throw new System.NotImplementedException();
   }
 
-  public override void PostUpdateMiscEffects()
+  public override void LoadData(TagCompound tag)
   {
-    Player.GetDamage(DamageClass.Ranged) *= 1.00f + (Value * Config.Damage);
   }
 
-  public override void PostUpdateRunSpeeds()
+  public override void ModifyPlayer(ref Player player)
   {
-    Player.maxRunSpeed *= 1.00f + (Value * Config.MaxSpeed);
+    player.GetDamage(DamageClass.Ranged) *= 1.00f + (Value * Config.Damage);
+  }
+
+  public override void ModifyRunSpeeds(ref Player player)
+  {
+    player.maxRunSpeed *= 1.00f + (Value * Config.MaxSpeed);
     //diminish
-    Player.runAcceleration *= 1.00f + (Value * Config.Acceleration);
+    player.runAcceleration *= 1.00f + (Value * Config.Acceleration);
   }
 }
 

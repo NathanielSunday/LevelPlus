@@ -8,31 +8,36 @@ using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class CharmPlayer : StatPlayer
+public class CharmPlayer : BaseStat
 {
-  private static CharmConfig Config => ModContent.GetInstance<CharmConfig>();
+  private CharmConfig Config => ModContent.GetInstance<CharmConfig>();
 
-  protected override string Id => "Charm";
   protected override object[] DescriptionArgs => new object[] { };
+  public override string Id => "Charm";
 
-  protected override void OnLoadData(TagCompound tag)
+  public override bool IsLoadingEnabled(Mod mod) => true;
+
+  public override void Load(Mod mod)
   {
-    throw new System.NotImplementedException();
+    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
   }
 
-  protected override void OnSaveData(TagCompound tag)
+  public override void SaveData(TagCompound tag)
   {
-    throw new System.NotImplementedException();
   }
 
-  public override void PostUpdateMiscEffects()
+  public override void LoadData(TagCompound tag)
   {
-    Player.GetDamage(DamageClass.Summon) *= 1.00f + Value * Config.Damage;
-    Player.maxMinions += Value / Config.MinionCost;
-    Player.maxTurrets += Value / Config.SentryCost;
   }
 
-  public override void GetFishingLevel(Item fishingRod, Item bait, ref float fishingLevel)
+  public override void ModifyPlayer(ref Player player)
+  {
+    player.GetDamage(DamageClass.Summon) *= 1.00f + Value * Config.Damage;
+    player.maxMinions += Value / Config.MinionCost;
+    player.maxTurrets += Value / Config.SentryCost;
+  }
+
+  public override void ModifyFishingLevel(Item fishingRod, Item bait, ref float fishingLevel)
   {
     fishingLevel += Value * Config.Fishing;
   }
