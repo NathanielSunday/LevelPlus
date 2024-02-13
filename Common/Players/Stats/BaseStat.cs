@@ -20,10 +20,17 @@ public abstract class BaseStat : ILoadable
   protected virtual string NameKey => "Stats." + Id + ".Name";
   /// The list of bonuses key for the localization of what this stat provides
   protected virtual string DescriptionKey => "Stats." + Id + ".Bonuses";
+  /// Set to false to not display this stat in the spend screen <br/>
+  /// (See LevelStat.cs for example of why this is useful)
+  public virtual bool Displayable => true;
+  /// Set to false to not have this subracted from point total in StatPlayer.cs <br/>
+  /// and to be not be spendable in the spend screen <br/>
+  /// (See LevelStat.cs for example of why this is useful)
+  public virtual bool Spendable => true;
   /// The file path of the icon for this stat
   public virtual string IconPath => "LevelPlus/Assets/Textures/UI/Icons/" + Id;
   /// The amount of points invested in this stat
-  public virtual int Value { get; protected set; }
+  public virtual int Value { get; protected internal set; }
 
   /// The arugments that go toward the localized description
   protected abstract object[] DescriptionArgs { get; }
