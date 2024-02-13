@@ -12,10 +12,14 @@ namespace LevelPlus.Common.Players.Stats;
 public abstract class BaseStat : ILoadable
 {
   /// The localized name of this stat 
-  public LocalizedText Name => Language.GetText("Stats." + Id + ".Name");
+  public LocalizedText Name => Language.GetText(NameKey);
   /// The localized list of bonuses this stat provides
-  public LocalizedText Description => Language.GetText("Stats." + Id + ".Bonuses").WithFormatArgs(DescriptionArgs);
+  public LocalizedText Description => Language.GetText(DescriptionKey).WithFormatArgs(DescriptionArgs);
 
+  /// The name key for localization of this stat
+  protected virtual string NameKey => "Stats." + Id + ".Name";
+  /// The list of bonuses key for the localization of what this stat provides
+  protected virtual string DescriptionKey => "Stats." + Id + ".Bonuses";
   /// The file path of the icon for this stat
   public virtual string IconPath => "LevelPlus/Assets/Textures/UI/Icons/" + Id;
   /// The amount of points invested in this stat

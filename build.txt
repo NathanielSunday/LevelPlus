@@ -1,4 +1,4 @@
 displayName = Level+
-author = PoctorDepper
+author = Bitwiser
 version = 1.2.0
-homepage = https://github.com/PoctorDepper/levelplus
+homepage = https://github.com/BitwiserGames/LevelPlus
