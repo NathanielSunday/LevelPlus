@@ -11,6 +11,7 @@ namespace LevelPlus.Common.Players.Stats;
 public class DeftPlayer : BaseStat
 {
   private DeftConfig Config => ModContent.GetInstance<DeftConfig>();
+  private Mod modCalamity;
 
   protected override object[] DescriptionArgs => new object[] { };
   public override string Id => "Deft";
@@ -20,6 +21,8 @@ public class DeftPlayer : BaseStat
   public override void Load(Mod mod)
   {
     ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+
+    ModLoader.TryGetMod("CalamityMod", out modCalamity);
   }
 
   public override void SaveData(TagCompound tag)
@@ -33,6 +36,14 @@ public class DeftPlayer : BaseStat
   public override void ModifyPlayer(ref Player player)
   {
     player.GetDamage(DamageClass.Ranged) *= 1.00f + (Value * Config.Damage);
+
+    if (modCalamity != null)
+    {
+      var modPlayer = player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>();
+      
+      modPlayer.rogueStealthMax += Value * Config.RogueStealthMax;
+      modPlayer.bonusStealthDamage += Value * Config.RogueStealthDamage;
+    }
   }
 
   public override void ModifyRunSpeeds(ref Player player)

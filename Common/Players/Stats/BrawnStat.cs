@@ -11,6 +11,7 @@ namespace LevelPlus.Common.Players.Stats;
 public class BrawnPlayer : BaseStat
 {
   private BrawnConfig Config => ModContent.GetInstance<BrawnConfig>();
+  private Mod modCalamity;
   
   protected override object[] DescriptionArgs => new object[] { };
   public override string Id => "Brawn";
@@ -20,6 +21,8 @@ public class BrawnPlayer : BaseStat
   public override void Load(Mod mod)
   {
     ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+    
+    ModLoader.TryGetMod("CalamityMod", out modCalamity);
   }
 
   public override void SaveData(TagCompound tag)
@@ -36,5 +39,13 @@ public class BrawnPlayer : BaseStat
     player.pickSpeed *= 1.00f + (Value * Config.PickSpeed);
     //diminish
     player.wingTimeMax += (int)(player.wingTimeMax * Config.MaxWingTime * Value);
+    
+    if (modCalamity != null)
+    {
+      var modPlayer = player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>();
+      
+      player.GetDamage(DamageClass.Throwing) *= 1.00f + (Value * Config.RogueDamage);
+      modPlayer.rogueVelocity *= 1.00f + Value * Config.RogueVelocity;
+    }
   }
 }

@@ -16,3 +16,17 @@ Acceleration: {
 	'''
 	Label: Acceleration
 }
+
+Calamity: {
+    Header: Calamity
+}
+
+RogueStealthMax: {
+    Tooltip: The amount of max stealth increased by per point.
+    Label: Rogue Max Stealth
+}
+
+RogueVelocity: {
+    Tooltip: The amount of rogue velocity increased by per point.
+    Label: Rogue Velocity
+}
