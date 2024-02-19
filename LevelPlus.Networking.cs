@@ -7,6 +7,7 @@ using System.IO;
 namespace LevelPlus {
   partial class LevelPlus {
     public override void HandlePacket(BinaryReader reader, int whoAmI) {
+      /*
       try {
         Type type = Type.GetType(reader.ReadString());
         Network.Packet packet = (Network.Packet)Activator.CreateInstance(type);
@@ -15,6 +16,7 @@ namespace LevelPlus {
       catch (Exception) {
         Logger.ErrorFormat("Level+: Could not handle packet");
       }
+      */
     }
 
     //I don't know whether we should conform to tMods non-OO nightmare, or stick with the changes I've made

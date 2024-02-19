@@ -41,10 +41,10 @@ class PointCommand : ModCommand
     switch (args[0].ToLower())
     {
       case "add":
-        player.Add(value);
+        player.Points += value;
         break;
       case "set":
-        player.Set(value);
+        player.Points = value;
         break;
       default:
         Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));

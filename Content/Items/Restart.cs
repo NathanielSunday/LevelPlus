@@ -35,7 +35,7 @@ namespace LevelPlus.Content.Items
 
     public override bool? UseItem(Player player)
     {
-      player.GetModPlayer<LevelStat>().StatInitialize();
+      //player.GetModPlayer<LevelStat>().StatInitialize();
 
       return true;
     }

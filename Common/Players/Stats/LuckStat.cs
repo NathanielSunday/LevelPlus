@@ -14,14 +14,14 @@ public class LuckPlayer : BaseStat
 
   private System.Random rand;
 
-  protected override object[] DescriptionArgs => new object[] { };
+  protected override object[] DescriptionArgs => [];
   public override string Id => "Luck";
 
   public override bool IsLoadingEnabled(Mod mod) => true;
 
   public override void Load(Mod mod)
   {
-    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+    StatPlayer.RegisterStat(this);
     rand = new System.Random(System.DateTime.Now.Millisecond);
   }
 
@@ -34,28 +34,30 @@ public class LuckPlayer : BaseStat
   }
 
   //diminish
-  public override void ModifyPlayer(ref Player player)
+  public override void ModifyPlayer()
   {
-    player.GetCritChance(DamageClass.Melee) += Value * Config.Crit;
-    player.GetCritChance(DamageClass.Ranged) += Value * Config.Crit;
-    player.GetCritChance(DamageClass.Magic) += Value * Config.Crit;
-    player.GetCritChance(DamageClass.Summon) += Value * Config.Crit;
-    player.luck += Value * Config.TerrariaLuck;
+    Player.GetCritChance(DamageClass.Melee) += Value * Config.Crit;
+    Player.GetCritChance(DamageClass.Ranged) += Value * Config.Crit;
+    Player.GetCritChance(DamageClass.Magic) += Value * Config.Crit;
+    Player.GetCritChance(DamageClass.Summon) += Value * Config.Crit;
+    Player.luck += Value * Config.TerrariaLuck;
   }
 
-  public override void ModifyOnConsumeMana(ref Player player, Item item, int manaConsumed)
+  public override void ModifyOnConsumeMana(Item item, int manaConsumed)
   {
     //diminish
     if (Value * Config.ManaReductionChance * 100 > rand.Next(1, 101))
     {
-      player.statMana += manaConsumed;
+      Player.statMana += manaConsumed;
     }
   }
 
   public override bool CanConsumeAmmo(Item weapon, Item ammo)
   {
+    // If the value is less than the 0-99, then ammo can be consumed
+    // 0 is not less than 0, so at no points invested, this is still true
     //diminish
-    return Value * Config.AmmoReductionChance * 100 > rand.Next(1, 101);
+    return Value * Config.AmmoReductionChance * 100 < rand.Next(0, 100);
   }
 }
 

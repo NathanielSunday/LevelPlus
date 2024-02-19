@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs;
-using LevelPlus.Common.Players.Stats;
+using LevelPlus.Common.Players;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -34,14 +34,14 @@ class LevelCommand : ModCommand
       return;
     }
 
-    LevelStat player = caller.Player.GetModPlayer<LevelStat>();
+    StatPlayer player = caller.Player.GetModPlayer<StatPlayer>();
     switch (args[0].ToLower())
     {
       case "add":
-        player.Add(value);
+        //player.Add(value);
         break;
       case "set":
-        player.Set(value);
+        //player.Set(value);
         break;
       default:
         Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));

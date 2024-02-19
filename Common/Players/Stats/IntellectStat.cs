@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
-using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -12,14 +11,14 @@ public class IntellectPlayer : BaseStat
 {
   private IntellectConfig Config => ModContent.GetInstance<IntellectConfig>();
 
-  protected override object[] DescriptionArgs => new object[] { };
+  protected override object[] DescriptionArgs => [];
   public override string Id => "Intellect";
 
   public override bool IsLoadingEnabled(Mod mod) => true;
 
   public override void Load(Mod mod)
   {
-    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+    StatPlayer.RegisterStat(this);
   }
   
   public override void SaveData(TagCompound tag)
@@ -30,10 +29,10 @@ public class IntellectPlayer : BaseStat
   {
   }
 
-  public override void ModifyPlayer(ref Player player)
+  public override void ModifyPlayer()
   {
-    player.statManaMax2 += Value * Config.Mana;
-    player.manaRegen += (int)(player.manaRegen * Value * Config.ManaRegen);
-    player.GetDamage(DamageClass.Magic) *= 1.00f + (Value * Config.Damage);
+    Player.statManaMax2 += Value * Config.Mana;
+    Player.manaRegen += (int)(Player.manaRegen * Value * Config.ManaRegen);
+    Player.GetDamage(DamageClass.Magic) *= 1.00f + (Value * Config.Damage);
   }
 }

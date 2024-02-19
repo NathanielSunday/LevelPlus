@@ -94,8 +94,8 @@ namespace LevelPlus.Common.UI {
     public override void Update(GameTime time) {
       base.Update(time);
 
-      LevelStat modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelStat>();
-      level.SetText("" + (modPlayer.Level + 1));
+      StatPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<StatPlayer>();
+      level.SetText("" + (StatPlayer.XpToLevel(modPlayer.Xp) + 1));
 
       if (IsMouseHovering) {
         int numPlayers = 0;
@@ -104,13 +104,13 @@ namespace LevelPlus.Common.UI {
         foreach (Player i in Main.player)
           if (i.active) {
             numPlayers++;
-            averageLevel += i.GetModPlayer<LevelStat>().Level + 1;
+            averageLevel += StatPlayer.XpToLevel(i.GetModPlayer<StatPlayer>().Xp) + 1;
 
           }
 
         averageLevel /= numPlayers;
 
-        Main.instance.MouseText("Level: " + (modPlayer.Level + 1) + "\n" + modPlayer.PointsAvailable + " unspent points\n" + (Main.netMode == NetmodeID.MultiplayerClient ? numPlayers + " players online\nAverage Level: " + (int)averageLevel : ""));
+        Main.instance.MouseText("Level: " + (StatPlayer.XpToLevel(modPlayer.Xp) + 1) + "\n" + modPlayer.Points + " unspent points\n" + (Main.netMode == NetmodeID.MultiplayerClient ? numPlayers + " players online\nAverage Level: " + (int)averageLevel : ""));
       }
     }
 

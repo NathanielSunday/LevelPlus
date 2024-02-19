@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
-using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -12,14 +11,14 @@ public class DeftPlayer : BaseStat
 {
   private DeftConfig Config => ModContent.GetInstance<DeftConfig>();
 
-  protected override object[] DescriptionArgs => new object[] { };
+  protected override object[] DescriptionArgs => [];
   public override string Id => "Deft";
 
   public override bool IsLoadingEnabled(Mod mod) => true;
 
   public override void Load(Mod mod)
   {
-    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+    StatPlayer.RegisterStat(this);
   }
 
   public override void SaveData(TagCompound tag)
@@ -30,16 +29,16 @@ public class DeftPlayer : BaseStat
   {
   }
 
-  public override void ModifyPlayer(ref Player player)
+  public override void ModifyPlayer()
   {
-    player.GetDamage(DamageClass.Ranged) *= 1.00f + (Value * Config.Damage);
+    Player.GetDamage(DamageClass.Ranged) *= 1.00f + (Value * Config.Damage);
   }
 
-  public override void ModifyRunSpeeds(ref Player player)
+  public override void ModifyRunSpeeds()
   {
-    player.maxRunSpeed *= 1.00f + (Value * Config.MaxSpeed);
+    Player.maxRunSpeed *= 1.00f + (Value * Config.MaxSpeed);
     //diminish
-    player.runAcceleration *= 1.00f + (Value * Config.Acceleration);
+    Player.runAcceleration *= 1.00f + (Value * Config.Acceleration);
   }
 }
 

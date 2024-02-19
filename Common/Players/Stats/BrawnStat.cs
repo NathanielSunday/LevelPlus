@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Configs.Stats;
-using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -12,14 +11,14 @@ public class BrawnPlayer : BaseStat
 {
   private BrawnConfig Config => ModContent.GetInstance<BrawnConfig>();
   
-  protected override object[] DescriptionArgs => new object[] { };
+  protected override object[] DescriptionArgs => [];
   public override string Id => "Brawn";
 
   public override bool IsLoadingEnabled(Mod mod) => true;
 
   public override void Load(Mod mod)
   {
-    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+    StatPlayer.RegisterStat(this);
   }
 
   public override void SaveData(TagCompound tag)
@@ -30,11 +29,11 @@ public class BrawnPlayer : BaseStat
   {
   }
 
-  public override void ModifyPlayer(ref Player player)
+  public override void ModifyPlayer()
   {
-    player.GetDamage(DamageClass.Melee) *= 1.00f + (Value * Config.Damage);
-    player.pickSpeed *= 1.00f + (Value * Config.PickSpeed);
+    Player.GetDamage(DamageClass.Melee) *= 1.00f + (Value * Config.Damage);
+    Player.pickSpeed *= 1.00f + (Value * Config.PickSpeed);
     //diminish
-    player.wingTimeMax += (int)(player.wingTimeMax * Config.MaxWingTime * Value);
+    Player.wingTimeMax += (int)(Player.wingTimeMax * Config.MaxWingTime * Value);
   }
 }

@@ -80,7 +80,7 @@ namespace LevelPlus.Common.UI
     {
       base.DrawSelf(spriteBatch);
 
-      LevelStat modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelStat>();
+      StatPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<StatPlayer>();
 
 
       //spriteBatch.Begin();
@@ -106,7 +106,7 @@ namespace LevelPlus.Common.UI
     {
       base.Update(gameTime);
 
-      LevelStat modPlayer = Main.player[Main.myPlayer].GetModPlayer<LevelStat>();
+      StatPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<StatPlayer>();
       string HoverText = "";
       switch (stat)
       {

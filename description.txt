@@ -1,5 +1,5 @@
 Level+ is meant to bring a simple leveling system that makes your character progress as the game progresses.
-Check out the GitHub page for more info: https://github.com/bitwisergames/levelplus
+Check out the GitHub page for more info: https://github.com/BitwiserGames/LevelPlus
 
 Bugs, suggestions, or want to interact with the developer(s)? Click here: https://discord.gg/zAWaHEyAA6
 If you'd like to support me, buy me a coffee: https://ko-fi.com/poctordepper

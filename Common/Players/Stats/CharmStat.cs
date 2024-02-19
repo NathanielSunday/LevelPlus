@@ -12,14 +12,14 @@ public class CharmPlayer : BaseStat
 {
   private CharmConfig Config => ModContent.GetInstance<CharmConfig>();
 
-  protected override object[] DescriptionArgs => new object[] { };
+  protected override object[] DescriptionArgs => [];
   public override string Id => "Charm";
 
   public override bool IsLoadingEnabled(Mod mod) => true;
 
   public override void Load(Mod mod)
   {
-    ModContent.GetInstance<StatPlayer>().RegisterStat(this);
+    StatPlayer.RegisterStat(this);
   }
 
   public override void SaveData(TagCompound tag)
@@ -30,11 +30,11 @@ public class CharmPlayer : BaseStat
   {
   }
 
-  public override void ModifyPlayer(ref Player player)
+  public override void ModifyPlayer()
   {
-    player.GetDamage(DamageClass.Summon) *= 1.00f + Value * Config.Damage;
-    player.maxMinions += Value / Config.MinionCost;
-    player.maxTurrets += Value / Config.SentryCost;
+    Player.GetDamage(DamageClass.Summon) *= 1.00f + Value * Config.Damage;
+    Player.maxMinions += Value / Config.MinionCost;
+    Player.maxTurrets += Value / Config.SentryCost;
   }
 
   public override void ModifyFishingLevel(Item fishingRod, Item bait, ref float fishingLevel)

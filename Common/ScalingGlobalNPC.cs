@@ -3,6 +3,7 @@
 
 using LevelPlus.Common.Configs;
 using System;
+using LevelPlus.Common.Players;
 using LevelPlus.Common.Players.Stats;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -47,7 +48,7 @@ class ScalingGlobalNPC : GlobalNPC
     {
       if (!player.active) continue;
       numPlayers++;
-      averageLevel += player.GetModPlayer<LevelStat>().Value;
+      averageLevel += StatPlayer.XpToLevel(player.GetModPlayer<StatPlayer>().Xp);
     }
 
     averageLevel /= numPlayers;
@@ -86,7 +87,7 @@ class ScalingGlobalNPC : GlobalNPC
 
     if (Main.netMode == NetmodeID.SinglePlayer)
     {
-      Main.LocalPlayer.GetModPlayer<LevelStat>().AddXp(amount);
+      Main.LocalPlayer.GetModPlayer<StatPlayer>().Xp += amount;
     }
     else if (Main.netMode == NetmodeID.Server)
     {
