@@ -13,4 +13,8 @@ public class BrawnConfig : ModConfig
   [DefaultValue(0.01f)] public float Damage;
   [DefaultValue(0.02f)] public float MaxWingTime; //dim
   [DefaultValue(0.01f)] public float PickSpeed;
+  
+  [Header("Calamity.Header")]
+  [DefaultValue(0.01f)] public float RogueDamage;
+  [DefaultValue(0.01f)] public float RogueVelocity;
 }

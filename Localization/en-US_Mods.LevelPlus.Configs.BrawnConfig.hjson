@@ -16,3 +16,17 @@ PickSpeed: {
 	Tooltip: The amount break speed is increased by per point.
 	Label: Break Speed
 }
+
+Calamity: {
+    Header: Calamity
+}
+
+RogueDamage: {
+    Tooltip: The amount of rogue damage increased by per point.
+    Label: Rogue Damage
+}
+
+RogueStealthDamage: {
+    Tooltip: The amount of rogue stealth damage increased by per point.
+    Label: Rogue Stealth Damage
+}

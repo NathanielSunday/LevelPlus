@@ -13,5 +13,9 @@ public class DeftConfig : ModConfig
   [DefaultValue(0.01f)] public float Damage;
   [DefaultValue(0.01f)] public float MaxSpeed;
   [DefaultValue(0.02f)] public float Acceleration; //dim
+  
+  [Header("Calamity.Header")]
+  [DefaultValue(0.2f)] public float RogueStealthMax;
+  [DefaultValue(0.01f)] public float RogueStealthDamage;
 }
 
