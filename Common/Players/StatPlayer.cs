@@ -1,6 +1,7 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
+using System;
 using System.Collections.Generic;
 using LevelPlus.Common.Configs;
 using LevelPlus.Common.Configs.Stats;
@@ -43,13 +44,17 @@ public class StatPlayer : ModPlayer
           true);
       }
 
+      var xpDifferance = value - xp;
+
+      CombatText.NewText(Player.getRect(), Color.Aqua, (int)xpDifferance);
+      
       xp = value;
       Points += ModContent.GetInstance<LevelConfig>().Points;
       Player.statLife = Player.statLifeMax2;
       Player.statMana = Player.statManaMax2;
     }
   }
-
+  
   public void RegisterStat(BaseStat stat) => Stats.Add(stat.Id, stat);
 
   private void Validate()
@@ -128,7 +133,7 @@ public class StatPlayer : ModPlayer
       stat.LoadData(tag);
       totalPoints += stat.Value;
     }
-
+    
     // Give the Player their left over points
   }
 
@@ -141,7 +146,7 @@ public class StatPlayer : ModPlayer
       stat.SaveData(tag);
     }
   }
-
+  
   public override void PostUpdateMiscEffects()
   {
     foreach (BaseStat stat in Stats.Values)
