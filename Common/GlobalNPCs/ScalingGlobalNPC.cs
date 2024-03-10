@@ -4,7 +4,6 @@
 using LevelPlus.Common.Configs;
 using System;
 using LevelPlus.Common.Players;
-using LevelPlus.Common.Players.Stats;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,7 +11,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace LevelPlus.Common;
+namespace LevelPlus.Common.GlobalNPCs;
 
 // ReSharper disable once InconsistentNaming
 class ScalingGlobalNPC : GlobalNPC
