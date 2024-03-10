@@ -12,6 +12,7 @@ using LevelPlus.Content.Items;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -303,6 +304,13 @@ public class StatPlayer : ModPlayer
         SpendUISystem.Instance.Toggle();
       }
     }
+  }
+  
+  public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar,
+    ref Vector2 sonarPosition)
+  {
+    var xpToAdd = 2 * (int)Math.Pow(ItemLoader.GetItem(attempt.rolledItemDrop).Item.rare, 2) + 2;
+    Xp += xpToAdd;
   }
 
   /// <returns>The amount of XP needed for next level</returns>
