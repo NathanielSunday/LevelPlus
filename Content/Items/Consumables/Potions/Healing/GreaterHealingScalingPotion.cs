@@ -7,8 +7,10 @@ namespace LevelPlus.Content.Items.Consumables.Potions.Healing;
 
 public class GreaterHealingScalingPotion : BaseScalingPotion
 {
+  public override string Texture => "LevelPlus/Assets/Textures/Items/Consumables/GreaterHealingScalingPotion";
+  protected override short BasePotionId => ItemID.GreaterHealingPotion;
   protected override float HealLife => 0.3f;
-
+  
   public override void AddRecipes()
   {
     CreateRecipe()

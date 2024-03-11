@@ -7,6 +7,8 @@ namespace LevelPlus.Content.Items.Consumables.Potions.Mana;
 
 public class SuperManaScalingPotion : BaseScalingPotion
 {
+  public override string Texture => "LevelPlus/Assets/Textures/Items/Consumables/SuperManaScalingPotion";
+  protected override short BasePotionId => ItemID.SuperManaPotion;
   protected override float HealMana => 0.75f;
 
   public override void AddRecipes()
