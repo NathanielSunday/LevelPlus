@@ -2,18 +2,18 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Players;
-using LevelPlus.Common.Players.Stats;
 using LevelPlus.Common.UI.SpendUI;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace LevelPlus.Common.UI;
 
-class XPBar : DraggableUIPanel
+public class XPBar : DraggableUIPanel
 {
   private ResourceBar bar;
   private XPBarButton button;

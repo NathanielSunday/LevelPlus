@@ -9,13 +9,13 @@ namespace LevelPlus.Common.UI.XpBar;
 
 internal class XpBarUIState : UIState
 {
-  public static bool Visible { get; private set; }
-  private XPBar XpBar;
   private Vector2 placement;
+  private XPBar XpBar;
 
   public override void OnInitialize()
   {
     base.OnInitialize();
+
     placement = new Vector2(ClientConfig.Instance.XpBarLeft, ClientConfig.Instance.XpBarTop);
 
     XpBar = new XPBar();
@@ -33,5 +33,3 @@ internal class XpBarUIState : UIState
     XpBar = null;
   }
 }
-
-

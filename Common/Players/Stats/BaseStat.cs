@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0.
 
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -31,6 +32,9 @@ public abstract class BaseStat
 
   /// The file path of the icon for this stat
   public virtual string IconPath => "LevelPlus/Assets/Textures/UI/Icons/" + Id;
+
+  /// The color of the UI Elements to shift to
+  public virtual Color UIColor => Color.White;
 
   /// The amount of points invested in this stat
   public virtual int Value { get; protected internal set; }

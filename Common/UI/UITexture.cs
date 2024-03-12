@@ -1,29 +1,29 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace LevelPlus.Common.UI;
 
-class UITexture : UIElement
+public class UITexture : UIElement
 {
-  public Color backgroundColor = Color.White;
-  private Texture2D _texture;
+  public Color color = Color.White;
+  private Texture2D texture;
   private bool mouseInterface;
   public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 
-  public UITexture(string path, bool mouseInterface)
+  public UITexture(string path, bool mouseInterface = false)
   {
-    if (!textures.TryGetValue(path, out _texture))
+    if (!textures.TryGetValue(path, out texture))
     {
       textures.Add(path, ModContent.Request<Texture2D>(path, AssetRequestMode.ImmediateLoad).Value);
-      _texture = textures[path];
+      texture = textures[path];
     }
 
     this.mouseInterface = mouseInterface;
@@ -32,7 +32,7 @@ class UITexture : UIElement
   public override void OnDeactivate()
   {
     base.OnDeactivate();
-    _texture = null;
+    texture = null;
   }
 
   public override void Update(GameTime gameTime)
@@ -48,7 +48,7 @@ class UITexture : UIElement
   protected override void DrawSelf(SpriteBatch spriteBatch)
   {
     base.DrawSelf(spriteBatch);
-    spriteBatch.Draw(_texture, GetDimensions().ToRectangle(), backgroundColor);
+    spriteBatch.Draw(texture, GetDimensions().ToRectangle(), color);
   }
 }
 
