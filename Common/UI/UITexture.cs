@@ -1,55 +1,50 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI
+namespace LevelPlus.Common.UI;
+
+internal class UITexture : UIElement
 {
+  public static Dictionary<string, Texture2D> textures = new();
+  private Texture2D _texture;
+  public Color backgroundColor = Color.White;
+  private readonly bool mouseInterface;
 
-  class UITexture : UIElement
+  public UITexture(string path, bool mouseInterface = false)
   {
-    public Color backgroundColor = Color.White;
-    private Texture2D _texture;
-    private bool mouseInterface;
-    public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-
-    public UITexture(string path, bool mouseInterface)
+    if (!textures.TryGetValue(path, out _texture))
     {
-      if (!textures.TryGetValue(path, out _texture))
-      {
-        textures.Add(path, ModContent.Request<Texture2D>(path, AssetRequestMode.ImmediateLoad).Value);
-        _texture = textures[path];
-      }
-
-      this.mouseInterface = mouseInterface;
+      textures.Add(path, ModContent.Request<Texture2D>(path, AssetRequestMode.ImmediateLoad).Value);
+      _texture = textures[path];
     }
 
-    public override void OnDeactivate()
-    {
-      base.OnDeactivate();
-      _texture = null;
-    }
+    this.mouseInterface = mouseInterface;
+  }
 
-    public override void Update(GameTime gameTime)
-    {
-      base.Update(gameTime);
+  public override void OnDeactivate()
+  {
+    base.OnDeactivate();
+    _texture = null;
+  }
 
-      if (mouseInterface && ContainsPoint(new Vector2(Main.mouseX, Main.mouseY)))
-      {
-        Main.LocalPlayer.mouseInterface = true;
-      }
-    }
+  public override void Update(GameTime gameTime)
+  {
+    base.Update(gameTime);
 
-    protected override void DrawSelf(SpriteBatch spriteBatch)
-    {
-      base.DrawSelf(spriteBatch);
-      spriteBatch.Draw(_texture, GetDimensions().ToRectangle(), backgroundColor);
-    }
+    if (mouseInterface && ContainsPoint(new Vector2(Main.mouseX, Main.mouseY))) Main.LocalPlayer.mouseInterface = true;
+  }
+
+  protected override void DrawSelf(SpriteBatch spriteBatch)
+  {
+    base.DrawSelf(spriteBatch);
+    spriteBatch.Draw(_texture, GetDimensions().ToRectangle(), backgroundColor);
   }
 }

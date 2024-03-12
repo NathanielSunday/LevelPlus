@@ -1,6 +1,7 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -13,10 +14,11 @@ public abstract class BaseStat : ILoadable
 {
   /// The instance of Player on StatPlayer
   protected Player Player => StatPlayer.Player;
+
   /// The instance of StatPlayer
   protected StatPlayer StatPlayer => ModContent.GetInstance<StatPlayer>();
 
-  /// The localized name of this stat 
+  /// The localized name of this stat
   public LocalizedText Name => Language.GetText(NameKey);
 
   /// The localized list of bonuses this stat provides
@@ -34,13 +36,18 @@ public abstract class BaseStat : ILoadable
   /// The list of bonuses key for the localization of what this stat provides
   protected virtual string DescriptionKey => "Stats." + Id + ".Bonuses";
 
-  /// Set to false to not display this stat in the spend screen <br/>
-  /// or subracted from point total in StatPlayer.cs <br/>
+  /// Set to false to not display this stat in the spend screen
+  /// <br />
+  /// or subracted from point total in StatPlayer.cs
+  /// <br />
   /// (See LevelStat.cs for example of why this is useful)
   public virtual bool Displayable => true;
 
   /// The file path of the icon for this stat
   public virtual string IconPath => "LevelPlus/Assets/Textures/UI/Icons/" + Id;
+
+  /// The color of the UI Elements to shift to
+  public virtual Color UIColor => Color.White;
 
   /// The amount of points invested in this stat
   public virtual int Value { get; protected internal set; }

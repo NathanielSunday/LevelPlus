@@ -5,33 +5,31 @@ using LevelPlus.Common.Configs;
 using Microsoft.Xna.Framework;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI.XpBar
+namespace LevelPlus.Common.UI.XpBar;
+
+internal class XpBarUIState : UIState
 {
-  internal class XpBarUIState : UIState
+  private Vector2 placement;
+  private XPBar XpBar;
+
+  public override void OnInitialize()
   {
-    public static bool Visible { get; private set; }
-    private XPBar XpBar;
-    private Vector2 placement;
+    base.OnInitialize();
 
-    public override void OnInitialize()
-    {
-      base.OnInitialize();
-      placement = new Vector2(ClientConfig.Instance.XpBarLeft, ClientConfig.Instance.XpBarTop);
+    placement = new Vector2(ClientConfig.Instance.XpBarLeft, ClientConfig.Instance.XpBarTop);
 
-      XpBar = new XPBar();
+    XpBar = new XPBar();
 
-      XpBar.Left.Set(placement.X, 0f);
-      XpBar.Top.Set(placement.Y, 0f);
-      XpBar.SetSnapPoint("Origin", 0, placement);
+    XpBar.Left.Set(placement.X, 0f);
+    XpBar.Top.Set(placement.Y, 0f);
+    XpBar.SetSnapPoint("Origin", 0, placement);
 
-      Append(XpBar);
-    }
+    Append(XpBar);
+  }
 
-    public override void OnDeactivate()
-    {
-      base.OnDeactivate();
-      XpBar = null;
-    }
+  public override void OnDeactivate()
+  {
+    base.OnDeactivate();
+    XpBar = null;
   }
 }
-
