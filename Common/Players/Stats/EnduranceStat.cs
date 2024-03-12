@@ -1,43 +1,29 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
+using System.Collections.Generic;
 using LevelPlus.Common.Configs.Stats;
+using Terraria;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class EndurancePlayer : BaseStat
+public class EnduranceStat : BaseStat
 {
   private EnduranceConfig Config => ModContent.GetInstance<EnduranceConfig>();
 
-  protected override object[] DescriptionArgs => [];
+  protected override List<object> DescriptionArgs => new();
   public override string Id => "Endurance";
 
-  public override bool IsLoadingEnabled(Mod mod) => true;
-
-  public override void Load(Mod mod)
+  public override void ModifyPlayer(Player player)
   {
-    StatPlayer.RegisterStat(this);
+    player.statLifeMax2 += Value * Config.Life;
+    player.statDefense += Value * Config.Defense;
   }
 
-  public override void SaveData(TagCompound tag)
-  {
-  }
-
-  public override void LoadData(TagCompound tag)
-  {
-  }
-
-  public override void ModifyPlayer()
-  {
-    Player.statLifeMax2 += Value * Config.Life;
-    Player.statDefense += Value * Config.Defense;
-  }
-
-  public override void ModifyLifeRegen()
+  public override void ModifyLifeRegen(Player player)
   {
     //diminish
-    Player.lifeRegen += (int)(Player.lifeRegen * (Config.LifeRegen * Value));
+    player.lifeRegen += (int)(player.lifeRegen * (Config.LifeRegen * Value));
   }
 }

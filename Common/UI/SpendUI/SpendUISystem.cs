@@ -8,67 +8,69 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI.SpendUI
+namespace LevelPlus.Common.UI.SpendUI;
+
+[Autoload(Side = ModSide.Client)]
+public class SpendUISystem : ModSystem
 {
-  [Autoload(Side = ModSide.Client)]
-  public class SpendUISystem : ModSystem
+  public static SpendUISystem Instance => ModContent.GetInstance<SpendUISystem>();
+
+  internal SpendUIState spendUI;
+  private UserInterface spendInterface;
+
+  public void Show()
   {
-    public static SpendUISystem Instance => ModContent.GetInstance<SpendUISystem>();
+    spendInterface?.SetState(spendUI);
+  }
 
-    internal SpendUIState spendUI;
-    private UserInterface spendInterface;
+  public void Hide()
+  {
+    spendInterface?.SetState(null);
+  }
 
-    public void Show()
+  public void Toggle()
+  {
+    if (spendInterface?.CurrentState != null)
     {
-      spendInterface?.SetState(spendUI);
+      Hide();
+      return;
     }
 
-    public void Hide()
-    {
-      spendInterface?.SetState(null);
-    }
+    Show();
+  }
 
-    public void Toggle()
-    {
-      if (spendInterface?.CurrentState != null)
-      {
-        Hide();
-        return;
-      }
-      Show();
-    }
+  public override void Load()
+  {
+    spendUI = new SpendUIState();
+    spendInterface = new UserInterface();
+    spendUI.Activate();
+    Show();
+  }
 
-    public override void Load()
+  public override void UpdateUI(GameTime gameTime)
+  {
+    if (spendInterface?.CurrentState != null)
     {
-      spendUI = new SpendUIState();
-      spendInterface = new UserInterface();
-      spendUI.Activate();
-      Show();
-    }
-
-    public override void UpdateUI(GameTime gameTime)
-    {
-      if (spendInterface?.CurrentState != null)
-      {
-        spendInterface?.Update(gameTime);
-      }
-    }
-
-    public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
-    {
-      int resourceBarsIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
-      layers.Insert(resourceBarsIndex, new LegacyGameInterfaceLayer(
-        "Level+: Spend Interface",
-        delegate
-        {
-          if (spendInterface?.CurrentState != null)
-          {
-            spendInterface.Draw(Main.spriteBatch, new GameTime());
-          }
-          return true;
-        },
-        InterfaceScaleType.UI)
-      );
+      spendInterface?.Update(gameTime);
     }
   }
+
+  public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+  {
+    int resourceBarsIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+    layers.Insert(resourceBarsIndex, new LegacyGameInterfaceLayer(
+      "Level+: Spend Interface",
+      delegate
+      {
+        if (spendInterface?.CurrentState != null)
+        {
+          spendInterface.Draw(Main.spriteBatch, new GameTime());
+        }
+
+        return true;
+      },
+      InterfaceScaleType.UI)
+    );
+  }
 }
+

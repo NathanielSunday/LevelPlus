@@ -14,7 +14,7 @@ class XpCommand : ModCommand
   public override string Command => "xp";
 
   public override string Description =>
-    "(" + Mod.Name + ")" + Language.GetTextValue("Commands.XpCommand.Description");
+    "(" + Mod.Name + ") " + Language.GetTextValue("Commands.XpCommand.Description");
 
   public override CommandType Type => CommandType.Chat;
 
@@ -38,10 +38,10 @@ class XpCommand : ModCommand
     switch (args[0].ToLower())
     {
       case "add":
-        player.Xp += value;
+        player.AddXp(value);
         break;
       case "set":
-        player.Xp = value;
+        player.SetXp(value);
         break;
       default:
         Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));

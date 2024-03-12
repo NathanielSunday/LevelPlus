@@ -10,9 +10,11 @@ Defense: {
 
 LifeRegen: {
 	Tooltip:
-	'''
-	The starting amount of life regen increase.
-		Diminishing.
-	'''
+		'''
+		The starting amount of life regen increase.
+			Diminishing.
+		'''
 	Label: Life Regen
 }
+
+DisplayName: Endurance Config

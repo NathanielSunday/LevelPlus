@@ -10,23 +10,29 @@ MaxSpeed: {
 
 Acceleration: {
 	Tooltip:
-	'''
-	The starting amount of acceleration increase.
-		Diminishing.
-	'''
+		'''
+		The starting amount of acceleration increase.
+			Diminishing.
+		'''
 	Label: Acceleration
 }
 
-Calamity: {
-    Header: Calamity
-}
+Calamity.Header: Calamity
 
 RogueStealthMax: {
-    Tooltip: The amount of max stealth increased by per point.
-    Label: Rogue Max Stealth
+	Tooltip: The amount of max stealth increased by per point.
+	Label: Rogue Max Stealth
 }
 
 RogueVelocity: {
-    Tooltip: The amount of rogue velocity increased by per point.
-    Label: Rogue Velocity
+	Tooltip: The amount of rogue velocity increased by per point.
+	Label: Rogue Velocity
 }
+
+RogueStealthDamage: {
+	Tooltip: ""
+	Label: Rogue Stealth Damage
+}
+
+Headers.Calamity.Header: Calamity. Header Header
+DisplayName: Deft Config

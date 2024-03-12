@@ -17,3 +17,5 @@ Fishing: {
 	Tooltip: The amount fishing level is increased by per point.
 	Label: Fishing
 }
+
+DisplayName: Charm Config

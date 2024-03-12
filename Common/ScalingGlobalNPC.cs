@@ -5,6 +5,7 @@ using LevelPlus.Common.Configs;
 using System;
 using LevelPlus.Common.Players;
 using LevelPlus.Common.Players.Stats;
+using LevelPlus.Network.Packets;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -87,16 +88,20 @@ class ScalingGlobalNPC : GlobalNPC
 
     if (Main.netMode == NetmodeID.SinglePlayer)
     {
-      Main.LocalPlayer.GetModPlayer<StatPlayer>().Xp += amount;
+      Main.LocalPlayer.GetModPlayer<StatPlayer>().AddXp(amount);
     }
     else if (Main.netMode == NetmodeID.Server)
     {
       for (int i = 0; i < npc.playerInteraction.Length; ++i)
       {
-        if (npc.playerInteraction[i])
+        if (!npc.playerInteraction[i]) continue;
+
+        XpPacket packet = new()
         {
-          //LevelPlus.Network.Packet.XPPacket.WritePacket(i, amount);
-        }
+          Amount = amount,
+          ToClient = i
+        };
+        packet.Send();
       }
     }
   }
