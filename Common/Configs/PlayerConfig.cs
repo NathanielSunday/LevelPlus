@@ -17,4 +17,8 @@ public class PlayerConfig : ModConfig
   
   [Range(10, 500)] [DefaultValue(100)] public int MaxLevel;
   [DefaultValue(3)] public int StartingPoints;
+  
+  [DefaultValue(2)] public int Points;
+  [DefaultValue(1)] public int Life;
+  [DefaultValue(0)] public int Mana;
 }

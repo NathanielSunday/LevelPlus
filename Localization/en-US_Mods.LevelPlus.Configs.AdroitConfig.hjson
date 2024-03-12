@@ -7,3 +7,5 @@ RangeCost: {
 	Tooltip: The amount of points required to unlock another block in range.
 	Label: Range Cost
 }
+
+DisplayName: Adroit Config

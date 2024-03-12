@@ -4,13 +4,17 @@
 using LevelPlus.Common.Configs;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI.SpendUI {
-  internal class SpendUIState : UIState {
-    public override void OnInitialize() {
-      //Append();
-    }
+namespace LevelPlus.Common.UI.SpendUI;
 
-    public override void OnDeactivate() {
-    }
+internal class SpendUIState : UIState
+{
+  public override void OnInitialize()
+  {
+    //Append();
+  }
+
+  public override void OnDeactivate()
+  {
   }
 }
+

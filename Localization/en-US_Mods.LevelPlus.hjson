@@ -1,5 +1,77 @@
 Popup: {
-  LevelUp: Level Up!
-  XpGain: +{0} XP
-  BestiaryUnlocked: Bestiary Entry Unlocked!
+	LevelUp: Level Up!
+	XpGain: +{0} XP
+	BestiaryUnlocked: Bestiary Entry Unlocked!
+}
+
+Network.UnhandledPacketError: Could not handle packet of type '{0}'
+Provider.UnhandledStatError: Could not provide StatData of type '{0}'
+
+Configs: {
+	LuckConfig: {
+		TerrariaLuck: {
+			Tooltip: ""
+			Label: Terraria Luck
+		}
+
+		ManaReductionChance: {
+			Tooltip: ""
+			Label: Mana Reduction Chance
+		}
+
+		AmmoReductionChance: {
+			Tooltip: ""
+			Label: Ammo Reduction Chance
+		}
+
+		Crit: {
+			Tooltip: ""
+			Label: Crit
+		}
+
+		DisplayName: Luck Config
+	}
+
+	IntellectConfig: {
+		ManaRegen: {
+			Tooltip: ""
+			Label: Mana Regen
+		}
+
+		Mana: {
+			Tooltip: ""
+			Label: Mana
+		}
+
+		Damage: {
+			Tooltip: ""
+			Label: Damage
+		}
+
+		DisplayName: Intellect Config
+	}
+
+	CommandConfig: {
+		XpCommandEnabled: {
+			Tooltip: ""
+			Label: Xp Command Enabled
+		}
+
+		PointCommandEnabled: {
+			Tooltip: ""
+			Label: Point Command Enabled
+		}
+
+		LevelCommandEnabled: {
+			Tooltip: ""
+			Label: Level Command Enabled
+		}
+
+		CommandsEnabled: {
+			Tooltip: ""
+			Label: Commands Enabled
+		}
+
+		DisplayName: Command Config
+	}
 }

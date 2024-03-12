@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using LevelPlus.Common.Configs;
-using LevelPlus.Common.Configs.Stats;
 using LevelPlus.Common.Players.Stats;
 using LevelPlus.Common.Systems;
 using LevelPlus.Common.UI.SpendUI;
 using LevelPlus.Content.Items;
+using LevelPlus.Network.Packets;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -21,137 +21,151 @@ namespace LevelPlus.Common.Players;
 
 public class StatPlayer : ModPlayer
 {
-  /// Use this to not play the level up sound on setting <br/>
-  /// e.g. loading the Xp from the tag
-  private long xp;
-
   private PlayerConfig Config => ModContent.GetInstance<PlayerConfig>();
-  public Dictionary<string, BaseStat> Stats { get; private set; }
+  public Dictionary<string, BaseStat> Stats { get; } = new();
 
   /// The amount of points available to spend
   public int Points { get; set; }
 
+  public int Level => Math.Min(XpToLevel(Xp), Config.MaxLevel);
+
   /// The Xp of the player
-  public long Xp
-  {
-    get => xp;
-    set
-    {
-      if (XpToLevel(value) >= XpToLevel(xp) && !Main.dedServ)
-      {
-        SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/LevelUp"));
-        CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Mods.LevelPlus.Popup.LevelUp"),
-          true);
-      }
+  public long Xp { get; private set; }
 
-      var xpDifferance = value - xp;
-
-      CombatText.NewText(Player.getRect(), Color.Aqua, (int)xpDifferance);
-      
-      xp = value;
-      Points += ModContent.GetInstance<LevelConfig>().Points;
-      Player.statLife = Player.statLifeMax2;
-      Player.statMana = Player.statManaMax2;
-    }
-  }
-  
-  public void RegisterStat(BaseStat stat) => Stats.Add(stat.Id, stat);
+  public void Register(BaseStat stat) => Stats.Add(stat.Id, stat);
 
   private void Validate()
   {
     if (CommandConfig.Instance.CommandsEnabled) return;
-    return;
-    /*
-    int spent = 0;
-    for (int i = 0; i < Enum.GetNames(typeof(Stat)).Length; ++i)
-    {
-      spent += Stats[i];
-    }
 
-    int possiblePoints = Math.Min(Level, ServerConfig.Instance.Level_MaxLevel) * ServerConfig.Instance.Level_Points +
-      ServerConfig.Instance.Level_StartingPoints;
-    if (spent > possiblePoints)
-    {
-      for (int i = 0; i < Enum.GetNames(typeof(Stat)).Length; ++i)
-      {
-      }
-    }
+    var spent = 0;
+    var possiblePoints = Math.Min(Level, Config.MaxLevel) * Config.Points + Config.StartingPoints;
+
+    foreach (BaseStat stat in Stats.Values) spent += stat.Value;
 
     while (spent > possiblePoints)
     {
-      for (int i = 0; i < Enum.GetNames(typeof(Stat)).Length; ++i)
+      foreach (BaseStat stat in Stats.Values)
       {
-        if (Stats[i] > 0)
-        {
-          --Stats[i];
-          --spent;
-        }
+        if (stat.Value <= 0) continue;
+        --stat.Value;
+        --spent;
       }
     }
 
-    PointsAvailable = possiblePoints - spent;
-    */
+    Points = possiblePoints - spent;
   }
 
-  public void Add(string key, int amount = 1)
+  /// Add to Xp
+  public void AddXp(long amount, bool command = false)
   {
-    if (Points == 0) return;
-    if (!Stats.TryGetValue(key, out BaseStat stat)) return;
-    if (Points < amount) amount = Points;
+    SetXp(Xp + amount);
+    if(Main.dedServ) return;
+    CombatText.NewText(Player.getRect(), Color.Aqua, Language.GetTextValue("Popup.XpGain", amount));
+  }
+
+  /// Set Xp
+  public void SetXp(long value, bool command = false)
+  {
+    // Instantiate a "Level Up" procedure
+    bool levelUp = XpToLevel(value) > Level && XpToLevel(value) < Config.MaxLevel && !Main.dedServ;
+    Xp = value;
+
+    if(!levelUp) return;
+    Points += Config.Points;
+    Player.statLife = Player.statLifeMax2;
+    Player.statMana = Player.statManaMax2;
+
+    if(command) return;
+    SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/LevelUp"));
+    CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Popup.LevelUp"), true);
+  }
+
+  public void AddLevel(int amount)
+  {
+    Xp += LevelToXp(amount) - LevelToXp(Level);
+  }
+
+  public void SetLevel(int value)
+  {
+    Xp = LevelToXp(value);
+  }
+
+  /// Add to a stat <br/>
+  /// Returns false when the stat was not found, or points were insufficient and not a command
+  public bool AddStat(string key, int amount = 1, bool command = false)
+  {
+    if (!command)
+    {
+      if (Points == 0) return false;
+      if (Points < amount) amount = Points;
+    }
+
+    if (!Stats.TryGetValue(key, out BaseStat stat)) return false;
     if (stat.Value + amount < 0)
       amount = int.MaxValue - stat.Value;
-    stat.Value = amount;
+    stat.Value += amount;
     Points -= amount;
+    return true;
   }
 
-  public void Set(string key, int value)
+  /// Set a stat without modifying a players points <br/>
+  /// Returns false when the stat was not found
+  public bool SetStat(string key, int value)
   {
-    if (!Stats.TryGetValue(key, out BaseStat stat)) return;
+    if (!Stats.TryGetValue(key, out BaseStat stat)) return false;
     if (value < 0) value = int.MaxValue;
     stat.Value = value;
+    return true;
   }
 
   /// <returns>True if stats between two players match</returns>
+  /// <remarks>Is only checked against level, not xp, since exact xp amount doesnt matter in all cases</remarks>
   public bool Match(StatPlayer compare)
   {
-    foreach (string key in Stats.Keys)
+    if(compare.Level != Level) return false;
+
+    foreach (var stat in Stats)
     {
-      if (!compare.Stats.TryGetValue(key, out BaseStat compareStat) ||
-          !Stats.TryGetValue(key, out BaseStat stat) ||
-          stat.Value != compareStat.Value)
+      if (!compare.Stats.TryGetValue(stat.Key, out BaseStat compareStat) ||
+          stat.Value.Value != compareStat.Value)
         return false;
     }
 
     return true;
   }
 
+  // Validate has to be called "OnEnterWorld" to get server-side configs
+  public override void OnEnterWorld() => Validate();
+
   public override void LoadData(TagCompound tag)
   {
-    int totalPoints = 0;
+    Xp = tag.GetAsLong("Xp");
+
     foreach (BaseStat stat in Stats.Values)
     {
       stat.LoadData(tag);
-      totalPoints += stat.Value;
     }
-    
-    // Give the Player their left over points
   }
 
   public override void SaveData(TagCompound tag)
   {
-    // Inject whatever my be needed by other classes here, then pass it on
+    tag.Set("Xp", Xp, true);
 
     foreach (BaseStat stat in Stats.Values)
     {
       stat.SaveData(tag);
     }
   }
-  
+
   public override void PostUpdateMiscEffects()
   {
+    Player.statLifeMax2 += Level * Config.Life;
+    Player.statManaMax2 += Level * Config.Mana;
+
     foreach (BaseStat stat in Stats.Values)
     {
-      stat.ModifyPlayer();
+      stat.ModifyPlayer(Player);
     }
   }
 
@@ -167,7 +181,7 @@ public class StatPlayer : ModPlayer
   {
     foreach (BaseStat stat in Stats.Values)
     {
-      stat.ModifyRunSpeeds();
+      stat.ModifyRunSpeeds(Player);
     }
   }
 
@@ -175,7 +189,7 @@ public class StatPlayer : ModPlayer
   {
     foreach (BaseStat stat in Stats.Values)
     {
-      stat.ModifyLifeRegen();
+      stat.ModifyLifeRegen(Player);
     }
   }
 
@@ -183,7 +197,7 @@ public class StatPlayer : ModPlayer
   {
     foreach (BaseStat stat in Stats.Values)
     {
-      stat.ModifyOnConsumeMana(item, manaConsumed);
+      stat.ModifyOnConsumeMana(Player, item, manaConsumed);
     }
   }
 
@@ -191,13 +205,11 @@ public class StatPlayer : ModPlayer
   {
     foreach (BaseStat stat in Stats.Values)
     {
-      if(!stat.CanConsumeAmmo(weapon, ammo)) return false;
+      if (!stat.CanConsumeAmmo(weapon, ammo)) return false;
     }
+
     return true;
   }
-
-  /// Validate has to be called "OnEnterWorld" to get server-side configs
-  public override void OnEnterWorld() => Validate();
 
   public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
   {
@@ -209,88 +221,84 @@ public class StatPlayer : ModPlayer
 
     if (!Config.RandomStartingWeapon) return;
 
-    System.Random rand = new System.Random(System.DateTime.Now.Millisecond);
-    switch (rand.Next(0, 9))
+    Random rand = new Random(DateTime.Now.Millisecond);
+    itemsByMod["Terraria"].Insert(0, rand.Next(9) switch
     {
-      case 0:
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBroadsword));
-        break;
-      case 1:
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.WoodenBoomerang));
-        break;
-      case 2:
-        Item arrows = new Item();
-        switch (rand.Next(3))
-        {
-          default:
-            arrows.SetDefaults(ItemID.WoodenArrow, true);
-            break;
-          case 1:
-            arrows.SetDefaults(ItemID.BoneArrow, true);
-            break;
-          case 2:
-            arrows.SetDefaults(ItemID.FlamingArrow, true);
-            break;
-        }
+      0 => new(ItemID.WoodenBoomerang),
+      1 => new(ItemID.CopperBow),
+      2 => new(ItemID.WandofSparking),
+      3 => new(ItemID.BabyBirdStaff),
+      4 => new(ItemID.Spear),
+      5 => new(ItemID.WoodYoyo),
+      6 => new(ItemID.FlintlockPistol),
+      7 => new(ItemID.Shuriken, 200 + rand.Next(101)),
+      _ => new(ItemID.CopperBroadsword)
+    });
 
-        arrows.stack = 100 + rand.Next(101);
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.CopperBow));
-        itemsByMod["Terraria"].Add(arrows);
-        break;
-      case 3:
-        Item manaCrystal = new Item();
-        manaCrystal.SetDefaults(ItemID.ManaCrystal, true);
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.WandofSparking));
-        itemsByMod["Terraria"].Add(manaCrystal);
-        break;
-      case 4:
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.BabyBirdStaff));
-        break;
-      case 5:
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.Spear));
-        break;
-      case 6:
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.WoodYoyo));
-        break;
-      case 7:
-        Item bullets = new(ItemID.MusketBall, 100 + rand.Next(101));
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.FlintlockPistol));
-        itemsByMod["Terraria"].Add(bullets);
-        break;
-      case 8:
-        itemsByMod["Terraria"].Insert(0, new Item(ItemID.Shuriken, 100 + rand.Next(101)));
-        break;
-    }
+    itemsByMod["Terraria"].Add(itemsByMod["Terraria"][0].type switch
+    {
+      ItemID.CopperBow => new(rand.Next(3) switch
+      {
+        0 => ItemID.BoneArrow,
+        1 => ItemID.FlamingArrow,
+        _ => ItemID.WoodenArrow
+      }, 100 + rand.Next(101)),
+      ItemID.WandofSparking => new(ItemID.ManaCrystal),
+      ItemID.FlintlockPistol => new(ItemID.MusketBall, 100 + rand.Next(101)),
+      _ => null
+    });
   }
 
   public override void OnRespawn()
   {
     if (!Config.LossEnabled) return;
-    Stats.TryGetValue("Level", out BaseStat levelStat);
-    Xp = (long)System.Math.Max(Xp - LevelToXp(levelStat.Value) * Config.LossAmount, LevelToXp(levelStat.Value));
+    Xp = (long)Math.Max(Xp - LevelToXp(Level) * Config.LossAmount, LevelToXp(Level));
   }
 
   public override void CopyClientState(ModPlayer targetCopy)
   {
-    StatPlayer target = targetCopy as StatPlayer;
+    var target = targetCopy as StatPlayer;
 
+    target!.Xp = Xp;
     foreach (string key in Stats.Keys)
     {
-      Stats.TryGetValue(key, out BaseStat stat);
-      target.Stats.TryGetValue(key, out BaseStat targetStat);
+      if (!Stats.TryGetValue(key, out BaseStat stat)) return;
+      if (!target!.Stats.TryGetValue(key, out BaseStat targetStat)) return;
       targetStat.Value = stat.Value;
     }
   }
 
   public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
   {
-    //LevelPlus.Network.Packet.PlayerSyncPacket.WritePacket(this);
+    if(!newPlayer) return;
+
+    PlayerSyncPacket packet = new();
+    packet.Level = Level;
+
+    foreach (var stat in Stats)
+    {
+      packet.Stats.Add(stat.Key, stat.Value.Value);
+    }
+
+    packet.Send();
   }
 
   public override void SendClientChanges(ModPlayer clientPlayer)
   {
-    if (Match(clientPlayer as StatPlayer)) return;
-    //LevelPlus.Network.Packet.StatsChangedPacket.WritePacket(Player.whoAmI);
+    var statPlayer = clientPlayer as StatPlayer;
+    if (Match(statPlayer)) return;
+
+    PlayerSyncPacket packet = new();
+    packet.Level = Level;
+
+    foreach (var stat in Stats)
+    {
+      if(!statPlayer.Stats.TryGetValue(stat.Key, out BaseStat clientStat)) continue;
+      if(clientStat.Value == stat.Value.Value) continue;
+      packet.Stats.Add(stat.Key, stat.Value.Value);
+    }
+
+    packet.Send();
   }
 
   public override void ProcessTriggers(Terraria.GameInput.TriggersSet triggersSet)
@@ -306,26 +314,11 @@ public class StatPlayer : ModPlayer
   }
 
   /// <returns>The amount of XP needed for next level</returns>
-  public static long CalculateNeededXp(long currentXp)
-  {
-    return CalculateNeededXP(XpToLevel(currentXp));
-  }
+  public static long NeededXp(int level) => LevelToXp(level + 1);
 
-  /// <returns>The amount of XP needed for next level</returns>
-  public static long CalculateNeededXP(int level)
-  {
-    return LevelToXp(level + 1);
-  }
-
-  /// <returns>What level you should be at for xp</returns>
-  public static int XpToLevel(long xp)
-  {
-    return (int)System.MathF.Pow(xp / 100f, 5f / 11f);
-  }
+  /// <returns>What level you should be at per xp</returns>
+  public static int XpToLevel(long xp) => (int)MathF.Pow(xp / 100f, 5f / 11f);
 
   /// <returns>The amount of XP required to be at level</returns>
-  public static long LevelToXp(int level)
-  {
-    return (long)(100 * System.MathF.Pow(level, 11f / 5f));
-  }
+  public static long LevelToXp(int level) => (long)(100f * MathF.Pow(level, 11f / 5f));
 }

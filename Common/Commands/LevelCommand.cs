@@ -14,7 +14,7 @@ class LevelCommand : ModCommand
   public override string Command => "level";
 
   public override string Description =>
-    "(" + Mod.Name + ")" + Language.GetTextValue("Commands.LevelCommand.Description");
+    "(" + Mod.Name + ") " + Language.GetTextValue("Commands.LevelCommand.Description");
 
   public override CommandType Type => CommandType.Chat;
 
@@ -38,10 +38,10 @@ class LevelCommand : ModCommand
     switch (args[0].ToLower())
     {
       case "add":
-        //player.Add(value);
+        player.AddLevel(value);
         break;
       case "set":
-        //player.Set(value);
+        player.SetLevel(value);
         break;
       default:
         Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));

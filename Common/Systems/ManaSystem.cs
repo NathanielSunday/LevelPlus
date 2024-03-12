@@ -11,22 +11,20 @@ public class ManaSystem : ModSystem
 {
   public override void Load()
   {
-    IL_Player.Update += PlayerManaUpdate;
-  }
-
-  private void PlayerManaUpdate(ILContext il)
-  {
-    ILCursor c = new(il);
-    if (!c.TryGotoNext(MoveType.Before,
-          i => i.MatchLdfld("Terraria.Player", "statManaMax2"),
-          i => i.MatchLdcI4(400))
-       )
+    IL_Player.Update += delegate(ILContext il)
     {
-      Mod.Logger.FatalFormat("Could not find instruction");
-      return;
-    }
+      ILCursor c = new(il);
+      if (!c.TryGotoNext(MoveType.Before,
+        i => i.MatchLdfld("Terraria.Player", "statManaMax2"),
+        i => i.MatchLdcI4(400))
+        )
+      {
+        Mod.Logger.FatalFormat("Could not find instruction");
+        return;
+      }
 
-    c.Next.Next.Operand = 200000;
+      c.Next!.Next.Operand = 200000;
+    };
   }
 }
 

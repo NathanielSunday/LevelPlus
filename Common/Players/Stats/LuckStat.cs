@@ -1,6 +1,7 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
+using System.Collections.Generic;
 using LevelPlus.Common.Configs.Stats;
 using Terraria;
 using Terraria.ModLoader;
@@ -8,48 +9,37 @@ using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Players.Stats;
 
-public class LuckPlayer : BaseStat
+public class LuckStat : BaseStat
 {
   private static LuckConfig Config => ModContent.GetInstance<LuckConfig>();
 
-  private System.Random rand;
+  private System.Random rng;
 
-  protected override object[] DescriptionArgs => [];
+  protected override List<object> DescriptionArgs => new();
   public override string Id => "Luck";
 
-  public override bool IsLoadingEnabled(Mod mod) => true;
-
-  public override void Load(Mod mod)
+  public override void Load(TagCompound tag)
   {
-    StatPlayer.RegisterStat(this);
-    rand = new System.Random(System.DateTime.Now.Millisecond);
-  }
-
-  public override void SaveData(TagCompound tag)
-  {
-  }
-
-  public override void LoadData(TagCompound tag)
-  {
+    rng = new System.Random(System.DateTime.Now.Millisecond);
   }
 
   //diminish
-  public override void ModifyPlayer()
+  public override void ModifyPlayer(Player player)
   {
-    Player.GetCritChance(DamageClass.Melee) += Value * Config.Crit;
-    Player.GetCritChance(DamageClass.Ranged) += Value * Config.Crit;
-    Player.GetCritChance(DamageClass.Magic) += Value * Config.Crit;
-    Player.GetCritChance(DamageClass.Summon) += Value * Config.Crit;
-    Player.luck += Value * Config.TerrariaLuck;
+    player.GetCritChance(DamageClass.Melee) += Value * Config.Crit;
+    player.GetCritChance(DamageClass.Ranged) += Value * Config.Crit;
+    player.GetCritChance(DamageClass.Magic) += Value * Config.Crit;
+    player.GetCritChance(DamageClass.Summon) += Value * Config.Crit;
+    player.luck += Value * Config.TerrariaLuck;
   }
 
-  public override void ModifyOnConsumeMana(Item item, int manaConsumed)
+  public override void ModifyOnConsumeMana(Player player, Item item, int manaConsumed)
   {
+    // If the value is less than the 0-99, then do not rebate mana
+    // 0 is not less than 0, so at no points invested, this is still correct
     //diminish
-    if (Value * Config.ManaReductionChance * 100 > rand.Next(1, 101))
-    {
-      Player.statMana += manaConsumed;
-    }
+    if (Value * Config.ManaReductionChance * 100 < rng.Next(100)) return;
+    player.statMana += manaConsumed;
   }
 
   public override bool CanConsumeAmmo(Item weapon, Item ammo)
@@ -57,7 +47,7 @@ public class LuckPlayer : BaseStat
     // If the value is less than the 0-99, then ammo can be consumed
     // 0 is not less than 0, so at no points invested, this is still true
     //diminish
-    return Value * Config.AmmoReductionChance * 100 < rand.Next(0, 100);
+    return Value * Config.AmmoReductionChance * 100 < rng.Next(100);
   }
 }
 

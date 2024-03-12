@@ -17,3 +17,15 @@ SpendUITop: {
 	Tooltip: Spend Screen distance from top side of window.
 	Label: Spend Screen Top
 }
+
+XpBarTop: {
+	Tooltip: ""
+	Label: Xp Bar Top
+}
+
+XpBarLeft: {
+	Tooltip: ""
+	Label: Xp Bar Left
+}
+
+DisplayName: Client Config

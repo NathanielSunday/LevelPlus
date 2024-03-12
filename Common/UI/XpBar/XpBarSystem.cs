@@ -7,67 +7,69 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI.XpBar
+namespace LevelPlus.Common.UI.XpBar;
+
+[Autoload(Side = ModSide.Client)]
+public class XpBarSystem : ModSystem
 {
-  [Autoload(Side = ModSide.Client)]
-  public class XpBarSystem : ModSystem
+  public static XpBarSystem Instance => ModContent.GetInstance<XpBarSystem>();
+
+  internal XpBarUIState xpBarUI;
+  private UserInterface xpBarInterface;
+
+  public void Show()
   {
-    public static XpBarSystem Instance => ModContent.GetInstance<XpBarSystem>();
+    xpBarInterface?.SetState(xpBarUI);
+  }
 
-    internal XpBarUIState xpBarUI;
-    private UserInterface xpBarInterface;
+  public void Hide()
+  {
+    xpBarInterface?.SetState(null);
+  }
 
-    public void Show()
+  public void Toggle()
+  {
+    if (xpBarInterface?.CurrentState != null)
     {
-      xpBarInterface?.SetState(xpBarUI);
+      Hide();
+      return;
     }
 
-    public void Hide()
-    {
-      xpBarInterface?.SetState(null);
-    }
+    Show();
+  }
 
-    public void Toggle()
-    {
-      if (xpBarInterface?.CurrentState != null)
-      {
-        Hide();
-        return;
-      }
-      Show();
-    }
+  public override void Load()
+  {
+    xpBarUI = new XpBarUIState();
+    xpBarInterface = new UserInterface();
+    xpBarUI.Activate();
+    Show();
+  }
 
-    public override void Load()
+  public override void UpdateUI(GameTime gameTime)
+  {
+    if (xpBarInterface?.CurrentState != null)
     {
-      xpBarUI = new XpBarUIState();
-      xpBarInterface = new UserInterface();
-      xpBarUI.Activate();
-      Show();
-    }
-
-    public override void UpdateUI(GameTime gameTime)
-    {
-      if (xpBarInterface?.CurrentState != null)
-      {
-        xpBarInterface?.Update(gameTime);
-      }
-    }
-
-    public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
-    {
-      int resourceBarsIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
-      layers.Insert(resourceBarsIndex, new LegacyGameInterfaceLayer(
-        "Level+: XP Bar",
-        delegate
-        {
-          if (xpBarInterface?.CurrentState != null)
-          {
-            xpBarInterface.Draw(Main.spriteBatch, new GameTime());
-          }
-          return true;
-        },
-        InterfaceScaleType.UI)
-      );
+      xpBarInterface?.Update(gameTime);
     }
   }
+
+  public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+  {
+    int resourceBarsIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+    layers.Insert(resourceBarsIndex, new LegacyGameInterfaceLayer(
+      "Level+: XP Bar",
+      delegate
+      {
+        if (xpBarInterface?.CurrentState != null)
+        {
+          xpBarInterface.Draw(Main.spriteBatch, new GameTime());
+        }
+
+        return true;
+      },
+      InterfaceScaleType.UI)
+    );
+  }
 }
+

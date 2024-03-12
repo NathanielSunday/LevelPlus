@@ -5,10 +5,10 @@ Damage: {
 
 MaxWingTime: {
 	Tooltip:
-	'''
-	The starting amount of max flight time increase.
-		Diminishing.
-	'''
+		'''
+		The starting amount of max flight time increase.
+			Diminishing.
+		'''
 	Label: Flight Time
 }
 
@@ -17,16 +17,22 @@ PickSpeed: {
 	Label: Break Speed
 }
 
-Calamity: {
-    Header: Calamity
-}
+Calamity.Header: Calamity
 
 RogueDamage: {
-    Tooltip: The amount of rogue damage increased by per point.
-    Label: Rogue Damage
+	Tooltip: The amount of rogue damage increased by per point.
+	Label: Rogue Damage
 }
 
 RogueStealthDamage: {
-    Tooltip: The amount of rogue stealth damage increased by per point.
-    Label: Rogue Stealth Damage
+	Tooltip: The amount of rogue stealth damage increased by per point.
+	Label: Rogue Stealth Damage
 }
+
+RogueVelocity: {
+	Tooltip: ""
+	Label: Rogue Velocity
+}
+
+Headers.Calamity.Header: Calamity. Header Header
+DisplayName: Brawn Config

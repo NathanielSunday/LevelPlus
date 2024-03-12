@@ -11,10 +11,13 @@ namespace LevelPlus.Common.Commands;
 
 class PointCommand : ModCommand
 {
+  /// Santa's little helper
+  internal record Arguments(string Action, int Value, string Stat);
+
   public override string Command => "point";
 
   public override string Description =>
-    "(" + Mod.Name + ")" + Language.GetTextValue("Commands.PointCommand.Description");
+    "(" + Mod.Name + ") " + Language.GetTextValue("Commands.PointCommand.Description");
 
   public override CommandType Type => CommandType.Chat;
 
@@ -33,18 +36,24 @@ class PointCommand : ModCommand
       Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[1]));
       return;
     }
-    if (args[2] != null)
-    {
-      // Find stat by key here
-    }
+
+    var arguments = new Arguments(args[0], value, args[2]);
+
     StatPlayer player = caller.Player.GetModPlayer<StatPlayer>();
-    switch (args[0].ToLower())
+
+    switch (arguments)
     {
-      case "add":
-        player.Points += value;
+      case ("add", var v, var s) when !string.IsNullOrEmpty(s):
+        if (!player.AddStat(s, v, true)) Main.NewText(Language.GetTextValue("Commands.InvalidArgument", s));
         break;
-      case "set":
-        player.Points = value;
+      case ("set", var v, var s) when !string.IsNullOrEmpty(s):
+        if (!player.SetStat(s, v)) Main.NewText(Language.GetTextValue("Commands.InvalidArgument", s));
+        break;
+      case ("add", var v, _):
+        player.Points += v;
+        break;
+      case ("set", var v, _):
+        player.Points = v;
         break;
       default:
         Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));
