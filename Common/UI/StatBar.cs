@@ -11,7 +11,7 @@ using Terraria.UI;
 
 namespace LevelPlus.Common.UI;
 
-public class StatBar(BaseStat stat) : UIElement
+public class StatBar : UIElement
 {
   private const float StatIconWidth = 20f;
   private const float StatIconHeight = 20f;
@@ -27,6 +27,12 @@ public class StatBar(BaseStat stat) : UIElement
   private UITexture icon;
   private UITexture statBar;
   private UIText statText;
+  private BaseStat stat;
+
+  public StatBar(BaseStat stat)
+  {
+    this.stat = stat;
+  }
 
   public override void OnInitialize()
   {
@@ -63,7 +69,7 @@ public class StatBar(BaseStat stat) : UIElement
     buttonAdd.Left.Set(StatBarWidth, 0f);
     buttonAdd.Top.Set(0f, 0f);
     buttonAdd.color = stat.UIColor;
-    buttonAdd.OnLeftClick += delegate { Main.LocalPlayer.GetModPlayer<StatPlayer>().Add(stat.Id); };
+    buttonAdd.OnLeftClick += delegate { Main.LocalPlayer.GetModPlayer<StatPlayer>().AddStat(stat.Id); };
 
     hint = new UITexture("LevelPlus/Assets/Textures/UI/Hint", true);
     hint.Width.Set(HintWidth, 0f);

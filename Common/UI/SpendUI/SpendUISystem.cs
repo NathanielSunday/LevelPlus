@@ -1,7 +1,6 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
-using LevelPlus.Common.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -21,6 +20,7 @@ public class SpendUISystem : ModSystem
   public void Show()
   {
     spendInterface?.SetState(spendUI);
+    spendUI.InitializeStats();
   }
 
   public void Hide()
@@ -44,7 +44,8 @@ public class SpendUISystem : ModSystem
     spendUI = new SpendUIState();
     spendInterface = new UserInterface();
     spendUI.Activate();
-    Show();
+    Hide();
+    //Show();
   }
 
   public override void UpdateUI(GameTime gameTime)

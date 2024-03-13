@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using LevelPlus.Common.Configs;
 using LevelPlus.Common.Players.Stats;
 using LevelPlus.Common.Systems;
+using LevelPlus.Common.UI;
 using LevelPlus.Common.UI.SpendUI;
 using LevelPlus.Content.Items;
 using LevelPlus.Network.Packets;
@@ -142,6 +143,8 @@ public class StatPlayer : ModPlayer
   public override void LoadData(TagCompound tag)
   {
     Xp = tag.GetAsLong("Xp");
+
+    ModContent.GetInstance<StatProviderSystem>().Register(Player);
 
     foreach (BaseStat stat in Stats.Values)
     {

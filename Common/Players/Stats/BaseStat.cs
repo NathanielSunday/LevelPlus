@@ -42,7 +42,7 @@ public abstract class BaseStat
   /// Load data from the StatPlayer
   public void LoadData(TagCompound tag)
   {
-    Value = tag.GetAsInt(Id);
+    Value = tag.ContainsKey(Id) ? tag.GetAsInt(Id) : 0;
     Load(tag);
   }
 
