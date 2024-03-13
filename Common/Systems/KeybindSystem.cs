@@ -17,12 +17,12 @@ public class KeybindSystem : ModSystem
   public override void Load()
   {
     OpenSpendUI =
-      KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue("OpenSpendUI"), Microsoft.Xna.Framework.Input.Keys.P);
-    SpendFive = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue("SpendFive"),
+      KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "OpenSpendUI"), Microsoft.Xna.Framework.Input.Keys.P);
+    SpendFive = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "SpendFive"),
       Microsoft.Xna.Framework.Input.Keys.LeftShift);
-    SpendTen = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue("SpendTen"),
+    SpendTen = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "SpendTen"),
       Microsoft.Xna.Framework.Input.Keys.LeftControl);
-    SpendAll = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue("SpendAll"),
+    SpendAll = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "SpendAll"),
       Microsoft.Xna.Framework.Input.Keys.LeftAlt);
   }
 

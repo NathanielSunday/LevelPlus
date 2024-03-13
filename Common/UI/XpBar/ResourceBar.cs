@@ -62,7 +62,7 @@ class ResourceBar : UIElement
     switch (stat)
     {
       case ResourceBarMode.XP:
-        currentBar.color = new Color(50, 205, 50); //green
+        currentBar.Color = new Color(50, 205, 50); //green
         break;
       default:
         break;

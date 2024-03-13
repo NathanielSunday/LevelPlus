@@ -11,9 +11,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI;
+namespace LevelPlus.Common.UI.XpBar;
 
-public class XPBar : DraggableUIPanel
+public class XpBar : DraggableUIPanel
 {
   private ResourceBar bar;
   private XPBarButton button;

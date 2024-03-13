@@ -11,10 +11,12 @@ namespace LevelPlus;
 
 public class LevelPlus : Mod
 {
+  public string LocalizationPrefix => "Mods." + Name + ".";
   public bool IsCalamityModLoaded;
-  public static LevelPlus Instance = ModContent.GetInstance<LevelPlus>();
 
   public override string Name => "LevelPlus";
+
+  public static LevelPlus Instance = ModContent.GetInstance<LevelPlus>();
 
   public override void Load()
   {
@@ -36,7 +38,7 @@ public class LevelPlus : Mod
     }
     catch (Exception)
     {
-      Logger.ErrorFormat(Language.GetTextValue("Network.UnhandledPacketError", type));
+      Logger.ErrorFormat(Language.GetTextValue(LocalizationPrefix + "Network.UnhandledPacketError", type));
     }
   }
 }

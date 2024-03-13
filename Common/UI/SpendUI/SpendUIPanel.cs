@@ -1,7 +1,9 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
-using LevelPlus.Common.Players;
+using System.Collections.Generic;
+using LevelPlus.Common.Systems;
+using LevelPlus.Common.UI.SpendUI;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 
@@ -13,18 +15,6 @@ public class SpendUIPanel : DraggableUIPanel
   private const float MainPanelMaxHeight = 500f;
 
   private UIGrid mainPanel;
-  private bool initialized;
-
-  public void InitializeStats()
-  {
-    if(initialized) return;
-    foreach (var stat in ModContent.GetInstance<StatPlayer>().Stats)
-    {
-      var statBar = new StatBar(stat.Value);
-      mainPanel.Add(statBar);
-    }
-    initialized = true;
-  }
 
   public override void OnInitialize()
   {
@@ -33,6 +23,9 @@ public class SpendUIPanel : DraggableUIPanel
     mainPanel = new UIGrid();
     mainPanel.Width.Set(MainPanelWidth, 0f);
     mainPanel.MaxHeight.Set(MainPanelMaxHeight, 0f);
+
+    List<string> idList = ModContent.GetInstance<StatProviderSystem>().GetIdList();
+    foreach (var stat in idList) mainPanel.Add(new StatBar(stat));
 
     Append(mainPanel);
   }

@@ -14,7 +14,7 @@ class LevelCommand : ModCommand
   public override string Command => "level";
 
   public override string Description =>
-    "(" + Mod.Name + ") " + Language.GetTextValue("Commands.LevelCommand.Description");
+    "(" + Mod.Name + ") " + Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.LevelCommand.Description");
 
   public override CommandType Type => CommandType.Chat;
 
@@ -24,13 +24,13 @@ class LevelCommand : ModCommand
   {
     if (!CommandConfig.Instance.CommandsEnabled || !CommandConfig.Instance.LevelCommandEnabled)
     {
-      Main.NewText(Language.GetTextValue("Commands.CommandNotEnabledError"));
+      Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.CommandNotEnabledError"));
       return;
     }
 
     if (!int.TryParse(args[1], out int value))
     {
-      Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[1]));
+      Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", args[1]));
       return;
     }
 
@@ -44,7 +44,7 @@ class LevelCommand : ModCommand
         player.SetLevel(value);
         break;
       default:
-        Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));
+        Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", args[0]));
         break;
     }
   }

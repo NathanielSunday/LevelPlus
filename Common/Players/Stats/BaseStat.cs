@@ -31,7 +31,7 @@ public abstract class BaseStat
   protected virtual string DescriptionKey => "Stats." + Id + ".Bonuses";
 
   /// The file path of the icon for this stat
-  public virtual string IconPath => "LevelPlus/Assets/Textures/UI/Icons/" + Id;
+  public virtual string IconPath => LevelPlus.Instance.Name + "/Assets/Textures/UI/Icons/" + Id;
 
   /// The color of the UI Elements to shift to
   public virtual Color UIColor => Color.White;

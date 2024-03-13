@@ -34,6 +34,7 @@ public class StatPlayer : ModPlayer
   /// The Xp of the player
   public long Xp { get; private set; }
 
+  /// Register a stat to the player to be able to be used on the player
   public void Register(BaseStat stat) => Stats.Add(stat.Id, stat);
 
   private void Validate()
@@ -63,7 +64,7 @@ public class StatPlayer : ModPlayer
   {
     SetXp(Xp + amount);
     if(Main.dedServ) return;
-    CombatText.NewText(Player.getRect(), Color.Aqua, Language.GetTextValue("Popup.XpGain", amount));
+    CombatText.NewText(Player.getRect(), Color.Aqua, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Popup.XpGain", amount));
   }
 
   /// Set Xp
@@ -80,7 +81,7 @@ public class StatPlayer : ModPlayer
 
     if(command) return;
     SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/LevelUp"));
-    CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Popup.LevelUp"), true);
+    CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Popup.LevelUp"), true);
   }
 
   public void AddLevel(int amount)

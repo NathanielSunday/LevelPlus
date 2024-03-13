@@ -10,7 +10,7 @@ namespace LevelPlus.Common.UI.XpBar;
 internal class XpBarUIState : UIState
 {
   private Vector2 placement;
-  private XPBar XpBar;
+  private XpBar XpBar;
 
   public override void OnInitialize()
   {
@@ -18,7 +18,7 @@ internal class XpBarUIState : UIState
 
     placement = new Vector2(ClientConfig.Instance.XpBarLeft, ClientConfig.Instance.XpBarTop);
 
-    XpBar = new XPBar();
+    XpBar = new XpBar();
 
     XpBar.Left.Set(placement.X, 0f);
     XpBar.Top.Set(placement.Y, 0f);

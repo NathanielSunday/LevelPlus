@@ -12,8 +12,6 @@ public class SpendUIState : UIState
   private Vector2 placement;
   private SpendUIPanel spendPanel;
 
-  public void InitializeStats() => spendPanel.InitializeStats();
-
   public override void OnInitialize()
   {
     base.OnInitialize();

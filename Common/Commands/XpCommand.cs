@@ -14,7 +14,7 @@ class XpCommand : ModCommand
   public override string Command => "xp";
 
   public override string Description =>
-    "(" + Mod.Name + ") " + Language.GetTextValue("Commands.XpCommand.Description");
+    "(" + Mod.Name + ") " + Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.XpCommand.Description");
 
   public override CommandType Type => CommandType.Chat;
 
@@ -24,13 +24,13 @@ class XpCommand : ModCommand
   {
     if (!CommandConfig.Instance.CommandsEnabled || !CommandConfig.Instance.XpCommandEnabled)
     {
-      Main.NewText(Language.GetTextValue("Commands.CommandNotEnabledError"));
+      Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.CommandNotEnabledError"));
       return;
     }
 
     if (!long.TryParse(args[1], out long value))
     {
-      Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[1]));
+      Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", args[1]));
       return;
     }
 
@@ -44,7 +44,7 @@ class XpCommand : ModCommand
         player.SetXp(value);
         break;
       default:
-        Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));
+        Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", args[0]));
         break;
     }
   }
