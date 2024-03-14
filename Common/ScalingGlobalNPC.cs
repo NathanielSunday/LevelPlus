@@ -82,7 +82,7 @@ class ScalingGlobalNPC : GlobalNPC
     if (killCount == 1)
     {
       amount *= 2;
-      CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue("Popup.BestiaryUnlocked"),
+      CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Popup.BestiaryUnlocked"),
         true);
     }
 

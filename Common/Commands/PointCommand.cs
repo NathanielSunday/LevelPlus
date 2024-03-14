@@ -17,7 +17,7 @@ class PointCommand : ModCommand
   public override string Command => "point";
 
   public override string Description =>
-    "(" + Mod.Name + ") " + Language.GetTextValue("Commands.PointCommand.Description");
+    "(" + Mod.Name + ") " + Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.PointCommand.Description");
 
   public override CommandType Type => CommandType.Chat;
 
@@ -27,13 +27,13 @@ class PointCommand : ModCommand
   {
     if (!CommandConfig.Instance.CommandsEnabled || !CommandConfig.Instance.PointCommandEnabled)
     {
-      Main.NewText(Language.GetTextValue("Commands.CommandNotEnabledError"));
+      Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.CommandNotEnabledError"));
       return;
     }
 
     if (!int.TryParse(args[1], out int value))
     {
-      Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[1]));
+      Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", args[1]));
       return;
     }
 
@@ -44,10 +44,10 @@ class PointCommand : ModCommand
     switch (arguments)
     {
       case ("add", var v, var s) when !string.IsNullOrEmpty(s):
-        if (!player.AddStat(s, v, true)) Main.NewText(Language.GetTextValue("Commands.InvalidArgument", s));
+        if (!player.AddStat(s, v, true)) Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", s));
         break;
       case ("set", var v, var s) when !string.IsNullOrEmpty(s):
-        if (!player.SetStat(s, v)) Main.NewText(Language.GetTextValue("Commands.InvalidArgument", s));
+        if (!player.SetStat(s, v)) Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", s));
         break;
       case ("add", var v, _):
         player.Points += v;
@@ -56,7 +56,7 @@ class PointCommand : ModCommand
         player.Points = v;
         break;
       default:
-        Main.NewText(Language.GetTextValue("Commands.InvalidArgument", args[0]));
+        Main.NewText(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Commands.InvalidArgument", args[0]));
         break;
     }
   }

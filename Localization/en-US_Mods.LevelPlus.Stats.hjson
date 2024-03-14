@@ -1,39 +1,54 @@
 Level: {
-	Name: Level
-	Bonuses: TBD
+	DisplayName: Level
+	Tooltip:
+		'''
+		Level: {0}
+		+{1} health
+		+{2} mana
+		{3} unspent points
+		'''
+	TooltipMultiplayer:
+		'''
+		Level: {0}
+		+{1} health
+		+{2} mana
+		{3} unspent points
+		{4} players online
+		Average Level: {5}
+		'''
 }
 
 Endurance: {
-	Name: Endurance
-	Bonuses: TBD
+	DisplayName: Endurance
+	Tooltip: TBD
 }
 
 Brawn: {
-	Name: Brawn
-	Bonuses: TBD
+	DisplayName: Brawn
+	Tooltip: TBD
 }
 
 Deft: {
-	Name: Deft
-	Bonuses: TBD
+	DisplayName: Deft
+	Tooltip: TBD
 }
 
 Intellect: {
-	Name: Intellect
-	Bonuses: TBD
+	DisplayName: Intellect
+	Tooltip: TBD
 }
 
 Charm: {
-	Name: Charm
-	Bonuses: TBD
+	DisplayName: Charm
+	Tooltip: TBD
 }
 
 Luck: {
-	Name: Luck
-	Bonuses: TBD
+	DisplayName: Luck
+	Tooltip: TBD
 }
 
 Adroit: {
-	Name: Adroit
-	Bonuses: TBD
+	DisplayName: Adroit
+	Tooltip: TBD
 }

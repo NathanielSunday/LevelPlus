@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LevelPlus.Common.Configs;
 using LevelPlus.Common.Players.Stats;
 using LevelPlus.Common.Systems;
@@ -26,14 +27,33 @@ public class StatPlayer : ModPlayer
   private PlayerConfig Config => ModContent.GetInstance<PlayerConfig>();
   public Dictionary<string, BaseStat> Stats { get; } = new();
 
+  public LocalizedText LevelDescription =>
+    Language.GetText(
+        LevelPlus.Instance.LocalizationPrefix +
+        "Stats.Level.Tooltip" +
+        (Main.netMode == NetmodeID.MultiplayerClient
+          ? "Multiplayer"
+          : ""))
+      .WithFormatArgs(new Object[]
+      {
+        Level,
+        Level * Config.Life,
+        Level * Config.Mana,
+        Points,
+        ActivePlayerCount(),
+        AverageLevel()
+      });
+
   /// The amount of points available to spend
   public int Points { get; set; }
 
+  /// The level of the current player
   public int Level => Math.Min(XpToLevel(Xp), Config.MaxLevel);
 
   /// The Xp of the player
   public long Xp { get; private set; }
 
+  /// Register a stat to the player to be able to be used on the player
   public void Register(BaseStat stat) => Stats.Add(stat.Id, stat);
 
   private void Validate()
@@ -62,8 +82,9 @@ public class StatPlayer : ModPlayer
   public void AddXp(long amount, bool command = false)
   {
     SetXp(Xp + amount);
-    if(Main.dedServ) return;
-    CombatText.NewText(Player.getRect(), Color.Aqua, Language.GetTextValue("Popup.XpGain", amount));
+    if (Main.dedServ) return;
+    CombatText.NewText(Player.getRect(), Color.Aqua,
+      Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Popup.XpGain", amount));
   }
 
   /// Set Xp
@@ -73,14 +94,15 @@ public class StatPlayer : ModPlayer
     bool levelUp = XpToLevel(value) > Level && XpToLevel(value) < Config.MaxLevel && !Main.dedServ;
     Xp = value;
 
-    if(!levelUp) return;
+    if (!levelUp) return;
     Points += Config.Points;
     Player.statLife = Player.statLifeMax2;
     Player.statMana = Player.statManaMax2;
 
-    if(command) return;
+    if (command) return;
     SoundEngine.PlaySound(new SoundStyle("LevelPlus/Assets/Sounds/LevelUp"));
-    CombatText.NewText(Player.getRect(), Color.GreenYellow, Language.GetTextValue("Popup.LevelUp"), true);
+    CombatText.NewText(Player.getRect(), Color.GreenYellow,
+      Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Popup.LevelUp"), true);
   }
 
   public void AddLevel(int amount)
@@ -125,7 +147,7 @@ public class StatPlayer : ModPlayer
   /// <remarks>Is only checked against level, not xp, since exact xp amount doesnt matter in all cases</remarks>
   public bool Match(StatPlayer compare)
   {
-    if(compare.Level != Level) return false;
+    if (compare.Level != Level) return false;
 
     foreach (var stat in Stats)
     {
@@ -274,7 +296,7 @@ public class StatPlayer : ModPlayer
 
   public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
   {
-    if(!newPlayer) return;
+    if (!newPlayer) return;
 
     PlayerSyncPacket packet = new();
     packet.Level = Level;
@@ -297,8 +319,8 @@ public class StatPlayer : ModPlayer
 
     foreach (var stat in Stats)
     {
-      if(!statPlayer.Stats.TryGetValue(stat.Key, out BaseStat clientStat)) continue;
-      if(clientStat.Value == stat.Value.Value) continue;
+      if (!statPlayer.Stats.TryGetValue(stat.Key, out BaseStat clientStat)) continue;
+      if (clientStat.Value == stat.Value.Value) continue;
       packet.Stats.Add(stat.Key, stat.Value.Value);
     }
 
@@ -316,20 +338,30 @@ public class StatPlayer : ModPlayer
       }
     }
   }
-  
-  public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar,
+
+  public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn,
+    ref AdvancedPopupRequest sonar,
     ref Vector2 sonarPosition)
   {
     var xpToAdd = 2 * (int)Math.Pow(ItemLoader.GetItem(attempt.rolledItemDrop).Item.rare, 2) + 2;
     Xp += xpToAdd;
   }
 
-  /// <returns>The amount of XP needed for next level</returns>
-  public static long NeededXp(int level) => LevelToXp(level + 1);
+  public static List<Player> ActivePlayers() => Main.player.Where(player => player.active).ToList();
+
+  public static int ActivePlayerCount() => ActivePlayers().Count;
 
   /// <returns>What level you should be at per xp</returns>
   public static int XpToLevel(long xp) => (int)MathF.Pow(xp / 100f, 5f / 11f);
 
   /// <returns>The amount of XP required to be at level</returns>
   public static long LevelToXp(int level) => (long)(100f * MathF.Pow(level, 11f / 5f));
+
+  public static int AverageLevel()
+  {
+    var active = ActivePlayers();
+    int averageLevel = (int)active.Average(player => player.GetModPlayer<StatPlayer>().Level);
+    averageLevel /= active.Count;
+    return averageLevel;
+  }
 }

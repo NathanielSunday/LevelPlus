@@ -7,63 +7,55 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI.XpBar;
+namespace LevelPlus.Common.UI.SpendUI;
 
 [Autoload(Side = ModSide.Client)]
-public class XpBarSystem : ModSystem
+public class SpendUISystem : ModSystem
 {
-  public static XpBarSystem Instance => ModContent.GetInstance<XpBarSystem>();
+  public static SpendUISystem Instance => ModContent.GetInstance<SpendUISystem>();
 
-  internal XpBarUIState xpBarUI;
-  private UserInterface xpBarInterface;
+  internal SpendUIState spendUI;
+  private UserInterface spendInterface;
 
-  public void Show()
-  {
-    xpBarInterface?.SetState(xpBarUI);
-  }
+  public void Show() => spendInterface?.SetState(spendUI);
 
-  public void Hide()
-  {
-    xpBarInterface?.SetState(null);
-  }
+  public void Hide() => spendInterface?.SetState(null);
 
   public void Toggle()
   {
-    if (xpBarInterface?.CurrentState != null)
+    if (spendInterface?.CurrentState is null)
     {
-      Hide();
+      Show();
       return;
     }
 
-    Show();
+    Hide();
   }
 
   public override void Load()
   {
-    xpBarUI = new XpBarUIState();
-    xpBarInterface = new UserInterface();
-    xpBarUI.Activate();
+    spendUI = new SpendUIState();
+    spendInterface = new UserInterface();
+    spendUI.Activate();
     Show();
   }
 
   public override void UpdateUI(GameTime gameTime)
   {
-    if (xpBarInterface?.CurrentState != null)
-    {
-      xpBarInterface?.Update(gameTime);
-    }
+    if (spendInterface?.CurrentState is null) return;
+    spendInterface?.Update(gameTime);
   }
 
   public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
   {
     int resourceBarsIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
     layers.Insert(resourceBarsIndex, new LegacyGameInterfaceLayer(
-      "Level+: XP Bar",
+      "Level+: Spend Interface",
       delegate
       {
-        if (xpBarInterface?.CurrentState != null)
+        if (spendInterface?.CurrentState is not null)
         {
-          xpBarInterface.Draw(Main.spriteBatch, new GameTime());
+          spendInterface.Draw(Main.spriteBatch, new GameTime());
         }
 
         return true;

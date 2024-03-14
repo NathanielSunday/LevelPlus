@@ -13,10 +13,12 @@ namespace LevelPlus.Common.UI;
 
 public class UITexture : UIElement
 {
-  public Color color = Color.White;
   private Texture2D texture;
-  private bool mouseInterface;
-  public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+  private readonly bool mouseInterface;
+
+  public Color Color { get; set; } = Color.White;
+
+  private static readonly Dictionary<string, Texture2D> textures = new();
 
   public UITexture(string path, bool mouseInterface = false)
   {
@@ -39,7 +41,7 @@ public class UITexture : UIElement
   {
     base.Update(gameTime);
 
-    if (mouseInterface && ContainsPoint(new Vector2(Main.mouseX, Main.mouseY)))
+    if (mouseInterface && ContainsPoint(Main.MouseScreen))
     {
       Main.LocalPlayer.mouseInterface = true;
     }
@@ -47,8 +49,7 @@ public class UITexture : UIElement
 
   protected override void DrawSelf(SpriteBatch spriteBatch)
   {
-    base.DrawSelf(spriteBatch);
-    spriteBatch.Draw(texture, GetDimensions().ToRectangle(), color);
+    spriteBatch.Draw(texture, GetDimensions().ToRectangle(), Color);
   }
 }
 
