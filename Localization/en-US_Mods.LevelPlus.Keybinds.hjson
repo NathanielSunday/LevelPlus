@@ -1,13 +1,4 @@
-SpendAll.DisplayName: Spend your remaining points.
+SpendAll.DisplayName: Spend all points
 SpendTen.DisplayName: Spend 10 points
 SpendFive.DisplayName: Spend 5 points
 OpenSpendUI.DisplayName: Open stat UI
-
-Mods: {
-	LevelPlus: {
-		OpenSpendUI.DisplayName: Mods. Level Plus. Open Spend U I
-		SpendFive.DisplayName: Mods. Level Plus. Spend Five
-		SpendTen.DisplayName: Mods. Level Plus. Spend Ten
-		SpendAll.DisplayName: Mods. Level Plus. Spend All
-	}
-}
