@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using LevelPlus.Common.Configs.Stats;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,6 +15,7 @@ public class CharmStat : BaseStat
 
   protected override List<object> DescriptionArgs => new();
   public override string Id => "Charm";
+  public override Color UIColor => Color.Purple;
 
   public override void ModifyPlayer(Player player)
   {

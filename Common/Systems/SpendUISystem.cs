@@ -40,6 +40,12 @@ public class SpendUISystem : ModSystem
     Show();
   }
 
+  public override void Unload()
+  {
+    spendUI.Deactivate();
+    spendUI = null;
+  }
+
   public override void UpdateUI(GameTime gameTime)
   {
     if (spendInterface?.CurrentState is null) return;

@@ -14,12 +14,9 @@ public class SpendUIState : UIState
 
   public override void OnInitialize()
   {
-    base.OnInitialize();
-
     placement = new Vector2(ClientConfig.Instance.SpendUILeft, ClientConfig.Instance.SpendUITop);
 
     spendPanel = new SpendUIPanel();
-
     spendPanel.Left.Set(placement.X, 0f);
     spendPanel.Top.Set(placement.Y, 0f);
     spendPanel.SetSnapPoint("Origin", 0, placement);
@@ -29,8 +26,6 @@ public class SpendUIState : UIState
 
   public override void OnDeactivate()
   {
-    base.OnDeactivate();
-
     spendPanel = null;
   }
 }
