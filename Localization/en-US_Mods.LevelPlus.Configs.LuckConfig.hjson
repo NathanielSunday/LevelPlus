@@ -1,0 +1,37 @@
+Crit: {
+	Tooltip:
+		'''
+		The starting amount of global crit chance increase.
+			Diminishing.
+		'''
+	Label: Crit Chance
+}
+
+AmmoReductionChance: {
+	Tooltip:
+		'''
+		The starting amount of chance not to consume ammo.
+			Diminishing.
+		'''
+	Label: Ammo Reduction
+}
+
+ManaReductionChance: {
+	Tooltip:
+		'''
+		The starting amount of chance to not consume mana.
+			Diminishing.
+		'''
+	Label: Mana Reduction
+}
+
+TerrariaLuck: {
+	Tooltip:
+		'''
+		The starting amount of Terraria game luck increase.
+			Diminishing.
+		'''
+	Label: Terraria Luck
+}
+
+DisplayName: Luck Config

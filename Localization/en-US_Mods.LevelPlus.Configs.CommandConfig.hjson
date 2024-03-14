@@ -1,0 +1,21 @@
+CommandsEnabled: {
+	Tooltip: Enables commands and disables player validation.
+	Label: Commands Enabled
+}
+
+LevelCommandEnabled: {
+	Tooltip: Enables the /level command.
+	Label: Level Enabled
+}
+
+PointCommandEnabled: {
+	Tooltip: Enables the /point command.
+	Label: Point Enabled
+}
+
+XpCommandEnabled: {
+	Tooltip: Enables the /xp command.
+	Label: Xp Enabled
+}
+
+DisplayName: Command Config

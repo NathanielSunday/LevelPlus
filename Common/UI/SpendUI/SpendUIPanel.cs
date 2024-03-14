@@ -9,7 +9,7 @@ using Terraria.ModLoader.UI.Elements;
 
 namespace LevelPlus.Common.UI;
 
-public class SpendUIPanel : DraggableUIPanel
+public class SpendUIPanel : DraggableUIElement
 {
   private const float MainPanelWidth = 200f;
   private const float MainPanelMaxHeight = 500f;

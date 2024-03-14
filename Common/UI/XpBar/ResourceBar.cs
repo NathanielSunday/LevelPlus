@@ -2,17 +2,19 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Players;
-using LevelPlus.Common.Players.Stats;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
+using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI;
+namespace LevelPlus.Common.UI.XpBar;
 
 internal enum ResourceBarMode
 {
-  XP
+  Xp
 }
 
 class ResourceBar : UIElement
@@ -20,9 +22,7 @@ class ResourceBar : UIElement
   private ResourceBarMode stat;
   private float width;
   private float height;
-  private UITexture barBackground;
-  private UITexture barCap;
-  private UITexture currentBar;
+
 
   public ResourceBar(ResourceBarMode stat, float width, float height)
   {
@@ -38,48 +38,24 @@ class ResourceBar : UIElement
     Height.Set(height, 0f);
     Width.Set(width, 0f);
 
-    float capWidthCalc = 42 * height / 186;
 
-    barCap = new UITexture("LevelPlus/Assets/Textures/UI/Hollow_End", true); //create end cap
-    barCap.Width.Set(capWidthCalc, 0f);
-    barCap.Height.Set(height, 0f);
-    barCap.Left.Set(width - capWidthCalc, 0f);
-    barCap.Top.Set(0f, 0f);
-
-    barBackground = new UITexture("LevelPlus/Assets/Textures/UI/Hollow", true); //create background
-    barBackground.Left.Set(0f, 0f);
-    barBackground.Top.Set(0f, 0f);
-    barBackground.Width.Set(width - capWidthCalc, 0f);
-    barBackground.Height.Set(height, 0f);
-
-    currentBar = new UITexture("LevelPlus/Assets/Textures/UI/Blank", true); //create current value panel
-    currentBar.Left.Set(0f, 0f);
-    currentBar.Top.Set(0f, 0f);
-    currentBar.Width.Set(width - capWidthCalc, 0f);
-    currentBar.Height.Set(height, 0f);
 
     //assignment of color
     switch (stat)
     {
-      case ResourceBarMode.XP:
-        currentBar.Color = new Color(50, 205, 50); //green
-        break;
-      default:
+      case ResourceBarMode.Xp:
+         //green
         break;
     }
 
-    barBackground.Append(barCap);
-    barBackground.Append(currentBar);
 
-    //barBackground.Append(text);
-    Append(barBackground);
   }
 
   protected override void DrawSelf(SpriteBatch spriteBatch)
   {
     base.DrawSelf(spriteBatch);
 
-    StatPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<StatPlayer>();
+    StatPlayer player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
 
 
     //spriteBatch.Begin();
@@ -87,34 +63,26 @@ class ResourceBar : UIElement
     //calculate quotient
     switch (stat)
     {
-      case ResourceBarMode.XP:
-        //quotient = modPlayer.XP / (float)modPlayer.NeededXP;
-        break;
-      default:
+      case ResourceBarMode.Xp:
+
         break;
     }
 
-    currentBar.Width.Set(quotient * width, 0f);
+    //currentBar.Width.Set(quotient * width, 0f);
 
     Recalculate();
-    //spriteBatch.End();
   }
 
   public override void Update(GameTime gameTime)
   {
     base.Update(gameTime);
 
-    StatPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<StatPlayer>();
-    string HoverText = "";
-    switch (stat)
+    StatPlayer player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
+    string HoverText = stat switch
     {
-      case ResourceBarMode.XP:
-        //HoverText = "" + modPlayer.XP + " | " + modPlayer.NeededXP;
-        break;
-      default:
-        HoverText = "";
-        break;
-    }
+      ResourceBarMode.Xp => "" + player.Xp + " | " + StatPlayer.LevelToXp(player.Level + 1),
+      _ => ""
+    };
 
     if (IsMouseHovering)
     {

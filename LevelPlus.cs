@@ -12,6 +12,7 @@ namespace LevelPlus;
 public class LevelPlus : Mod
 {
   public string LocalizationPrefix => "Mods." + Name + ".";
+  public string AssetPath => Name + "/Assets/";
   public bool IsCalamityModLoaded;
 
   public override string Name => "LevelPlus";

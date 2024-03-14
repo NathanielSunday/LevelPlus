@@ -4,32 +4,96 @@
 using LevelPlus.Common.Players;
 using LevelPlus.Common.UI.SpendUI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace LevelPlus.Common.UI.XpBar;
 
-public class XpBar : DraggableUIPanel
+public class XpBar : DraggableUIElement
 {
-  private ResourceBar bar;
-  private XPBarButton button;
+  private const float BarCapRatio = 3f / 13f;
+
+  private UIImage bar;
+  private UIImage barCap;
+  private UIImage barQuotient;
+  private UIImage button;
+  private UIText text;
+
+  #region Init
+
+  private void InitBarQuotient()
+  {
+    barQuotient = new UIImage(ModContent.Request<Texture2D>(LevelPlus.Instance.AssetPath + "Textures/UI/Blank"));
+    barQuotient.ScaleToFit = true;
+    barQuotient.Width.Set(0f, 1f);
+    barQuotient.Height.Set(0f, 1f);
+    barQuotient.Left.Set(0f, 0f);
+    barQuotient.Top.Set(0f, 0f);
+    barQuotient.Color = new Color(50, 205, 50);
+  }
+
+  private void InitBarCap()
+  {
+    barCap = new UIImage(ModContent.Request<Texture2D>(LevelPlus.Instance.AssetPath + "Textures/UI/Hollow_End"));
+    barCap.ScaleToFit = true;
+    barCap.Width.Set(0f, BarCapRatio * Height.Pixels / Width.Pixels / (1f - button.Width.Percent));
+    barCap.Height.Set(0f, 1f);
+    barCap.Left.Set(0f, 1f);
+    barCap.Top.Set(0f, 0f);
+  }
+
+  private void InitBar()
+  {
+    InitBarCap();
+    InitBarQuotient();
+    bar = new UIImage(ModContent.Request<Texture2D>(LevelPlus.Instance.AssetPath + "Textures/UI/Hollow"));
+    bar.ScaleToFit = true;
+    bar.Width.Set(0f, 1f - button.Width.Percent);
+    bar.Height.Set(0f, 1f);
+    bar.Left.Set(0f, button.Width.Percent);
+    bar.Top.Set(0f, 0f);
+    bar.Append(barQuotient);
+    bar.Append(barCap);
+  }
+
+  private void InitText()
+  {
+    text = new UIText("0"); //text for showing level
+    text.Width.Set(0f, 1f);
+    text.Height.Set(0f, 1f);
+    text.Left.Set(0f, 0f);
+    text.Top.Set(0f, 0f);
+    text.TextOriginX = 0.5f;
+    text.TextOriginY = 0.5f;
+  }
+
+  private void InitButton()
+  {
+    InitText();
+    button = new UIImage(ModContent.Request<Texture2D>(LevelPlus.Instance.AssetPath + "Textures/UI/Hollow_Start"));
+    button.ScaleToFit = true;
+    button.Height.Set(0f, 1f);
+    button.Width.Set(0f, Height.Pixels / Width.Pixels);
+    button.Left.Set(0f, 0f);
+    button.Top.Set(0f, 0f);
+    button.OnLeftClick += delegate
+    {
+      SoundEngine.PlaySound(SoundID.MenuTick);
+      SpendUISystem.Instance.Toggle();
+    };
+    button.Append(text);
+  }
+
+  #endregion
 
   public override void OnInitialize()
   {
-    base.OnInitialize();
-
-    button = new XPBarButton(Height.Pixels);
-    bar = new ResourceBar(ResourceBarMode.XP, Width.Pixels - Height.Pixels * (186f / 186f), Height.Pixels);
-
-    button.Left.Set(0f, 0f);
-    button.Top.Set(0f, 0f);
-
-    bar.Left.Set(Height.Pixels * (186f / 186f), 0f);
-    bar.Top.Set(0f, 0f);
+    InitButton();
+    InitBar();
 
     Append(bar);
     Append(button);
@@ -37,100 +101,33 @@ public class XpBar : DraggableUIPanel
 
   public override void OnDeactivate()
   {
-    base.OnDeactivate();
+    barCap = null;
+    barQuotient = null;
     bar = null;
+    text = null;
     button = null;
   }
 
   public override void Update(GameTime gameTime)
   {
     base.Update(gameTime);
+
+    StatPlayer player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
+    text.SetText(player.Level.ToString());
+
+    if (bar.IsMouseHovering)
+      Main.instance.MouseText(player.Xp + " | " + StatPlayer.LevelToXp(player.Level + 1));
+    if (button.IsMouseHovering) Main.instance.MouseText(player.LevelDescription.Value);
   }
 
-  public override void LeftMouseDown(UIMouseEvent evt)
+  protected override void DrawSelf(SpriteBatch spriteBatch)
   {
-    base.LeftMouseDown(evt);
-  }
+    StatPlayer player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
+    float currentXp = player.Xp - StatPlayer.LevelToXp(player.Level);
+    float neededXp = StatPlayer.LevelToXp(player.Level + 1) - StatPlayer.LevelToXp(player.Level);
+    float quotient = currentXp / neededXp;
 
-  public override void LeftMouseUp(UIMouseEvent evt)
-  {
-    base.LeftMouseUp(evt);
+    barQuotient.Width.Set(0f, quotient);
+    Recalculate();
   }
 }
-
-internal class XPBarButton : UIElement
-{
-  private UITexture button;
-  private UIText level;
-  private float height;
-  private float width;
-
-  public XPBarButton(float height)
-  {
-    this.height = height;
-    width = height * (186f / 186f);
-  }
-
-  public override void OnInitialize()
-  {
-    base.OnInitialize();
-
-    Height.Set(height, 0f);
-    Width.Set(width, 0f);
-
-    button = new UITexture("LevelPlus/Assets/Textures/UI/Hollow_Start", true); //create button
-    button.Left.Set(0f, 0f);
-    button.Top.Set(0f, 0f);
-    button.Width.Set(width, 0f);
-    button.Height.Set(height, 0f);
-    button.OnLeftClick += delegate
-    {
-      SoundEngine.PlaySound(SoundID.MenuTick);
-      SpendUISystem.Instance.Toggle();
-    };
-
-    level = new UIText("0"); //text for showing values
-    level.Width.Set(width, 0f);
-    level.Height.Set(height, 0f);
-    level.Top.Set(height / 2 - level.MinHeight.Pixels / 2, 0f);
-
-    button.Append(level);
-    Append(button);
-  }
-
-  public override void OnDeactivate()
-  {
-    base.OnDeactivate();
-    level = null;
-    button = null;
-  }
-
-  public override void Update(GameTime time)
-  {
-    base.Update(time);
-
-    StatPlayer modPlayer = Main.LocalPlayer.GetModPlayer<StatPlayer>();
-    level.SetText("" + (StatPlayer.XpToLevel(modPlayer.Xp) + 1));
-
-    if (IsMouseHovering)
-    {
-      int numPlayers = 0;
-      float averageLevel = 0;
-
-      foreach (Player i in Main.player)
-        if (i.active)
-        {
-          numPlayers++;
-          averageLevel += StatPlayer.XpToLevel(i.GetModPlayer<StatPlayer>().Xp) + 1;
-        }
-
-      averageLevel /= numPlayers;
-
-      Main.instance.MouseText("Level: " + (StatPlayer.XpToLevel(modPlayer.Xp) + 1) + "\n" + modPlayer.Points +
-                              " unspent points\n" + (Main.netMode == NetmodeID.MultiplayerClient
-                                ? numPlayers + " players online\nAverage Level: " + (int)averageLevel
-                                : ""));
-    }
-  }
-}
-

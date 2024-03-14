@@ -25,13 +25,13 @@ public abstract class BaseStat
   public abstract string Id { get; }
 
   /// The name key for localization of this stat
-  protected virtual string NameKey => "Stats." + Id + ".Name";
+  protected virtual string NameKey => LevelPlus.Instance.LocalizationPrefix + "Stats." + Id + ".DisplayName";
 
   /// The list of bonuses key for the localization of what this stat provides
-  protected virtual string DescriptionKey => "Stats." + Id + ".Bonuses";
+  protected virtual string DescriptionKey => LevelPlus.Instance.LocalizationPrefix + "Stats." + Id + ".Tooltip";
 
   /// The file path of the icon for this stat
-  public virtual string IconPath => LevelPlus.Instance.Name + "/Assets/Textures/UI/Icons/" + Id;
+  public virtual string IconPath => LevelPlus.Instance.AssetPath + "Textures/UI/Icons/" + Id;
 
   /// The color of the UI Elements to shift to
   public virtual Color UIColor => Color.White;

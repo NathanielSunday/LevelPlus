@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using LevelPlus.Common.Players;
 using LevelPlus.Common.Players.Stats;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace LevelPlus.Common.Systems;
@@ -19,7 +20,7 @@ public class StatProviderSystem : ModSystem
   {
     if(!type.IsSubclassOf(typeof(BaseStat)))
     {
-      LevelPlus.Instance.Logger.ErrorFormat("Stat of type '{0}' is not a derivative of type '{1}'", type, typeof(BaseStat));
+      LevelPlus.Instance.Logger.ErrorFormat(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Provider.UnhandledStatError", type, typeof(BaseStat)));
       stat = null;
       return false;
     }
@@ -62,12 +63,12 @@ public class StatProviderSystem : ModSystem
 
   public override void Load()
   {
-    Register(typeof(AdroitStat));
-    Register(typeof(BrawnStat));
-    Register(typeof(CharmStat));
-    Register(typeof(DeftStat));
     Register(typeof(EnduranceStat));
+    Register(typeof(BrawnStat));
+    Register(typeof(DeftStat));
     Register(typeof(IntellectStat));
+    Register(typeof(CharmStat));
+    Register(typeof(AdroitStat));
     Register(typeof(LuckStat));
   }
 }

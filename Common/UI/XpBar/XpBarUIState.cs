@@ -10,26 +10,27 @@ namespace LevelPlus.Common.UI.XpBar;
 internal class XpBarUIState : UIState
 {
   private Vector2 placement;
-  private XpBar XpBar;
+  private XpBar xpBar;
 
   public override void OnInitialize()
   {
-    base.OnInitialize();
-
     placement = new Vector2(ClientConfig.Instance.XpBarLeft, ClientConfig.Instance.XpBarTop);
 
-    XpBar = new XpBar();
+    xpBar = new XpBar();
+    // 120 26
+    xpBar.Width.Set(140f, 0f);
+    xpBar.Height.Set(32f, 0f);
+    xpBar.Left.Set(placement.X, 0f);
+    xpBar.Top.Set(placement.Y, 0f);
 
-    XpBar.Left.Set(placement.X, 0f);
-    XpBar.Top.Set(placement.Y, 0f);
-    XpBar.SetSnapPoint("Origin", 0, placement);
-
-    Append(XpBar);
+    Append(xpBar);
   }
 
   public override void OnDeactivate()
   {
     base.OnDeactivate();
-    XpBar = null;
+    ClientConfig.Instance.XpBarLeft = (int)xpBar.Left.Pixels;
+    ClientConfig.Instance.XpBarTop = (int)xpBar.Top.Pixels;
+    xpBar = null;
   }
 }

@@ -10,9 +10,11 @@ Mana: {
 
 ManaRegen: {
 	Tooltip:
-	'''
-	The starting amount of mana regen increase.
-		Diminishing.
-	'''
+		'''
+		The starting amount of mana regen increase.
+			Diminishing.
+		'''
 	Label: Mana Regen
 }
+
+DisplayName: Intellect Config
