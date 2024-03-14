@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using LevelPlus.Common.Configs.Stats;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,6 +15,7 @@ public class DeftStat : BaseStat
 
   protected override List<object> DescriptionArgs => new();
   public override string Id => "Deft";
+  public override Color UIColor => Color.Yellow;
 
   [JITWhenModsEnabled("CalamityMod")]
   private void ModifyCalamityPlayer(Player player)

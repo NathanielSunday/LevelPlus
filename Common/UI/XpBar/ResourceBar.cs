@@ -2,13 +2,12 @@
 // Licensed under the Apache License, Version 2.0.
 
 using LevelPlus.Common.Players;
-using LevelPlus.Common.Players.Stats;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
 
-namespace LevelPlus.Common.UI;
+namespace LevelPlus.Common.UI.XpBar;
 
 internal enum ResourceBarMode
 {

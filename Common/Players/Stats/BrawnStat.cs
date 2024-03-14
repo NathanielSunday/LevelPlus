@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using LevelPlus.Common.Configs.Stats;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,7 +15,8 @@ public class BrawnStat : BaseStat
 
   protected override List<object> DescriptionArgs => new();
   public override string Id => "Brawn";
-
+  public override Color UIColor => Color.Red; 
+  
   [JITWhenModsEnabled("CalamityMod")]
   private void ModifyCalamityPlayer(Player player)
   {

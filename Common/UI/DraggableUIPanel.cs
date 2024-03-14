@@ -15,21 +15,21 @@ public class DraggableUIPanel : UIPanel
 
   public override void LeftMouseDown(UIMouseEvent evt)
   {
-    base.LeftMouseDown(evt);
-    DragStart(evt);
+    if(IsMouseHovering)
+      DragStart(evt);
   }
 
   public override void LeftMouseUp(UIMouseEvent evt)
   {
-    base.LeftMouseUp(evt);
-    DragEnd(evt);
+    if(IsMouseHovering)
+      DragEnd(evt);
   }
 
   public override void Update(GameTime gameTime)
   {
     base.Update(gameTime);
 
-    if (ContainsPoint(Main.MouseScreen))
+    if (IsMouseHovering)
     {
       Main.LocalPlayer.mouseInterface = true;
     }

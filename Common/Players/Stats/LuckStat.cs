@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using LevelPlus.Common.Configs.Stats;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -17,6 +18,7 @@ public class LuckStat : BaseStat
 
   protected override List<object> DescriptionArgs => new();
   public override string Id => "Luck";
+  public override Color UIColor => Color.Green;
 
   public override void Load(TagCompound tag)
   {

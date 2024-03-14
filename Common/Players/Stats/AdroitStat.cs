@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using LevelPlus.Common.Configs.Stats;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,6 +15,7 @@ public class AdroitStat : BaseStat
 
   protected override List<object> DescriptionArgs => new();
   public override string Id => "Adroit";
+  public override Color UIColor => Color.Orange;
 
   public override void ModifyPlayer(Player player)
   {
