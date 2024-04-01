@@ -19,7 +19,7 @@ internal class XpBarUIState : UIState
     xpBar = new XpBar();
     // 120 26
     xpBar.Width.Set(140f, 0f);
-    xpBar.Height.Set(32f, 0f);
+    xpBar.Height.Set(30f, 0f);
     xpBar.Left.Set(placement.X, 0f);
     xpBar.Top.Set(placement.Y, 0f);
 

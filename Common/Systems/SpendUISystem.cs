@@ -37,7 +37,7 @@ public class SpendUISystem : ModSystem
     spendUI = new SpendUIState();
     spendInterface = new UserInterface();
     spendUI.Activate();
-    Show();
+    Hide();
   }
 
   public override void Unload()
