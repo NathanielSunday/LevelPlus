@@ -1,3 +1,5 @@
+DisplayName: Player
+
 RandomStartingWeapon: {
 	Tooltip: Spawn with a weapon of a random damage type.
 	Label: Random Starting Weapon
@@ -50,5 +52,3 @@ Mana: {
 	Tooltip: The amount max mana is increased by per level.
 	Label: Mana
 }
-
-DisplayName: Player Config

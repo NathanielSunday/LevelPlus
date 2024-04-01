@@ -1,7 +1,6 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
@@ -19,7 +18,7 @@ public abstract class BaseStat
   public LocalizedText Description => Language.GetText(DescriptionKey).WithFormatArgs(DescriptionArgs);
 
   /// The arugments that go toward the localized description
-  protected abstract List<object> DescriptionArgs { get; }
+  protected abstract object[] DescriptionArgs { get; }
 
   /// The internal handle of the stat
   public abstract string Id { get; }

@@ -20,35 +20,101 @@ Level: {
 
 Endurance: {
 	DisplayName: Endurance
-	Tooltip: TBD
+	Tooltip:
+		'''
+		+{0} life
+		+{1} defense
+		+{2}% life regen*
+
+		* diminishing
+		'''
 }
 
 Brawn: {
 	DisplayName: Brawn
-	Tooltip: TBD
+	Tooltip:
+		'''
+		+{0}% melee damage
+		+{1}% pick speed
+		+{2}% wing time*
+
+		* diminishing
+		'''
+	TooltipCalamity:
+		'''
+		+{0}% melee damage
+		+{1}% pick speed
+		+{2}% wing time*
+		+{3}% rogue damage
+		+{4}% rogue velocity
+
+		* diminishing
+		'''
 }
 
 Deft: {
 	DisplayName: Deft
-	Tooltip: TBD
+	Tooltip:
+		'''
+		+{0}% ranged damage
+		+{1}% max run speed
+		+{2}% acceleration*
+
+		* diminishing
+		'''
+	TooltipCalamity:
+		'''
+		+{0}% ranged damage
+		+{1}% max run speed
+		+{2}% acceleration*
+		+{3}% rogue stealth damage
+		+{4}% max rogue stealth
+
+		* diminishing
+		'''
 }
 
 Intellect: {
 	DisplayName: Intellect
-	Tooltip: TBD
+	Tooltip:
+		'''
+		+{0}% magic damage
+		+{1} mana
+		+{2}% mana regen*
+
+		* diminishing
+		'''
 }
 
 Charm: {
 	DisplayName: Charm
-	Tooltip: TBD
+	Tooltip:
+		'''
+		+{0}% summon damage
+		+{1} max minions ({2} points away)
+		+{3} max sentries ({4} points away)
+		+{5} fishing level
+		'''
 }
 
 Luck: {
 	DisplayName: Luck
-	Tooltip: TBD
+	Tooltip:
+		'''
+		+{0}% crit chance*
+		+{1}% better luck*
+		+{2}% chance to not consume mana*
+		+{3}% chance to not consume ammo*
+
+		* diminishing
+		'''
 }
 
 Adroit: {
 	DisplayName: Adroit
-	Tooltip: TBD
+	Tooltip:
+		'''
+		+{0}% placement speed
+		+{1} block range ({2} points away)
+		'''
 }

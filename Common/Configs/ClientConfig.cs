@@ -7,14 +7,15 @@ using Terraria.ModLoader.Config;
 
 namespace LevelPlus.Common.Configs;
 
+// ReSharper disable file InconsistentNaming
 public class ClientConfig : ModConfig
 {
   public override ConfigScope Mode => ConfigScope.ClientSide;
   public static ClientConfig Instance => ModContent.GetInstance<ClientConfig>();
 
-  // ReSharper disable InconsistentNaming
-  [DefaultValue(480)] public int XpBarLeft;
-  [DefaultValue(35)] public int XpBarTop;
-  [DefaultValue(35)] public int SpendUILeft;
-  [DefaultValue(200)] public int SpendUITop;
+
+  [DefaultValue(480)] [ReloadRequired] public int XpBarLeft;
+  [DefaultValue(35)] [ReloadRequired] public int XpBarTop;
+  [DefaultValue(35)] [ReloadRequired] public int SpendUILeft;
+  [DefaultValue(200)] [ReloadRequired] public int SpendUITop;
 }

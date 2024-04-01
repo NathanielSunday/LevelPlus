@@ -1,8 +1,7 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
-using System.Collections.Generic;
-using LevelPlus.Common.Configs.Stats;
+using LevelPlus.Common.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,16 +10,20 @@ namespace LevelPlus.Common.Players.Stats;
 
 public class IntellectStat : BaseStat
 {
-  private IntellectConfig Config => ModContent.GetInstance<IntellectConfig>();
+  private int Mana => Value * StatConfig.Instance.Intellect_Mana;
+  private float ManaRegen => Value * StatConfig.Instance.Intellect_ManaRegen; //dim
+  private float Damage => Value * StatConfig.Instance.Intellect_Damage;
 
-  protected override List<object> DescriptionArgs => new();
+  protected override object[] DescriptionArgs => new object[]
+    { Damage * 100, Mana, ManaRegen * 100 };
+
   public override string Id => "Intellect";
   public override Color UIColor => Color.Blue;
 
   public override void ModifyPlayer(Player player)
   {
-    player.statManaMax2 += Value * Config.Mana;
-    player.manaRegen += (int)(player.manaRegen * Value * Config.ManaRegen);
-    player.GetDamage(DamageClass.Magic) *= 1.00f + (Value * Config.Damage);
+    player.statManaMax2 += Mana;
+    player.manaRegen += (int)(player.manaRegen * ManaRegen);
+    player.GetDamage(DamageClass.Magic) *= 1.00f + Damage;
   }
 }

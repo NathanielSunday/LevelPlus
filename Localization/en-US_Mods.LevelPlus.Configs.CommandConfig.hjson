@@ -1,3 +1,5 @@
+DisplayName: Commands
+
 CommandsEnabled: {
 	Tooltip: Enables commands and disables player validation.
 	Label: Commands Enabled
@@ -17,5 +19,3 @@ XpCommandEnabled: {
 	Tooltip: Enables the /xp command.
 	Label: Xp Enabled
 }
-
-DisplayName: Command Config

@@ -25,6 +25,8 @@ public class DraggableUIElement : UIElement
 
   public override void Update(GameTime gameTime)
   {
+    base.Update(gameTime);
+
     if (IsMouseHovering)
     {
       Main.LocalPlayer.mouseInterface = true;

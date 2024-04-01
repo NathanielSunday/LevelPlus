@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LevelPlus.Common.Players;
 using LevelPlus.Common.Players.Stats;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -13,14 +15,16 @@ namespace LevelPlus.Common.Systems;
 
 public class StatProviderSystem : ModSystem
 {
-  private readonly List<Type> statTypes = new();
+  private readonly Dictionary<string, Type> statTypes = new();
 
+  public static StatProviderSystem Instance = ModContent.GetInstance<StatProviderSystem>();
 
   private bool CreateStatInstance(Type type, out BaseStat stat)
   {
-    if(!type.IsSubclassOf(typeof(BaseStat)))
+    if (!type.IsSubclassOf(typeof(BaseStat)))
     {
-      LevelPlus.Instance.Logger.ErrorFormat(Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Provider.UnhandledStatError", type, typeof(BaseStat)));
+      LevelPlus.Instance.Logger.ErrorFormat(Language.GetTextValue(
+        LevelPlus.Instance.LocalizationPrefix + "Provider.UnhandledStatError", type, typeof(BaseStat)));
       stat = null;
       return false;
     }
@@ -29,23 +33,35 @@ public class StatProviderSystem : ModSystem
     return true;
   }
 
+  private bool CreateStatInstance(string key, out BaseStat stat)
+  {
+    if (!statTypes.TryGetValue(key, out var statType) || !CreateStatInstance(statType, out stat))
+    {
+      stat = null;
+      return false;
+    }
+
+    return true;
+  }
+
+  public Color GetColor(string key)
+  {
+    if (!CreateStatInstance(key, out var stat)) return Color.White;
+    return stat.UIColor;
+  }
+
   public List<string> GetIdList()
   {
-    List<string> output = new();
-    foreach (var type in statTypes)
-    {
-      if(!CreateStatInstance(type, out BaseStat stat)) continue;
-      output.Add(stat.Id);
-    }
-    return output;
+    return statTypes.Keys.ToList();
   }
 
   /// <summary>Register a stat to the list of stats to be registered to a player</summary>
   /// <returns>false if the Type provided is not a type of BaseStat</returns>
   public bool Register(Type type)
   {
-    if(!type.IsSubclassOf(typeof(BaseStat))) return false;
-    statTypes.Add(type);
+    if (!type.IsSubclassOf(typeof(BaseStat))) return false;
+    if (!CreateStatInstance(type, out var stat)) return false;
+    statTypes.Add(stat.Id, type);
     return true;
   }
 
@@ -54,9 +70,9 @@ public class StatProviderSystem : ModSystem
   {
     var statPlayer = player.GetModPlayer<StatPlayer>();
 
-    foreach (var type in statTypes)
+    foreach (var type in statTypes.Values)
     {
-      if(!CreateStatInstance(type, out BaseStat stat)) continue;
+      if (!CreateStatInstance(type, out BaseStat stat)) continue;
       statPlayer.Register(stat);
     }
   }
@@ -68,7 +84,7 @@ public class StatProviderSystem : ModSystem
     Register(typeof(DeftStat));
     Register(typeof(IntellectStat));
     Register(typeof(CharmStat));
-    Register(typeof(AdroitStat));
     Register(typeof(LuckStat));
+    Register(typeof(AdroitStat));
   }
 }

@@ -1,3 +1,5 @@
+DisplayName: Mob
+
 ScalingEnabled: {
 	Tooltip: Turns on mob scaling.
 	Label: Scaling
@@ -11,5 +13,3 @@ LevelScalar: {
 		'''
 	Label: Average Level Scaling
 }
-
-DisplayName: Mob Config

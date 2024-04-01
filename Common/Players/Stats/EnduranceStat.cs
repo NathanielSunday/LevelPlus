@@ -1,31 +1,33 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
-using System.Collections.Generic;
-using LevelPlus.Common.Configs.Stats;
+using LevelPlus.Common.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace LevelPlus.Common.Players.Stats;
 
 public class EnduranceStat : BaseStat
 {
-  private EnduranceConfig Config => ModContent.GetInstance<EnduranceConfig>();
+  //diminish
+  private float LifeRegen => StatConfig.Instance.Endurance_LifeRegen * Value;
+  private int Life => StatConfig.Instance.Endurance_Life * Value;
+  private int Defense => StatConfig.Instance.Endurance_Defense * Value;
 
-  protected override List<object> DescriptionArgs => new();
+  protected override object[] DescriptionArgs => new object[]
+    { Life, Defense, LifeRegen * 100 };
+
   public override string Id => "Endurance";
   public override Color UIColor => Color.LimeGreen;
 
   public override void ModifyPlayer(Player player)
   {
-    player.statLifeMax2 += Value * Config.Life;
-    player.statDefense += Value * Config.Defense;
+    player.statLifeMax2 += Life;
+    player.statDefense += Defense;
   }
 
   public override void ModifyLifeRegen(Player player)
   {
-    //diminish
-    player.lifeRegen += (int)(player.lifeRegen * (Config.LifeRegen * Value));
+    player.lifeRegen += (int)(player.lifeRegen * LifeRegen);
   }
 }

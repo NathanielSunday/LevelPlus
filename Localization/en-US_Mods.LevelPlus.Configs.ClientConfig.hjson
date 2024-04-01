@@ -1,3 +1,5 @@
+DisplayName: Client UI
+
 XpBarLeft: {
 	Tooltip: XP Bar distance from left side of window.
 	Label: XP Bar Left
@@ -17,5 +19,3 @@ SpendUITop: {
 	Tooltip: Spend Screen distance from top side of window.
 	Label: Spend Screen Top
 }
-
-DisplayName: Client Config

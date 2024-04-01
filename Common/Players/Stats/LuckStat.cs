@@ -1,8 +1,7 @@
 // Copyright (c) Bitwiser.
 // Licensed under the Apache License, Version 2.0.
 
-using System.Collections.Generic;
-using LevelPlus.Common.Configs.Stats;
+using LevelPlus.Common.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -12,11 +11,16 @@ namespace LevelPlus.Common.Players.Stats;
 
 public class LuckStat : BaseStat
 {
-  private static LuckConfig Config => ModContent.GetInstance<LuckConfig>();
-
   private System.Random rng;
 
-  protected override List<object> DescriptionArgs => new();
+  private float Crit => Value * StatConfig.Instance.Luck_Crit; //dim
+  private float Luck => Value * StatConfig.Instance.Luck_TerrariaLuck; //dim
+  private float Mana => Value * StatConfig.Instance.Luck_ManaReductionChance * 100; //dim
+  private float Ammo => Value * StatConfig.Instance.Luck_AmmoReductionChance * 100; //dim
+
+  protected override object[] DescriptionArgs => new object[]
+    { Crit * 100, Luck * 100, Mana, Ammo };
+
   public override string Id => "Luck";
   public override Color UIColor => Color.Green;
 
@@ -28,11 +32,11 @@ public class LuckStat : BaseStat
   //diminish
   public override void ModifyPlayer(Player player)
   {
-    player.GetCritChance(DamageClass.Melee) += Value * Config.Crit;
-    player.GetCritChance(DamageClass.Ranged) += Value * Config.Crit;
-    player.GetCritChance(DamageClass.Magic) += Value * Config.Crit;
-    player.GetCritChance(DamageClass.Summon) += Value * Config.Crit;
-    player.luck += Value * Config.TerrariaLuck;
+    player.GetCritChance(DamageClass.Melee) += Crit;
+    player.GetCritChance(DamageClass.Magic) += Crit;
+    player.GetCritChance(DamageClass.Ranged) += Crit;
+    player.GetCritChance(DamageClass.Summon) += Crit;
+    player.luck += Luck;
   }
 
   public override void ModifyOnConsumeMana(Player player, Item item, int manaConsumed)
@@ -40,7 +44,7 @@ public class LuckStat : BaseStat
     // If the value is less than the 0-99, then do not rebate mana
     // 0 is not less than 0, so at no points invested, this is still correct
     //diminish
-    if (Value * Config.ManaReductionChance * 100 < rng.Next(100)) return;
+    if (Mana < rng.Next(100)) return;
     player.statMana += manaConsumed;
   }
 
@@ -49,7 +53,7 @@ public class LuckStat : BaseStat
     // If the value is less than the 0-99, then ammo can be consumed
     // 0 is not less than 0, so at no points invested, this is still true
     //diminish
-    return Value * Config.AmmoReductionChance * 100 < rng.Next(100);
+    return Ammo < rng.Next(100);
   }
 }
 
