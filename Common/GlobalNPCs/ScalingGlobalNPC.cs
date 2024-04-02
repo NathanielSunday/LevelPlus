@@ -4,7 +4,6 @@
 using LevelPlus.Common.Configs;
 using System;
 using LevelPlus.Common.Players;
-using LevelPlus.Common.Players.Stats;
 using LevelPlus.Network.Packets;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -13,7 +12,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace LevelPlus.Common;
+namespace LevelPlus.Common.GlobalNPCs;
 
 // ReSharper disable once InconsistentNaming
 class ScalingGlobalNPC : GlobalNPC
@@ -82,7 +81,8 @@ class ScalingGlobalNPC : GlobalNPC
     if (killCount == 1)
     {
       amount *= 2;
-      CombatText.NewText(npc.getRect(), Color.Aqua, Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Popup.BestiaryUnlocked"),
+      CombatText.NewText(npc.getRect(), Color.Aqua,
+        Language.GetTextValue(LevelPlus.Instance.LocalizationPrefix + "Popup.BestiaryUnlocked"),
         true);
     }
 
