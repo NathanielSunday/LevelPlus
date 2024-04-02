@@ -42,6 +42,7 @@ public abstract class BaseStat
   public void LoadData(TagCompound tag)
   {
     Value = tag.ContainsKey(Id) ? tag.GetAsInt(Id) : 0;
+    LevelPlus.Instance.Logger.DebugFormat($"Load-{Id}: {Value.ToString()}");
     Load(tag);
   }
 
@@ -49,6 +50,7 @@ public abstract class BaseStat
   public void SaveData(TagCompound tag)
   {
     tag.Set(Id, Value, true);
+    LevelPlus.Instance.Logger.DebugFormat($"Save-{Id}: {Value.ToString()}");
     Save(tag);
   }
 

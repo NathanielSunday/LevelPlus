@@ -44,7 +44,7 @@ public class StatBar : UIElement
 
   private void InitIcon()
   {
-    var iconTexture = ModContent.Request<Texture2D>("LevelPlus/Assets/Textures/UI/Icons/" + statId);
+    var iconTexture = ModContent.Request<Texture2D>(StatProviderSystem.Instance.GetIconPath(statId));
 
     icon = new UIImage(iconTexture);
     icon.Width.Set(NormalUISize, 0f);

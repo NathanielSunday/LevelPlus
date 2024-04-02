@@ -53,7 +53,10 @@ public class StatPlayer : ModPlayer
   public long Xp { get; private set; }
 
   /// Register a stat to the player to be able to be used on the player
-  public void Register(BaseStat stat) => Stats.Add(stat.Id, stat);
+  public void Register(BaseStat stat)
+  {
+    Stats.TryAdd(stat.Id, stat);
+  }
 
   private void Validate()
   {
@@ -161,11 +164,18 @@ public class StatPlayer : ModPlayer
   // Validate has to be called "OnEnterWorld" to get server-side configs
   public override void OnEnterWorld() => Validate();
 
+  public override void SetStaticDefaults()
+  {
+    StatProviderSystem.Instance.Register(this);
+  }
+
   public override void LoadData(TagCompound tag)
   {
     Xp = tag.GetAsLong("Xp");
 
-    ModContent.GetInstance<StatProviderSystem>().Register(Player);
+    LevelPlus.Instance.Logger.DebugFormat($"Loading {Player.name}");
+    LevelPlus.Instance.Logger.DebugFormat("---------------------------------");
+    //StatProviderSystem.Instance.Register(Player);
 
     foreach (BaseStat stat in Stats.Values)
     {
@@ -176,6 +186,10 @@ public class StatPlayer : ModPlayer
   public override void SaveData(TagCompound tag)
   {
     tag.Set("Xp", Xp, true);
+
+    LevelPlus.Instance.Logger.DebugFormat($"Saving {Player.name}");
+    LevelPlus.Instance.Logger.DebugFormat("---------------------------------");
+    //StatProviderSystem.Instance.Register(Player);
 
     foreach (BaseStat stat in Stats.Values)
     {

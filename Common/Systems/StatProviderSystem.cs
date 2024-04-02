@@ -7,7 +7,6 @@ using System.Linq;
 using LevelPlus.Common.Players;
 using LevelPlus.Common.Players.Stats;
 using Microsoft.Xna.Framework;
-using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -44,6 +43,12 @@ public class StatProviderSystem : ModSystem
     return true;
   }
 
+  public string GetIconPath(string key)
+  {
+    if (!CreateStatInstance(key, out var stat)) return "LevelPlus/Assets/Textures/UI/Hint";
+    return stat.IconPath;
+  }
+
   public Color GetColor(string key)
   {
     if (!CreateStatInstance(key, out var stat)) return Color.White;
@@ -66,14 +71,12 @@ public class StatProviderSystem : ModSystem
   }
 
   /// Register all registered stats to the player
-  public void Register(Player player)
+  public void Register(StatPlayer player)
   {
-    var statPlayer = player.GetModPlayer<StatPlayer>();
-
     foreach (var type in statTypes.Values)
     {
       if (!CreateStatInstance(type, out BaseStat stat)) continue;
-      statPlayer.Register(stat);
+      player.Register(stat);
     }
   }
 
