@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 
 namespace LevelPlus.Common.GlobalNPCs;
 
+// ReSharper disable once InconsistentNaming
 public class EssenceGlobalNPC : GlobalNPC
 {
   public override void ModifyGlobalLoot(GlobalLoot globalLoot)

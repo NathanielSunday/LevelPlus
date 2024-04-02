@@ -52,6 +52,7 @@ public class StatBar : UIElement
     icon.Left.Set(0f, 0f);
     icon.Top.Set(0, 0f);
     icon.Color = color;
+    Append(icon);
   }
 
   private void InitStatBarMain()
@@ -72,8 +73,8 @@ public class StatBar : UIElement
     statText.TextOriginX = 0.5f;
     statText.TextColor = color;
 
-
     statBarMain.Append(statText);
+    Append(statBarMain);
   }
 
   private void InitSpendButton()
@@ -91,6 +92,8 @@ public class StatBar : UIElement
       Main.LocalPlayer.GetModPlayer<StatPlayer>().AddStat(statId);
     };
     spendButton.Color = color;
+
+    Append(spendButton);
   }
 
   private void InitHint()
@@ -103,8 +106,7 @@ public class StatBar : UIElement
     hint.Left.Set(NormalUISizeWithMargin + StatBackgroundWithMargin + NormalUISizeWithMargin, 0f);
     hint.Top.Set(0f, 0f);
 
-    //hint.OnMouseOver += delegate { displayHintText = true; };
-    //hint.OnMouseOut += delegate { displayHintText = false; };
+    Append(hint);
   }
 
   #endregion
@@ -122,20 +124,6 @@ public class StatBar : UIElement
     InitStatBarMain();
     InitSpendButton();
     InitHint();
-
-    Append(icon);
-    Append(statBarMain);
-    Append(spendButton);
-    Append(hint);
-  }
-
-  public override void OnDeactivate()
-  {
-    hint = null;
-    statText = null;
-    spendButton = null;
-    statBarMain = null;
-    icon = null;
   }
 
   public override void Update(GameTime gameTime)

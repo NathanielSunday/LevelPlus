@@ -7,7 +7,6 @@ using System.Linq;
 using LevelPlus.Common.Configs;
 using LevelPlus.Common.Players.Stats;
 using LevelPlus.Common.Systems;
-using LevelPlus.Common.UI;
 using LevelPlus.Common.UI.SpendUI;
 using LevelPlus.Content.Items;
 using LevelPlus.Network.Packets;
@@ -34,7 +33,7 @@ public class StatPlayer : ModPlayer
         (Main.netMode == NetmodeID.MultiplayerClient
           ? "Multiplayer"
           : ""))
-      .WithFormatArgs(new Object[]
+      .WithFormatArgs(new object[]
       {
         Level,
         Level * Config.Life,

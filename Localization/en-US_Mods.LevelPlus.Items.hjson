@@ -15,3 +15,48 @@ Respec: {
 		'''
 	DisplayName: Insignia of Reform
 }
+
+GreaterHealingScalingPotion: {
+	DisplayName: Greater Healing Scaling Potion
+	Tooltip: ""
+}
+
+HealingScalingPotion: {
+	DisplayName: Healing Scaling Potion
+	Tooltip: ""
+}
+
+LesserHealingScalingPotion: {
+	DisplayName: Lesser Healing Scaling Potion
+	Tooltip: ""
+}
+
+SuperHealingScalingPotion: {
+	DisplayName: Super Healing Scaling Potion
+	Tooltip: ""
+}
+
+GreaterManaScalingPotion: {
+	DisplayName: Greater Mana Scaling Potion
+	Tooltip: ""
+}
+
+LesserManaScalingPotion: {
+	DisplayName: Lesser Mana Scaling Potion
+	Tooltip: ""
+}
+
+ManaScalingPotion: {
+	DisplayName: Mana Scaling Potion
+	Tooltip: ""
+}
+
+SuperManaScalingPotion: {
+	DisplayName: Super Mana Scaling Potion
+	Tooltip: ""
+}
+
+Essence: {
+	DisplayName: Essence
+	Tooltip: ""
+}

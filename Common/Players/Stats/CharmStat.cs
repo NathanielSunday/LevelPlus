@@ -17,8 +17,9 @@ public class CharmStat : BaseStat
 
   protected override object[] DescriptionArgs => new object[]
   {
-    Damage * 100, MaxMinions, Value % StatConfig.Instance.Charm_MinionCost, MaxSentries,
-    Value % StatConfig.Instance.Charm_SentryCost, FishingLevel
+    Damage * 100, MaxMinions, StatConfig.Instance.Charm_MinionCost - Value % StatConfig.Instance.Charm_MinionCost,
+    MaxSentries,
+    StatConfig.Instance.Charm_SentryCost - Value % StatConfig.Instance.Charm_SentryCost, FishingLevel
   };
 
   public override string Id => "Charm";

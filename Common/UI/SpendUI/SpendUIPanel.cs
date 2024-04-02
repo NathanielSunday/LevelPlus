@@ -10,7 +10,7 @@ using Terraria.ModLoader.UI.Elements;
 
 namespace LevelPlus.Common.UI.SpendUI;
 
-public class SpendUIPanel : DraggableUIElement
+public class SpendUIPanel : DraggableUIPanel
 {
   private const float HorizontalPadding = 10f;
   private const float MainPanelHeight = 150f;
@@ -50,12 +50,6 @@ public class SpendUIPanel : DraggableUIElement
 
     Append(statGrid);
     Append(scrollbar);
-  }
-
-  public override void OnDeactivate()
-  {
-    scrollbar = null;
-    statGrid = null;
   }
 
   public override void Update(GameTime gameTime)

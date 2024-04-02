@@ -13,7 +13,10 @@ public class AdroitStat : BaseStat
   private int BlockRange => Value / StatConfig.Instance.Adroit_RangeCost;
 
   protected override object[] DescriptionArgs => new object[]
-    { PlacementSpeed * 100, BlockRange, Value % StatConfig.Instance.Adroit_RangeCost };
+  {
+    PlacementSpeed * 100, BlockRange,
+    StatConfig.Instance.Adroit_RangeCost - Value % StatConfig.Instance.Adroit_RangeCost
+  };
 
   public override string Id => "Adroit";
   public override Color UIColor => Color.Orange;
