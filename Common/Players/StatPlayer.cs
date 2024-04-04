@@ -164,18 +164,14 @@ public class StatPlayer : ModPlayer
   // Validate has to be called "OnEnterWorld" to get server-side configs
   public override void OnEnterWorld() => Validate();
 
-  public override void SetStaticDefaults()
-  {
-    StatProviderSystem.Instance.Register(this);
-  }
-
   public override void LoadData(TagCompound tag)
   {
-    Xp = tag.GetAsLong("Xp");
+    Xp = tag.ContainsKey("Xp") ? tag.GetAsLong("Xp") : 0;
 
     LevelPlus.Instance.Logger.DebugFormat($"Loading {Player.name}");
     LevelPlus.Instance.Logger.DebugFormat("---------------------------------");
-    //StatProviderSystem.Instance.Register(Player);
+
+    StatProviderSystem.Instance.Register(this);
 
     foreach (BaseStat stat in Stats.Values)
     {
@@ -185,11 +181,11 @@ public class StatPlayer : ModPlayer
 
   public override void SaveData(TagCompound tag)
   {
-    tag.Set("Xp", Xp, true);
-
     LevelPlus.Instance.Logger.DebugFormat($"Saving {Player.name}");
     LevelPlus.Instance.Logger.DebugFormat("---------------------------------");
-    //StatProviderSystem.Instance.Register(Player);
+
+    if (!tag.ContainsKey("Xp")) StatProviderSystem.Instance.Register(this);
+    tag.Set("Xp", Xp, true);
 
     foreach (BaseStat stat in Stats.Values)
     {
