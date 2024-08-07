@@ -1,0 +1,23 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>LevelPlus</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CalamityMod">
+      <HintPath>..\ModAssemblies\CalamityMod_v2.0.3.9.dll</HintPath>
+    </Reference>
+    <Reference Include="ThoriumMod">
+      <HintPath>..\ModAssemblies\ThoriumMod_v1.7.1.6.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
