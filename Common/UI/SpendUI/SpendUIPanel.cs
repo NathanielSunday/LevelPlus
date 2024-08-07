@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using LevelPlus.Common.Systems;
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
@@ -44,7 +45,13 @@ public class SpendUIPanel : DraggableUIPanel
     PaddingRight = HorizontalPadding;
 
     List<string> idList = StatProviderSystem.Instance.GetIdList();
-    foreach (var stat in idList) statGrid.Add(new StatBar(stat));
+    foreach (var stat in idList)
+    {
+      var statBar = new StatBar(stat);
+      statBar.Width.Set(0f, 1f);
+      statBar.Height.Set(20f, 0f);
+      statGrid.Add(statBar);
+    }
 
     statGrid.Recalculate();
 
@@ -58,5 +65,6 @@ public class SpendUIPanel : DraggableUIPanel
     statGrid.Update(gameTime);
 
     if (IsMouseHovering) PlayerInput.LockVanillaMouseScroll("LevelPlus/SpendStat");
+    if (scrollbar.IsMouseHovering) Main.LocalPlayer.mouseInterface = true;
   }
 }

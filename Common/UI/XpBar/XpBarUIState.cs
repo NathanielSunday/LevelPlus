@@ -14,7 +14,7 @@ internal class XpBarUIState : UIState
 
   public override void OnInitialize()
   {
-    placement = new Vector2(ClientConfig.Instance.XpBarLeft, ClientConfig.Instance.XpBarTop);
+    placement = new Vector2(UIConfig.Instance.XpBarLeft, UIConfig.Instance.XpBarTop);
 
     xpBar = new XpBar();
     // 120 26
@@ -29,8 +29,8 @@ internal class XpBarUIState : UIState
   public override void OnDeactivate()
   {
     base.OnDeactivate();
-    ClientConfig.Instance.XpBarLeft = (int)xpBar.Left.Pixels;
-    ClientConfig.Instance.XpBarTop = (int)xpBar.Top.Pixels;
+    UIConfig.Instance.XpBarLeft = (int)xpBar.Left.Pixels;
+    UIConfig.Instance.XpBarTop = (int)xpBar.Top.Pixels;
     xpBar = null;
   }
 }

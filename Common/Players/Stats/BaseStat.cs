@@ -32,9 +32,6 @@ public abstract class BaseStat
   /// The file path of the icon for this stat
   public virtual string IconPath => LevelPlus.Instance.AssetPath + "Textures/UI/Icons/" + Id;
 
-  /// The color of the UI Elements to shift to
-  public virtual Color UIColor => Color.White;
-
   /// The amount of points invested in this stat
   public virtual int Value { get; protected internal set; }
 
@@ -89,7 +86,7 @@ public abstract class BaseStat
   {
   }
 
-  /// Whether or not the player can consume ammo
+  /// Can the player can consume ammo
   public virtual bool CanConsumeAmmo(Item weapon, Item ammo)
   {
     return true;

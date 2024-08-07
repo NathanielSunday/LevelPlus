@@ -23,7 +23,7 @@ namespace LevelPlus.Common.Players;
 
 public class StatPlayer : ModPlayer
 {
-  private PlayerConfig Config => ModContent.GetInstance<PlayerConfig>();
+  private PlayConfig Config => ModContent.GetInstance<PlayConfig>();
   public Dictionary<string, BaseStat> Stats { get; } = new();
 
   public LocalizedText LevelDescription =>
@@ -61,7 +61,7 @@ public class StatPlayer : ModPlayer
   private void Validate()
   {
     if (CommandConfig.Instance.CommandsEnabled) return;
-
+    
     var spent = 0;
     var possiblePoints = Math.Min(Level, Config.MaxLevel) * Config.Points + Config.StartingPoints;
 

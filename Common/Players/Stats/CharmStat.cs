@@ -23,7 +23,6 @@ public class CharmStat : BaseStat
   };
 
   public override string Id => "Charm";
-  public override Color UIColor => Color.Purple;
 
   public override void ModifyPlayer(Player player)
   {

@@ -13,7 +13,6 @@ public class CommandConfig : ModConfig
   public static CommandConfig Instance => ModContent.GetInstance<CommandConfig>();
   
   [DefaultValue(false)] public bool CommandsEnabled;
-  
   [DefaultValue(true)] public bool LevelCommandEnabled;
   [DefaultValue(true)] public bool PointCommandEnabled;
   [DefaultValue(true)] public bool XpCommandEnabled;

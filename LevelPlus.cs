@@ -14,14 +14,19 @@ public class LevelPlus : Mod
   public string LocalizationPrefix => "Mods." + Name + ".";
   public string AssetPath => Name + "/Assets/";
   public bool IsCalamityModLoaded;
+  public bool IsThoriumModLoaded;
 
   public override string Name => "LevelPlus";
 
-  public static LevelPlus Instance = ModContent.GetInstance<LevelPlus>();
-
+  public static LevelPlus Instance => ModContent.GetInstance<LevelPlus>();
+  
   public override void Load()
   {
     IsCalamityModLoaded = ModLoader.HasMod("CalamityMod");
+    IsThoriumModLoaded = ModLoader.HasMod("ThoriumMod");
+    
+    Logger.Info($"Calamity: {IsCalamityModLoaded}");
+    Logger.Info($"Thorium: {IsThoriumModLoaded}");
   }
 
   public override void Unload()
@@ -31,7 +36,7 @@ public class LevelPlus : Mod
   // I decided against copying tMod's hard-code nightmare :)
   public override void HandlePacket(BinaryReader reader, int whoAmI)
   {
-    Type type = Type.GetType(reader.ReadString());
+    var type = Type.GetType(reader.ReadString());
     try
     {
       var packet = Activator.CreateInstance(type!) as BasePacket;

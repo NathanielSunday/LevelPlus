@@ -12,7 +12,9 @@ namespace LevelPlus.Common.Players.Stats;
 public class LuckStat : BaseStat
 {
   private System.Random rng;
-
+  private bool calamityLoaded;
+  private bool thoriumLoaded;
+  
   private float Crit => Value * StatConfig.Instance.Luck_Crit; //dim
   private float Luck => Value * StatConfig.Instance.Luck_TerrariaLuck; //dim
   private float Mana => Value * StatConfig.Instance.Luck_ManaReductionChance * 100; //dim
@@ -22,13 +24,28 @@ public class LuckStat : BaseStat
     { Crit * 100, Luck * 100, Mana, Ammo };
 
   public override string Id => "Luck";
-  public override Color UIColor => Color.Green;
 
   public override void Load(TagCompound tag)
   {
     rng = new System.Random(System.DateTime.Now.Millisecond);
+
+    calamityLoaded = LevelPlus.Instance.IsCalamityModLoaded;
+    thoriumLoaded = LevelPlus.Instance.IsThoriumModLoaded;
   }
 
+  [JITWhenModsEnabled("CalamityMod")]
+  private void ModifyCalamityPlayer(Player player)
+  {
+    player.GetCritChance<CalamityMod.StealthDamageClass>() += Crit;
+    player.GetCritChance<CalamityMod.RogueDamageClass>() += Crit;
+  }
+  
+  [JITWhenModsEnabled("ThoriumMod")]
+  private void ModifyThoriumPlayer(Player player)
+  {
+    
+  }
+  
   //diminish
   public override void ModifyPlayer(Player player)
   {
@@ -36,6 +53,8 @@ public class LuckStat : BaseStat
     player.GetCritChance(DamageClass.Magic) += Crit;
     player.GetCritChance(DamageClass.Ranged) += Crit;
     player.GetCritChance(DamageClass.Summon) += Crit;
+    if (calamityLoaded) ModifyCalamityPlayer(player);
+    if (thoriumLoaded) ModifyThoriumPlayer(player);
     player.luck += Luck;
   }
 

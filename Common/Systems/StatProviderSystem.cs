@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using LevelPlus.Common.Players;
 using LevelPlus.Common.Players.Stats;
-using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -16,7 +15,7 @@ public class StatProviderSystem : ModSystem
 {
   private readonly Dictionary<string, Type> statTypes = new();
 
-  public static StatProviderSystem Instance = ModContent.GetInstance<StatProviderSystem>();
+  public static readonly StatProviderSystem Instance = ModContent.GetInstance<StatProviderSystem>();
 
   private bool CreateStatInstance(Type type, out BaseStat stat)
   {
@@ -43,16 +42,35 @@ public class StatProviderSystem : ModSystem
     return true;
   }
 
+  private void LoadVanillaStats()
+  {
+    Register(typeof(EnduranceStat));
+    Register(typeof(BrawnStat));
+    Register(typeof(DeftStat));
+    Register(typeof(IntellectStat));
+    Register(typeof(CharmStat));
+    Register(typeof(LuckStat));
+    Register(typeof(AdroitStat));
+    LevelPlus.Instance.Logger.Info("Registered stats");
+  }
+
+  [JITWhenModsEnabled("CalamityMod")]
+  private void LoadCalamityStats()
+  {
+    Register(typeof(StealthStat));
+    LevelPlus.Instance.Logger.Info("Registered Calamity stats");
+  }
+
+  [JITWhenModsEnabled("ThoriumMod")]
+  private void LoadThoriumStats()
+  {
+    LevelPlus.Instance.Logger.Info("Registered Thorium stats");
+  }
+
   public string GetIconPath(string key)
   {
     if (!CreateStatInstance(key, out var stat)) return "LevelPlus/Assets/Textures/UI/Hint";
     return stat.IconPath;
-  }
-
-  public Color GetColor(string key)
-  {
-    if (!CreateStatInstance(key, out var stat)) return Color.White;
-    return stat.UIColor;
   }
 
   public List<string> GetIdList()
@@ -80,14 +98,10 @@ public class StatProviderSystem : ModSystem
     }
   }
 
-  public override void Load()
+  public override void OnModLoad()
   {
-    Register(typeof(EnduranceStat));
-    Register(typeof(BrawnStat));
-    Register(typeof(DeftStat));
-    Register(typeof(IntellectStat));
-    Register(typeof(CharmStat));
-    Register(typeof(LuckStat));
-    Register(typeof(AdroitStat));
+    LoadVanillaStats();
+    if (LevelPlus.Instance.IsCalamityModLoaded) LoadCalamityStats();
+    if (LevelPlus.Instance.IsThoriumModLoaded) LoadThoriumStats();
   }
 }

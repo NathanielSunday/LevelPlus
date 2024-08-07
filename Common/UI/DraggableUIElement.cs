@@ -14,7 +14,7 @@ public class DraggableUIElement : UIElement
 
   public override void LeftMouseDown(UIMouseEvent evt)
   {
-    if (IsMouseHovering)
+    if (IsMouseHovering && !Main.LocalPlayer.mouseInterface)
       DragStart(evt);
   }
 
@@ -26,11 +26,6 @@ public class DraggableUIElement : UIElement
   public override void Update(GameTime gameTime)
   {
     base.Update(gameTime);
-
-    if (IsMouseHovering)
-    {
-      Main.LocalPlayer.mouseInterface = true;
-    }
 
     if (dragging)
     {

@@ -18,7 +18,6 @@ public class IntellectStat : BaseStat
     { Damage * 100, Mana, ManaRegen * 100 };
 
   public override string Id => "Intellect";
-  public override Color UIColor => Color.Blue;
 
   public override void ModifyPlayer(Player player)
   {

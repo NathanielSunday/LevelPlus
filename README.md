@@ -21,7 +21,7 @@ and 1 gold/platinum bar.
 - I've also got a Patreon, but not much is done with it: https://www.patreon.com/poctordepper5446
 
 ## Credits
-### Bitwiser consists of Nathaniel Sunday (PoctorDepper) and William Venables (Bidrum). Specific credits, however, go to:
+### This project is overseen by Bitwiser. However, specific credits go to:
 
 #### Development
 - Nathaniel Sunday

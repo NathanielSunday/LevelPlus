@@ -48,8 +48,6 @@ public class XpBar : DraggableUIElement
 
   private void InitBar()
   {
-    InitBarCap();
-    InitBarQuotient();
     bar = new UIImage(ModContent.Request<Texture2D>(LevelPlus.Instance.AssetPath + "Textures/UI/Hollow"));
     bar.ScaleToFit = true;
     bar.Width.Set(0f, 1f - button.Width.Percent);
@@ -68,12 +66,11 @@ public class XpBar : DraggableUIElement
     text.Left.Set(0f, 0f);
     text.Top.Set(0f, 0f);
     text.TextOriginX = 0.5f;
-    text.TextOriginY = 0.5f;
+    text.TextOriginY = 0.5f; 
   }
 
   private void InitButton()
   {
-    InitText();
     button = new UIImage(ModContent.Request<Texture2D>(LevelPlus.Instance.AssetPath + "Textures/UI/Hollow_Start"));
     button.ScaleToFit = true;
     button.Height.Set(0f, 1f);
@@ -92,7 +89,10 @@ public class XpBar : DraggableUIElement
 
   public override void OnInitialize()
   {
+    InitText();
     InitButton();
+    InitBarCap();
+    InitBarQuotient();
     InitBar();
 
     Append(bar);
@@ -112,7 +112,7 @@ public class XpBar : DraggableUIElement
   {
     base.Update(gameTime);
 
-    StatPlayer player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
+    var player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
     text.SetText(player.Level.ToString());
 
     if (bar.IsMouseHovering)
@@ -122,10 +122,10 @@ public class XpBar : DraggableUIElement
 
   protected override void DrawSelf(SpriteBatch spriteBatch)
   {
-    StatPlayer player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
+    var player = Main.LocalPlayer.GetModPlayer<StatPlayer>();
     float currentXp = player.Xp - StatPlayer.LevelToXp(player.Level);
     float neededXp = StatPlayer.LevelToXp(player.Level + 1) - StatPlayer.LevelToXp(player.Level);
-    float quotient = currentXp / neededXp;
+    var quotient = currentXp / neededXp;
 
     barQuotient.Width.Set(0f, quotient);
     Recalculate();

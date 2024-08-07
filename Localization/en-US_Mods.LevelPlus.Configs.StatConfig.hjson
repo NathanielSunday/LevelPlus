@@ -1,7 +1,7 @@
-DisplayName: Stats
+DisplayName: Stat Configuration
 
 Adroit_PlacementSpeed: {
-	Tooltip: The amount placement speed is increased by per point.
+	Tooltip: The percentage placement speed is increased by per point.
 	Label: Placement Speed
 }
 
@@ -11,26 +11,26 @@ Adroit_RangeCost: {
 }
 
 Brawn_Damage: {
-	Tooltip: The amount melee damage is increased by per point.
+	Tooltip: The percentage melee damage is increased by per point.
 	Label: Melee Damage
 }
 
 Brawn_MaxWingTime: {
 	Tooltip:
 		'''
-		The starting amount of max flight time increase.
+		The starting percentage of max flight time increase.
 			Diminishing.
 		'''
 	Label: Flight Time
 }
 
 Brawn_PickSpeed: {
-	Tooltip: The amount break speed is increased by per point.
+	Tooltip: The percentage break speed is increased by per point.
 	Label: Break Speed
 }
 
 Charm_Damage: {
-	Tooltip: The amount summon damage is increased by per point.
+	Tooltip: The percentage summon damage is increased by per point.
 	Label: Summoning Damage
 }
 
@@ -45,24 +45,24 @@ Charm_SentryCost: {
 }
 
 Charm_Fishing: {
-	Tooltip: The amount fishing level is increased by per point.
+	Tooltip: The percentage fishing level is increased by per point.
 	Label: Fishing
 }
 
 Deft_Damage: {
-	Tooltip: The amount ranged damage is increased by per point.
+	Tooltip: The percentage ranged damage is increased by per point.
 	Label: Ranged Damage
 }
 
 Deft_MaxSpeed: {
-	Tooltip: The amount max speed is increased by per point.
+	Tooltip: The percentage max speed is increased by per point.
 	Label: Max Speed
 }
 
 Deft_Acceleration: {
 	Tooltip:
 		'''
-		The starting amount of acceleration increase.
+		The starting percentage of acceleration increase.
 			Diminishing.
 		'''
 	Label: Acceleration
@@ -81,14 +81,14 @@ Endurance_Defense: {
 Endurance_LifeRegen: {
 	Tooltip:
 		'''
-		The starting amount of life regen increase.
+		The starting percentage of life regen increase.
 			Diminishing.
 		'''
 	Label: Life Regen
 }
 
 Intellect_Damage: {
-	Tooltip: The amount magic damage is increased by per point.
+	Tooltip: The percentage magic damage is increased by per point.
 	Label: Magic Damage
 }
 
@@ -100,7 +100,7 @@ Intellect_Mana: {
 Intellect_ManaRegen: {
 	Tooltip:
 		'''
-		The starting amount of mana regen increase.
+		The starting percentage of mana regen increase.
 			Diminishing.
 		'''
 	Label: Mana Regen
@@ -109,7 +109,7 @@ Intellect_ManaRegen: {
 Luck_Crit: {
 	Tooltip:
 		'''
-		The starting amount of global crit chance increase.
+		The starting percentage of global crit chance increase.
 			Diminishing.
 		'''
 	Label: Crit Chance
@@ -118,7 +118,7 @@ Luck_Crit: {
 Luck_AmmoReductionChance: {
 	Tooltip:
 		'''
-		The starting amount of chance not to consume ammo.
+		The starting percentage chance not to consume ammo.
 			Diminishing.
 		'''
 	Label: Ammo Reduction
@@ -127,7 +127,7 @@ Luck_AmmoReductionChance: {
 Luck_ManaReductionChance: {
 	Tooltip:
 		'''
-		The starting amount of chance to not consume mana.
+		The starting percentage chance to not consume mana.
 			Diminishing.
 		'''
 	Label: Mana Reduction
@@ -136,8 +136,28 @@ Luck_ManaReductionChance: {
 Luck_TerrariaLuck: {
 	Tooltip:
 		'''
-		The starting amount of Terraria game luck increase.
+		The starting percentage of Terraria game luck increase.
 			Diminishing.
 		'''
 	Label: Terraria Luck
+}
+
+Stealth_Damage: {
+	Tooltip: The percentage rogue damage is increased by per point.
+	Label: Rogue Damage
+}
+
+Stealth_Velocity: {
+	Tooltip: The percentage rogue velocity is increased by per point.
+	Label: Rogue Velocity
+}
+
+Stealth_StealthDamage: {
+	Tooltip: The percentage rogue stealth damage is increased by per point.
+	Label: Rogue Stealth Damage
+}
+
+Stealth_StealthMax: {
+	Tooltip: The percentage max stealth is increased by per point.
+	Label: Rogue Max Stealth
 }

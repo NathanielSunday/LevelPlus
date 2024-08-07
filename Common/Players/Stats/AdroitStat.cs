@@ -19,7 +19,6 @@ public class AdroitStat : BaseStat
   };
 
   public override string Id => "Adroit";
-  public override Color UIColor => Color.Orange;
 
   public override void ModifyPlayer(Player player)
   {

@@ -8,10 +8,10 @@ using Terraria.ModLoader.Config;
 namespace LevelPlus.Common.Configs;
 
 // ReSharper disable file InconsistentNaming
-public class ClientConfig : ModConfig
+public class UIConfig : ModConfig
 {
   public override ConfigScope Mode => ConfigScope.ClientSide;
-  public static ClientConfig Instance => ModContent.GetInstance<ClientConfig>();
+  public static UIConfig Instance => ModContent.GetInstance<UIConfig>();
 
 
   [DefaultValue(480)] [ReloadRequired] public int XpBarLeft;

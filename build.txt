@@ -2,4 +2,4 @@ displayName = Level+
 author = Bitwiser
 version = 1.2.0
 homepage = https://github.com/BitwiserGames/LevelPlus
-weakReferences = CalamityMod
+weakReferences = CalamityMod, ThoriumMod

@@ -14,7 +14,7 @@ public class SpendUIState : UIState
 
   public override void OnInitialize()
   {
-    placement = new Vector2(ClientConfig.Instance.SpendUILeft, ClientConfig.Instance.SpendUITop);
+    placement = new Vector2(UIConfig.Instance.SpendUILeft, UIConfig.Instance.SpendUITop);
 
     spendPanel = new SpendUIPanel();
     spendPanel.Left.Set(placement.X, 0f);

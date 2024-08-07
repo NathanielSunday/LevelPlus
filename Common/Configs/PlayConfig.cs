@@ -2,13 +2,18 @@
 // Licensed under the Apache License, Version 2.0.
 
 using System.ComponentModel;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace LevelPlus.Common.Configs;
 
-public class PlayerConfig : ModConfig
+public class PlayConfig : ModConfig
 {
   public override ConfigScope Mode => ConfigScope.ServerSide;
+  public static PlayConfig Instance => ModContent.GetInstance<PlayConfig>();
+  
+  [DefaultValue(true)] public bool ScalingEnabled;
+  [DefaultValue(0.025f)] public float LevelScalar;
   
   [DefaultValue(true)] public bool RandomStartingWeapon;
   

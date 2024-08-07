@@ -18,7 +18,6 @@ public class EnduranceStat : BaseStat
     { Life, Defense, LifeRegen * 100 };
 
   public override string Id => "Endurance";
-  public override Color UIColor => Color.LimeGreen;
 
   public override void ModifyPlayer(Player player)
   {

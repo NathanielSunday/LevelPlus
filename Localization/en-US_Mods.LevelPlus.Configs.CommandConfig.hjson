@@ -1,4 +1,4 @@
-DisplayName: Commands
+DisplayName: Command Configuration
 
 CommandsEnabled: {
 	Tooltip: Enables commands and disables player validation.
