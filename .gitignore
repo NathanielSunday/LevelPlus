@@ -17,9 +17,7 @@
 
 # Rider
 # Rider auto-generates .iml files, and contentModel.xml
-**/.idea/**/*.iml
-**/.idea/**/contentModel.xml
-**/.idea/**/modules.xml
+.idea/
 
 *.suo
 *.user
