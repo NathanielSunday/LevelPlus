@@ -1,6 +1,6 @@
 <div align="center">
   
-  ![Level+ logo](https://github.com/NathanielSunday/LevelPlus/raw/master/icon.png)
+  ![Level+ logo](https://github.com/NathanielSunday/LevelPlus/raw/main/icon.png)
 
   ![Version](https://img.shields.io/github/v/release/nathanielsunday/levelplus?color=green&label=current%20version)\
   [![Steam users](https://img.shields.io/steam/downloads/2600460955?color=005777&logo=steam&label=steam%20users)](https://steamcommunity.com/sharedfiles/filedetails/?id=2600460955)
