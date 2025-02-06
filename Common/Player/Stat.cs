@@ -15,7 +15,7 @@ public interface Stat
     LocalizedText SpendTooltip { get; }
     
     // The access key for stat, usually the name.
-    string ID { get; }
+    string Id { get; }
     
     // The path of the icon to be used in the UI.
     string IconPath { get; }
