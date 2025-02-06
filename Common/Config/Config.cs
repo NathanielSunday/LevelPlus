@@ -1,25 +1,34 @@
+using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
 namespace LevelPlus.Common.Config;
 
 [BackgroundColor(55, 15, 85, 190)]
-public partial class PlayConfiguration
+public partial class PlayConfiguration : ModConfig
 {
-    public override ConfigScope Mode => ConfigScope.ServerSide;    
-    public override void OnLoaded() => (Mod as LevelPlus)!.PlayConfig = this;
-    
+    public static PlayConfiguration Instance { get; private set; }
+
+    public override ConfigScope Mode => ConfigScope.ServerSide;
+    public override void OnLoaded() => Instance = this;
+
+    [Header("Play")]
     [BackgroundColor(0, 0, 0)]
     [Range(0f, 0.10f)]
-    public float ScalingPercentage { get; set; } = 0.02f;
-    
+    [DefaultValue(0.02f)]
+    public float ScalingPercentage { get; set; }
+
     [BackgroundColor(0, 0, 0)]
     [Increment(0.1f)]
     [Range(0f, 1f)]
-    public float LossPercentage { get; set; } = 0.1f;
-    
+    [DefaultValue(0.1f)]
+    public float LossPercentage { get; set; }
+
     [BackgroundColor(0, 0, 0)]
-    public bool RandomStartingWeapon { get; set; } = true;
-    
-    public int StartingPoints { get; set; } = 3;
-    
+    [DefaultValue(true)]
+    public bool RandomStartingWeapon { get; set; }
+
+    [BackgroundColor(0, 0, 0)]
+    [Range(0, 10)]
+    [DefaultValue(3)]
+    public int StartingPoints { get; set; }
 }

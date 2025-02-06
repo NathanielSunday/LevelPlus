@@ -3,12 +3,13 @@ using Terraria.ModLoader.Config;
 
 namespace LevelPlus.Common.Config;
 
-public partial class PlayConfiguration : ModConfig
+public partial class PlayConfiguration
 {
-    [Header("StatsHeader")]
+    [Header("Stats")]
     [Expand(false)]
     [BackgroundColor(255, 255, 255)]
-    [LabelKey("$Mods.LevelPlus.Stats.Level.DisplayName")]
+    [LabelKey("$Mods.LevelPlus.Configs.LevelConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.LevelConfig.Tooltip")]
     public LevelConfig Level { get; set; } = new();
 
     public class LevelConfig
@@ -23,7 +24,7 @@ public partial class PlayConfiguration : ModConfig
         [Range(0, 10)]
         [BackgroundColor(255, 255, 255)]
         public int Points { get; set; } = 2;
-        
+
         [Slider]
         [Range(0, 10)]
         [BackgroundColor(255, 255, 255)]
@@ -40,7 +41,8 @@ public partial class PlayConfiguration : ModConfig
 
     [Expand(false)]
     [BackgroundColor(255, 255, 0)]
-    [LabelKey("$Mods.LevelPlus.Stats.Endurance.DisplayName")]
+    [LabelKey("$Mods.LevelPlus.Configs.EnduranceConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.EnduranceConfig.Tooltip")]
     public EnduranceConfig Endurance { get; set; } = new();
 
     public class EnduranceConfig
@@ -65,7 +67,8 @@ public partial class PlayConfiguration : ModConfig
 
     [Expand(false)]
     [BackgroundColor(255, 0, 0)]
-    [LabelKey("$Mods.LevelPlus.Stats.Brawn.DisplayName")]
+    [LabelKey("$Mods.LevelPlus.Configs.BrawnConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.BrawnConfig.Tooltip")]
     public BrawnConfig Brawn { get; set; } = new();
 
     public class BrawnConfig
@@ -88,7 +91,8 @@ public partial class PlayConfiguration : ModConfig
 
     [Expand(false)]
     [BackgroundColor(0, 255, 255)]
-    [LabelKey("$Mods.LevelPlus.Stats.Deft.DisplayName")]
+    [LabelKey("$Mods.LevelPlus.Configs.DeftConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.DeftConfig.Tooltip")]
     public DeftConfig Deft { get; set; } = new();
 
     public class DeftConfig
@@ -115,7 +119,8 @@ public partial class PlayConfiguration : ModConfig
 
     [Expand(false)]
     [BackgroundColor(0, 0, 255)]
-    [LabelKey("$Mods.LevelPlus.Stats.Intellect.DisplayName")]
+    [LabelKey("$Mods.LevelPlus.Configs.IntellectConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.IntellectConfig.Tooltip")]
     public IntellectConfig Intellect { get; set; } = new();
 
     public class IntellectConfig
@@ -144,7 +149,8 @@ public partial class PlayConfiguration : ModConfig
 
     [Expand(false)]
     [BackgroundColor(255, 0, 255)]
-    [LabelKey("$Mods.LevelPlus.Stats.Charm.DisplayName")]
+    [LabelKey("$Mods.LevelPlus.Configs.CharmConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.CharmConfig.Tooltip")]
     public CharmConfig Charm { get; set; } = new();
 
     public class CharmConfig
@@ -173,7 +179,8 @@ public partial class PlayConfiguration : ModConfig
 
     [Expand(false)]
     [BackgroundColor(0, 255, 0)]
-    [LabelKey("$Mods.LevelPlus.Stats.Luck.DisplayName")]
+    [LabelKey("$Mods.LevelPlus.Configs.LuckConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.LuckConfig.Tooltip")]
     public LuckConfig Luck { get; set; } = new();
 
     public class LuckConfig
