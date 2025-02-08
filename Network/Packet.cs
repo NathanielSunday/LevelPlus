@@ -7,11 +7,18 @@ namespace LevelPlus.Network;
 
 public abstract class Packet
 {
+    // Forward this packet to all other clients
+    protected abstract bool Forward { get; }
+
+    protected abstract void Write(BinaryWriter writer);
+
+    protected abstract void Read(BinaryReader reader, int whoAmI);
+    
     public void Send(int toClient = -1, int ignoreClient = -1)
     {
-        ModPacket packet = ModContent.GetInstance<LevelPlus>().GetPacket();
+        var packet = ModContent.GetInstance<LevelPlus>().GetPacket();
 
-        packet.Write(GetType().Name);
+        packet.Write(GetType().ToString());
         Write(packet);
 
         packet.Send(toClient, ignoreClient);
@@ -20,23 +27,14 @@ public abstract class Packet
     public void Receive(BinaryReader reader, int whoAmI)
     {
         Read(reader, whoAmI);
+        if (Forward) ForwardAll(whoAmI);
     }
 
-    protected abstract void Write(BinaryWriter writer);
-
-    protected abstract void Read(BinaryReader reader, int whoAmI);
-
-    protected void Spread()
+    private void ForwardAll(int whoAmI)
     {
-        switch (Main.netMode)
+        if (Main.netMode == NetmodeID.Server)
         {
-            case NetmodeID.MultiplayerClient:
-                Send(-1, Main.myPlayer);
-                break;
-
-            case NetmodeID.Server:
-                Send();
-                break;
+            Send(-1, whoAmI);
         }
     }
 }
