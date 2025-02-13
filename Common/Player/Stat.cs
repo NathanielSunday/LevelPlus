@@ -20,7 +20,7 @@ public abstract class Stat : ModPlayer
         get
         {
             var keybind = ModContent.GetInstance<KeybindSystem>();
-            return Value + Math.Min(ModContent.GetInstance<StatSystem>().Points,
+            return Value + Math.Min(Player.GetModPlayer<LevelPlayer>().Points,
                 (keybind.SpendMultFive.Current ? 5 : 1) *
                 (keybind.SpendMultTen.Current ? 10 : 1) *
                 (keybind.SpendMultTwenty.Current ? 20 : 1)
