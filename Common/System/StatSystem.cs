@@ -11,9 +11,7 @@ public class StatSystem : ModSystem
 {
     // Base instances of Stat implementations, should not modify these directly
     private SortedList<string, ModPlayer> stats;
-
-    public int Points { get; set; }
-
+    
     public void ValidateStats(Terraria.Player player)
     {
         var maxPoints = player.GetModPlayer<LevelPlayer>().Level * PlayConfiguration.Instance.Level.Points +
@@ -25,7 +23,7 @@ public class StatSystem : ModSystem
             playerStats.ForEach(s => s.Value -= s.Value > 0 ? 1 : 0);
         }
 
-        Points = maxPoints - playerStats.Sum(s => s.Value);
+        player.GetModPlayer<LevelPlayer>().Points = maxPoints - playerStats.Sum(s => s.Value);
     }
 
     public Stat GetStat(int player, string id)
