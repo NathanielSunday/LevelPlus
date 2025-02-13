@@ -2,7 +2,6 @@ using System;
 using LevelPlus.Common.Config;
 using Terraria;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace LevelPlus.Common.Player;
 
