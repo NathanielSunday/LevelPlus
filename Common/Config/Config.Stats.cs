@@ -103,17 +103,13 @@ public partial class PlayConfiguration
 
         [Range(0, 0.10f)]
         [BackgroundColor(0, 255, 255)]
-        public float MaxSpeed { get; set; } = 0.01f;
+        public float MoveSpeed { get; set; } = 0.01f;
 
         [Range(0, 0.10f)]
         [BackgroundColor(0, 255, 255)]
         public float PlacementSpeed { get; set; } = 0.02f;
-
-        [Range(0, 0.10f)]
-        [BackgroundColor(0, 255, 255)]
-        public float Acceleration { get; set; } = 0.02f;
-
-        public override int GetHashCode() => HashCode.Combine(Damage, MaxSpeed, PlacementSpeed, Acceleration);
+        
+        public override int GetHashCode() => HashCode.Combine(Damage, MoveSpeed, PlacementSpeed);
     }
 
 
