@@ -31,7 +31,7 @@ public class CharmStat : Stat
     
     private float FishingLevel(bool projected = false)
     {
-        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Deft.PlacementSpeed;
+        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Charm.Fishing;
     }
 
     public override void PostUpdateMiscEffects()
