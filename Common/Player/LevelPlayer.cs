@@ -1,11 +1,15 @@
 using System;
 using LevelPlus.Common.Config;
+using LevelPlus.Common.System;
+using LevelPlus.Network;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace LevelPlus.Common.Player;
 
@@ -18,6 +22,8 @@ public class LevelPlayer : ModPlayer
         set => Experience = LevelToExperience(value);
     }
 
+    public int Points { get; set; }
+    
     public long Experience { get; set; }
 
     public LocalizedText Description => Mod.GetLocalization("Stats.Level.Tooltip" +
@@ -56,28 +62,83 @@ public class LevelPlayer : ModPlayer
     // Used explicitly for gaining experience legitimately 
     public void GainExperience(long experience)
     {
-        int priorLevel = Level;
+        var priorLevel = Level;
         Experience += experience;
 
         // Show experience gain popup
         if (Main.dedServ) return;
         CombatText.NewText(Player.getRect(), Color.Aqua,
-            Language.GetTextValue(Mod.Name + "Stats.Level.Popup.Experience", experience));
+            Language.GetTextValue(((LevelPlus)Mod).LocalizationPrefix + "Stats.Level.Popup.Experience", experience));
 
-        // Show level up popup and play level up sound
+        // Show level up popup, play level up sound, and give runtime points
         if (priorLevel == Level) return;
         SoundEngine.PlaySound(new SoundStyle(((LevelPlus)Mod).AssetPath + "Sounds/LevelUp"));
         CombatText.NewText(Player.getRect(), Color.GreenYellow,
             Language.GetTextValue(((LevelPlus)Mod).LocalizationPrefix + "Stats.Level.Popup.LevelUp"));
+        
+        Points += PlayConfiguration.Instance.Level.Points * (Level - priorLevel);
     }
 
     public override void OnEnterWorld()
     {
-        // TODO Verify the player
+        if (PlayConfiguration.Instance.CommandsEnabled) return;
+        ModContent.GetInstance<StatSystem>().ValidateStats(Player);
     }
 
     public override void OnRespawn()
     {
-        Experience = Math.Max(LevelToExperience(Level), (long)(Experience - (Experience - LevelToExperience(Level)) * PlayConfiguration.Instance.LossPercentage));
+        var lossPercentage = PlayConfiguration.Instance.LossPercentage;
+        
+        if (lossPercentage == 0f) return;
+        
+        Experience = Math.Max(LevelToExperience(Level), (long)(Experience - (Experience - LevelToExperience(Level)) * lossPercentage));
+    }
+    
+    public override void PostUpdateMiscEffects()
+    {
+        Player.statLifeMax2 += Life;
+        Player.statManaMax2 += Mana;
+    }
+
+    public override void LoadData(TagCompound tag)
+    {
+        Experience = tag.ContainsKey("Experience") ? tag.GetLong("Experience") : 0;
+    }
+
+    public override void SaveData(TagCompound tag)
+    {
+        tag.Set("Experience", Experience);
+    }
+
+    public override void CopyClientState(ModPlayer targetCopy)
+    {
+        ((LevelPlayer)targetCopy).Level = Level;
+    }
+
+    public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+    {
+        if (!newPlayer) return;
+
+        var packet = new StatPacket
+        {
+            Id = "level",
+            Value = Level
+        };
+        
+        packet.Send();
+    }
+
+    public override void SendClientChanges(ModPlayer clientCopy)
+    {
+        if (((LevelPlayer)clientCopy).Level == Level) return;
+        
+        SyncPlayer(0, 0, true);
+    }
+
+    public override void ProcessTriggers(TriggersSet triggersSet)
+    {
+        if (Main.netMode == NetmodeID.Server) return;
+        if (ModContent.GetInstance<KeybindSystem>().ToggleStatUI.JustPressed) return;
+        ModContent.GetInstance<StatUISystem>().Toggle();
     }
 }
