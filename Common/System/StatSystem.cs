@@ -57,9 +57,7 @@ public class StatSystem : ModSystem
     {
         foreach (var player in Mod.GetContent<ModPlayer>())
         {
-            var stat = player as Stat;
-
-            if (stat is null) continue;
+            if (player as Stat is not { } stat) continue;
 
             stats.Add(stat.Id, player);
         }
