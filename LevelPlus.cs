@@ -30,18 +30,14 @@ public class LevelPlus : Mod
     public override void HandlePacket(BinaryReader reader, int whoAmI)
     {
         var typeString = reader.ReadString();
-        var type = Type.GetType(typeString);
         
-        if (type is null || 
-            !type.IsAssignableFrom(typeof(Packet)))
+        if (Type.GetType(typeString) is not { } type)
         {
             Logger.WarnFormat("{0}: Packet of unknown type \"{1}\"", Name, typeString);
             return;
         }
 
-        var packet = (Packet)Activator.CreateInstance(type);
-        
-        if (packet is null)
+        if (Activator.CreateInstance(type) is not Packet packet)
         {
             Logger.WarnFormat("{0}: Failed to instantiate Packet of type \"{1}\"", Name, typeString);
             return;
