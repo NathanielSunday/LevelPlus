@@ -15,17 +15,17 @@ public class BrawnStat : Stat
 
     private float Damage(bool projected = false)
     {
-        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Endurance.Life;
+        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Brawn.Damage;
     }
 
     private float WingTimeMax(bool projected = false)
     {
-        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Endurance.Defense;
+        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Brawn.MaxWingTime;
     }
 
     private float PickSpeed(bool projected = false)
     {
-        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Endurance.LifeRegenCost * 2;
+        return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Brawn.PickSpeed;
     }
 
     public override void PostUpdateMiscEffects()
