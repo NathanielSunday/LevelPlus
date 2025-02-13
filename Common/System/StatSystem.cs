@@ -55,7 +55,7 @@ public class StatSystem : ModSystem
 
     public override void OnModLoad()
     {
-        foreach (var player in Mod.GetContent<ModPlayer>())
+        foreach (var player in ModContent.GetContent<ModPlayer>())
         {
             if (player as Stat is not { } stat) continue;
 
