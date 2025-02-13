@@ -130,16 +130,16 @@ public partial class PlayConfiguration
         [BackgroundColor(0, 0, 255)]
         public int Mana { get; set; } = 2;
 
-        [Range(0, 0.10f)]
+        [Range(10, 60)]
         [BackgroundColor(0, 0, 255)]
-        public float ManaRegen { get; set; } = 0.02f;
+        public int ManaRegenCost { get; set; } = 30;
 
         [Slider]
         [Range(10, 60)]
         [BackgroundColor(0, 0, 255)]
         public int BlockRangeCost { get; set; } = 25;
 
-        public override int GetHashCode() => HashCode.Combine(Damage, Mana, ManaRegen, BlockRangeCost);
+        public override int GetHashCode() => HashCode.Combine(Damage, Mana, ManaRegenCost, BlockRangeCost);
     }
 
 
