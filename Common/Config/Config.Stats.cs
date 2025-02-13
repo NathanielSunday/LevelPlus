@@ -57,11 +57,11 @@ public partial class PlayConfiguration
         [BackgroundColor(255, 255, 0)]
         public int Defense { get; set; } = 2;
 
-        [Range(0, 0.10f)]
+        [Range(10, 60)]
         [BackgroundColor(255, 255, 0)]
-        public float LifeRegen { get; set; } = 0.05f;
+        public int LifeRegenCost { get; set; } = 20;
 
-        public override int GetHashCode() => HashCode.Combine(Life, Defense, LifeRegen);
+        public override int GetHashCode() => HashCode.Combine(Life, Defense, LifeRegenCost);
     }
 
 
