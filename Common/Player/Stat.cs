@@ -29,25 +29,23 @@ public abstract class Stat : ModPlayer
     }
 
     // The LocalizedText for the name of the Stat
-    public virtual LocalizedText Name =>
-        Language.GetText(((LevelPlus)Mod).LocalizationPrefix + "Stats." + Id + ".DisplayName");
+    public virtual LocalizedText Name => Mod.GetLocalization("Stats." + Id + ".DisplayName", () => Id);
 
     // The LocalizedText for the description. Should be pre-formatted with args.
-    public virtual LocalizedText Description =>
-        Language.GetText(((LevelPlus)Mod).LocalizationPrefix + "Stats." + Id + ".Tooltip");
+    public virtual LocalizedText Description => Mod.GetLocalization("Stats." + Id + ".Tooltip", () => Id + " Tooltip");
 
     // The LocalizedText for the description for next point(s) spent. Should be pre-formatted with args.
     public virtual LocalizedText SpendTooltip => Description;
 
     // The path of the icon to be used in the UI.
-    public virtual string IconPath => ((LevelPlus)Mod).AssetPath + "Icons/" + Id;
-    
+    public virtual string IconPath => "Assets/Icons/" + Id;
+
     // The color to modify the UI element by.
     public virtual Color Color => Color.White;
-    
+
     // The access key for stat, usually the name.
     public abstract string Id { get; }
-    
+
     public override void LoadData(TagCompound tag)
     {
         Value = tag.ContainsKey(Id) ? tag.GetInt(Id) : 0;
