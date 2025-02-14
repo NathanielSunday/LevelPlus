@@ -67,14 +67,14 @@ public class LevelPlayer : ModPlayer
 
         // Show experience gain popup
         if (Main.dedServ) return;
-        CombatText.NewText(Player.getRect(), Color.Aqua,
-            Language.GetTextValue(((LevelPlus)Mod).LocalizationPrefix + "Stats.Level.Popup.Experience", experience));
+        CombatText.NewText(Player.getRect(), Color.Lime, 
+            Mod.GetLocalization("Stats.Level.Popup.Experience").Format(experience));
 
         // Show level up popup, play level up sound, and give runtime points
         if (priorLevel == Level) return;
-        SoundEngine.PlaySound(new SoundStyle(((LevelPlus)Mod).AssetPath + "Sounds/LevelUp"));
-        CombatText.NewText(Player.getRect(), Color.GreenYellow,
-            Language.GetTextValue(((LevelPlus)Mod).LocalizationPrefix + "Stats.Level.Popup.LevelUp"));
+        SoundEngine.PlaySound(new SoundStyle($"{Mod.Name}/Assets/Sounds/LevelUp"));
+        CombatText.NewText(Player.getRect(), Color.Aqua,
+            Mod.GetLocalization("Stats.Level.Popup.LevelUp").Value);
         
         Points += PlayConfiguration.Instance.Level.Points * (Level - priorLevel);
     }
