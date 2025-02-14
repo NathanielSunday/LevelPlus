@@ -7,8 +7,6 @@ namespace LevelPlus;
 
 public class LevelPlus : Mod
 {
-    public string LocalizationPrefix => "Mods." + Name + ".";
-    public string AssetPath => Name + "/Assets/";
     public bool IsCalamityLoaded { get; private set; }
     public bool IsThoriumLoaded { get; private set; }
 
