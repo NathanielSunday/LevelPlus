@@ -57,6 +57,7 @@ public partial class PlayConfiguration
         [BackgroundColor(255, 255, 0)]
         public int Defense { get; set; } = 2;
 
+        [Slider]
         [Range(10, 60)]
         [BackgroundColor(255, 255, 0)]
         public int LifeRegenCost { get; set; } = 20;
@@ -130,6 +131,7 @@ public partial class PlayConfiguration
         [BackgroundColor(0, 0, 255)]
         public int Mana { get; set; } = 2;
 
+        [Slider]
         [Range(10, 60)]
         [BackgroundColor(0, 0, 255)]
         public int ManaRegenCost { get; set; } = 30;
