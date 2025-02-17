@@ -1,7 +1,7 @@
 using LevelPlus.Common.Config;
 using LevelPlus.Common.Player;
 using LevelPlus.Common.UI;
-using LevelPlus.Content;
+using LevelPlus.Content.Item;
 using LevelPlus.Network;
 using Terraria;
 using Terraria.DataStructures;
@@ -48,7 +48,9 @@ public class ScalingNPC : Terraria.ModLoader.GlobalNPC
 
     public override void OnSpawn(NPC npc, IEntitySource source)
     {
-        npc.life = npc.lifeMax = (int)(npc.lifeMax * (1 + Scalar)); //, npc.lifeMax, int.MaxValue);
+        // Doesn't work on variants for some reason (e.g. Green Slime)
+        // May end up moving this to ApplyDifficultyAndPlayerScaling and make scaling an Expert+ feature
+        npc.life = npc.lifeMax = (int)(npc.lifeMax * (1 + Scalar));
     }
 
     public override void OnKill(NPC npc)

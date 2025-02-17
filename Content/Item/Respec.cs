@@ -5,21 +5,21 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace LevelPlus.Content;
+namespace LevelPlus.Content.Item;
 
 public class Respec : ModItem
 {
-    public override string Texture => ((LevelPlus)Mod).AssetPath + "Textures/Respec";
+    public override string Texture => $"{Mod.Name}/Assets/Textures/Items/Respec";
 
     public override void SetDefaults()
     {
-        Item.width = 40;
-        Item.height = 40;
+        Item.width = 28;
+        Item.height = 28;
         Item.useTime = 20;
         Item.useAnimation = ItemUseStyleID.HoldUp;
         Item.maxStack = 1;
         Item.consumable = true;
-        Item.value = Item.sellPrice(gold: 5);
+        Item.value = Terraria.Item.sellPrice(gold: 5);
         Item.rare = ItemRarityID.Lime;
         Item.UseSound = SoundID.Item4;
     }
@@ -27,15 +27,15 @@ public class Respec : ModItem
     public override void AddRecipes()
     {
         CreateRecipe()
-            .AddIngredient(ItemID.GoldBar)
-            .AddIngredient<Essence>(50)
+            .AddIngredient(ItemID.GoldBar, 2)
+            .AddIngredient<Essence>(100)
             .AddTile(TileID.MythrilAnvil)
             .DisableDecraft()
             .Register();
         
         CreateRecipe()
-            .AddIngredient(ItemID.PlatinumBar)
-            .AddIngredient<Essence>(50)
+            .AddIngredient(ItemID.PlatinumBar, 2)
+            .AddIngredient<Essence>(100)
             .AddTile(TileID.MythrilAnvil)
             .DisableDecraft()
             .Register();

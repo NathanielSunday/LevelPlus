@@ -5,21 +5,21 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace LevelPlus.Content;
+namespace LevelPlus.Content.Item;
 
 public class Restart : ModItem
 {
-    public override string Texture => ((LevelPlus)Mod).AssetPath + "Textures/Restart";
+    public override string Texture => $"{Mod.Name}/Assets/Textures/Items/Restart";
 
     public override void SetDefaults()
     {
-        Item.width = 40;
-        Item.height = 40;
+        Item.width = 28;
+        Item.height = 28;
         Item.useTime = 20;
         Item.useAnimation = ItemUseStyleID.HoldUp;
         Item.maxStack = 1;
         Item.consumable = true;
-        Item.value = Item.sellPrice(silver: 20);
+        Item.value = Terraria.Item.sellPrice(silver: 20);
         Item.rare = ItemRarityID.Green;
         Item.UseSound = SoundID.Item4;
     }

@@ -1,20 +1,20 @@
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
-namespace LevelPlus.Content;
+namespace LevelPlus.Content.Item;
 
 public class LesserScalingPotion : ScalingPotion
 {
     protected override float HealLifePercent => 0.1f;
     protected override float HealManaPercent => 0.125f;
     
-    public override string Texture => ((LevelPlus)Mod).AssetPath + "Textures/LesserScalingPotion";
+    public override string Texture => $"{Mod.Name}/Assets/Textures/Items/LesserScalingPotion";
 
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.value = Item.buyPrice(silver: 50);
+        Item.height = 26;
+        Item.value = Terraria.Item.buyPrice(silver: 50);
+        Item.rare = new Terraria.Item(ItemID.LesserHealingPotion).rare + 1;
     }
 
     public override void AddRecipes()
