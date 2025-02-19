@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using LevelPlus.Common.Config;
 using LevelPlus.Common.System;
+using LevelPlus.Content.Item;
 using LevelPlus.Network;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -23,7 +25,7 @@ public class LevelPlayer : ModPlayer
     }
 
     public int Points { get; set; }
-    
+
     public long Experience { get; set; }
 
     public LocalizedText Description => Mod.GetLocalization("Stats.Level.Tooltip" +
@@ -53,7 +55,7 @@ public class LevelPlayer : ModPlayer
     {
         return Math.Min((int)Math.Floor(Math.Pow(experience / 100f, 5 / 11f)), PlayConfiguration.Instance.Level.Max);
     }
-    
+
     public static long LevelToExperience(int level)
     {
         return (long)Math.Ceiling(100f * Math.Pow(level, 11 / 5f));
@@ -67,7 +69,7 @@ public class LevelPlayer : ModPlayer
 
         // Show experience gain popup
         if (Main.dedServ) return;
-        CombatText.NewText(Player.getRect(), Color.Lime, 
+        CombatText.NewText(Player.getRect(), Color.Lime,
             Mod.GetLocalization("Stats.Level.Popup.Experience").Format(experience));
 
         // Show level up popup, play level up sound, and give runtime points
@@ -75,7 +77,7 @@ public class LevelPlayer : ModPlayer
         SoundEngine.PlaySound(new SoundStyle($"{Mod.Name}/Assets/Sounds/LevelUp"));
         CombatText.NewText(Player.getRect(), Color.Aqua,
             Mod.GetLocalization("Stats.Level.Popup.LevelUp").Value);
-        
+
         Points += PlayConfiguration.Instance.Level.Points * (Level - priorLevel);
     }
 
@@ -85,35 +87,74 @@ public class LevelPlayer : ModPlayer
         ModContent.GetInstance<StatSystem>().ValidateStats(Player);
     }
 
+    public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
+    {
+        if (mediumCoreDeath) return [];
+        return [
+            new Item(ModContent.ItemType<Respec>()),
+            new Item(ModContent.ItemType<LesserScalingPotion>(), 5)
+        ];
+    }
+
+    public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod,
+        bool mediumCoreDeath)
+    {
+        if (mediumCoreDeath || !PlayConfiguration.Instance.RandomStartingWeapon) return;
+
+        var rand = new Random(DateTime.Now.Millisecond);
+
+        var startingWeapon = rand.Next(9) switch
+        {
+            0 => new Item(ItemID.WoodenBoomerang),
+            1 => new Item(ItemID.CopperBow),
+            2 => new Item(ItemID.WandofSparking),
+            3 => new Item(ItemID.BabyBirdStaff),
+            4 => new Item(ItemID.Spear),
+            5 => new Item(ItemID.WoodYoyo),
+            6 => new Item(ItemID.Blowpipe),
+            7 => new Item(ItemID.Shuriken, 200 + rand.Next(101)),
+            _ => new Item(ItemID.CopperBroadsword)
+        };
+
+        itemsByMod["Terraria"][0] = startingWeapon;
+        
+        itemsByMod[Mod.Name].Add(startingWeapon.type switch
+        {
+            ItemID.CopperBow => new Item(rand.Next(3) switch
+            {
+                0 => ItemID.BoneArrow,
+                1 => ItemID.FlamingArrow,
+                _ => ItemID.WoodenArrow
+            }, 100 + rand.Next(101)),
+            ItemID.WandofSparking => new Item(ItemID.ManaCrystal),
+            ItemID.Blowpipe => new Item(ItemID.Seed, 100 + rand.Next(101)),
+            _ => new Item(ItemID.SilverCoin, 50)
+        });
+    }
+
     public override void OnRespawn()
     {
         var lossPercentage = PlayConfiguration.Instance.LossPercentage;
-        
+
         if (lossPercentage == 0f) return;
-        
-        Experience = Math.Max(LevelToExperience(Level), (long)(Experience - (Experience - LevelToExperience(Level)) * lossPercentage));
+
+        Experience = Math.Max(LevelToExperience(Level),
+            (long)(Experience - (Experience - LevelToExperience(Level)) * lossPercentage));
     }
-    
+
     public override void PostUpdateMiscEffects()
     {
         Player.statLifeMax2 += Life;
         Player.statManaMax2 += Mana;
     }
+    
+    public override void Initialize() => Experience = 0;
 
-    public override void LoadData(TagCompound tag)
-    {
-        Experience = tag.ContainsKey("Experience") ? tag.GetLong("Experience") : 0;
-    }
+    public override void LoadData(TagCompound tag) => Experience = tag.GetLong("Experience");
 
-    public override void SaveData(TagCompound tag)
-    {
-        tag.Set("Experience", Experience);
-    }
+    public override void SaveData(TagCompound tag) => tag["Experience"] = Experience;
 
-    public override void CopyClientState(ModPlayer targetCopy)
-    {
-        ((LevelPlayer)targetCopy).Level = Level;
-    }
+    public override void CopyClientState(ModPlayer targetCopy) => ((LevelPlayer)targetCopy).Level = Level;
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
@@ -124,21 +165,21 @@ public class LevelPlayer : ModPlayer
             Id = "level",
             Value = Level
         };
-        
+
         packet.Send();
     }
 
     public override void SendClientChanges(ModPlayer clientCopy)
     {
         if (((LevelPlayer)clientCopy).Level == Level) return;
-        
+
         SyncPlayer(0, 0, true);
     }
 
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
         if (Main.netMode == NetmodeID.Server) return;
-        if (ModContent.GetInstance<KeybindSystem>().ToggleStatUI.JustPressed) return;
+        if (!ModContent.GetInstance<KeybindSystem>().ToggleStatUI.JustPressed) return;
         ModContent.GetInstance<StatUISystem>().Toggle();
     }
 }

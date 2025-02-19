@@ -15,13 +15,14 @@ public class Restart : ModItem
     {
         Item.width = 28;
         Item.height = 28;
+        Item.useStyle = ItemUseStyleID.HoldUp;
+        Item.useAnimation = 15;
         Item.useTime = 20;
-        Item.useAnimation = ItemUseStyleID.HoldUp;
+        Item.UseSound = SoundID.Item4;
         Item.maxStack = 1;
         Item.consumable = true;
         Item.value = Terraria.Item.sellPrice(silver: 20);
         Item.rare = ItemRarityID.Green;
-        Item.UseSound = SoundID.Item4;
     }
 
     public override void AddRecipes()

@@ -38,7 +38,7 @@ public abstract class Stat : ModPlayer
     public virtual LocalizedText SpendTooltip => Description;
 
     // The path of the icon to be used in the UI.
-    public virtual string IconPath => "Assets/Icons/" + Id;
+    public virtual string IconPath => "Assets/Textures/UI/Icons/" + Id;
 
     // The color to modify the UI element by.
     public virtual Color Color => Color.White;
@@ -46,20 +46,13 @@ public abstract class Stat : ModPlayer
     // The access key for stat, usually the name.
     public abstract string Id { get; }
 
-    public override void LoadData(TagCompound tag)
-    {
-        Value = tag.ContainsKey(Id) ? tag.GetInt(Id) : 0;
-    }
+    public override void Initialize() => Value = 0;
 
-    public override void SaveData(TagCompound tag)
-    {
-        tag.Add(Id, Value);
-    }
+    public override void LoadData(TagCompound tag) => Value = tag.GetInt(Id);
 
-    public override void CopyClientState(ModPlayer targetCopy)
-    {
-        ((Stat)targetCopy).Value = Value;
-    }
+    public override void SaveData(TagCompound tag) => tag[Id] = Value;
+
+    public override void CopyClientState(ModPlayer targetCopy) => ((Stat)targetCopy).Value = Value;
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {

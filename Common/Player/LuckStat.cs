@@ -7,7 +7,7 @@ namespace LevelPlus.Common.Player;
 
 public class LuckStat : Stat
 {
-    private Random rng;
+    private static Random rng;
     
     public override LocalizedText Description => base.Description.WithFormatArgs(Crit(), Luck(), Ammo());
 
@@ -31,14 +31,10 @@ public class LuckStat : Stat
         return Math.Min(1, (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Luck.Ammo) * 100;
     }
 
-    public override void Load()
+    public override void Initialize()
     {
-        rng = new Random();
-    }
-
-    public override void Unload()
-    {
-        rng = null;
+        base.Initialize();
+        rng = new Random(DateTime.Now.Millisecond);
     }
 
     public override void ModifyWeaponCrit(Item item, ref float crit)
@@ -46,9 +42,9 @@ public class LuckStat : Stat
         crit += Crit();
     }
 
-    public override void PostUpdateMiscEffects()
+    public override void ModifyLuck(ref float luck)
     {
-        Player.luck += Luck();
+        luck += Luck();
     }
 
     public override bool CanConsumeAmmo(Item weapon, Item ammo)
