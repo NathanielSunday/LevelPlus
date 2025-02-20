@@ -147,7 +147,13 @@ public class LevelPlayer : ModPlayer
         Player.statLifeMax2 += Life;
         Player.statManaMax2 += Mana;
     }
-    
+
+    // Just to get XP for fishing
+    public override void ModifyCaughtFish(Item fish)
+    {
+        GainExperience(fish.value / 500);
+    }
+
     public override void Initialize() => Experience = 0;
 
     public override void LoadData(TagCompound tag) => Experience = tag.GetLong("Experience");

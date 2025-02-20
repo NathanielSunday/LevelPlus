@@ -55,30 +55,33 @@ public class ScalingNPC : Terraria.ModLoader.GlobalNPC
 
     public override void OnKill(NPC npc)
     {
-        if (!npc.AnyInteractions()) return;
+        if (!npc.AnyInteractions() || Main.netMode == NetmodeID.MultiplayerClient) return;
 
         var experience = CalculateExperience(npc);
 
-        if (Main.netMode == NetmodeID.SinglePlayer)
+        switch (Main.netMode)
         {
-            Main.LocalPlayer.GetModPlayer<LevelPlayer>().GainExperience(experience);
-        }
+            case NetmodeID.SinglePlayer:
+                Main.LocalPlayer.GetModPlayer<LevelPlayer>().GainExperience(experience);
+                break;
 
-        if (Main.netMode != NetmodeID.Server) return;
+            case NetmodeID.Server:
+                for (var i = 0; i < npc.playerInteraction.Length; i++)
+                {
+                    if (!npc.playerInteraction[i]) continue;
 
-        for (var i = 0; i < npc.playerInteraction.Length; i++)
-        {
-            if (!npc.playerInteraction[i]) continue;
+                    var packet = new GainExperiencePacket
+                    {
+                        Amount = experience
+                    };
 
-            var packet = new GainExperiencePacket
-            {
-                Amount = experience
-            };
+                    packet.Send(i);
+                }
 
-            packet.Send(i);
+                break;
         }
     }
-    
+
     public override void ModifyGlobalLoot(GlobalLoot globalLoot)
     {
         globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<Essence>(), 100, 1, 5));
