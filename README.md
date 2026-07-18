@@ -12,4 +12,13 @@
 </div>
 
 # Level+, The RPG Mod
+
 ## A simple leveling experience to enhance your gameplay
+
+## Credits
+
+- PoctorDepper (lead developer and spriter)
+- MarauderKnight3 (spriter)
+- TheAshenWolf (contributor and ass-saver)
+- LanToaster (contributor)
+- WilliamVenables (sound designer)
