@@ -15,7 +15,7 @@ namespace LevelPlus.UI;
 public class ExperienceBar : UIState
 {
     // 100% - left square % - right endcap %
-    private const float quotientScalar = 1f - 13f / 60f - 3f / 60f;
+    private const float QuotientScalar = 1f - 13f / 60f - 3f / 60f;
     
     private BarBackground background;
     private UIImage bar;
@@ -50,7 +50,7 @@ public class ExperienceBar : UIState
             Height = StyleDimension.FromPercent(1f),
             Left = StyleDimension.FromPixels(background.Height.Pixels),
             ScaleToFit = true,
-            Color = new Color(50, 205, 30)
+            Color = Color.LawnGreen // new Color(50, 205, 30)
         };
         background.Append(bar);
 
@@ -87,8 +87,7 @@ public class ExperienceBar : UIState
                         LevelPlayer.LevelToExperience(LevelPlayer.Level));
         
         
-        
-        bar.Width.Percent = quotient * quotientScalar;
+        bar.Width.Percent = quotient * QuotientScalar;
         
         Recalculate();
     }
