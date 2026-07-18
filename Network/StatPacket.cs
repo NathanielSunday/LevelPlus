@@ -37,7 +37,7 @@ public class StatPacket : Packet
         }
         else
         {
-            ModContent.GetInstance<StatSystem>().GetStat(whoAmI, Id).Value = Value;
+            ModContent.GetInstance<StatSystem>().GetStatOfPlayer(whoAmI, Id).Value = Value;
         }
     }
 }

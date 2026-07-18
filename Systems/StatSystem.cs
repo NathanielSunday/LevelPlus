@@ -7,57 +7,58 @@ using Terraria.ModLoader;
 
 namespace LevelPlus.Systems;
 
+[Autoload(Side = ModSide.Both)]
 public class StatSystem : ModSystem
 {
     // Base instances of Stat implementations, should not modify these directly
-    private SortedList<string, ModPlayer> stats;
-    
+    public List<Stat> Stats { get; private set; }
+
     public void ValidateStats(Player player)
     {
         var maxPoints = player.GetModPlayer<LevelPlayer>().Level * PlayConfiguration.Instance.Level.Points +
                         PlayConfiguration.Instance.StartingPoints;
-        var playerStats = GetStats(player.whoAmI);
-
+        var playerStats = GetStatsOfPlayer(player.whoAmI);
+        
+        // Roll each stat down by one point until we are back under maxPoints
+        // Don't want to use percentages in case players log out with unspent points
         while (playerStats.Sum(s => s.Value) > maxPoints)
         {
             playerStats.ForEach(s => s.Value -= s.Value > 0 ? 1 : 0);
         }
-
+        
+        
         player.GetModPlayer<LevelPlayer>().Points = maxPoints - playerStats.Sum(s => s.Value);
     }
 
-    public Stat GetStat(int player, string id)
+    public Stat GetStatOfPlayer(int player, string id)
     {
-        if (!stats.TryGetValue(id, out var statPlayer)) return null;
-
-        return (Stat)Main.player[player].GetModPlayer(statPlayer);
+        return Main.player[player].GetModPlayer(Stats.Find(s => s.Id == id));
     }
 
-    public List<Stat> GetStats(int player)
+    public List<Stat> GetStatsOfPlayer(int player)
     {
-        return stats.Values
-            .Select(p => (Stat)Main.player[player].GetModPlayer(p))
+        return Stats
+            .Select(p => Main.player[player].GetModPlayer(p))
             .ToList();
     }
 
     public override void Load()
     {
-        stats = new SortedList<string, ModPlayer>();
+        Stats = [];
+        
+        // Get every instance of Stat loaded and add it
+        foreach (var stat in ModContent.GetContent<Stat>())
+        { 
+            Stats.Add(stat);
+        }
+        
+        Mod.Logger.Info("Loading Stats...");
+        Mod.Logger.Info(Stats.Select(s => s.Id));
     }
-
+    
     public override void Unload()
     {
-        stats.Clear();
-        stats = null;
-    }
-
-    public override void OnModLoad()
-    {
-        foreach (var player in ModContent.GetContent<ModPlayer>())
-        {
-            if (player as Stat is not { } stat) continue;
-
-            stats.Add(stat.Id, player);
-        }
+        Stats.Clear();
+        Stats = null;
     }
 }

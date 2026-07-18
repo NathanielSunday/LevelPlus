@@ -44,7 +44,7 @@ public class Respec : ModItem
 
     public override bool? UseItem(Player player)
     {
-        ModContent.GetInstance<StatSystem>().GetStats(player.whoAmI).ForEach(s => s.Value = 0);
+        ModContent.GetInstance<StatSystem>().GetStatsOfPlayer(player.whoAmI).ForEach(s => s.Value = 0);
         
         var levelPlayer = player.GetModPlayer<LevelPlayer>();
         var config = PlayConfiguration.Instance;
