@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LevelPlus.Systems;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -6,30 +7,36 @@ using Terraria.UI;
 
 namespace LevelPlus.UI;
 
-[Autoload(Side = ModSide.Client)]
+// [Autoload(Side = ModSide.Client)]
 public class StatUISystem : ModSystem
 {
-    // TODO Add UI States when they're made
     private ExperienceBar experienceBar;
+    private SpendPanel spendPanel;
 
     private UserInterface currentInterface;
+    
 
     public void Toggle()
     {
-        // TODO Swap the UI states
+        currentInterface.SetState(currentInterface.CurrentState.Equals(experienceBar)
+            ? spendPanel
+            : experienceBar);
     }
 
     public void UpdateConfigPositions()
     {
         experienceBar?.OnActivate();
-        // TODO spend panel .OnActivate()
+        spendPanel?.OnActivate();
     }
 
     public override void Load()
     {
         experienceBar = new ExperienceBar();
         experienceBar.Activate();
-        
+
+        spendPanel = new SpendPanel();
+        spendPanel.Activate();
+
         currentInterface = new UserInterface();
         currentInterface.SetState(experienceBar);
     }
@@ -48,10 +55,10 @@ public class StatUISystem : ModSystem
             delegate
             {
                 if (currentInterface?.CurrentState is null) return false;
-                
+
                 currentInterface.Draw(Main.spriteBatch, new GameTime());
-                
-                return true; 
+
+                return true;
             },
             InterfaceScaleType.UI)
         );
