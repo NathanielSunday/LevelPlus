@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 
 namespace LevelPlus.Network;
 
+// A simple wrapper class for tMod networking
 public abstract class Packet
 {
     // Forward this packet to all other clients

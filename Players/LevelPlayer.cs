@@ -213,14 +213,13 @@ public class LevelPlayer : ModPlayer
             Value = Level
         };
 
-        packet.Send();
+        packet.Send(toWho, fromWho);
     }
 
     public override void SendClientChanges(ModPlayer clientCopy)
     {
         if (((LevelPlayer)clientCopy).Level == Level) return;
-
-        SyncPlayer(0, 0, true);
+        SyncPlayer(-1, Player.whoAmI, true);
     }
 
     public override void ProcessTriggers(TriggersSet triggersSet)
