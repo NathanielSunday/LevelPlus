@@ -9,7 +9,7 @@ public class GainExperiencePacket : Packet
     public long Amount { get; set; }
 
     protected override bool Forward => false;
-    
+
     protected override void Write(BinaryWriter writer)
     {
         writer.Write(Amount);
@@ -17,8 +17,8 @@ public class GainExperiencePacket : Packet
 
     protected override void Read(BinaryReader reader, int whoAmI)
     {
-        Amount = reader.ReadInt64(); 
-        
+        Amount = reader.ReadInt64();
+
         Main.LocalPlayer.GetModPlayer<LevelPlayer>().GainExperience(Amount);
     }
 }

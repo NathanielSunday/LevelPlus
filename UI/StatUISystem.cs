@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using LevelPlus.Systems;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -10,11 +9,10 @@ namespace LevelPlus.UI;
 // [Autoload(Side = ModSide.Client)]
 public class StatUISystem : ModSystem
 {
+    private UserInterface currentInterface;
     private ExperienceBar experienceBar;
     private SpendPanel spendPanel;
 
-    private UserInterface currentInterface;
-    
 
     public void Toggle()
     {

@@ -1,5 +1,5 @@
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 
 namespace LevelPlus.Items;
 
@@ -7,7 +7,7 @@ public class GreaterScalingPotion : ScalingPotion
 {
     protected override float HealLifePercent => 0.3f;
     protected override float HealManaPercent => 0.5f;
-    
+
     public override string Texture => $"{Mod.Name}/Assets/Textures/Items/GreaterScalingPotion";
 
     public override void SetDefaults()
@@ -26,7 +26,7 @@ public class GreaterScalingPotion : ScalingPotion
             .AddTile(TileID.Bottles)
             .DisableDecraft()
             .Register();
-        
+
         CreateRecipe()
             .AddIngredient<Essence>(25)
             .AddIngredient<ScalingPotion>()

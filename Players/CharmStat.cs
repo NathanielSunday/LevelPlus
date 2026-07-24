@@ -1,4 +1,5 @@
 using LevelPlus.Configs;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -6,7 +7,8 @@ namespace LevelPlus.Players;
 
 public class CharmStat : Stat
 {
-    public override LocalizedText Description => base.Description.WithFormatArgs(Damage() * 100, MaxMinions(), MaxSentries(), FishingLevel());
+    public override LocalizedText Description =>
+        base.Description.WithFormatArgs(Damage() * 100, MaxMinions(), MaxSentries(), FishingLevel());
 
     public override LocalizedText SpendTooltip =>
         base.SpendTooltip.WithFormatArgs(Damage(true), MaxMinions(true), MaxSentries(true), FishingLevel(true));
@@ -27,7 +29,7 @@ public class CharmStat : Stat
     {
         return (projected ? ProjectedValue : Value) / PlayConfiguration.Instance.Charm.SentryCost;
     }
-    
+
     private float FishingLevel(bool projected = false)
     {
         return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Charm.Fishing;
@@ -40,7 +42,7 @@ public class CharmStat : Stat
         Player.maxTurrets += MaxSentries();
     }
 
-    public override void GetFishingLevel(Terraria.Item fishingRod, Terraria.Item bait, ref float fishingLevel)
+    public override void GetFishingLevel(Item fishingRod, Item bait, ref float fishingLevel)
     {
         fishingLevel += FishingLevel();
     }

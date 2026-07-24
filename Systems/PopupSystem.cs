@@ -10,7 +10,7 @@ namespace LevelPlus.Systems;
 public class PopupSystem : ModSystem
 {
     private static LocalizedText LevelUp;
-    
+
     public override void Load()
     {
         LevelUp = Mod.GetLocalization("Stats.Level.Popup.LevelUp");

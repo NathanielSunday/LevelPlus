@@ -8,9 +8,9 @@ public class DraggableUIElement : UIElement
 {
     private Vector2 offset;
     protected bool Dragging { get; private set; }
-    
+
     protected event MouseEvent OnDragStart;
-    
+
     protected event MouseEvent OnDragEnd;
 
     private void Move(Vector2 position)
@@ -30,13 +30,13 @@ public class DraggableUIElement : UIElement
     public override void RightMouseDown(UIMouseEvent evt)
     {
         base.RightMouseDown(evt);
-        
+
         // if (evt.Target != this) return;
         if (!IsMouseHovering) return;
-        
+
         offset = evt.MousePosition - new Vector2(Left.Pixels, Top.Pixels);
         Dragging = true;
-        
+
         OnDragStart?.Invoke(evt, this);
     }
 
@@ -46,11 +46,11 @@ public class DraggableUIElement : UIElement
 
         // if (evt.Target != this) return;
         if (!IsMouseHovering) return;
-        
+
         Dragging = false;
 
         Move(evt.MousePosition);
-        
+
         OnDragEnd?.Invoke(evt, this);
     }
 

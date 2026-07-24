@@ -14,7 +14,7 @@ public class LevelPlus : Mod
     {
         IsCalamityLoaded = ModLoader.HasMod("CalamityMod");
         IsThoriumLoaded = ModLoader.HasMod("ThoriumMod");
-        
+
         Logger.InfoFormat("{0}: Calamity = {1}", Name, IsCalamityLoaded);
         Logger.InfoFormat("{0}: Thorium = {1}", Name, IsThoriumLoaded);
     }
@@ -24,11 +24,11 @@ public class LevelPlus : Mod
         IsCalamityLoaded = false;
         IsThoriumLoaded = false;
     }
-    
+
     public override void HandlePacket(BinaryReader reader, int whoAmI)
     {
         var typeString = reader.ReadString();
-        
+
         if (Type.GetType(typeString) is not { } type)
         {
             Logger.WarnFormat("{0}: Packet of unknown type \"{1}\"", Name, typeString);
@@ -40,7 +40,7 @@ public class LevelPlus : Mod
             Logger.WarnFormat("{0}: Failed to instantiate Packet of type \"{1}\"", Name, typeString);
             return;
         }
-        
+
         packet.Receive(reader, whoAmI);
     }
 }

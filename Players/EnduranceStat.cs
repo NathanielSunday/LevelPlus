@@ -21,7 +21,7 @@ public class EnduranceStat : Stat
     {
         return (projected ? ProjectedValue : Value) * PlayConfiguration.Instance.Endurance.Defense;
     }
-    
+
     private int LifeRegen(bool projected = false)
     {
         return (projected ? ProjectedValue : Value) / PlayConfiguration.Instance.Endurance.LifeRegenCost * 2;

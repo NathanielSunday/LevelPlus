@@ -14,7 +14,7 @@ public abstract class Packet
     protected abstract void Write(BinaryWriter writer);
 
     protected abstract void Read(BinaryReader reader, int whoAmI);
-    
+
     public void Send(int toClient = -1, int ignoreClient = -1)
     {
         var packet = ModContent.GetInstance<LevelPlus>().GetPacket();
@@ -33,9 +33,6 @@ public abstract class Packet
 
     private void ForwardAll(int whoAmI)
     {
-        if (Main.netMode == NetmodeID.Server)
-        {
-            Send(-1, whoAmI);
-        }
+        if (Main.netMode == NetmodeID.Server) Send(-1, whoAmI);
     }
 }

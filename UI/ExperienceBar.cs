@@ -91,8 +91,8 @@ public class ExperienceBar : UIState
 
 internal class BarBackground : DraggableUIElement
 {
-    private Asset<Texture2D> outline;
-    private Asset<Texture2D> texture;
+    private readonly Asset<Texture2D> outline;
+    private readonly Asset<Texture2D> texture;
 
     public BarBackground()
     {

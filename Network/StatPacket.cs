@@ -9,7 +9,7 @@ namespace LevelPlus.Network;
 public class StatPacket : Packet
 {
     public string Id { get; set; }
-    
+
     public int Value { get; set; }
 
     protected override bool Forward => true;
@@ -19,7 +19,7 @@ public class StatPacket : Packet
         Id = stat.Id;
         Value = stat.Value;
     }
-    
+
     protected override void Write(BinaryWriter writer)
     {
         writer.Write(Id);
@@ -32,12 +32,8 @@ public class StatPacket : Packet
         Value = reader.ReadInt32();
 
         if (Id == "level")
-        {
             Main.player[whoAmI].GetModPlayer<LevelPlayer>().Level = Value;
-        }
         else
-        {
             ModContent.GetInstance<StatSystem>().GetStatOfPlayer(whoAmI, Id).Value = Value;
-        }
     }
 }

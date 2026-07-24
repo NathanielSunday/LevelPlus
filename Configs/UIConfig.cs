@@ -9,17 +9,15 @@ namespace LevelPlus.Configs;
 public class UIConfig : ModConfig
 {
     public static UIConfig Instance { get; private set; }
-    
+
     public override ConfigScope Mode => ConfigScope.ClientSide;
-    
-    public override void OnLoaded() => Instance = this;
 
     [BackgroundColor(0, 0, 0)]
     [SliderColor(0, 0, 0)]
     [Range(0, 1920f)]
     [DefaultValue(typeof(Vector2), "480, 35")]
     public Vector2 ExperienceBar { get; set; }
-    
+
     [BackgroundColor(0, 0, 0)]
     [SliderColor(0, 0, 0)]
     [Range(0, 1920f)]
@@ -28,6 +26,11 @@ public class UIConfig : ModConfig
 
     [DefaultValue(true)]
     public bool PointNotifier { get; set; }
+
+    public override void OnLoaded()
+    {
+        Instance = this;
+    }
 
     public override void OnChanged()
     {

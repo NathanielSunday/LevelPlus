@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using LevelPlus.Configs;
 using LevelPlus.Players;
 using LevelPlus.Systems;
@@ -35,20 +33,20 @@ public class SpendPanel : UIState
     {
         base.OnInitialize();
 
-        background = new SpendBackground()
+        background = new SpendBackground
         {
             Width = StyleDimension.FromPixels(PanelWidth),
             Height = StyleDimension.FromPixels(PanelHeight)
         };
 
-        stats = new UIList()
+        stats = new UIList
         {
             Width = StyleDimension.FromPercent(StatWidth),
             Height = StyleDimension.FromPixelsAndPercent(-HeaderHeight - BorderThickness - 2 * Padding, 1f),
             Left = StyleDimension.FromPixels(BorderThickness + Padding),
             Top = StyleDimension.FromPixels(HeaderHeight + Padding),
             ListPadding = Padding,
-            ManualSortMethod = (e) => { }
+            ManualSortMethod = e => { }
         };
         background.Append(stats);
 
@@ -102,7 +100,7 @@ internal class StatInterface(Stat stat) : UIElement
             Width = StyleDimension.FromPixels(IconSize),
             Height = StyleDimension.FromPixels(IconSize),
             Left = StyleDimension.FromPixels(BorderThickness),
-            Top = StyleDimension.FromPixels(BorderThickness),
+            Top = StyleDimension.FromPixels(BorderThickness)
         };
         icon.OnDraw += delegate
         {
@@ -136,7 +134,7 @@ internal class StatInterface(Stat stat) : UIElement
         addStat.OnLeftClick += delegate
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            int spent = StatPlayer.ProjectedValue - StatPlayer.Value;
+            var spent = StatPlayer.ProjectedValue - StatPlayer.Value;
             StatPlayer.Value = StatPlayer.ProjectedValue;
             LevelPlayer.Points -= spent;
         };
@@ -160,7 +158,7 @@ internal class StatInterface(Stat stat) : UIElement
 internal class SpendBackground : DraggableUIElement
 {
     // Create a background for the full spend UI
-    private Asset<Texture2D> texture;
+    private readonly Asset<Texture2D> texture;
 
     public SpendBackground()
     {

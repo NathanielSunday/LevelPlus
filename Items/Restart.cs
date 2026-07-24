@@ -37,12 +37,12 @@ public class Restart : ModItem
     public override bool? UseItem(Player player)
     {
         ModContent.GetInstance<StatSystem>().GetStatsOfPlayer(player.whoAmI).ForEach(s => s.Value = 0);
-        
+
         var levelPlayer = player.GetModPlayer<LevelPlayer>();
 
         levelPlayer.Experience = 0;
         levelPlayer.Points = PlayConfiguration.Instance.StartingPoints;
-        
+
         return true;
     }
 }

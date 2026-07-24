@@ -38,7 +38,7 @@ public class ScalingPotion : ModItem
             .AddTile(TileID.Bottles)
             .DisableDecraft()
             .Register();
-        
+
         CreateRecipe()
             .AddIngredient<Essence>(10)
             .AddIngredient<LesserScalingPotion>()

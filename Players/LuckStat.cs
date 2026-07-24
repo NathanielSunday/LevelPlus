@@ -8,7 +8,7 @@ namespace LevelPlus.Players;
 public class LuckStat : Stat
 {
     private static Random rng;
-    
+
     public override LocalizedText Description => base.Description.WithFormatArgs(Crit() * 100, Luck() * 100, Ammo());
 
     public override LocalizedText SpendTooltip =>

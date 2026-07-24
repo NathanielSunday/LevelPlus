@@ -38,10 +38,11 @@ public class ScalingNPC : GlobalNPC
     public static int CalculateExperience(NPC npc)
     {
         npc.CloneDefaults(npc.netID);
-        return (int) (PlayConfiguration.Instance.ExperienceScale.Combat * (npc.lifeMax / 10 + npc.defense + npc.defDamage / 3));
+        return (int)(PlayConfiguration.Instance.ExperienceScale.Combat *
+                     (npc.lifeMax / 10 + npc.defense + npc.defDamage / 3));
     }
 
-    public override void ModifyHitPlayer(NPC npc, Terraria.Player target, ref Terraria.Player.HurtModifiers modifiers)
+    public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers)
     {
         modifiers.SourceDamage += Scalar;
     }
@@ -60,7 +61,7 @@ public class ScalingNPC : GlobalNPC
         var experience = CalculateExperience(npc);
 
         if (experience == 0) return;
-        
+
         switch (Main.netMode)
         {
             case NetmodeID.SinglePlayer:

@@ -12,6 +12,48 @@ public partial class PlayConfiguration
     [TooltipKey("$Mods.LevelPlus.Configs.LevelConfig.Tooltip")]
     public LevelConfig Level { get; set; } = new();
 
+
+    [Expand(false)]
+    [BackgroundColor(255, 255, 0)]
+    [LabelKey("$Mods.LevelPlus.Configs.EnduranceConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.EnduranceConfig.Tooltip")]
+    public EnduranceConfig Endurance { get; set; } = new();
+
+
+    [Expand(false)]
+    [BackgroundColor(255, 0, 0)]
+    [LabelKey("$Mods.LevelPlus.Configs.BrawnConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.BrawnConfig.Tooltip")]
+    public BrawnConfig Brawn { get; set; } = new();
+
+
+    [Expand(false)]
+    [BackgroundColor(0, 255, 255)]
+    [LabelKey("$Mods.LevelPlus.Configs.DeftConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.DeftConfig.Tooltip")]
+    public DeftConfig Deft { get; set; } = new();
+
+
+    [Expand(false)]
+    [BackgroundColor(0, 0, 255)]
+    [LabelKey("$Mods.LevelPlus.Configs.IntellectConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.IntellectConfig.Tooltip")]
+    public IntellectConfig Intellect { get; set; } = new();
+
+
+    [Expand(false)]
+    [BackgroundColor(255, 0, 255)]
+    [LabelKey("$Mods.LevelPlus.Configs.CharmConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.CharmConfig.Tooltip")]
+    public CharmConfig Charm { get; set; } = new();
+
+
+    [Expand(false)]
+    [BackgroundColor(0, 255, 0)]
+    [LabelKey("$Mods.LevelPlus.Configs.LuckConfig.Label")]
+    [TooltipKey("$Mods.LevelPlus.Configs.LuckConfig.Tooltip")]
+    public LuckConfig Luck { get; set; } = new();
+
     public class LevelConfig
     {
         [Slider]
@@ -35,15 +77,11 @@ public partial class PlayConfiguration
         [BackgroundColor(255, 255, 255)]
         public int Mana { get; set; } = 0;
 
-        public override int GetHashCode() => HashCode.Combine(Max, Points, Life, Mana);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Max, Points, Life, Mana);
+        }
     }
-
-
-    [Expand(false)]
-    [BackgroundColor(255, 255, 0)]
-    [LabelKey("$Mods.LevelPlus.Configs.EnduranceConfig.Label")]
-    [TooltipKey("$Mods.LevelPlus.Configs.EnduranceConfig.Tooltip")]
-    public EnduranceConfig Endurance { get; set; } = new();
 
     public class EnduranceConfig
     {
@@ -62,15 +100,11 @@ public partial class PlayConfiguration
         [BackgroundColor(255, 255, 0)]
         public int LifeRegenCost { get; set; } = 20;
 
-        public override int GetHashCode() => HashCode.Combine(Life, Defense, LifeRegenCost);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Life, Defense, LifeRegenCost);
+        }
     }
-
-
-    [Expand(false)]
-    [BackgroundColor(255, 0, 0)]
-    [LabelKey("$Mods.LevelPlus.Configs.BrawnConfig.Label")]
-    [TooltipKey("$Mods.LevelPlus.Configs.BrawnConfig.Tooltip")]
-    public BrawnConfig Brawn { get; set; } = new();
 
     public class BrawnConfig
     {
@@ -86,15 +120,11 @@ public partial class PlayConfiguration
         [BackgroundColor(255, 0, 0)]
         public float PickSpeed { get; set; } = 0.01f;
 
-        public override int GetHashCode() => HashCode.Combine(Damage, MaxWingTime, PickSpeed);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Damage, MaxWingTime, PickSpeed);
+        }
     }
-
-
-    [Expand(false)]
-    [BackgroundColor(0, 255, 255)]
-    [LabelKey("$Mods.LevelPlus.Configs.DeftConfig.Label")]
-    [TooltipKey("$Mods.LevelPlus.Configs.DeftConfig.Tooltip")]
-    public DeftConfig Deft { get; set; } = new();
 
     public class DeftConfig
     {
@@ -109,16 +139,12 @@ public partial class PlayConfiguration
         [Range(0, 0.10f)]
         [BackgroundColor(0, 255, 255)]
         public float PlacementSpeed { get; set; } = 0.02f;
-        
-        public override int GetHashCode() => HashCode.Combine(Damage, MoveSpeed, PlacementSpeed);
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Damage, MoveSpeed, PlacementSpeed);
+        }
     }
-
-
-    [Expand(false)]
-    [BackgroundColor(0, 0, 255)]
-    [LabelKey("$Mods.LevelPlus.Configs.IntellectConfig.Label")]
-    [TooltipKey("$Mods.LevelPlus.Configs.IntellectConfig.Tooltip")]
-    public IntellectConfig Intellect { get; set; } = new();
 
     public class IntellectConfig
     {
@@ -141,15 +167,11 @@ public partial class PlayConfiguration
         [BackgroundColor(0, 0, 255)]
         public int BlockRangeCost { get; set; } = 25;
 
-        public override int GetHashCode() => HashCode.Combine(Damage, Mana, ManaRegenCost, BlockRangeCost);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Damage, Mana, ManaRegenCost, BlockRangeCost);
+        }
     }
-
-
-    [Expand(false)]
-    [BackgroundColor(255, 0, 255)]
-    [LabelKey("$Mods.LevelPlus.Configs.CharmConfig.Label")]
-    [TooltipKey("$Mods.LevelPlus.Configs.CharmConfig.Tooltip")]
-    public CharmConfig Charm { get; set; } = new();
 
     public class CharmConfig
     {
@@ -171,15 +193,11 @@ public partial class PlayConfiguration
         [BackgroundColor(255, 0, 255)]
         public float Fishing { get; set; } = 0.01f;
 
-        public override int GetHashCode() => HashCode.Combine(Damage, MinionCost, SentryCost, Fishing);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Damage, MinionCost, SentryCost, Fishing);
+        }
     }
-
-
-    [Expand(false)]
-    [BackgroundColor(0, 255, 0)]
-    [LabelKey("$Mods.LevelPlus.Configs.LuckConfig.Label")]
-    [TooltipKey("$Mods.LevelPlus.Configs.LuckConfig.Tooltip")]
-    public LuckConfig Luck { get; set; } = new();
 
     public class LuckConfig
     {
@@ -195,6 +213,9 @@ public partial class PlayConfiguration
         [BackgroundColor(0, 255, 0)]
         public float Ammo { get; set; } = 0.03f;
 
-        public override int GetHashCode() => HashCode.Combine(Crit, TerrariaLuck, Ammo);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Crit, TerrariaLuck, Ammo);
+        }
     }
 }

@@ -6,7 +6,8 @@ namespace LevelPlus.Players;
 
 public class BrawnStat : Stat
 {
-    public override LocalizedText Description => base.Description.WithFormatArgs(Damage() * 100, WingTimeMax() * 100, PickSpeed() * 100);
+    public override LocalizedText Description =>
+        base.Description.WithFormatArgs(Damage() * 100, WingTimeMax() * 100, PickSpeed() * 100);
 
     public override LocalizedText SpendTooltip =>
         base.SpendTooltip.WithFormatArgs(Damage(true), WingTimeMax(true), PickSpeed(true));

@@ -35,7 +35,8 @@ public abstract class Stat : ModPlayer
     public virtual LocalizedText Description => Mod.GetLocalization("Stats." + Id + ".Tooltip", () => Id + " Tooltip");
 
     /// The LocalizedText for the description for next point(s) spent. Should be pre-formatted with args.
-    public virtual LocalizedText SpendTooltip => Description;
+    public virtual LocalizedText SpendTooltip =>
+        Mod.GetLocalization("Stats." + Id + ".Projected", () => Id + " Projected");
 
     /// The path of the icon to be used in the UI.
     public virtual string IconPath => "Assets/Textures/UI/Icons/" + Id;
@@ -46,13 +47,25 @@ public abstract class Stat : ModPlayer
     /// The access key for stat, usually the name.
     public abstract string Id { get; }
 
-    public override void Initialize() => Value = 0;
+    public override void Initialize()
+    {
+        Value = 0;
+    }
 
-    public override void LoadData(TagCompound tag) => Value = tag.GetInt(Id);
+    public override void LoadData(TagCompound tag)
+    {
+        Value = tag.GetInt(Id);
+    }
 
-    public override void SaveData(TagCompound tag) => tag[Id] = Value;
+    public override void SaveData(TagCompound tag)
+    {
+        tag[Id] = Value;
+    }
 
-    public override void CopyClientState(ModPlayer targetCopy) => ((Stat)targetCopy).Value = Value;
+    public override void CopyClientState(ModPlayer targetCopy)
+    {
+        ((Stat)targetCopy).Value = Value;
+    }
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
@@ -61,7 +74,7 @@ public abstract class Stat : ModPlayer
         var packet = new StatPacket
         {
             Id = Id,
-            Value = Value,
+            Value = Value
         };
 
         packet.Send(toWho, fromWho);

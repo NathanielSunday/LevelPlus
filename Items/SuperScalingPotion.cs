@@ -7,7 +7,7 @@ public class SuperScalingPotion : ScalingPotion
 {
     protected override float HealLifePercent => 0.4f;
     protected override float HealManaPercent => 0.75f;
-    
+
     public override string Texture => $"{Mod.Name}/Assets/Textures/Items/SuperScalingPotion";
 
     public override void SetDefaults()
@@ -27,7 +27,7 @@ public class SuperScalingPotion : ScalingPotion
             .AddTile(TileID.Bottles)
             .DisableDecraft()
             .Register();
-        
+
         CreateRecipe()
             .AddIngredient<Essence>(100)
             .AddIngredient<GreaterScalingPotion>()

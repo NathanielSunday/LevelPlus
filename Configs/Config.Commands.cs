@@ -19,12 +19,18 @@ public partial class PlayConfiguration
 
     public class CommandConfig
     {
-        [BackgroundColor(0, 0, 0)] public bool Level { get; set; } = true;
+        [BackgroundColor(0, 0, 0)]
+        public bool Level { get; set; } = true;
 
-        [BackgroundColor(0, 0, 0)] public bool Experience { get; set; } = true;
+        [BackgroundColor(0, 0, 0)]
+        public bool Experience { get; set; } = true;
 
-        [BackgroundColor(0, 0, 0)] public bool Point { get; set; } = true;
+        [BackgroundColor(0, 0, 0)]
+        public bool Point { get; set; } = true;
 
-        public override int GetHashCode() => HashCode.Combine(Level, Experience, Point);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Level, Experience, Point);
+        }
     }
 }

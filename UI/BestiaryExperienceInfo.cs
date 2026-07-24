@@ -12,17 +12,9 @@ namespace LevelPlus.UI;
 public class BestiaryExperienceElement(NPC instance)
     : IBestiaryInfoElement, ICategorizedBestiaryInfoElement, IBestiaryPrioritizedElement
 {
-    public float OrderPriority => 1f;
-
-    public UIBestiaryEntryInfoPage.BestiaryInfoCategory ElementCategory =>
-        UIBestiaryEntryInfoPage.BestiaryInfoCategory.Stats;
-
     public UIElement ProvideUIElement(BestiaryUICollectionInfo info)
     {
-        if (info.UnlockState == BestiaryEntryUnlockState.NotKnownAtAll_0)
-        {
-            return null;
-        }
+        if (info.UnlockState == BestiaryEntryUnlockState.NotKnownAtAll_0) return null;
 
         UIPanel panel = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Stat_Panel"),
             null, customBarSize: 7)
@@ -32,7 +24,7 @@ public class BestiaryExperienceElement(NPC instance)
             BackgroundColor = new Color(43, 56, 101),
             BorderColor = Color.Transparent,
             Left = StyleDimension.FromPixels(-8f),
-            HAlign = 1f,
+            HAlign = 1f
         };
         panel.SetPadding(0f);
         panel.PaddingRight = 5f;
@@ -43,7 +35,7 @@ public class BestiaryExperienceElement(NPC instance)
             IgnoresMouseInteraction = true,
             ScaleToFit = true,
             HAlign = 0,
-            VAlign = 0.5f,
+            VAlign = 0.5f
         };
         panel.Append(icon);
 
@@ -57,12 +49,17 @@ public class BestiaryExperienceElement(NPC instance)
             HAlign = 1f,
             VAlign = 0.5f,
             Left = StyleDimension.FromPixels(-3),
-            TextColor = Color.White,
+            TextColor = Color.White
         };
         panel.Append(experienceText);
 
         return panel;
     }
+
+    public float OrderPriority => 1f;
+
+    public UIBestiaryEntryInfoPage.BestiaryInfoCategory ElementCategory =>
+        UIBestiaryEntryInfoPage.BestiaryInfoCategory.Stats;
 
     private void ShowExperienceTooltip(UIElement element)
     {

@@ -44,8 +44,8 @@ public class LevelPlayer : ModPlayer
 
     public static int GetAverageLevel()
     {
-        int level = 0;
-        int players = 0;
+        var level = 0;
+        var players = 0;
 
         foreach (var player in Main.ActivePlayers)
         {
@@ -73,15 +73,16 @@ public class LevelPlayer : ModPlayer
     {
         var priorLevel = Level;
 
-        bool shared = false;
+        var shared = false;
 
         // Ensure that the packet received was not from a share and that TeamShare is actually enabled
         if (!teamShare && Player.team != 0 && PlayConfiguration.Instance.TeamSharePercentage != 0)
             // Check if there are other players in the team
-            shared = Main.player.Any(player => player.whoAmI != Player.whoAmI && player.team ==  Player.team);
-        
+            shared = Main.player.Any(player => player.whoAmI != Player.whoAmI && player.team == Player.team);
+
         // If there are other players in the team, send the team share packet to the server
-        if (shared) {
+        if (shared)
+        {
             var packet = new TeamSharePacket
             {
                 Amount = (long)Math.Max(1, experience * PlayConfiguration.Instance.TeamSharePercentage),
@@ -193,13 +194,25 @@ public class LevelPlayer : ModPlayer
         GainExperience(experience);
     }
 
-    public override void Initialize() => Experience = 0;
+    public override void Initialize()
+    {
+        Experience = 0;
+    }
 
-    public override void LoadData(TagCompound tag) => Experience = tag.GetLong("Experience");
+    public override void LoadData(TagCompound tag)
+    {
+        Experience = tag.GetLong("Experience");
+    }
 
-    public override void SaveData(TagCompound tag) => tag["Experience"] = Experience;
+    public override void SaveData(TagCompound tag)
+    {
+        tag["Experience"] = Experience;
+    }
 
-    public override void CopyClientState(ModPlayer targetCopy) => ((LevelPlayer)targetCopy).Level = Level;
+    public override void CopyClientState(ModPlayer targetCopy)
+    {
+        ((LevelPlayer)targetCopy).Level = Level;
+    }
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {

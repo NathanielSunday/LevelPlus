@@ -7,7 +7,7 @@ public class LesserScalingPotion : ScalingPotion
 {
     protected override float HealLifePercent => 0.1f;
     protected override float HealManaPercent => 0.125f;
-    
+
     public override string Texture => $"{Mod.Name}/Assets/Textures/Items/LesserScalingPotion";
 
     public override void SetDefaults()

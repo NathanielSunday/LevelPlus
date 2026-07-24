@@ -33,7 +33,7 @@ public class Respec : ModItem
             .AddTile(TileID.MythrilAnvil)
             .DisableDecraft()
             .Register();
-        
+
         CreateRecipe()
             .AddIngredient(ItemID.PlatinumBar, 2)
             .AddIngredient<Essence>(100)
@@ -45,12 +45,12 @@ public class Respec : ModItem
     public override bool? UseItem(Player player)
     {
         ModContent.GetInstance<StatSystem>().GetStatsOfPlayer(player.whoAmI).ForEach(s => s.Value = 0);
-        
+
         var levelPlayer = player.GetModPlayer<LevelPlayer>();
         var config = PlayConfiguration.Instance;
 
         levelPlayer.Points = levelPlayer.Level * config.Level.Points + config.StartingPoints;
-        
+
         return true;
     }
 }

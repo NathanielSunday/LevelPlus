@@ -34,19 +34,19 @@ public class OreExperienceSystem : ModSystem
 
 public class OreExperienceTile : GlobalTile
 {
-    public static bool[] Gems = TileID.Sets.Factory.CreateBoolSet(TileID.Sapphire, TileID.Ruby, 
+    public static bool[] Gems = TileID.Sets.Factory.CreateBoolSet(TileID.Sapphire, TileID.Ruby,
         TileID.Emerald, TileID.Topaz, TileID.Amethyst, TileID.Diamond, TileID.ExposedGems);
-    
-    private static int[] gemDropID = TileID.Sets.Factory.CreateIntSet(-1, TileID.Sapphire, 
-        ItemID.Sapphire, TileID.Ruby, ItemID.Ruby, TileID.Emerald, ItemID.Emerald, TileID.Topaz, ItemID.Topaz, 
+
+    private static int[] gemDropID = TileID.Sets.Factory.CreateIntSet(-1, TileID.Sapphire,
+        ItemID.Sapphire, TileID.Ruby, ItemID.Ruby, TileID.Emerald, ItemID.Emerald, TileID.Topaz, ItemID.Topaz,
         TileID.Amethyst, ItemID.Amethyst, TileID.Diamond, ItemID.Diamond);
-    
+
     private bool ValidType(int type)
     {
         return TileID.Sets.Ore[type]
-            || Gems[type];
+               || Gems[type];
     }
-    
+
     private void AddOre(Point16 pos)
     {
         switch (Main.netMode)
@@ -59,12 +59,12 @@ public class OreExperienceTile : GlobalTile
                 {
                     Position = pos
                 };
-                
+
                 packet.Send();
                 break;
         }
     }
-    
+
     // Using CanPlace since it doesn't explicitly say "called on client" like PlaceInWorld
     public override bool CanPlace(int i, int j, int type)
     {
@@ -72,8 +72,8 @@ public class OreExperienceTile : GlobalTile
         var canPlace = base.CanPlace(i, j, type);
 
         // If it's not an ore or not a host, return whatever base is
-        if (!ValidType(type)) return canPlace; 
-        
+        if (!ValidType(type)) return canPlace;
+
         // If it's false, don't bother adding it to the list
         if (!canPlace) return false;
 
@@ -86,15 +86,15 @@ public class OreExperienceTile : GlobalTile
     public override bool CanReplace(int i, int j, int type, int tileTypeBeingPlaced)
     {
         var canReplace = base.CanReplace(i, j, type, tileTypeBeingPlaced);
-    
+
         // If it's not an ore or not a host, return whatever base is
         if (!ValidType(type)) return canReplace;
-    
+
         // If it's false, don't bother adding it to the list
         if (!canReplace) return false;
-    
+
         AddOre(new Point16(i, j));
-    
+
         return true;
     }
 
@@ -116,32 +116,29 @@ public class OreExperienceTile : GlobalTile
         int value;
 
         // Gem stuff, because gems tiles don't drop their gem by default...
-        if (type == TileID.ExposedGems) value = (int)gemDropID.Where(item => item != -1).Average(gem => new Item(gem).value);
+        if (type == TileID.ExposedGems)
+            value = (int)gemDropID.Where(item => item != -1).Average(gem => new Item(gem).value);
         else if (Gems[type]) value = new Item(gemDropID[type]).value;
         // Every other ore
-        else if(TileLoader.GetTile(type) is { } tile) value = tile.GetItemDrops(i, j).Sum(item => item.value);
+        else if (TileLoader.GetTile(type) is { } tile) value = tile.GetItemDrops(i, j).Sum(item => item.value);
         else value = new Item(TileLoader.GetItemDropFromTypeAndStyle(type)).value;
-        
-        var experience = (int) (PlayConfiguration.Instance.ExperienceScale.Mining * (value / 200));
-        
+
+        var experience = (int)(PlayConfiguration.Instance.ExperienceScale.Mining * (value / 200));
+
         if (experience == 0) return;
-        
+
         switch (Main.netMode)
         {
             case NetmodeID.SinglePlayer:
                 Main.LocalPlayer.GetModPlayer<LevelPlayer>().GainExperience(experience);
                 break;
-            
+
             case NetmodeID.Server:
                 var player = Main.player[0];
 
                 foreach (var ap in Main.ActivePlayers)
-                {
                     if (ap.position.Distance(worldPos) < player.position.Distance(worldPos))
-                    {
                         player = ap;
-                    }
-                }
 
                 var packet = new GainExperiencePacket
                 {

@@ -10,7 +10,7 @@ public class TeamSharePacket : Packet
     public int Team { get; set; }
 
     protected override bool Forward => true;
-    
+
     protected override void Write(BinaryWriter writer)
     {
         writer.Write(Amount);
@@ -19,11 +19,11 @@ public class TeamSharePacket : Packet
 
     protected override void Read(BinaryReader reader, int whoAmI)
     {
-        Amount = reader.ReadInt64(); 
+        Amount = reader.ReadInt64();
         Team = reader.ReadInt32();
-        
+
         var player = Main.LocalPlayer;
-        
+
         if (player.team == Team) player.GetModPlayer<LevelPlayer>().GainExperience(Amount, true);
     }
 }

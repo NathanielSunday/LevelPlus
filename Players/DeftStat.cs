@@ -6,7 +6,8 @@ namespace LevelPlus.Players;
 
 public class DeftStat : Stat
 {
-    public override LocalizedText Description => base.Description.WithFormatArgs(Damage() * 100, MoveSpeed() * 100, PlacementSpeed() * 100);
+    public override LocalizedText Description =>
+        base.Description.WithFormatArgs(Damage() * 100, MoveSpeed() * 100, PlacementSpeed() * 100);
 
     public override LocalizedText SpendTooltip =>
         base.SpendTooltip.WithFormatArgs(Damage(true), MoveSpeed(true), PlacementSpeed(true));
