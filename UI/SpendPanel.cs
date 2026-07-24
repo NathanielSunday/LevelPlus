@@ -8,9 +8,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace LevelPlus.UI;
@@ -24,7 +27,7 @@ public class SpendPanel : UIState
     private const float PanelHeight = 300f;
     private const float StatWidth = 240f;
     private const float StatHeight = 40f;
-    
+
     private SpendBackground background;
     private UIList stats;
 
@@ -80,8 +83,7 @@ internal class StatInterface(Stat stat) : UIElement
     private const float BorderThickness = 6f;
     private const float IconSize = 28f;
     private const float AddSquare = 28f;
-    
-    
+
     private Asset<Texture2D> background;
 
     private Stat StatPlayer => Main.LocalPlayer.GetModPlayer(stat);
@@ -91,9 +93,9 @@ internal class StatInterface(Stat stat) : UIElement
     {
         base.OnInitialize();
         var mod = ModContent.GetInstance<LevelPlus>();
-        
+
         background = mod.Assets.Request<Texture2D>("Assets/Textures/UI/Stat_Background");
-        
+
         // Apply icon
         var icon = new UIImage(mod.Assets.Request<Texture2D>(stat.IconPath))
         {
@@ -102,19 +104,23 @@ internal class StatInterface(Stat stat) : UIElement
             Left = StyleDimension.FromPixels(BorderThickness),
             Top = StyleDimension.FromPixels(BorderThickness),
         };
+        icon.OnDraw += delegate
+        {
+            if (icon.IsMouseHovering) UICommon.TooltipMouseText(StatPlayer.Description.Value);
+        };
         Append(icon);
-        
+
         // Apply text value
         var valueText = new UIText("0")
         {
             Width = StyleDimension.FromPixelsAndPercent(-4 * BorderThickness - IconSize - AddSquare, 1f),
             Height = StyleDimension.FromPixelsAndPercent(-2 * BorderThickness, 1f),
             Left = StyleDimension.FromPixels(2 * BorderThickness + IconSize),
-            Top =  StyleDimension.FromPixels(BorderThickness),
+            Top = StyleDimension.FromPixels(BorderThickness),
             TextOriginX = 0.5f,
             TextOriginY = 0.5f
         };
-        valueText.OnUpdate += delegate { valueText.SetText(StatPlayer.Value.ToString()); };
+        valueText.OnDraw += delegate { valueText.SetText(StatPlayer.Value.ToString()); };
         Append(valueText);
 
         // Apply plus button
@@ -123,15 +129,20 @@ internal class StatInterface(Stat stat) : UIElement
             Width = StyleDimension.FromPixels(AddSquare),
             Height = StyleDimension.FromPixels(AddSquare),
             Left = StyleDimension.FromPixelsAndPercent(-BorderThickness - AddSquare, 1f),
-            Top =  StyleDimension.FromPixels(BorderThickness),
+            Top = StyleDimension.FromPixels(BorderThickness),
             TextOriginX = 0.5f,
             TextOriginY = 0.5f
         };
         addStat.OnLeftClick += delegate
         {
+            SoundEngine.PlaySound(SoundID.MenuTick);
             int spent = StatPlayer.ProjectedValue - StatPlayer.Value;
             StatPlayer.Value = StatPlayer.ProjectedValue;
             LevelPlayer.Points -= spent;
+        };
+        addStat.OnDraw += delegate
+        {
+            if (addStat.IsMouseHovering) UICommon.TooltipMouseText(StatPlayer.SpendTooltip.Value);
         };
         Append(addStat);
     }

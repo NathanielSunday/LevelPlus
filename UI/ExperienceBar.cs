@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace LevelPlus.UI;
@@ -38,7 +39,7 @@ public class ExperienceBar : UIState
         background.OnLeftClick += delegate { ModContent.GetInstance<StatUISystem>().Toggle(); };
         background.OnDraw += delegate
         {
-            if (background.IsMouseHovering) Main.instance.MouseText(LevelPlayer.Description.Value);
+            if (background.IsMouseHovering) UICommon.TooltipMouseText(LevelPlayer.Description.Value);
         };
         Append(background);
 
@@ -64,7 +65,7 @@ public class ExperienceBar : UIState
         };
         bar.OnDraw += delegate
         {
-            if (bar.IsMouseHovering) Main.instance.MouseText(LevelPlayer.ExperienceTooltip.Value);
+            if (bar.IsMouseHovering) UICommon.TooltipMouseText(LevelPlayer.ExperienceTooltip.Value);
 
             // Current level progress experience / Experience needed to get to from current level to next level
             var quotient = QuotientScalar *
