@@ -8,7 +8,8 @@ public class EnduranceStat : Stat
     public override LocalizedText Description => base.Description.WithFormatArgs(Life(), Defense(), LifeRegen());
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Life(true), Defense(true), LifeRegen(true));
+        base.SpendTooltip.WithFormatArgs(Life(), Defense(), LifeRegen(),
+            Life(true), Defense(true), LifeRegen(true));
 
     public override string Id => "Endurance";
 

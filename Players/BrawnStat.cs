@@ -10,7 +10,8 @@ public class BrawnStat : Stat
         base.Description.WithFormatArgs(Damage() * 100, WingTimeMax() * 100, PickSpeed() * 100);
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage(true), WingTimeMax(true), PickSpeed(true));
+        base.SpendTooltip.WithFormatArgs(Damage() * 100, WingTimeMax() * 100, PickSpeed() * 100,
+            Damage(true) * 100, WingTimeMax(true) * 100, PickSpeed(true) * 100);
 
     public override string Id => "Brawn";
 

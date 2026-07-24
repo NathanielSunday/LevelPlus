@@ -10,7 +10,8 @@ public class DeftStat : Stat
         base.Description.WithFormatArgs(Damage() * 100, MoveSpeed() * 100, PlacementSpeed() * 100);
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage(true), MoveSpeed(true), PlacementSpeed(true));
+        base.SpendTooltip.WithFormatArgs(Damage() * 100, MoveSpeed() * 100, PlacementSpeed() * 100,
+            Damage(true) * 100, MoveSpeed(true) * 100, PlacementSpeed(true) * 100);
 
     public override string Id => "Deft";
 

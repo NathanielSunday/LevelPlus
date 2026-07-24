@@ -11,7 +11,8 @@ public class CharmStat : Stat
         base.Description.WithFormatArgs(Damage() * 100, MaxMinions(), MaxSentries(), FishingLevel());
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage(true), MaxMinions(true), MaxSentries(true), FishingLevel(true));
+        base.SpendTooltip.WithFormatArgs(Damage() * 100, MaxMinions(), MaxSentries(), FishingLevel(),
+            Damage(true) * 100, MaxMinions(true), MaxSentries(true), FishingLevel(true));
 
     public override string Id => "Charm";
 

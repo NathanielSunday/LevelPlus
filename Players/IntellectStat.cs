@@ -10,7 +10,8 @@ public class IntellectStat : Stat
         base.Description.WithFormatArgs(Damage() * 100, Mana(), ManaRegen(), BlockRange());
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage(true), Mana(true), ManaRegen(true), BlockRange(true));
+        base.SpendTooltip.WithFormatArgs(Damage() * 100, Mana(), ManaRegen(), BlockRange(),
+            Damage(true) * 100, Mana(true), ManaRegen(true), BlockRange(true));
 
     public override string Id => "Intellect";
 

@@ -1,90 +1,113 @@
 Level: {
-	Tooltip: {
-		Singleplayer:
-			'''
+    Tooltip: {
+        Singleplayer: '''
 			Level {0} | {3} unspent points
 			+{1} life
 			+{2} mana
-			'''
-		Multiplayer:
-			'''
+			''',
+        Multiplayer: '''
 			Level {0} | {3} unspent points
 			+{1} life
 			+{2} mana
 			Average level: {4}
-			'''
-	}
-
-	Experience:
-		'''
-		{0} experience
-		{2} to next level
-		'''
-
-	Popup: {
-		Experience: +{0} XP
-		LevelUp: Level Up!
-	}
+			''',
+    },
+    
+    Experience: '''
+	    {0} experience
+	    {2} to next level
+	    ''',
+    
+    Popup: {
+        Experience: "+{0} XP",
+        LevelUp: "Level Up!"
+    }
 }
 
 Brawn: {
-	DisplayName: Brawn
-	Tooltip:
-		'''
+    DisplayName: Brawn,
+    Tooltip: '''
 		+{0}% melee damage
 		+{1}% wing time
 		+{2}% pick speed
-		'''
+		''',
+    Projected: '''
+		+{0}% -> [c/55ff55:{3}%] melee damage
+		+{1}% -> [c/55ff55:{4}%] wing time
+		+{2}% -> [c/55ff55:{5}%] pick speed
+		''',
 }
 
 Charm: {
-	DisplayName: Charm
-	Tooltip:
-		'''
+    DisplayName: Charm,
+    Tooltip: '''
 		+{0}% summon damage
 		+{1} max minions
 		+{2} max sentries
-		+{3} fishing power
-		'''
+		+{3} fishing power      
+		''',
+    Projected: '''
+	    +{0}% -> [c/55ff55:{4}%] summon damage
+		+{1} -> [c/55ff55:{5}] max minions
+		+{2} -> [c/55ff55:{6}] max sentries
+		+{3} -> [c/55ff55:{7}] fishing power
+		''',
 }
 
 Deft: {
-	DisplayName: Deft
-	Tooltip:
-		'''
+    DisplayName: Deft,
+    Tooltip: '''
 		+{0}% ranged damage
 		+{1}% move speed
 		+{2}% place speed
-		'''
+		''',
+    Projected: '''
+		+{0}% -> [c/55ff55:{3}%] ranged damage
+		+{1}% -> [c/55ff55:{4}%] move speed
+		+{2}% -> [c/55ff55:{5}%] place speed
+		''',
 }
 
 Endurance: {
-	DisplayName: Endurance
-	Tooltip:
-		'''
+    DisplayName: Endurance,
+    Tooltip: '''
 		+{0} life
 		+{1} defense
 		+{2} life regen
-		'''
+		''',
+    Projected: '''
+        +{0} -> [c/55ff55:{3}] life
+        +{1} -> [c/55ff55:{4}] defense
+        +{2} -> [c/55ff55:{5}] life regen
+        ''',
 }
 
 Intellect: {
-	DisplayName: Intellect
-	Tooltip:
-		'''
+    DisplayName: Intellect,
+    Tooltip: '''
 		+{0}% magic damage
 		+{1} mana
 		+{2} mana regen
 		+{3} block range
-		'''
+		''',
+    Projected: '''
+        +{0}% -> [c/55ff55:{4}%] magic damage
+        +{1} -> [c/55ff55:{5}] mana
+        +{2} -> [c/55ff55:{6}] mana regen
+        +{3} -> [c/55ff55:{7}] block range
+        ''',
 }
 
 Luck: {
-	DisplayName: Luck
-	Tooltip:
-		'''
+    DisplayName: Luck,
+    Tooltip: '''
 		+{0}% crit chance
 		+{1}% luck
 		{2}% chance to not consume ammo
-		'''
+		''',
+    Projected: '''
+        +{0}% -> [c/55ff55:{3}%] crit chance
+        +{1}% -> [c/55ff55:{4}%] luck
+        {2}% -> [c/55ff55:{5}%] chance to not consume ammo
+        ''',
 }

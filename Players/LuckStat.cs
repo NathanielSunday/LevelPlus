@@ -11,8 +11,8 @@ public class LuckStat : Stat
 
     public override LocalizedText Description => base.Description.WithFormatArgs(Crit() * 100, Luck() * 100, Ammo());
 
-    public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Crit(true), Luck(true), Ammo(true));
+    public override LocalizedText SpendTooltip => base.SpendTooltip.WithFormatArgs(Crit() * 100, Luck() * 100, Ammo(),
+            Crit(true) * 100, Luck(true) * 100, Ammo(true));
 
     public override string Id => "Luck";
 
