@@ -104,7 +104,7 @@ internal class StatInterface(Stat stat) : UIElement
         };
         icon.OnDraw += delegate
         {
-            if (icon.IsMouseHovering) UICommon.TooltipMouseText(StatPlayer.Description.Value);
+            if (icon.IsMouseHovering) UICommon.TooltipMouseText(StatPlayer.Name + "\n" + StatPlayer.Description);
         };
         Append(icon);
 
@@ -140,7 +140,7 @@ internal class StatInterface(Stat stat) : UIElement
         };
         addStat.OnDraw += delegate
         {
-            if (addStat.IsMouseHovering) UICommon.TooltipMouseText(StatPlayer.SpendTooltip.Value);
+            if (addStat.IsMouseHovering) UICommon.TooltipMouseText(StatPlayer.Name + "\n" + StatPlayer.SpendTooltip);
         };
         Append(addStat);
     }

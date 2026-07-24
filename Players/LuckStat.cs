@@ -1,5 +1,6 @@
 using System;
 using LevelPlus.Configs;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 
@@ -15,6 +16,8 @@ public class LuckStat : Stat
             Crit(true) * 100, Luck(true) * 100, Ammo(true));
 
     public override string Id => "Luck";
+
+    public override Color Color => Color.LawnGreen;
 
     private float Crit(bool projected = false)
     {

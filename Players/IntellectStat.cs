@@ -1,4 +1,5 @@
 using LevelPlus.Configs;
+using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -14,6 +15,8 @@ public class IntellectStat : Stat
             Damage(true) * 100, Mana(true), ManaRegen(true), BlockRange(true));
 
     public override string Id => "Intellect";
+
+    public override Color Color => Color.SteelBlue;
 
     private float Damage(bool projected = false)
     {

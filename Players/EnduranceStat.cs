@@ -1,4 +1,5 @@
 using LevelPlus.Configs;
+using Microsoft.Xna.Framework;
 using Terraria.Localization;
 
 namespace LevelPlus.Players;
@@ -12,6 +13,8 @@ public class EnduranceStat : Stat
             Life(true), Defense(true), LifeRegen(true));
 
     public override string Id => "Endurance";
+
+    public override Color Color => Color.Red;
 
     private int Life(bool projected = false)
     {

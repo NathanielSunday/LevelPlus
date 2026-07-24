@@ -1,4 +1,5 @@
 using LevelPlus.Configs;
+using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -14,6 +15,8 @@ public class DeftStat : Stat
             Damage(true) * 100, MoveSpeed(true) * 100, PlacementSpeed(true) * 100);
 
     public override string Id => "Deft";
+
+    public override Color Color => Color.Yellow;
 
     private float Damage(bool projected = false)
     {

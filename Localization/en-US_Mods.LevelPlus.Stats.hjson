@@ -25,7 +25,7 @@ Level: {
 }
 
 Brawn: {
-    DisplayName: Brawn,
+    DisplayName: "[c/{0}:Brawn]",
     Tooltip: '''
 		+{0}% melee damage
 		+{1}% wing time
@@ -39,7 +39,7 @@ Brawn: {
 }
 
 Charm: {
-    DisplayName: Charm,
+    DisplayName: "[c/{0}:Charm]",
     Tooltip: '''
 		+{0}% summon damage
 		+{1} max minions
@@ -55,7 +55,7 @@ Charm: {
 }
 
 Deft: {
-    DisplayName: Deft,
+    DisplayName: "[c/{0}:Deft]",
     Tooltip: '''
 		+{0}% ranged damage
 		+{1}% move speed
@@ -69,7 +69,7 @@ Deft: {
 }
 
 Endurance: {
-    DisplayName: Endurance,
+    DisplayName: "[c/{0}:Endurance]",
     Tooltip: '''
 		+{0} life
 		+{1} defense
@@ -83,7 +83,7 @@ Endurance: {
 }
 
 Intellect: {
-    DisplayName: Intellect,
+    DisplayName: "[c/{0}:Intellect]",
     Tooltip: '''
 		+{0}% magic damage
 		+{1} mana
@@ -99,7 +99,7 @@ Intellect: {
 }
 
 Luck: {
-    DisplayName: Luck,
+    DisplayName: "[c/{0}:Luck]",
     Tooltip: '''
 		+{0}% crit chance
 		+{1}% luck

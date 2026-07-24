@@ -1,4 +1,5 @@
 using LevelPlus.Configs;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -15,6 +16,8 @@ public class CharmStat : Stat
             Damage(true) * 100, MaxMinions(true), MaxSentries(true), FishingLevel(true));
 
     public override string Id => "Charm";
+
+    public override Color Color => Color.Cyan;
 
     private float Damage(bool projected = false)
     {

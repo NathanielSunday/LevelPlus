@@ -1,4 +1,5 @@
 using LevelPlus.Configs;
+using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -14,6 +15,8 @@ public class BrawnStat : Stat
             Damage(true) * 100, WingTimeMax(true) * 100, PickSpeed(true) * 100);
 
     public override string Id => "Brawn";
+
+    public override Color Color => Color.DarkOrange;
 
     private float Damage(bool projected = false)
     {

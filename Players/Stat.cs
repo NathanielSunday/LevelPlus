@@ -2,6 +2,7 @@ using System;
 using LevelPlus.Network;
 using LevelPlus.Systems;
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -29,7 +30,7 @@ public abstract class Stat : ModPlayer
     }
 
     /// The LocalizedText for the name of the Stat
-    public new virtual LocalizedText Name => Mod.GetLocalization("Stats." + Id + ".DisplayName", () => Id);
+    public new virtual LocalizedText Name => Mod.GetLocalization("Stats." + Id + ".DisplayName", () => Id).WithFormatArgs(this.Color.Hex3());
 
     /// The LocalizedText for the description. Should be pre-formatted with args.
     public virtual LocalizedText Description => Mod.GetLocalization("Stats." + Id + ".Tooltip", () => Id + " Tooltip");
