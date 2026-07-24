@@ -23,8 +23,6 @@ public class ExperienceBar : UIState
         1f - (SquareThickness + 2 * BorderThickness) / PanelWidth - BorderThickness / PanelWidth;
 
     private BarBackground background;
-    private UIImage bar;
-    private UIText level;
 
     private LevelPlayer LevelPlayer => Main.LocalPlayer.GetModPlayer<LevelPlayer>();
 
@@ -44,21 +42,21 @@ public class ExperienceBar : UIState
         };
         Append(background);
 
-        level = new UIText("0")
+        var level = new UIText("0")
         {
             Width = StyleDimension.FromPixels(SquareThickness),
             Height = StyleDimension.FromPixels(SquareThickness),
             Left = StyleDimension.FromPixels(BorderThickness),
             Top = StyleDimension.FromPixels(BorderThickness),
             TextOriginX = 0.5f,
-            TextOriginY = 0.4f
+            TextOriginY = 0.1f
         };
         level.OnDraw += delegate { level.SetText(LevelPlayer.Level.ToString()); };
         background.Append(level);
 
-        bar = new UIImage(ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Bar"))
+        var bar = new UIImage(ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Bar"))
         {
-            Width = StyleDimension.FromPercent(1f),
+            Width = StyleDimension.FromPercent(0f),
             Height = StyleDimension.FromPercent(1f),
             Left = StyleDimension.FromPixels(2 * BorderThickness + SquareThickness),
             ScaleToFit = true,
@@ -74,8 +72,7 @@ public class ExperienceBar : UIState
                            (LevelPlayer.LevelToExperience(LevelPlayer.Level + 1) -
                             LevelPlayer.LevelToExperience(LevelPlayer.Level));
 
-            bar.Width.Percent = quotient * QuotientScalar;
-            // Recalculate();
+            bar.Width.Percent = quotient;
         };
         background.Append(bar);
     }
