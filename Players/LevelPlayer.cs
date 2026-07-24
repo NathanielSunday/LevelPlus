@@ -9,13 +9,11 @@ using LevelPlus.UI;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Enums;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using tModPorter;
 
 namespace LevelPlus.Players;
 
@@ -35,7 +33,7 @@ public class LevelPlayer : ModPlayer
     public LocalizedText Description => Mod.GetLocalization("Stats.Level.Tooltip" +
                                                             (Main.netMode == NetmodeID.MultiplayerClient
                                                                 ? ".Multiplayer"
-                                                                : ""))
+                                                                : ".Singleplayer"))
         .WithFormatArgs(Level, Life, Mana, Points, GetAverageLevel());
 
     public LocalizedText ExperienceTooltip => Mod.GetLocalization("Stats.Level.Experience")
