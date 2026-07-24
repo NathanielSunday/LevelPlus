@@ -29,7 +29,7 @@ public class EnduranceStat : Stat
 
     public override void PostUpdateMiscEffects()
     {
-        Player.statLifeMax2 += LifeRegen();
+        Player.statLifeMax2 += Life();
         Player.statDefense += Defense();
     }
 
