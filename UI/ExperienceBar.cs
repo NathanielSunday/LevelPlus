@@ -49,7 +49,7 @@ public class ExperienceBar : UIState
             Left = StyleDimension.FromPixels(BorderThickness),
             Top = StyleDimension.FromPixels(BorderThickness),
             TextOriginX = 0.5f,
-            TextOriginY = 0.1f
+            TextOriginY = 0.5f
         };
         level.OnDraw += delegate { level.SetText(LevelPlayer.Level.ToString()); };
         background.Append(level);
