@@ -1,0 +1,90 @@
+Level: {
+	Tooltip: {
+		Singleplayer:
+			'''
+			Level {0} | {3} unspent points
+			+{1} life
+			+{2} mana
+			'''
+		Multiplayer:
+			'''
+			Level {0} | {3} unspent points
+			+{1} life
+			+{2} mana
+			Average level: {4}
+			'''
+	}
+
+	Experience:
+		'''
+		{0} experience
+		{2} to next level
+		'''
+
+	Popup: {
+		Experience: +{0} XP
+		LevelUp: Level Up!
+	}
+}
+
+Brawn: {
+	DisplayName: Brawn
+	Tooltip:
+		'''
+		+{0}% melee damage
+		+{1}% wing time
+		+{2}% pick speed
+		'''
+}
+
+Charm: {
+	DisplayName: Charm
+	Tooltip:
+		'''
+		+{0}% summon damage
+		+{1} max minions
+		+{2} max sentries
+		+{3} fishing power
+		'''
+}
+
+Deft: {
+	DisplayName: Deft
+	Tooltip:
+		'''
+		+{0}% ranged damage
+		+{1}% move speed
+		+{2}% place speed
+		'''
+}
+
+Endurance: {
+	DisplayName: Endurance
+	Tooltip:
+		'''
+		+{0} life
+		+{1} defense
+		+{2} life regen
+		'''
+}
+
+Intellect: {
+	DisplayName: Intellect
+	Tooltip:
+		'''
+		+{0}% magic damage
+		+{1} mana
+		+{2} mana regen
+		+{3} block range
+		'''
+}
+
+Luck: {
+	DisplayName: Luck
+	Tooltip:
+		'''
+		+{0}% crit chance
+		+{1}% luck
+		{2}% chance to not consume ammo
+		'''
+}
