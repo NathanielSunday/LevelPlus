@@ -14,9 +14,14 @@ namespace LevelPlus.UI;
 
 public class ExperienceBar : UIState
 {
-    // 100% - left square % - right endcap %
-    private const float QuotientScalar = 1f - 13f / 60f - 3f / 60f;
-    
+    private const float BorderThickness = 6f;
+    private const float PanelWidth = 120f;
+    private const float PanelHeight = 26f;
+    private const float SquareThickness = 14f;
+
+    private const float QuotientScalar =
+        1f - (SquareThickness + 2 * BorderThickness) / PanelWidth - BorderThickness / PanelWidth;
+
     private BarBackground background;
     private UIImage bar;
     private UIText level;
@@ -29,32 +34,50 @@ public class ExperienceBar : UIState
 
         background = new BarBackground
         {
-            Width = StyleDimension.FromPixels(120f),
-            Height = StyleDimension.FromPixels(26f)
+            Width = StyleDimension.FromPixels(PanelWidth),
+            Height = StyleDimension.FromPixels(PanelHeight)
         };
-
         background.OnLeftClick += delegate { ModContent.GetInstance<StatUISystem>().Toggle(); };
+        background.OnDraw += delegate
+        {
+            if (background.IsMouseHovering) Main.instance.MouseText(LevelPlayer.Description.Value);
+        };
+        Append(background);
 
         level = new UIText("0")
         {
-            Width = StyleDimension.FromPercent(13f / 60f),
-            Height = StyleDimension.FromPercent(1f),
+            Width = StyleDimension.FromPixels(SquareThickness),
+            Height = StyleDimension.FromPixels(SquareThickness),
+            Left = StyleDimension.FromPixels(BorderThickness),
+            Top = StyleDimension.FromPixels(BorderThickness),
             TextOriginX = 0.5f,
-            TextOriginY = 0.5f
+            TextOriginY = 0.4f
         };
+        level.OnDraw += delegate { level.SetText(LevelPlayer.Level.ToString()); };
         background.Append(level);
 
         bar = new UIImage(ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Bar"))
         {
             Width = StyleDimension.FromPercent(1f),
             Height = StyleDimension.FromPercent(1f),
-            Left = StyleDimension.FromPixels(background.Height.Pixels),
+            Left = StyleDimension.FromPixels(2 * BorderThickness + SquareThickness),
             ScaleToFit = true,
             Color = Color.LawnGreen // new Color(50, 205, 30)
         };
-        background.Append(bar);
+        bar.OnDraw += delegate
+        {
+            if (bar.IsMouseHovering) Main.instance.MouseText(LevelPlayer.ExperienceTooltip.Value);
 
-        Append(background);
+            // Current level progress experience / Experience needed to get to from current level to next level
+            var quotient = QuotientScalar *
+                           (LevelPlayer.Experience - LevelPlayer.LevelToExperience(LevelPlayer.Level)) /
+                           (LevelPlayer.LevelToExperience(LevelPlayer.Level + 1) -
+                            LevelPlayer.LevelToExperience(LevelPlayer.Level));
+
+            bar.Width.Percent = quotient * QuotientScalar;
+            // Recalculate();
+        };
+        background.Append(bar);
     }
 
     public override void OnActivate()
@@ -65,31 +88,6 @@ public class ExperienceBar : UIState
 
         background.Left.Set(placement.X, 0);
         background.Top.Set(placement.Y, 0);
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        base.Update(gameTime);
-
-        level.SetText(LevelPlayer.Level.ToString());
-
-        if (background.IsMouseHovering) Main.instance.MouseText(LevelPlayer.Description.Value);
-        if (bar.IsMouseHovering) Main.instance.MouseText(LevelPlayer.ExperienceTooltip.Value);
-    }
-
-    protected override void DrawSelf(SpriteBatch spriteBatch)
-    {
-        base.DrawSelf(spriteBatch);
-        
-        // Current level progress experience / Experience needed to get to from current level to next level
-        var quotient = (float) (LevelPlayer.Experience - LevelPlayer.LevelToExperience(LevelPlayer.Level)) /
-                       (LevelPlayer.LevelToExperience(LevelPlayer.Level + 1) -
-                        LevelPlayer.LevelToExperience(LevelPlayer.Level));
-        
-        
-        bar.Width.Percent = quotient * QuotientScalar;
-        
-        Recalculate();
     }
 }
 
