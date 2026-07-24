@@ -17,6 +17,14 @@ namespace LevelPlus.UI;
 
 public class SpendPanel : UIState
 {
+    private const float Padding = 2f;
+    private const float BorderThickness = 6f;
+    private const float HeaderHeight = 28f + 2 * BorderThickness;
+    private const float PanelWidth = 270f;
+    private const float PanelHeight = 300f;
+    private const float StatWidth = 240f;
+    private const float StatHeight = 40f;
+    
     private SpendBackground background;
     private UIList stats;
 
@@ -26,31 +34,34 @@ public class SpendPanel : UIState
 
         background = new SpendBackground()
         {
-            Width = StyleDimension.FromPixels(160f),
-            Height = StyleDimension.FromPixels(200f)
+            Width = StyleDimension.FromPixels(PanelWidth),
+            Height = StyleDimension.FromPixels(PanelHeight)
         };
 
         stats = new UIList()
         {
-            Width =  StyleDimension.FromPercent(1f),
-            Height = StyleDimension.FromPercent(1f)
+            Width = StyleDimension.FromPercent(StatWidth),
+            Height = StyleDimension.FromPixelsAndPercent(-HeaderHeight - BorderThickness - 2 * Padding, 1f),
+            Left = StyleDimension.FromPixels(BorderThickness + Padding),
+            Top = StyleDimension.FromPixels(HeaderHeight + Padding),
+            ListPadding = Padding,
+            ManualSortMethod = (e) => { }
         };
-        
+        background.Append(stats);
+
         // Get all loaded stats and add them to the interface
         ModContent.GetInstance<LevelPlus>().Logger.Debug("Adding stats to UI: ");
-        // TODO understand why it's just stacking them on top of each other
-        stats.AddRange(
-            ModContent.GetInstance<StatSystem>().Stats
-            .Select(s => new StatInterface(s)
-                {
-                    Width = StyleDimension.FromPercent(1f),
-                    Height = StyleDimension.FromPixels(20f)
-                }
-            ));
-        stats.Recalculate();
+        var mod = ModContent.GetInstance<LevelPlus>();
+
+        // AddRange wouldn't work properly for me
+        ModContent.GetInstance<StatSystem>().Stats.ForEach(s =>
+            stats.Add(new StatInterface(s)
+            {
+                Width = StyleDimension.FromPixels(StatWidth),
+                Height = StyleDimension.FromPixels(StatHeight)
+            }));
 
         Append(background);
-        background.Append(stats);
     }
 
     public override void OnActivate()
@@ -64,31 +75,65 @@ public class SpendPanel : UIState
     }
 }
 
-internal class StatInterface : UIElement
+internal class StatInterface(Stat stat) : UIElement
 {
+    private const float BorderThickness = 6f;
+    private const float IconSize = 28f;
+    private const float AddSquare = 28f;
+    
+    
     private Asset<Texture2D> background;
-    private UIImage icon;
-    private UIText valueText;
 
-    private Stat stat;
+    private Stat StatPlayer => Main.LocalPlayer.GetModPlayer(stat);
+    private LevelPlayer LevelPlayer => Main.LocalPlayer.GetModPlayer<LevelPlayer>();
 
-    public StatInterface(Stat stat)
+    public override void OnInitialize()
     {
+        base.OnInitialize();
         var mod = ModContent.GetInstance<LevelPlus>();
-        this.stat = stat;
-        mod.Logger.Debug(stat.Id);
-
-        // Request our assets
+        
         background = mod.Assets.Request<Texture2D>("Assets/Textures/UI/Stat_Background");
-        // icon = new UIImage(mod.Assets.Request<Texture2D>(stat.IconPath));
+        
+        // Apply icon
+        var icon = new UIImage(mod.Assets.Request<Texture2D>(stat.IconPath))
+        {
+            Width = StyleDimension.FromPixels(IconSize),
+            Height = StyleDimension.FromPixels(IconSize),
+            Left = StyleDimension.FromPixels(BorderThickness),
+            Top = StyleDimension.FromPixels(BorderThickness),
+        };
+        Append(icon);
+        
+        // Apply text value
+        var valueText = new UIText("0")
+        {
+            Width = StyleDimension.FromPixelsAndPercent(-4 * BorderThickness - IconSize - AddSquare, 1f),
+            Height = StyleDimension.FromPixelsAndPercent(-2 * BorderThickness, 1f),
+            Left = StyleDimension.FromPixels(2 * BorderThickness + IconSize),
+            Top =  StyleDimension.FromPixels(BorderThickness),
+            TextOriginX = 0.5f,
+            TextOriginY = 0.5f
+        };
+        valueText.OnUpdate += delegate { valueText.SetText(StatPlayer.Value.ToString()); };
+        Append(valueText);
 
-        // TODO Apply text values
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        base.Update(gameTime);
-        // TODO implement hover features
+        // Apply plus button
+        var addStat = new UIText("+")
+        {
+            Width = StyleDimension.FromPixels(AddSquare),
+            Height = StyleDimension.FromPixels(AddSquare),
+            Left = StyleDimension.FromPixelsAndPercent(-BorderThickness - AddSquare, 1f),
+            Top =  StyleDimension.FromPixels(BorderThickness),
+            TextOriginX = 0.5f,
+            TextOriginY = 0.5f
+        };
+        addStat.OnLeftClick += delegate
+        {
+            int spent = StatPlayer.ProjectedValue - StatPlayer.Value;
+            StatPlayer.Value = StatPlayer.ProjectedValue;
+            LevelPlayer.Points -= spent;
+        };
+        Append(addStat);
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)

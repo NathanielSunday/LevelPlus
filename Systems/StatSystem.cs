@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 
 namespace LevelPlus.Systems;
 
-[Autoload(Side = ModSide.Both)]
 public class StatSystem : ModSystem
 {
     // Base instances of Stat implementations, should not modify these directly
