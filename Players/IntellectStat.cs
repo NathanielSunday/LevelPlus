@@ -6,7 +6,7 @@ namespace LevelPlus.Players;
 
 public class IntellectStat : Stat
 {
-    public override LocalizedText Description => base.Description.WithFormatArgs(Damage(), Mana(), ManaRegen(), BlockRange());
+    public override LocalizedText Description => base.Description.WithFormatArgs(Damage() * 100, Mana(), ManaRegen(), BlockRange());
 
     public override LocalizedText SpendTooltip =>
         base.SpendTooltip.WithFormatArgs(Damage(true), Mana(true), ManaRegen(true), BlockRange(true));
