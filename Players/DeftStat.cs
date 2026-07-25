@@ -8,11 +8,11 @@ namespace LevelPlus.Players;
 public class DeftStat : Stat
 {
     public override LocalizedText Description =>
-        base.Description.WithFormatArgs(Damage() * 100, MoveSpeed() * 100, PlacementSpeed() * 100);
+        base.Description.WithFormatArgs($"{Damage():P0}", $"{MoveSpeed():P0}", $"{PlacementSpeed():P0}");
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage() * 100, MoveSpeed() * 100, PlacementSpeed() * 100,
-            Damage(true) * 100, MoveSpeed(true) * 100, PlacementSpeed(true) * 100);
+        base.SpendTooltip.WithFormatArgs($"{Damage():P0}", $"{MoveSpeed():P0}", $"{PlacementSpeed():P0}",
+            $"{Damage(true):P0}", $"{MoveSpeed(true):P0}", $"{PlacementSpeed(true):P0}");
 
     public override string Id => "Deft";
 

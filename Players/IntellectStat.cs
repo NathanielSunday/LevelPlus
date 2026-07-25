@@ -8,11 +8,11 @@ namespace LevelPlus.Players;
 public class IntellectStat : Stat
 {
     public override LocalizedText Description =>
-        base.Description.WithFormatArgs(Damage() * 100, Mana(), ManaRegen(), BlockRange());
+        base.Description.WithFormatArgs($"{Damage():P0}", Mana(), ManaRegen(), BlockRange());
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage() * 100, Mana(), ManaRegen(), BlockRange(),
-            Damage(true) * 100, Mana(true), ManaRegen(true), BlockRange(true));
+        base.SpendTooltip.WithFormatArgs($"{Damage():P0}", Mana(), ManaRegen(), BlockRange(),
+            $"{Damage(true):P0}", Mana(true), ManaRegen(true), BlockRange(true));
 
     public override string Id => "Intellect";
 

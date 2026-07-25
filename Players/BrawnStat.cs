@@ -8,11 +8,11 @@ namespace LevelPlus.Players;
 public class BrawnStat : Stat
 {
     public override LocalizedText Description =>
-        base.Description.WithFormatArgs(Damage() * 100, WingTimeMax() * 100, PickSpeed() * 100);
+        base.Description.WithFormatArgs($"{Damage():P0}", $"{WingTimeMax():P0}", $"{PickSpeed():P0}");
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage() * 100, WingTimeMax() * 100, PickSpeed() * 100,
-            Damage(true) * 100, WingTimeMax(true) * 100, PickSpeed(true) * 100);
+        base.SpendTooltip.WithFormatArgs($"{Damage():P0}", $"{WingTimeMax():P0}", $"{PickSpeed():P0}",
+            $"{Damage(true):P0}", $"{WingTimeMax(true):P0}", $"{PickSpeed(true):P0}");
 
     public override string Id => "Brawn";
 

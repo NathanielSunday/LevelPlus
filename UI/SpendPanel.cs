@@ -27,7 +27,6 @@ public class SpendPanel : UIState
     private const float StatHeight = 40f;
 
     private SpendBackground background;
-    private UIList stats;
 
     public override void OnInitialize()
     {
@@ -39,7 +38,7 @@ public class SpendPanel : UIState
             Height = StyleDimension.FromPixels(PanelHeight)
         };
 
-        stats = new UIList
+        var stats = new UIList
         {
             Width = StyleDimension.FromPercent(StatWidth),
             Height = StyleDimension.FromPixelsAndPercent(-HeaderHeight - BorderThickness - 2 * Padding, 1f),
@@ -51,9 +50,6 @@ public class SpendPanel : UIState
         background.Append(stats);
 
         // Get all loaded stats and add them to the interface
-        ModContent.GetInstance<LevelPlus>().Logger.Debug("Adding stats to UI: ");
-        var mod = ModContent.GetInstance<LevelPlus>();
-
         // AddRange wouldn't work properly for me
         ModContent.GetInstance<StatSystem>().Stats.ForEach(s =>
             stats.Add(new StatInterface(s)

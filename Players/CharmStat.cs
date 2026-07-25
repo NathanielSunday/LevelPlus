@@ -9,11 +9,11 @@ namespace LevelPlus.Players;
 public class CharmStat : Stat
 {
     public override LocalizedText Description =>
-        base.Description.WithFormatArgs(Damage() * 100, MaxMinions(), MaxSentries(), FishingLevel());
+        base.Description.WithFormatArgs($"{Damage():P0}", MaxMinions(), MaxSentries(), 100 * FishingLevel());
 
     public override LocalizedText SpendTooltip =>
-        base.SpendTooltip.WithFormatArgs(Damage() * 100, MaxMinions(), MaxSentries(), FishingLevel(),
-            Damage(true) * 100, MaxMinions(true), MaxSentries(true), FishingLevel(true));
+        base.SpendTooltip.WithFormatArgs($"{Damage():P0}", MaxMinions(), MaxSentries(), $"{100 * FishingLevel():F0}",
+            $"{Damage(true):P0}", MaxMinions(true), MaxSentries(true), $"{100 * FishingLevel(true):F0}");
 
     public override string Id => "Charm";
 
