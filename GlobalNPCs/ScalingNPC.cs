@@ -1,3 +1,4 @@
+using System;
 using LevelPlus.Configs;
 using LevelPlus.Items;
 using LevelPlus.Network;
@@ -31,15 +32,24 @@ public class ScalingNPC : GlobalNPC
             // Should take care of most projectiles giving xp
             entity.lifeMax < 5 ||
             // Killing segments shouldn't get you more xp
-            entity.realLife > -1
+            entity.realLife > -1 ||
+            // Don't give XP for things that are meant to be unkillable (i.e. Dungeon Guardian)
+            entity.SuperArmor
         );
     }
 
     public static int CalculateExperience(NPC npc)
     {
         npc.CloneDefaults(npc.netID);
-        return (int)(PlayConfiguration.Instance.ExperienceScale.Combat *
-                     (npc.lifeMax / 10 + npc.defense + npc.defDamage / 3));
+        float formula = PlayConfiguration.Instance.ExperienceScale.Combat *
+                        // Base life and scalar
+                        npc.lifeMax * 0.25f *
+                        // damage + defense scalar for the value of each point of life
+                        (npc.damage * 0.05f + npc.defense * 0.05f) *
+                        // Rare creature bonus
+                        (1 + npc.rarity * 0.0625f);
+        // Give minimum of 1 experience for entities that passed the AppliesToEntity check (Green Slime, Bee, Servant of Cthulhu)
+        return (int)Math.Max(1, formula);
     }
 
     public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers)
