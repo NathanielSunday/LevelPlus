@@ -5,12 +5,12 @@ Essence: {
 
 GreaterScalingPotion: {
 	DisplayName: Greater Scaling Potion
-	Tooltip: ""
+	Tooltip: "{0} life and {1} mana"
 }
 
 LesserScalingPotion: {
 	DisplayName: Lesser Scaling Potion
-	Tooltip: ""
+	Tooltip: "{0} life and {1} mana"
 }
 
 Respec: {
@@ -33,10 +33,10 @@ Restart: {
 
 ScalingPotion: {
 	DisplayName: Scaling Potion
-	Tooltip: ""
+	Tooltip: "{0} life and {1} mana"
 }
 
 SuperScalingPotion: {
 	DisplayName: Super Scaling Potion
-	Tooltip: ""
+	Tooltip: "{0} life and {1} mana"
 }

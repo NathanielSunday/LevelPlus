@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace LevelPlus.Items;
@@ -8,7 +9,8 @@ public class ScalingPotion : ModItem
 {
     protected virtual float HealLifePercent => 0.2f;
     protected virtual float HealManaPercent => 0.25f;
-
+    
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs($"{HealLifePercent:P0}", $"{HealManaPercent:P0}");
     public override string Texture => $"{Mod.Name}/Assets/Textures/Items/ScalingPotion";
 
     public override void SetDefaults()
