@@ -37,9 +37,9 @@ Brawn: {
 		'''
 	Projected:
 		'''
-		+{0} -> [c/55ff55:{3}] melee damage
-		+{1} -> [c/55ff55:{4}] wing time
-		+{2} -> [c/55ff55:{5}] pick speed
+		+{0} -> [c/55ff55:+{3}] melee damage
+		+{1} -> [c/55ff55:+{4}] wing time
+		+{2} -> [c/55ff55:+{5}] pick speed
 		'''
 }
 
@@ -54,10 +54,10 @@ Charm: {
 		'''
 	Projected:
 		'''
-		+{0} -> [c/55ff55:{4}] summon damage
-		+{1} -> [c/55ff55:{5}] max minions
-		+{2} -> [c/55ff55:{6}] max sentries
-		+{3} -> [c/55ff55:{7}] fishing power
+		+{0} -> [c/55ff55:+{4}] summon damage
+		+{1} -> [c/55ff55:+{5}] max minions
+		+{2} -> [c/55ff55:+{6}] max sentries
+		+{3} -> [c/55ff55:+{7}] fishing power
 		'''
 }
 
@@ -71,9 +71,9 @@ Deft: {
 		'''
 	Projected:
 		'''
-		+{0} -> [c/55ff55:{3}] ranged damage
-		+{1} -> [c/55ff55:{4}] move speed
-		+{2} -> [c/55ff55:{5}] place speed
+		+{0} -> [c/55ff55:+{3}] ranged damage
+		+{1} -> [c/55ff55:+{4}] move speed
+		+{2} -> [c/55ff55:+{5}] place speed
 		'''
 }
 
@@ -87,9 +87,9 @@ Endurance: {
 		'''
 	Projected:
 		'''
-		+{0} -> [c/55ff55:{3}] life
-		+{1} -> [c/55ff55:{4}] defense
-		+{2} -> [c/55ff55:{5}] life regen
+		+{0} -> [c/55ff55:+{3}] life
+		+{1} -> [c/55ff55:+{4}] defense
+		+{2} -> [c/55ff55:+{5}] life regen
 		'''
 }
 
@@ -104,10 +104,10 @@ Intellect: {
 		'''
 	Projected:
 		'''
-		+{0} -> [c/55ff55:{4}] magic damage
-		+{1} -> [c/55ff55:{5}] mana
-		+{2} -> [c/55ff55:{6}] mana regen
-		+{3} -> [c/55ff55:{7}] block range
+		+{0} -> [c/55ff55:+{4}] magic damage
+		+{1} -> [c/55ff55:+{5}] mana
+		+{2} -> [c/55ff55:+{6}] mana regen
+		+{3} -> [c/55ff55:+{7}] block range
 		'''
 }
 
@@ -121,8 +121,8 @@ Luck: {
 		'''
 	Projected:
 		'''
-		+{0} -> [c/55ff55:{3}] crit chance
-		+{1} -> [c/55ff55:{4}] luck
+		+{0} -> [c/55ff55:+{3}] crit chance
+		+{1} -> [c/55ff55:+{4}] luck
 		{2} -> [c/55ff55:{5}] chance to not consume ammo
 		'''
 }
