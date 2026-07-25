@@ -1,2 +1,11 @@
-# This file will automatically update with entries for new content after a build and reload.
+Bestiary: {
+	Tooltip: Experience
+	Sort: Experience
+}
 
+Keybinds: {
+	SpendMultTwenty.DisplayName: Spend Twenty,
+	SpendMultTen.DisplayName: Spend Ten,
+	SpendMultFive.DisplayName: Spend Five,
+	ToggleStatUI.DisplayName: Toggle Spend UI
+}

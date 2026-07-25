@@ -1,0 +1,258 @@
+PlayConfiguration: {
+	DisplayName: Gameplay
+
+	Headers: {
+		Commands: Commands
+		Play: Gameplay Additions
+		Stats: Stats
+	}
+
+	CommandsEnabled: {
+		Label: Commands Enabled
+		Tooltip: Enable cheat commands. (Will disable character validation)
+	}
+
+	ScalingPercentage: {
+		Label: Mob Scaling Percentage
+		Tooltip: The percentage in which mob's damage and health scale per player (average) level.
+	}
+
+	LossPercentage: {
+		Label: Experience Loss Percentage
+		Tooltip: The percentage of experience you lose on death. (Cannot bring you down a level)
+	}
+
+	RandomStartingWeapon: {
+		Label: Random Starting Weapon
+		Tooltip: Replaces the copper shortsword with a random starting weapon for new players.
+	}
+
+	StartingPoints: {
+		Label: Starting Points
+		Tooltip: The amount of points a player starts with at level zero.
+	}
+
+	TeamSharePercentage: {
+		Label: Team Share Percentage
+		Tooltip: The percentage of experience to share with other players on your team.
+	}
+}
+
+CommandConfig: {
+	Label: Commands
+	Tooltip: A list of available commands, any of which can be enabled or disabled
+
+	Level: {
+		Label: Level
+		Tooltip: A command to set a player's level.
+	}
+
+	Experience: {
+		Label: Experience
+		Tooltip: A command to give a player experience.
+	}
+
+	Point: {
+		Label: Point
+		Tooltip: A command to give a player points.
+	}
+}
+
+LevelConfig: {
+	Label: Level
+	Tooltip: Options concerning overall level and point distribution.
+
+	Max: {
+		Label: Max Level
+		Tooltip: The max level that any player can be.
+	}
+
+	Points: {
+		Label: Points Per Level
+		Tooltip: The amount of points awarded per level.
+	}
+
+	StartingPoints: {
+		Label: Starting Points
+		Tooltip: The amount of points a player starts with.
+	}
+
+	Life: {
+		Label: Life
+		Tooltip: The amount of max life awarded per level.
+	}
+
+	Mana: {
+		Label: Mana
+		Tooltip: The amount of max mana awarded per level.
+	}
+}
+
+BrawnConfig: {
+	Label: Brawn
+	Tooltip: Options concerning the Brawn stat.
+
+	Damage: {
+		Label: Melee Damage
+		Tooltip: The percentage increase of melee damage per point invested.
+	}
+
+	MaxWingTime: {
+		Label: Flight Time
+		Tooltip: The percentage increase of flight time per point invested.
+	}
+
+	PickSpeed: {
+		Label: Mining Speed
+		Tooltip: The percentage increase of mining speed per point invested.
+	}
+}
+
+CharmConfig: {
+	Label: Charm
+	Tooltip: Options concerning the Charm stat.
+
+	Damage: {
+		Label: Summon Damage
+		Tooltip: The percentage increase of summon damage per point invested.
+	}
+
+	MinionCost: {
+		Label: Minion Cost
+		Tooltip: The amount of points that need to be invested to gain another minion slot.
+	}
+
+	SentryCost: {
+		Label: Sentry Cost
+		Tooltip: The amount of points that need to be invested to gain another sentry slot.
+	}
+
+	Fishing: {
+		Label: Fishing Level
+		Tooltip: The fishing level increase per point invested. (0.01 is 1 fishing level)
+	}
+}
+
+DeftConfig: {
+	Label: Deft
+	Tooltip: Options concerning the Deft stat.
+
+	Damage: {
+		Label: Damage
+		Tooltip: The percentage increase of ranged damage per point invested.
+	}
+
+	MoveSpeed: {
+		Label: Move Speed
+		Tooltip: The percentage increase of move speed per point invested.
+	}
+
+	PlacementSpeed: {
+		Label: Placement Speed
+		Tooltip: The percentage increase of placement speed per point invested.
+	}
+}
+
+EnduranceConfig: {
+	Label: Endurance
+	Tooltip: Options concerning the Endurance stat.
+
+	Life: {
+		Label: Life
+		Tooltip: The amount of max life gained per point invested.
+	}
+
+	Defense: {
+		Label: Defense
+		Tooltip: The amount of defense gained per point invested.
+	}
+
+	LifeRegenCost: {
+		Label: Life Regen Cost
+		Tooltip: The amount of points that need to be invested to gain another life per second.
+	}
+}
+
+IntellectConfig: {
+	Label: Intellect
+	Tooltip: Options concerning the Intellect stat.
+
+	Damage: {
+		Label: Damage
+		Tooltip: The percentage increase of magic damage per point invested.
+	}
+
+	Mana: {
+		Label: Mana
+		Tooltip: The amount of mana gained per point invested.
+	}
+
+	ManaRegenCost: {
+		Label: Mana Regen Cost
+		Tooltip: The amount of points that need to be invested to gain another mana per second.
+	}
+
+	BlockRangeCost: {
+		Label: Block Range Cost
+		Tooltip: The amount of points that need to be invested to increase block range.
+	}
+}
+
+LuckConfig: {
+	Label: Luck
+	Tooltip: Options concerning the Luck stat.
+
+	Crit: {
+		Label: Crit Chance
+		Tooltip: The percentage increase of crit chance per point invested.
+	}
+
+	TerrariaLuck: {
+		Label: Terraria Luck
+		Tooltip: The amount of Terraria luck gained per point invested.
+	}
+
+	Ammo: {
+		Label: Ammo
+		Tooltip: The percentage chance to not consume ammo per point invested.
+	}
+}
+
+ExperienceScaleConfig: {
+	Label: Experience Scale
+	Tooltip: Options to scale experience gain from different sources if players feel that sources from one location are too low
+
+	Combat: {
+		Label: Combat
+		Tooltip: The scalar for combat experience.
+	}
+
+	Mining: {
+		Label: Mining
+		Tooltip: The scalar for mining experience.
+	}
+
+	Fishing: {
+		Label: Fishing
+		Tooltip: The scalar for fishing experience.
+	}
+}
+
+UIConfig: {
+	DisplayName: Interface
+
+	ExperienceBar: {
+		Label: Experience Bar
+		Tooltip: The screen placement of the experience bar in pixels.
+	}
+
+	SpendPanel: {
+		Label: Spend Panel
+		Tooltip: The screen placement of the spending panel in pixels.
+	}
+
+	PointNotifier: {
+		Label: Point Notifier
+		Tooltip: The rainbow glow around the experience bar when the player has points to spend.
+	}
+}

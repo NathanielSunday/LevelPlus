@@ -1,0 +1,42 @@
+Essence: {
+	DisplayName: Essence
+	Tooltip: The will of all living things.
+}
+
+GreaterScalingPotion: {
+	DisplayName: Greater Scaling Potion
+	Tooltip: "{0} life and {1} mana"
+}
+
+LesserScalingPotion: {
+	DisplayName: Lesser Scaling Potion
+	Tooltip: "{0} life and {1} mana"
+}
+
+Respec: {
+	DisplayName: Insignia of Reform
+	Tooltip:
+		'''
+		[c/55ff55:Allows the reallocation of skill points.]
+		"New year, new me."
+		'''
+}
+
+Restart: {
+	DisplayName: Insignia of Rebirth
+	Tooltip:
+		'''
+		[c/ff0000:WHEN USED, ALL Level+ PROGRESS FOR THIS CHARACTER WILL BE LOST.]
+		"Return from whence ye came!"
+		'''
+}
+
+ScalingPotion: {
+	DisplayName: Scaling Potion
+	Tooltip: "{0} life and {1} mana"
+}
+
+SuperScalingPotion: {
+	DisplayName: Super Scaling Potion
+	Tooltip: "{0} life and {1} mana"
+}
