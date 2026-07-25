@@ -4,7 +4,6 @@ using Terraria.ModLoader.Config;
 
 namespace LevelPlus.Configs;
 
-[BackgroundColor(55, 15, 85, 190)]
 public partial class PlayConfiguration : ModConfig
 {
     public static PlayConfiguration Instance { get; private set; }
@@ -32,11 +31,6 @@ public partial class PlayConfiguration : ModConfig
     [BackgroundColor(0, 0, 0)]
     [DefaultValue(true)]
     public bool RandomStartingWeapon { get; set; }
-
-    [BackgroundColor(0, 0, 0)]
-    [Range(0, 10)]
-    [DefaultValue(3)]
-    public int StartingPoints { get; set; }
 
     [Expand(false)]
     [BackgroundColor(0, 0, 0)]

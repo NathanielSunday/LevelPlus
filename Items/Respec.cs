@@ -49,7 +49,7 @@ public class Respec : ModItem
         var levelPlayer = player.GetModPlayer<LevelPlayer>();
         var config = PlayConfiguration.Instance;
 
-        levelPlayer.Points = levelPlayer.Level * config.Level.Points + config.StartingPoints;
+        levelPlayer.Points = levelPlayer.Level * config.Level.Points + config.Level.StartingPoints;
 
         return true;
     }

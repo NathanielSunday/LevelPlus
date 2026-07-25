@@ -41,7 +41,7 @@ public class Restart : ModItem
         var levelPlayer = player.GetModPlayer<LevelPlayer>();
 
         levelPlayer.Experience = 0;
-        levelPlayer.Points = PlayConfiguration.Instance.StartingPoints;
+        levelPlayer.Points = PlayConfiguration.Instance.Level.StartingPoints;
 
         return true;
     }

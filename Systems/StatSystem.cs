@@ -15,7 +15,7 @@ public class StatSystem : ModSystem
     public void ValidateStats(Player player)
     {
         var maxPoints = player.GetModPlayer<LevelPlayer>().Level * PlayConfiguration.Instance.Level.Points +
-                        PlayConfiguration.Instance.StartingPoints;
+                        PlayConfiguration.Instance.Level.StartingPoints;
         var playerStats = GetStatsOfPlayer(player.whoAmI);
 
         // Roll each stat down by one point until we are back under maxPoints
