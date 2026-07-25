@@ -10,10 +10,10 @@ public class LuckStat : Stat
 {
     private static Random rng;
 
-    public override LocalizedText Description => base.Description.WithFormatArgs($"{Crit()}", $"{Luck()}", $"{Ammo()}%");
+    public override LocalizedText Description => base.Description.WithFormatArgs($"{Crit():P0}", $"{Luck():P0}", $"{Ammo()}%");
 
-    public override LocalizedText SpendTooltip => base.SpendTooltip.WithFormatArgs($"{Crit()}", $"{Luck()}", $"{Ammo()}%",
-        $"{Crit(true)}", $"{Luck(true)}", $"{Ammo(true)}%");
+    public override LocalizedText SpendTooltip => base.SpendTooltip.WithFormatArgs($"{Crit():P0}", $"{Luck():P0}", $"{Ammo()}%",
+        $"{Crit(true):P0}", $"{Luck(true):P0}", $"{Ammo(true)}%");
 
     public override string Id => "Luck";
 
