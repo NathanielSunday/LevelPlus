@@ -20,11 +20,16 @@ public class SpendPanel : UIState
 {
     private const float Padding = 2f;
     private const float BorderThickness = 6f;
-    private const float HeaderHeight = 28f + 2 * BorderThickness;
+    private const float SquareThickness = 28f;
+    private const float PointWidth = 44f;
+    private const float BarWidth = 140f;
     private const float PanelWidth = 270f;
     private const float PanelHeight = 300f;
     private const float StatWidth = 240f;
     private const float StatHeight = 40f;
+
+    private const float QuotientScalar = 1f - BorderThickness * 5 / PanelWidth - 2 * SquareThickness / PanelWidth -
+                                         PointWidth / PanelWidth;
 
     private SpendBackground background;
 
@@ -38,12 +43,76 @@ public class SpendPanel : UIState
             Height = StyleDimension.FromPixels(PanelHeight)
         };
 
+        var level = new UIText("0")
+        {
+            Width = StyleDimension.FromPixels(SquareThickness),
+            Height = StyleDimension.FromPixels(SquareThickness),
+            Left = StyleDimension.FromPixels(BorderThickness),
+            Top = StyleDimension.FromPixels(BorderThickness),
+            TextOriginX = 0.5f,
+            TextOriginY = 0.5f
+        };
+        level.OnDraw += delegate
+        {
+            var player = Main.LocalPlayer.GetModPlayer<LevelPlayer>();
+            level.SetText(player.Level.ToString());
+            if (!level.IsMouseHovering) return;
+            UICommon.TooltipMouseText(player.Description.Value);
+        };
+        background.Append(level);
+
+        var points = new UIText("0")
+        {
+            Width = StyleDimension.FromPixels(PointWidth),
+            Height = StyleDimension.FromPixels(SquareThickness),
+            Left = StyleDimension.FromPixelsAndPercent(-2 * BorderThickness - SquareThickness - PointWidth, 1f),
+            Top = StyleDimension.FromPixels(BorderThickness),
+            TextOriginX = 0.5f,
+            TextOriginY = 0.5f
+        };
+        points.OnDraw += delegate { points.SetText(Main.LocalPlayer.GetModPlayer<LevelPlayer>().Points.ToString()); };
+        background.Append(points);
+
+        var close = new UIText("X")
+        {
+            Width = StyleDimension.FromPixels(SquareThickness),
+            Height = StyleDimension.FromPixels(SquareThickness),
+            Left = StyleDimension.FromPixelsAndPercent(-BorderThickness - SquareThickness, 1f),
+            Top = StyleDimension.FromPixels(BorderThickness),
+            TextOriginX = 0.5f,
+            TextOriginY = 0.5f
+        };
+        close.OnLeftClick += delegate { ModContent.GetInstance<StatUISystem>().Toggle(); };
+        background.Append(close);
+        
+        var bar = new UIImage(ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Panel_Bar"))
+        {
+            Width = StyleDimension.FromPercent(0f),
+            Height = StyleDimension.FromPixels(SquareThickness + 2 * BorderThickness),
+            Left = StyleDimension.FromPixels(2 * BorderThickness + SquareThickness),
+            ScaleToFit = true,
+            Color = Color.LawnGreen // new Color(50, 205, 30)
+        };
+        bar.OnDraw += delegate
+        {
+            // Current level progress experience / Experience needed to get to from current level to next level
+            var player = Main.LocalPlayer.GetModPlayer<LevelPlayer>();
+            var quotient = QuotientScalar *
+                           (player.Experience - LevelPlayer.LevelToExperience(player.Level)) /
+                           (LevelPlayer.LevelToExperience(player.Level + 1) -
+                            LevelPlayer.LevelToExperience(player.Level));
+
+            bar.Width.Percent = quotient;
+            if (bar.IsMouseHovering) UICommon.TooltipMouseText(player.ExperienceTooltip.Value);
+        };
+        background.Append(bar);
+
         var stats = new UIList
         {
             Width = StyleDimension.FromPercent(StatWidth),
-            Height = StyleDimension.FromPixelsAndPercent(-HeaderHeight - BorderThickness - 2 * Padding, 1f),
+            Height = StyleDimension.FromPixelsAndPercent(-SquareThickness - 3 * BorderThickness - 2 * Padding, 1f),
             Left = StyleDimension.FromPixels(BorderThickness + Padding),
-            Top = StyleDimension.FromPixels(HeaderHeight + Padding),
+            Top = StyleDimension.FromPixels(SquareThickness + 2 * BorderThickness + Padding),
             ListPadding = Padding,
             ManualSortMethod = e => { }
         };
