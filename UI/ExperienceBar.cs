@@ -18,10 +18,9 @@ public class ExperienceBar : UIState
     private const float BorderThickness = 6f;
     private const float PanelWidth = 120f;
     private const float PanelHeight = 26f;
-    private const float SquareThickness = 14f;
 
     private const float QuotientScalar =
-        1f - (SquareThickness + 2 * BorderThickness) / PanelWidth - BorderThickness / PanelWidth;
+        1f - 2 * BorderThickness / PanelWidth;
 
     private BarBackground background;
 
@@ -39,34 +38,20 @@ public class ExperienceBar : UIState
         background.OnLeftClick += delegate { ModContent.GetInstance<StatUISystem>().Toggle(); };
         background.OnDraw += delegate
         {
-            if (background.IsMouseHovering) UICommon.TooltipMouseText(LevelPlayer.Description.Value);
+            if (background.IsMouseHovering) UICommon.TooltipMouseText(LevelPlayer.ExperienceTooltip.Value);
         };
         Append(background);
-
-        var level = new UIText("0")
-        {
-            Width = StyleDimension.FromPixels(SquareThickness),
-            Height = StyleDimension.FromPixels(SquareThickness),
-            Left = StyleDimension.FromPixels(BorderThickness),
-            Top = StyleDimension.FromPixels(BorderThickness),
-            TextOriginX = 0.5f,
-            TextOriginY = 0.5f
-        };
-        level.OnDraw += delegate { level.SetText(LevelPlayer.Level.ToString()); };
-        background.Append(level);
 
         var bar = new UIImage(ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Bar"))
         {
             Width = StyleDimension.FromPercent(0f),
             Height = StyleDimension.FromPercent(1f),
-            Left = StyleDimension.FromPixels(2 * BorderThickness + SquareThickness),
+            Left = StyleDimension.FromPixels(BorderThickness),
             ScaleToFit = true,
             Color = Color.LawnGreen // new Color(50, 205, 30)
         };
         bar.OnDraw += delegate
         {
-            if (bar.IsMouseHovering) UICommon.TooltipMouseText(LevelPlayer.ExperienceTooltip.Value);
-
             // Current level progress experience / Experience needed to get to from current level to next level
             var quotient = QuotientScalar *
                            (LevelPlayer.Experience - LevelPlayer.LevelToExperience(LevelPlayer.Level)) /

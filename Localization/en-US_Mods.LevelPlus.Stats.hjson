@@ -1,24 +1,24 @@
 Level: {
-	Tooltip: {
+	Experience: {
 		Singleplayer:
 			'''
 			Level {0} | {3} unspent points
-			+{1} life
-			+{2} mana
+			{1} experience
+			{2} to next level
 			'''
 		Multiplayer:
 			'''
 			Level {0} | {3} unspent points
-			+{1} life
-			+{2} mana
 			Average level: {4}
+			{1} experience
+			{2} to next level
 			'''
 	}
 
-	Experience:
+	Tooltip:
 		'''
-		{0} experience
-		{2} to next level
+		+{0} life
+		+{1} mana
 		'''
 
 	Popup: {

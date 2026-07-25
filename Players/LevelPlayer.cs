@@ -30,14 +30,14 @@ public class LevelPlayer : ModPlayer
 
     public long Experience { get; set; }
 
-    public LocalizedText Description => Mod.GetLocalization("Stats.Level.Tooltip" +
-                                                            (Main.netMode == NetmodeID.MultiplayerClient
-                                                                ? ".Multiplayer"
-                                                                : ".Singleplayer"))
-        .WithFormatArgs(Level, Life, Mana, Points, GetAverageLevel());
+    public LocalizedText Description => Mod.GetLocalization("Stats.Level.Tooltip")
+        .WithFormatArgs(Life, Mana);
 
-    public LocalizedText ExperienceTooltip => Mod.GetLocalization("Stats.Level.Experience")
-        .WithFormatArgs(Experience, LevelToExperience(Level + 1), LevelToExperience(Level + 1) - Experience);
+    public LocalizedText ExperienceTooltip => Mod.GetLocalization("Stats.Level.Experience." +
+                                                                  (Main.netMode == NetmodeID.MultiplayerClient
+                                                                      ? "Multiplayer"
+                                                                      : "Singleplayer"))
+        .WithFormatArgs(Level, Experience, LevelToExperience(Level + 1) - Experience, Points, GetAverageLevel());
 
     private int Life => Level * PlayConfiguration.Instance.Level.Life;
     private int Mana => Level * PlayConfiguration.Instance.Level.Mana;
