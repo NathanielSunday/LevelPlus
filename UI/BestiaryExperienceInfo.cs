@@ -15,7 +15,7 @@ public class BestiaryExperienceElement(NPC instance)
     public UIElement ProvideUIElement(BestiaryUICollectionInfo info)
     {
         if (info.UnlockState == BestiaryEntryUnlockState.NotKnownAtAll_0) return null;
-
+        
         UIPanel panel = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Stat_Panel"),
             null, customBarSize: 7)
         {
@@ -30,7 +30,7 @@ public class BestiaryExperienceElement(NPC instance)
         panel.PaddingRight = 5f;
         panel.OnUpdate += ShowExperienceTooltip;
 
-        UIImage icon = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Stat_Knockback"))
+        UIImage icon = new(ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Icons/Charm"))
         {
             IgnoresMouseInteraction = true,
             ScaleToFit = true,
@@ -41,7 +41,7 @@ public class BestiaryExperienceElement(NPC instance)
 
         UIText experienceText = new(
             info.UnlockState >= BestiaryEntryUnlockState.CanShowStats_2
-                ? ScalingNPC.CalculateExperience(instance).ToString()
+                ? Experience.ToString()
                 : "???",
             0.85f)
         {
@@ -55,8 +55,10 @@ public class BestiaryExperienceElement(NPC instance)
 
         return panel;
     }
+    
+    public int Experience => ScalingNPC.CalculateExperience(instance);
 
-    public float OrderPriority => 1f;
+    public float OrderPriority => 0f;
 
     public UIBestiaryEntryInfoPage.BestiaryInfoCategory ElementCategory =>
         UIBestiaryEntryInfoPage.BestiaryInfoCategory.Stats;
