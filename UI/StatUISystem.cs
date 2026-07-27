@@ -6,7 +6,7 @@ using Terraria.UI;
 
 namespace LevelPlus.UI;
 
-// [Autoload(Side = ModSide.Client)]
+[Autoload(Side = ModSide.Client)]
 public class StatUISystem : ModSystem
 {
     private UserInterface currentInterface;
