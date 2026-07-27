@@ -74,6 +74,7 @@ public abstract class Stat : ModPlayer
 
         var packet = new StatPacket
         {
+            Player = Player.whoAmI,
             Id = Id,
             Value = Value
         };

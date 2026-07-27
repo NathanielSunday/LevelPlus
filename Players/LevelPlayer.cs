@@ -220,6 +220,7 @@ public class LevelPlayer : ModPlayer
 
         var packet = new StatPacket
         {
+            Player = Player.whoAmI,
             Id = "level",
             Value = Level
         };
