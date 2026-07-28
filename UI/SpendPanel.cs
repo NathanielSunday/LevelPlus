@@ -25,7 +25,7 @@ public class SpendPanel : UIState
     private const float BarWidth = 140f;
     private const float PanelWidth = 270f;
     private const float PanelHeight = 300f;
-    private const float StatWidth = 240f;
+    private const float StatWidth = 224f;
     private const float StatHeight = 40f;
 
     private const float QuotientScalar = 1f - BorderThickness * 5 / PanelWidth - 2 * SquareThickness / PanelWidth -
@@ -84,8 +84,9 @@ public class SpendPanel : UIState
         };
         close.OnLeftClick += delegate { ModContent.GetInstance<StatUISystem>().Toggle(); };
         background.Append(close);
-        
-        var bar = new UIImage(ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Panel_Bar"))
+
+        var bar = new UIImage(ModContent.GetInstance<LevelPlus>().Assets
+            .Request<Texture2D>("Assets/Textures/UI/Panel_Bar"))
         {
             Width = StyleDimension.FromPercent(0f),
             Height = StyleDimension.FromPixels(SquareThickness + 2 * BorderThickness),
@@ -107,15 +108,29 @@ public class SpendPanel : UIState
         };
         background.Append(bar);
 
+        var scrollbar = new StatScrollbar
+        {
+            Width = StyleDimension.FromPixels(20f),
+            Height = StyleDimension.FromPixelsAndPercent(-3 * BorderThickness - SquareThickness - 2 * Padding, 1f),
+            Left = StyleDimension.FromPixelsAndPercent(-20f - BorderThickness - Padding, 1f),
+            Top = StyleDimension.FromPixels(2 * BorderThickness + SquareThickness + Padding),
+        };
+        background.Append(scrollbar);
+
         var stats = new UIList
         {
             Width = StyleDimension.FromPercent(StatWidth),
-            Height = StyleDimension.FromPixelsAndPercent(-SquareThickness - 3 * BorderThickness - 2 * Padding, 1f),
-            Left = StyleDimension.FromPixels(BorderThickness + Padding),
-            Top = StyleDimension.FromPixels(SquareThickness + 2 * BorderThickness + Padding),
+            Height = StyleDimension.FromPixelsAndPercent(-SquareThickness - 3 * BorderThickness, 1f),
+            Left = StyleDimension.FromPixels(BorderThickness),
+            Top = StyleDimension.FromPixels(SquareThickness + 2 * BorderThickness),
             ListPadding = Padding,
+            PaddingLeft = Padding,
+            PaddingRight = Padding,
+            PaddingTop = Padding,
+            PaddingBottom = Padding,
             ManualSortMethod = e => { }
         };
+        stats.SetScrollbar(scrollbar);
         background.Append(stats);
 
         // Get all loaded stats and add them to the interface
@@ -126,6 +141,7 @@ public class SpendPanel : UIState
                 Width = StyleDimension.FromPixels(StatWidth),
                 Height = StyleDimension.FromPixels(StatHeight)
             }));
+
 
         Append(background);
     }
@@ -138,6 +154,26 @@ public class SpendPanel : UIState
 
         background.Left.Set(placement.X, 0);
         background.Top.Set(placement.Y, 0);
+    }
+}
+
+internal class StatScrollbar : UIScrollbar
+{
+    private Asset<Texture2D> peg;
+
+    public override void OnInitialize()
+    {
+        peg = ModContent.GetInstance<LevelPlus>().Assets.Request<Texture2D>("Assets/Textures/UI/Scrollbar_Peg");
+    }
+
+    protected override void DrawSelf(SpriteBatch spriteBatch)
+    {
+        var dimensions = GetDimensions().ToRectangle();
+        spriteBatch.Draw(peg.Value, new Rectangle(
+            dimensions.X, 
+            dimensions.Y + (int)((dimensions.Height - 20) * (ViewPosition / (MaxViewSize - dimensions.Height))), 
+            dimensions.Width, 
+            20), Color.White);
     }
 }
 
