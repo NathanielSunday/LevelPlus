@@ -1,6 +1,6 @@
 <div align="center">
 
-![Level+ logo](https://github.com/NathanielSunday/LevelPlus/raw/main/icon.png)
+![Level+ logo](https://github.com/NathanielSunday/LevelPlus/raw/main/icon_workshop.png)
 
 ![Version](https://img.shields.io/github/v/release/nathanielsunday/levelplus?color=green&label=latest%20version)
 ![Last Update](https://img.shields.io/steam/update-date/2600460955?label=last%20updated)\
@@ -18,7 +18,7 @@
 ## Credits
 
 - PoctorDepper (lead developer and spriter)
-- MarauderKnight3 (spriter)
+- MarauderKnight3 (spriter and contributor)
 - TheAshenWolf (contributor and ass-saver)
 - LanToaster (contributor)
 - WilliamVenables (sound designer)
